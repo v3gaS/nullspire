@@ -2,6 +2,12 @@
 
 Build diary. Newest entries at the top.
 
+## 2026-07-10 — Crash: RigidBody outside Physics
+- Deploy blanked with "This page couldn't load"
+- Console: `useRapier must be used within <Physics />!`
+- Cause: `KenneyWorldDressing` (has barrel `RigidBody`) rendered outside `<Physics>`
+- Fix: move dressing under Physics; keep viewmodel/VFX outside; add GameErrorBoundary
+
 ## 2026-07-10 — Physics feel pass
 - Shared `playerPhysics` impulse/knock/camera-punch layer (survives wishdir overwrites)
 - Jump uses Rapier `applyImpulse`; pads are sensors + proximity fallback

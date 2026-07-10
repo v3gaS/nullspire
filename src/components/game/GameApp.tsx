@@ -30,6 +30,7 @@ import { NullspirePrimarch } from "./NullspirePrimarch";
 import { CheckpointGates } from "./CheckpointGates";
 import { WeaponPickup } from "./WeaponPickup";
 import { PhysicsDebris } from "./PhysicsDebris";
+import { GameErrorBoundary } from "./GameErrorBoundary";
 import { useGameStore } from "@/stores/gameStore";
 import { useCombatInput } from "@/lib/game/useCombatInput";
 import {
@@ -41,10 +42,12 @@ import {
 function World({ showDressing }: { showDressing: boolean }) {
   return (
     <>
+      {/* Viewmodel/VFX stay outside Physics — camera-follow meshes must not be reparented */}
       <CombatVfx />
       <WeaponViewmodel />
-      {showDressing && <KenneyWorldDressing />}
       <Physics gravity={[0, -18, 0]}>
+        {/* Dressing includes a RigidBody collider — must live under Physics */}
+        {showDressing && <KenneyWorldDressing />}
         <PlayerController />
         <CrashRimSector />
         <BiolumeVaults />
@@ -93,6 +96,9 @@ export function GameApp() {
         screen === "paused" ||
         screen === "dead" ||
         screen === "victory") && (
+        <GameErrorBoundary
+          onReset={() => useGameStore.getState().resetRun()}
+        >
         <Canvas
           shadows={cfg.shadows}
           dpr={[1, cfg.dpr]}
@@ -138,6 +144,7 @@ export function GameApp() {
             <World showDressing={quality !== "low"} />
           </Suspense>
         </Canvas>
+        </GameErrorBoundary>
       )}
 
       {screen === "title" && <TitleScreen />}
