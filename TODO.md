@@ -74,7 +74,7 @@ Campaign build order. Check items as completed. Loop works top-down; pause every
 
 ## Phase 8 — Ship
 - [x] Production Vercel deploy
-- [ ] Visual QA in browser (movement, combat, bosses)
+- [x] Visual QA in browser (movement, combat, bosses)
 - [ ] Fix ship blockers
 - [ ] Tag release notes in LEARNINGS.md
 

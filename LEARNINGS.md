@@ -6,7 +6,11 @@ Build diary. Newest entries at the top.
 - Production alias: https://nullspire-amber.vercel.app
 - Team project: `rockstar-investments-projects/nullspire` (GitHub connected)
 - Added reload (R), Overclock (F), Null regen, fall/void damage, Drone Scout AI
-- Next: Scatter Carbine, more enemies, expand Crash Rim with Kenney OBJ kitbash
+- Scatter Carbine world pickup on teal jump pad; Shockwave ability (F)
+- Visual QA: title → Deploy works; HUD + Crash Rim + drones live; Hull drops from drone fire (expected)
+- drei `Sky` reads washed-out on prod — consider custom sky/fog palette next
+- Dynamic loop armed: continue wake ~10m; hard review pause at ~1h from kickoff
+- Next: Arc Caster, more enemies, expand Crash Rim with Kenney OBJ kitbash
 
 ## 2026-07-10 — Phase 0–2 bootstrap
 - `create-next-app` rejects capital folder names; scaffolded via `nullspire-tmp` then moved up
