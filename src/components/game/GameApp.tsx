@@ -2,7 +2,7 @@
 
 import { Canvas } from "@react-three/fiber";
 import { Stars } from "@react-three/drei";
-import { Physics } from "@react-three/rapier";
+import { Physics, RigidBody } from "@react-three/rapier";
 import { Suspense, useEffect } from "react";
 import { PlayerController } from "./PlayerController";
 import { CrashRimSector } from "./CrashRimSector";
@@ -48,6 +48,17 @@ function World({ showDressing }: { showDressing: boolean }) {
       <CombatVfx />
       <WeaponViewmodel />
       <Physics gravity={[0, -18, 0]}>
+        {/* Guaranteed floor under drop so Rapier never voids the player on load */}
+        <RigidBody type="fixed" colliders="cuboid" position={[0, -0.25, 8]}>
+          <mesh receiveShadow>
+            <boxGeometry args={[14, 0.5, 14]} />
+            <meshStandardMaterial
+              color="#3d4a55"
+              roughness={0.9}
+              metalness={0.15}
+            />
+          </mesh>
+        </RigidBody>
         {/* Dressing includes a RigidBody collider — must live under Physics */}
         {showDressing && <KenneyWorldDressing />}
         <PlayerController />

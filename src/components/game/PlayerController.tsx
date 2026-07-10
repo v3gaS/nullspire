@@ -31,7 +31,7 @@ export function PlayerController() {
   const jumpHeld = useRef(false);
   const jumpBuffer = useRef(0);
   const canCutJump = useRef(false);
-  const spawnProtect = useRef(2.5);
+  const spawnProtect = useRef(4);
   const spawn = useRef({ x: 0, y: 2, z: 8 });
   const groundedRay = useRef(new THREE.Raycaster());
   const downDir = useRef(new THREE.Vector3(0, -1, 0));
