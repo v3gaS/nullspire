@@ -2,6 +2,11 @@
 
 Build diary. Newest entries at the top.
 
+## 2026-07-10 — Continuous resume (user override)
+- User asked to keep looping; removed hard 1h stop from TODO/AGENTS
+- Prior wake PIDs had exited without a follow-up agent turn — re-armed continuous wakes
+- Shipped: full 5-weapon abilities, turrets/skitters/spitters, bastion/stalker, loot, Rust Canyons + pads/acid, Aegis Warden + victory, dark sky fix
+
 ## 2026-07-10 — Live deploy + combat loop
 - Production alias: https://nullspire-amber.vercel.app
 - Team project: `rockstar-investments-projects/nullspire` (GitHub connected)

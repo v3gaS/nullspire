@@ -1,8 +1,12 @@
 "use client";
 
-import { useGLTF } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 import { RigidBody } from "@react-three/rapier";
-import { Suspense } from "react";
+import { useGLTF } from "@react-three/drei";
+import { Suspense, useRef } from "react";
+import * as THREE from "three";
+import { useGameStore } from "@/stores/gameStore";
+import { playSfx } from "@/lib/game/audio";
 
 function Box({
   position,
@@ -18,6 +22,30 @@ function Box({
       <mesh castShadow receiveShadow>
         <boxGeometry args={size} />
         <meshStandardMaterial color={color} roughness={0.85} metalness={0.2} />
+      </mesh>
+    </RigidBody>
+  );
+}
+
+function JumpPad({ position }: { position: [number, number, number] }) {
+  return (
+    <RigidBody
+      type="fixed"
+      colliders="cuboid"
+      position={position}
+      onCollisionEnter={() => {
+        /* impulse applied via sensor-less boost zones in PlayerController later */
+      }}
+    >
+      <mesh castShadow receiveShadow userData={{ jumpPad: true, boost: 14 }}>
+        <cylinderGeometry args={[1.4, 1.4, 0.25, 16]} />
+        <meshStandardMaterial
+          color="#ff6bcb"
+          emissive="#ff2ea6"
+          emissiveIntensity={1.4}
+          metalness={0.4}
+          roughness={0.3}
+        />
       </mesh>
     </RigidBody>
   );
@@ -48,13 +76,88 @@ function Prop({
   );
 }
 
-/** Crash Rim starter sector — large footprint with jumps and cover. */
+function Beacon({ position }: { position: [number, number, number] }) {
+  const meshRef = useRef<THREE.Mesh>(null);
+  const claimed = useRef(false);
+
+  useFrame((state) => {
+    const mesh = meshRef.current;
+    if (!mesh || claimed.current) return;
+    mesh.rotation.y += 0.02;
+    const dist = state.camera.position.distanceTo(mesh.position);
+    if (dist < 3.5) {
+      claimed.current = true;
+      mesh.visible = false;
+      useGameStore
+        .getState()
+        .setObjective("Beacon online — push into Rust Canyons");
+      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.55);
+      useGameStore.getState().healPlayer(25);
+      useGameStore.getState().setNullEnergy(100);
+    }
+  });
+
+  return (
+    <mesh ref={meshRef} position={position}>
+      <sphereGeometry args={[0.7, 16, 16]} />
+      <meshStandardMaterial
+        color="#7dffef"
+        emissive="#2ee6c8"
+        emissiveIntensity={2.5}
+      />
+    </mesh>
+  );
+}
+
+function AcidHazard({
+  position,
+  size,
+}: {
+  position: [number, number, number];
+  size: [number, number, number];
+}) {
+  const cooldown = useRef(0);
+  const meshRef = useRef<THREE.Mesh>(null);
+
+  useFrame((state, dt) => {
+    cooldown.current = Math.max(0, cooldown.current - dt);
+    const mesh = meshRef.current;
+    if (!mesh || useGameStore.getState().screen !== "playing") return;
+    const cam = state.camera.position;
+    const halfX = size[0] / 2;
+    const halfZ = size[2] / 2;
+    if (
+      Math.abs(cam.x - position[0]) < halfX &&
+      Math.abs(cam.z - position[2]) < halfZ &&
+      cam.y < position[1] + 2.2 &&
+      cooldown.current <= 0
+    ) {
+      cooldown.current = 0.5;
+      useGameStore.getState().damagePlayer(6);
+    }
+  });
+
+  return (
+    <mesh ref={meshRef} position={position} rotation={[-Math.PI / 2, 0, 0]}>
+      <planeGeometry args={[size[0], size[2]]} />
+      <meshStandardMaterial
+        color="#7cff3a"
+        emissive="#3a8a10"
+        emissiveIntensity={0.8}
+        transparent
+        opacity={0.65}
+      />
+    </mesh>
+  );
+}
+
+/** Crash Rim + Rust Canyons approach — large footprint with jumps and hazards. */
 export function CrashRimSector() {
   return (
     <group>
       <RigidBody type="fixed" colliders="cuboid" position={[0, -0.5, 0]}>
         <mesh receiveShadow>
-          <boxGeometry args={[120, 1, 120]} />
+          <boxGeometry args={[180, 1, 180]} />
           <meshStandardMaterial color="#2a2438" roughness={1} />
         </mesh>
       </RigidBody>
@@ -76,17 +179,23 @@ export function CrashRimSector() {
         <Box key={z} position={[-22, 2, z]} size={[2, 4, 2]} color="#554838" />
       ))}
 
-      <mesh position={[16, 10, -20]}>
-        <sphereGeometry args={[0.6, 16, 16]} />
-        <meshStandardMaterial
-          color="#7dffef"
-          emissive="#2ee6c8"
-          emissiveIntensity={2}
-        />
-      </mesh>
+      <Beacon position={[16, 10, -20]} />
 
       <Box position={[6, 0.05, -8]} size={[5, 0.1, 5]} color="#1f6b4a" />
       <Box position={[-12, 0.05, -16]} size={[4, 0.1, 4]} color="#1f6b4a" />
+
+      {/* Rust Canyons trench */}
+      <Box position={[0, 1.5, -45]} size={[40, 3, 2]} color="#6b3f2a" />
+      <Box position={[-18, 3, -55]} size={[4, 6, 4]} color="#5a4030" />
+      <Box position={[18, 3, -55]} size={[4, 6, 4]} color="#5a4030" />
+      <Box position={[-6, 1.5, -52]} size={[4, 0.4, 4]} color="#3ecfbf" />
+      <Box position={[2, 3.2, -58]} size={[4, 0.4, 4]} color="#3ecfbf" />
+      <Box position={[10, 4.8, -64]} size={[4, 0.4, 4]} color="#48d4c4" />
+      <Box position={[0, 0.2, -70]} size={[16, 0.4, 16]} color="#3a2a22" />
+
+      <JumpPad position={[0, 0.2, -28]} />
+      <JumpPad position={[8, 0.2, -48]} />
+      <AcidHazard position={[-4, 0.08, -38]} size={[8, 0.1, 6]} />
 
       <Suspense fallback={null}>
         <Prop
@@ -105,6 +214,11 @@ export function CrashRimSector() {
           scale={2}
         />
         <Prop
+          url="/assets/models/kenney-fps/platform-large-grass.glb"
+          position={[0, 0.05, -70]}
+          scale={3}
+        />
+        <Prop
           url="/assets/models/kenney-fps/enemy-flying.glb"
           position={[8, 3, -12]}
           scale={1.5}
@@ -118,4 +232,5 @@ export function CrashRimSector() {
 useGLTF.preload("/assets/models/kenney-fps/wall-high.glb");
 useGLTF.preload("/assets/models/kenney-fps/wall-low.glb");
 useGLTF.preload("/assets/models/kenney-fps/platform.glb");
+useGLTF.preload("/assets/models/kenney-fps/platform-large-grass.glb");
 useGLTF.preload("/assets/models/kenney-fps/enemy-flying.glb");

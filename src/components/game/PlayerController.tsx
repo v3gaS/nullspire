@@ -130,6 +130,14 @@ export function PlayerController() {
       coyote.current = 0;
     }
 
+    // Pink jump pads (world markers near y≈0.2)
+    const onPad =
+      (Math.hypot(pos.x - 0, pos.z + 28) < 1.8 && pos.y < 1.5) ||
+      (Math.hypot(pos.x - 8, pos.z + 48) < 1.8 && pos.y < 1.5);
+    if (onPad && vel.y <= 0.5) {
+      body.setLinvel({ x: wish.x * speed, y: 14, z: wish.z * speed }, true);
+    }
+
     camera.position.set(pos.x, pos.y + 0.6, pos.z);
     camera.rotation.order = "YXZ";
     camera.rotation.y = yaw.current;

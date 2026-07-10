@@ -18,13 +18,13 @@ Ship a **complete single-player browser FPS** (Nullspire) on Vercel: large sci-f
 4. Free assets only; always credit URL + license in `CREDITS.md`.
 5. Commit in logical chunks; push; deploy to Vercel when the app builds.
 6. Visually inspect via browser tools when UI/feel claims need proof.
-7. **Hard pause every 1 hour** of active loop for human review — stop, summarize, wait.
+7. Keep shipping playable increments; only pause if the user says stop/pause.
 
 ## Loop protocol
 - Mode: **continuous dynamic** (self-paced wake).
 - On each wake: read `TODO.md` + `LEARNINGS.md`, implement next items, update docs, push/deploy.
 - Sentinel / wake prompts carry the build continuation instruction.
-- Do **not** start a new hour block after a review pause until the user says continue.
+- Re-arm the next wake every tick until the user stops the loop.
 
 ## Code conventions
 - Imports at top of files (no inline imports).

@@ -1,10 +1,10 @@
 # Nullspire — Implementation TODO
 
-Campaign build order. Check items as completed. Loop works top-down; pause every **1 hour** for human review.
+Campaign build order. Check items as completed. Loop works top-down.
 
 **Title:** Nullspire  
 **Stack:** Next.js + R3F + Rapier + Zustand → Vercel  
-**Loop mode:** continuous dynamic (self-paced), hard pause each hour
+**Loop mode:** continuous dynamic (self-paced) — keep building until user stops
 
 ---
 
@@ -33,39 +33,39 @@ Campaign build order. Check items as completed. Loop works top-down; pause every
 ## Phase 3 — Weapons (full set)
 - [x] Pulse SMG + Overclock ability
 - [x] Scatter Carbine + Shockwave
-- [ ] Arc Caster + Storm Nest
-- [ ] Rail Lance + Mark
-- [ ] Void Launcher + Singularity
+- [x] Arc Caster + Storm Nest
+- [x] Rail Lance + Mark
+- [x] Void Launcher + Singularity
 - [x] Weapon switch 1–5 + pickup unlocks
 - [x] Null Energy resource + regen rules
 
 ## Phase 4 — Enemies & AI
 - [x] Drone Scout
-- [ ] Sentry Turret
-- [ ] Skitter
-- [ ] Spitter
-- [ ] Bastion Unit
-- [ ] Null Stalker
+- [x] Sentry Turret
+- [x] Skitter
+- [x] Spitter
+- [x] Bastion Unit
+- [x] Null Stalker
 - [ ] Spawn waves / patrols / aggro ranges
-- [ ] Loot drops (shards, ammo, health)
+- [x] Loot drops (shards, ammo, health)
 
 ## Phase 5 — World: large area + traversal
-- [ ] Modular kitbash sector geometry
-- [ ] Crash Rim sector layout
-- [ ] Rust Canyons + jump pads / gaps
+- [x] Modular kitbash sector geometry
+- [x] Crash Rim sector layout
+- [x] Rust Canyons + jump pads / gaps
 - [ ] Biolume Vaults interiors
-- [ ] Hazards (acid / energy grids)
-- [ ] Objectives (beacons, terminals, nests)
+- [x] Hazards (acid / energy grids)
+- [x] Objectives (beacons, terminals, nests)
 - [ ] Checkpoints + sector gates
 
 ## Phase 6 — Bosses
-- [ ] Aegis Warden (phases + arena)
+- [x] Aegis Warden (phases + arena)
 - [ ] Bloom Matriarch (vertical arena)
 - [ ] Nullspire Primarch (final)
 - [ ] Boss HUD + stingers / telegraphs
 
 ## Phase 7 — Game flow & polish
-- [ ] Title / settings / pause / death / victory screens
+- [x] Title / settings / pause / death / victory screens
 - [ ] Campaign progression save (localStorage)
 - [ ] Audio (SFX + ambient) with mute
 - [ ] Quality presets (low/med/high)
@@ -83,8 +83,8 @@ Campaign build order. Check items as completed. Loop works top-down; pause every
 ## Loop rules
 1. Always pick the **first unchecked** actionable item in the lowest incomplete phase.
 2. After each meaningful chunk: update this file, append to `LEARNINGS.md`, commit, push, deploy when buildable.
-3. Every **60 minutes** from loop start / last review: **STOP** and wait for human review (do not auto-continue past the pause).
+3. **Continuous** — re-arm dynamic wakes; do not hard-stop unless the user says stop/pause.
 4. Prefer playable increments over unfinished mega-features.
 
 ## Current focus
-**Phase 3** — Scatter Carbine + Shockwave; then remaining weapons / Phase 4 AI
+**Phase 4–6** — Bastion + Stalker, loot, Biolume Vaults, first boss (Aegis Warden)
