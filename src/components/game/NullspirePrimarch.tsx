@@ -6,7 +6,8 @@ import { useRef } from "react";
 import * as THREE from "three";
 import { useGameStore } from "@/stores/gameStore";
 import { playSfx } from "@/lib/game/audio";
-import { distToCam } from "@/lib/game/math";
+import { combatFx } from "@/components/game/CombatVfx";
+import { distToCam, worldPos } from "@/lib/game/math";
 
 /** Final boss — Nullspire Primarch at the Null Core. */
 export function NullspirePrimarch() {
@@ -70,12 +71,20 @@ export function NullspirePrimarch() {
     cooldown.current = Math.max(0, cooldown.current - dt);
     if (dist < 30 && cooldown.current <= 0) {
       cooldown.current = phase.current === 3 ? 0.9 : 1.4;
+      const cam = state.camera.position;
       useGameStore.getState().damagePlayer(6 + phase.current * 2);
       // Singularity wells — pull feel via extra damage in close range
       if (phase.current >= 2 && dist < 14) {
         useGameStore.getState().damagePlayer(4);
       }
       playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.32);
+      combatFx.pushBeam(
+        worldPos(mesh).clone().add(new THREE.Vector3(0, 1.5, 0)),
+        cam.clone(),
+        "#c084fc",
+        0.14,
+      );
+      combatFx.pushImpact(cam.clone(), "#c084fc");
     }
 
     const mat = mesh.material as THREE.MeshStandardMaterial;

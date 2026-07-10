@@ -5,6 +5,7 @@ import { useRef } from "react";
 import * as THREE from "three";
 import { useGameStore } from "@/stores/gameStore";
 import { playSfx } from "@/lib/game/audio";
+import { combatFx } from "@/components/game/CombatVfx";
 import { distToCam, worldPos } from "@/lib/game/math";
 
 export function BastionUnit({
@@ -56,10 +57,21 @@ export function BastionUnit({
     mesh.lookAt(cam.x, wp.y, cam.z);
     cooldown.current = Math.max(0, cooldown.current - dt);
     const dist = distToCam(mesh, cam);
-    if (dist < 24 && cooldown.current <= 0) {
+    if (
+      dist < 24 &&
+      cooldown.current <= 0 &&
+      performance.now() >= useGameStore.getState().invulnerableUntil
+    ) {
       cooldown.current = 1.8;
       useGameStore.getState().damagePlayer(7);
       playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.32);
+      combatFx.pushBeam(
+        wp.clone().add(new THREE.Vector3(0, 0.8, 0)),
+        cam.clone(),
+        "#94a3b8",
+        0.09,
+      );
+      combatFx.pushImpact(cam.clone(), "#94a3b8");
     }
   });
 
@@ -135,10 +147,15 @@ export function NullStalker({
     }
 
     cooldown.current = Math.max(0, cooldown.current - dt);
-    if (distToCam(mesh, cam) < 2.4 && cooldown.current <= 0) {
+    if (
+      distToCam(mesh, cam) < 2.4 &&
+      cooldown.current <= 0 &&
+      performance.now() >= useGameStore.getState().invulnerableUntil
+    ) {
       cooldown.current = 0.85;
       useGameStore.getState().damagePlayer(16);
       playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.35);
+      combatFx.pushImpact(cam.clone(), "#a78bfa");
     }
   });
 

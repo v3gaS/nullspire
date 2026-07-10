@@ -78,6 +78,17 @@ Campaign build order. Check items as completed. Loop works top-down.
 - [x] Fix ship blockers
 - [x] Tag release notes in LEARNINGS.md
 
+## Phase 9 — Feel & readability (post-ship)
+- [x] Hitscan through dressing / skipHit
+- [x] Damage numbers + hit flash + enemy beams
+- [x] Arid lighting + de-purple accents
+- [x] Drop shield HUD + early aggro soften
+- [x] Movement gun bob + muzzle fade + SFX volume
+- [x] Footsteps / land / jump pad audio
+- [x] More boss telegraph beams
+- [ ] LOD / draw-distance pass
+- [ ] Weapon pickup world models polish
+
 ---
 
 ## Loop rules

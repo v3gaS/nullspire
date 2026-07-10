@@ -5,7 +5,8 @@ import { useRef } from "react";
 import * as THREE from "three";
 import { useGameStore } from "@/stores/gameStore";
 import { playSfx } from "@/lib/game/audio";
-import { distToCam } from "@/lib/game/math";
+import { combatFx } from "@/components/game/CombatVfx";
+import { distToCam, worldPos } from "@/lib/game/math";
 
 /** Sector 2 boss — Bloom Matriarch in the vault shaft. */
 export function BloomMatriarch() {
@@ -97,6 +98,13 @@ export function BloomMatriarch() {
         useGameStore.getState().damagePlayer(3);
       }
       playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.28);
+      combatFx.pushBeam(
+        worldPos(mesh).clone(),
+        cam.clone(),
+        "#86efac",
+        0.11,
+      );
+      combatFx.pushImpact(cam.clone(), "#86efac");
     }
   });
 

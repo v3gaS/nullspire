@@ -5,7 +5,8 @@ import { useRef } from "react";
 import * as THREE from "three";
 import { useGameStore } from "@/stores/gameStore";
 import { playSfx } from "@/lib/game/audio";
-import { distToCam } from "@/lib/game/math";
+import { combatFx } from "@/components/game/CombatVfx";
+import { distToCam, worldPos } from "@/lib/game/math";
 
 /** Sector 1 boss — Aegis Warden with 3 phases. */
 export function AegisWarden() {
@@ -74,8 +75,22 @@ export function AegisWarden() {
     if (dist < 26 && cooldown.current <= 0) {
       const interval = phase.current === 1 ? 2.0 : phase.current === 2 ? 1.5 : 1.1;
       cooldown.current = interval;
+      const cam = state.camera.position;
       useGameStore.getState().damagePlayer(5 + phase.current * 2);
       playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.3);
+      const color =
+        phase.current === 1
+          ? "#94a3b8"
+          : phase.current === 2
+            ? "#a78bfa"
+            : "#f87171";
+      combatFx.pushBeam(
+        worldPos(mesh).clone().add(new THREE.Vector3(0, 1.2, 0)),
+        cam.clone(),
+        color,
+        0.12,
+      );
+      combatFx.pushImpact(cam.clone(), color);
       if (phase.current === 3 && dist < 10) {
         useGameStore.getState().damagePlayer(6);
       }
