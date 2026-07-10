@@ -34,6 +34,8 @@ export interface BossHudState {
 
 export interface GameState {
   screen: GameScreen;
+  /** Bumps on every Deploy/Reboot so the player RigidBody remounts at the pad. */
+  runId: number;
   health: number;
   armor: number;
   nullEnergy: number;
@@ -112,6 +114,7 @@ function loadSfxVolume(): number {
 
 export const useGameStore = create<GameState>((set, get) => ({
   screen: "title",
+  runId: 0,
   health: 100,
   armor: 40,
   nullEnergy: 100,
@@ -183,13 +186,14 @@ export const useGameStore = create<GameState>((set, get) => ({
   resetRun: () =>
     set({
       screen: "playing",
+      runId: get().runId + 1,
       health: 100,
       armor: 40,
       nullEnergy: 100,
       activeWeapon: "pulse_smg",
       weapons: structuredClone(defaultWeapons),
       objective: "Reach the Crash Rim beacon",
-      invulnerableUntil: performance.now() + 5500,
+      invulnerableUntil: performance.now() + 8000,
       checkpoint: startCheckpoint,
       boss: defaultBoss,
       mouseSensitivity: loadSens(),

@@ -31,21 +31,30 @@ export function PlayerController() {
   const jumpHeld = useRef(false);
   const jumpBuffer = useRef(0);
   const canCutJump = useRef(false);
-  const spawnProtect = useRef(4);
-  const spawn = useRef({ x: 0, y: 2, z: 8 });
+  /** Hard lock on the drop pad until Rapier colliders are live. */
+  const spawnProtect = useRef(6);
+  const spawn = useRef({ x: 0, y: 2.2, z: 8 });
   const groundedRay = useRef(new THREE.Raycaster());
   const downDir = useRef(new THREE.Vector3(0, -1, 0));
   const { camera, gl, scene } = useThree();
-  const screen = useGameStore((s) => s.screen);
   const sensitivity = useGameStore((s) => s.mouseSensitivity);
   const checkpoint = useGameStore((s) => s.checkpoint);
 
   useEffect(() => {
     spawn.current = {
       x: checkpoint.x,
-      y: checkpoint.y,
+      y: Math.max(checkpoint.y, 2.2),
       z: checkpoint.z,
     };
+    spawnProtect.current = 6;
+    const body = bodyRef.current;
+    if (body) {
+      body.setTranslation(
+        { x: spawn.current.x, y: spawn.current.y, z: spawn.current.z },
+        true,
+      );
+      body.setLinvel({ x: 0, y: 0, z: 0 }, true);
+    }
   }, [checkpoint]);
 
   useEffect(() => {
@@ -99,18 +108,33 @@ export function PlayerController() {
 
   useFrame((_, dt) => {
     const body = bodyRef.current;
-    if (!body || screen !== "playing") return;
+    if (!body || useGameStore.getState().screen !== "playing") return;
     playerPhysics.register(body);
 
     const vel = body.linvel();
     const pos = body.translation();
 
-    // Hold above ground until Rapier colliders finish streaming in
+    // Pin to pad until physics world is trustworthy — no void, no fall damage
     spawnProtect.current = Math.max(0, spawnProtect.current - dt);
-    if (spawnProtect.current > 0 && pos.y < 1.6) {
-      body.setTranslation({ x: pos.x, y: 2.2, z: pos.z }, true);
-      body.setLinvel({ x: vel.x * 0.2, y: 0, z: vel.z * 0.2 }, true);
+    if (spawnProtect.current > 0) {
+      const sx = spawn.current.x;
+      const sy = spawn.current.y;
+      const sz = spawn.current.z;
+      if (
+        pos.y < sy - 0.15 ||
+        pos.y > sy + 4 ||
+        Math.hypot(pos.x - sx, pos.z - sz) > 6
+      ) {
+        body.setTranslation({ x: sx, y: sy, z: sz }, true);
+      } else if (pos.y < sy) {
+        body.setTranslation({ x: pos.x, y: sy, z: pos.z }, true);
+      }
+      body.setLinvel(
+        { x: vel.x * 0.35, y: Math.max(vel.y, 0), z: vel.z * 0.35 },
+        true,
+      );
     }
+
     groundedRay.current.set(
       new THREE.Vector3(pos.x, pos.y, pos.z),
       downDir.current,
@@ -123,16 +147,18 @@ export function PlayerController() {
         !(h.object as THREE.Object3D).userData?.jumpPad,
     );
     const nearGround =
-      !!groundHit || (Math.abs(vel.y) < 0.25 && pos.y < 3.5);
+      !!groundHit ||
+      spawnProtect.current > 0 ||
+      (Math.abs(vel.y) < 0.25 && pos.y < 3.5);
 
-    if (vel.y < -0.5) {
+    if (vel.y < -0.5 && spawnProtect.current <= 0) {
       wasAirborne.current = true;
       peakFallSpeed.current = Math.min(peakFallSpeed.current, vel.y);
     }
 
     if (nearGround) {
       coyote.current = PLAYER.coyoteTime;
-      if (wasAirborne.current) {
+      if (wasAirborne.current && spawnProtect.current <= 0) {
         const impact = Math.abs(peakFallSpeed.current);
         if (impact > 14) {
           const dmg = Math.round((impact - 14) * 8);
@@ -151,14 +177,21 @@ export function PlayerController() {
       coyote.current = Math.max(0, coyote.current - dt);
     }
 
-    if (pos.y < -20) {
+    if (pos.y < -8) {
       const cp = useGameStore.getState().checkpoint;
-      body.setTranslation({ x: cp.x, y: cp.y, z: cp.z }, true);
+      const canHurt = spawnProtect.current <= 0;
+      body.setTranslation(
+        { x: cp.x, y: Math.max(cp.y, 2.2), z: cp.z },
+        true,
+      );
       body.setLinvel({ x: 0, y: 0, z: 0 }, true);
       playerPhysics.knock.set(0, 0, 0);
-      useGameStore.getState().damagePlayer(20);
+      spawnProtect.current = Math.max(spawnProtect.current, 2.5);
+      if (canHurt) {
+        useGameStore.getState().damagePlayer(15);
+      }
       useGameStore.setState({
-        invulnerableUntil: performance.now() + 2000,
+        invulnerableUntil: performance.now() + 2500,
       });
     }
 
@@ -185,7 +218,6 @@ export function PlayerController() {
     playerLocomotion.moving = wish.lengthSq() > 0;
     playerLocomotion.sprinting = sprint && playerLocomotion.moving;
 
-    // Decay knockback; blend with wish so explosions/hits feel physical
     const knock = playerPhysics.knock;
     knock.multiplyScalar(Math.exp(-dt * 4.2));
     if (knock.lengthSq() < 0.01) knock.set(0, 0, 0);
@@ -195,6 +227,9 @@ export function PlayerController() {
     const hz = wish.z * speed * airControl + knock.z;
     let hy = vel.y + knock.y;
     knock.y *= Math.exp(-dt * 6);
+    if (spawnProtect.current > 0) {
+      hy = Math.max(0, hy * 0.2);
+    }
 
     body.setLinvel({ x: hx, y: hy, z: hz }, true);
 
@@ -234,7 +269,6 @@ export function PlayerController() {
       tryJump();
     }
 
-    // Variable jump — release Space once to cut upward velocity
     if (!jumpHeld.current && canCutJump.current) {
       const v = body.linvel();
       if (v.y > 2) {
@@ -244,7 +278,6 @@ export function PlayerController() {
     }
     if (nearGround) canCutJump.current = false;
 
-    // Jump pads — impulse via physics (sensor + proximity fallback)
     padCooldown.current = Math.max(0, padCooldown.current - dt);
     const onPad =
       (Math.hypot(pos.x - 0, pos.z + 28) < 1.8 && pos.y < 1.5) ||
@@ -256,7 +289,6 @@ export function PlayerController() {
       playerPhysics.punch(-0.06);
     }
 
-    // Camera punch + Quake-style explosion shake
     playerPhysics.punchPitch *= Math.exp(-dt * 10);
     playerPhysics.punchYaw *= Math.exp(-dt * 10);
     const fx = useFxStore.getState();
@@ -271,7 +303,8 @@ export function PlayerController() {
       useFxStore.setState({ shakeAmp: 0 });
     }
 
-    camera.position.set(pos.x + shakeX, pos.y + 0.6 + shakeY, pos.z);
+    const camPos = body.translation();
+    camera.position.set(camPos.x + shakeX, camPos.y + 0.6 + shakeY, camPos.z);
     camera.rotation.order = "YXZ";
     camera.rotation.y = yaw.current + playerPhysics.punchYaw;
     camera.rotation.x = pitch.current + playerPhysics.punchPitch;
@@ -280,7 +313,7 @@ export function PlayerController() {
   return (
     <RigidBody
       ref={bodyRef}
-      position={[0, 2.4, 8]}
+      position={[spawn.current.x, spawn.current.y, spawn.current.z]}
       enabledRotations={[false, false, false]}
       colliders={false}
       mass={1}

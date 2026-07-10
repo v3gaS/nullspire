@@ -166,17 +166,7 @@ function AcidHazard({
 export function CrashRimSector() {
   return (
     <group>
-      <RigidBody type="fixed" colliders="cuboid" position={[0, -0.5, 0]}>
-        <mesh receiveShadow>
-          <boxGeometry args={[180, 1, 180]} />
-          <meshStandardMaterial
-            color="#1f1830"
-            roughness={0.95}
-            metalness={0.05}
-          />
-        </mesh>
-      </RigidBody>
-      {/* Ground grid accents */}
+      {/* Ground grid accents — main floor lives in World core (never suspends) */}
       {[-40, -20, 0, 20].map((z) => (
         <mesh key={`gz-${z}`} position={[0, 0.02, z]} rotation={[-Math.PI / 2, 0, 0]}>
           <planeGeometry args={[100, 0.08]} />
