@@ -293,7 +293,7 @@ export function WeaponSystem() {
             : origin.clone().add(shot.dir.clone().multiplyScalar(80));
 
           const beamWidth =
-            id === "rail_lance" ? 0.12 : id === "scatter_carbine" ? 0.04 : 0.07;
+            id === "rail_lance" ? 0.18 : id === "scatter_carbine" ? 0.06 : 0.11;
           combatFx.pushBeam(muzzle, impact, shot.color, beamWidth);
           combatFx.pushImpact(impact, shot.color);
 

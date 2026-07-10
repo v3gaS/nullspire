@@ -14,6 +14,7 @@ import { WeaponViewmodel } from "./WeaponViewmodel";
 import { CombatVfx } from "./CombatVfx";
 import { KenneyWorldDressing } from "./KenneyWorldDressing";
 import { DamageVignette } from "./DamageVignette";
+import { MuzzleFlashOverlay } from "./MuzzleFlashOverlay";
 import { BossHUD } from "./BossHUD";
 import { TargetDummies } from "./TargetDummies";
 import { DroneSquad } from "./DroneScout";
@@ -112,6 +113,7 @@ export function GameApp() {
       {(screen === "playing" || screen === "paused") && (
         <>
           <DamageVignette />
+          <MuzzleFlashOverlay />
           <GameHUD />
           {boss.active && (
             <BossHUD

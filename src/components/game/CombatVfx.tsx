@@ -96,7 +96,7 @@ export function CombatVfx() {
     }
 
     // Beams
-    combatFx.beams = combatFx.beams.filter((b) => now - b.born < 140);
+    combatFx.beams = combatFx.beams.filter((b) => now - b.born < 220);
     const bg = beamsGroup.current;
     if (bg) {
       while (bg.children.length) {
