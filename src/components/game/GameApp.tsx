@@ -54,17 +54,12 @@ function World({ showDressing }: { showDressing: boolean }) {
   const runId = useGameStore((s) => s.runId);
   return (
     <>
-      {/* Always-on landmark so a blank Suspense cannot look like a void death */}
-      <mesh position={[0, 0.6, 6]} castShadow>
-        <boxGeometry args={[1.5, 1.2, 1.5]} />
-        <meshStandardMaterial
-          color="#f4a261"
-          emissive="#f4a261"
-          emissiveIntensity={0.85}
-        />
-      </mesh>
-      <CombatVfx />
-      <WeaponViewmodel />
+      <Suspense fallback={null}>
+        <CombatVfx />
+      </Suspense>
+      <Suspense fallback={null}>
+        <WeaponViewmodel />
+      </Suspense>
       <Suspense fallback={<LoadingBeacon />}>
         <Physics gravity={[0, -18, 0]}>
           <RigidBody type="fixed" colliders={false} position={[0, 0, 0]}>
@@ -190,6 +185,10 @@ export function GameApp() {
             fade
             speed={0.35}
           />
+          <mesh position={[0, 0.8, 5]}>
+            <boxGeometry args={[2, 1.4, 2]} />
+            <meshBasicMaterial color="#f4a261" />
+          </mesh>
           <Suspense fallback={<LoadingBeacon />}>
             <World showDressing={quality !== "low"} />
           </Suspense>
