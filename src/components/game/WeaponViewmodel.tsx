@@ -46,7 +46,7 @@ function GunModel({ url, color }: { url: string; color: string }) {
   return (
     <primitive
       object={cloned}
-      scale={5}
+      scale={0.45}
       position={[0, -0.02, 0]}
       rotation={[0.2, Math.PI, 0]}
     />
@@ -91,7 +91,7 @@ export function WeaponViewmodel() {
     const y =
       -0.22 +
       (playerLocomotion.moving ? Math.sin(bob.current) * amp * 0.6 : 0);
-    const z = 0.55 - kickZ;
+    const z = 0.72 - kickZ;
 
     g.position
       .copy(camera.position)
