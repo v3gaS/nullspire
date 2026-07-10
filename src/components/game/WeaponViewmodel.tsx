@@ -6,6 +6,7 @@ import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { useGameStore, type WeaponId } from "@/stores/gameStore";
 import { useFxStore } from "@/stores/fxStore";
+import { playerLocomotion } from "@/lib/game/playerLocomotion";
 
 const COLORS: Record<WeaponId, string> = {
   pulse_smg: "#7dffef",
@@ -69,17 +70,27 @@ export function WeaponViewmodel() {
     if (!g || screen !== "playing") return;
     const fx = useFxStore.getState();
     const kicking = performance.now() < fx.muzzleUntil;
-    bob.current += dt * 8;
+    const bobRate = playerLocomotion.moving
+      ? playerLocomotion.sprinting
+        ? 14
+        : 9
+      : 0;
+    if (bobRate > 0) bob.current += dt * bobRate;
 
     const kickZ = kicking ? 0.12 : fx.kick * 0.07;
+    const amp = playerLocomotion.sprinting ? 0.014 : 0.008;
     const right = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion);
     const up = new THREE.Vector3(0, 1, 0).applyQuaternion(camera.quaternion);
     const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(
       camera.quaternion,
     );
 
-    const x = 0.28 + Math.cos(bob.current * 0.5) * 0.004;
-    const y = -0.22 + Math.sin(bob.current) * 0.008;
+    const x =
+      0.28 +
+      (playerLocomotion.moving ? Math.cos(bob.current * 0.5) * amp : 0);
+    const y =
+      -0.22 +
+      (playerLocomotion.moving ? Math.sin(bob.current) * amp * 0.6 : 0);
     const z = 0.55 - kickZ;
 
     g.position
@@ -88,7 +99,7 @@ export function WeaponViewmodel() {
       .addScaledVector(up, y)
       .addScaledVector(forward, z);
     g.quaternion.copy(camera.quaternion);
-    g.rotateX(kicking ? -0.1 : 0.05);
+    g.rotateX(0.05 - fx.kick * 0.15);
     g.rotateY(0.08);
 
     if (glowRef.current) {

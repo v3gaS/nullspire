@@ -10,6 +10,8 @@ import {
 } from "@react-three/rapier";
 import { PLAYER } from "@/lib/game/constants";
 import { useGameStore } from "@/stores/gameStore";
+import { playerLocomotion } from "@/lib/game/playerLocomotion";
+import { playSfx } from "@/lib/game/audio";
 
 type Keys = Record<string, boolean>;
 
@@ -21,6 +23,7 @@ export function PlayerController() {
   const coyote = useRef(0);
   const wasAirborne = useRef(false);
   const peakFallSpeed = useRef(0);
+  const padCooldown = useRef(0);
   const spawn = useRef({ x: 0, y: 2, z: 8 });
   const groundedRay = useRef(new THREE.Raycaster());
   const downDir = useRef(new THREE.Vector3(0, -1, 0));
@@ -146,6 +149,8 @@ export function PlayerController() {
 
     const sprint = !!keys.current["ShiftLeft"] || !!keys.current["ShiftRight"];
     const speed = sprint ? PLAYER.sprintSpeed : PLAYER.walkSpeed;
+    playerLocomotion.moving = wish.lengthSq() > 0;
+    playerLocomotion.sprinting = sprint && playerLocomotion.moving;
     body.setLinvel({ x: wish.x * speed, y: vel.y, z: wish.z * speed }, true);
 
     if (keys.current["Space"] && coyote.current > 0) {
@@ -157,11 +162,14 @@ export function PlayerController() {
     }
 
     // Pink jump pads (world markers near y≈0.2)
+    padCooldown.current = Math.max(0, padCooldown.current - dt);
     const onPad =
       (Math.hypot(pos.x - 0, pos.z + 28) < 1.8 && pos.y < 1.5) ||
       (Math.hypot(pos.x - 8, pos.z + 48) < 1.8 && pos.y < 1.5);
-    if (onPad && vel.y <= 0.5) {
+    if (onPad && vel.y <= 0.5 && padCooldown.current <= 0) {
       body.setLinvel({ x: wish.x * speed, y: 14, z: wish.z * speed }, true);
+      playSfx("/assets/audio/kenney-fps/jump_a.ogg", 0.35);
+      padCooldown.current = 0.6;
     }
 
     camera.position.set(pos.x, pos.y + 0.6, pos.z);

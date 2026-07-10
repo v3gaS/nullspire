@@ -38,6 +38,7 @@ export interface GameState {
   nullEnergy: number;
   mouseSensitivity: number;
   muted: boolean;
+  sfxVolume: number;
   activeWeapon: WeaponId;
   weapons: Record<WeaponId, WeaponState>;
   objective: string;
@@ -51,6 +52,7 @@ export interface GameState {
   setNullEnergy: (energy: number) => void;
   setMouseSensitivity: (value: number) => void;
   setMuted: (muted: boolean) => void;
+  setSfxVolume: (value: number) => void;
   setActiveWeapon: (id: WeaponId) => void;
   setObjective: (text: string) => void;
   setCheckpoint: (cp: Checkpoint) => void;
@@ -101,6 +103,12 @@ function loadSens(): number {
   return Number.isFinite(v) && v > 0 ? v : 1;
 }
 
+function loadSfxVolume(): number {
+  if (typeof window === "undefined") return 1;
+  const v = Number(window.localStorage.getItem("nullspire_sfx"));
+  return Number.isFinite(v) ? Math.max(0, Math.min(1, v)) : 1;
+}
+
 export const useGameStore = create<GameState>((set, get) => ({
   screen: "title",
   health: 100,
@@ -108,6 +116,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   nullEnergy: 100,
   mouseSensitivity: 1,
   muted: false,
+  sfxVolume: 1,
   activeWeapon: "pulse_smg",
   weapons: defaultWeapons,
   objective: "Reach the Crash Rim beacon",
@@ -126,6 +135,13 @@ export const useGameStore = create<GameState>((set, get) => ({
     }
   },
   setMuted: (muted) => set({ muted }),
+  setSfxVolume: (sfxVolume) => {
+    const v = Math.max(0, Math.min(1, sfxVolume));
+    set({ sfxVolume: v });
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("nullspire_sfx", String(v));
+    }
+  },
   setActiveWeapon: (activeWeapon) => set({ activeWeapon }),
   setObjective: (objective) => set({ objective }),
   setCheckpoint: (checkpoint) => set({ checkpoint }),

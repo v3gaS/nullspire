@@ -74,6 +74,13 @@ export function GameApp() {
 
   useEffect(() => {
     hydrateSettings();
+    useGameStore.setState({
+      mouseSensitivity: Number(window.localStorage.getItem("nullspire_sens")) || 1,
+      sfxVolume: (() => {
+        const v = Number(window.localStorage.getItem("nullspire_sfx"));
+        return Number.isFinite(v) ? Math.max(0, Math.min(1, v)) : 1;
+      })(),
+    });
   }, []);
 
   return (

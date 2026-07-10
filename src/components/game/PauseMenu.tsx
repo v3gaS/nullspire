@@ -14,6 +14,8 @@ export function PauseMenu() {
   const setMouseSensitivity = useGameStore((s) => s.setMouseSensitivity);
   const muted = useGameStore((s) => s.muted);
   const setMuted = useGameStore((s) => s.setMuted);
+  const sfxVolume = useGameStore((s) => s.sfxVolume);
+  const setSfxVolume = useGameStore((s) => s.setSfxVolume);
   const quality = useSettingsStore((s) => s.quality);
   const setQuality = useSettingsStore((s) => s.setQuality);
   const [credits, setCredits] = useState(false);
@@ -52,6 +54,21 @@ export function PauseMenu() {
             <option value="medium">Medium</option>
             <option value="high">High</option>
           </select>
+        </label>
+        <label className="mt-4 block text-xs uppercase tracking-[0.2em] text-zinc-400">
+          SFX volume
+          <input
+            type="range"
+            min={0}
+            max={1}
+            step={0.05}
+            value={sfxVolume}
+            onChange={(e) => setSfxVolume(Number(e.target.value))}
+            className="mt-2 w-full accent-cyan-400"
+          />
+          <span className="mt-1 block text-zinc-300">
+            {Math.round(sfxVolume * 100)}%
+          </span>
         </label>
         <label className="mt-4 flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-zinc-400">
           <input

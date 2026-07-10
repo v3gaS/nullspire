@@ -85,6 +85,10 @@ function Beacon({ position }: { position: [number, number, number] }) {
     if (!mesh || claimed.current) return;
     mesh.rotation.y += 0.02;
     const dist = state.camera.position.distanceTo(mesh.position);
+    const mat = mesh.material as THREE.MeshStandardMaterial;
+    const pulse = 1.8 + Math.sin(state.clock.elapsedTime * 3) * 0.7;
+    mat.emissiveIntensity = dist < 8 ? pulse + 1.2 : pulse;
+    mesh.scale.setScalar(1 + Math.sin(state.clock.elapsedTime * 2) * 0.08);
     if (dist < 3.5) {
       claimed.current = true;
       mesh.visible = false;
@@ -123,6 +127,8 @@ function AcidHazard({
     cooldown.current = Math.max(0, cooldown.current - dt);
     const mesh = meshRef.current;
     if (!mesh || useGameStore.getState().screen !== "playing") return;
+    const mat = mesh.material as THREE.MeshStandardMaterial;
+    mat.emissiveIntensity = 0.7 + Math.sin(state.clock.elapsedTime * 6) * 0.35;
     const cam = state.camera.position;
     const halfX = size[0] / 2;
     const halfZ = size[2] / 2;
@@ -134,6 +140,8 @@ function AcidHazard({
     ) {
       cooldown.current = 0.5;
       useGameStore.getState().damagePlayer(6);
+      playSfx("/assets/audio/kenney-fps/enemy_hurt.ogg", 0.18);
+      mat.emissiveIntensity = 2.2;
     }
   });
 
