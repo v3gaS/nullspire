@@ -2,6 +2,13 @@
 
 Build diary. Newest entries at the top.
 
+## 2026-07-10 — DOOM/QUAKE fun pass
+- Quake speeds (8.5/14), screen shake, fat boom spheres, gibbier kills
+- Explosive barrels (chain), secret caches with objective hints
+- Void launcher buff + soft rocket-jump; shockwave/singularity booms
+- Visual QA: spawn was void-dying before colliders loaded — spawn protect + CCD + longer invuln
+- Cleared barrels/debris from camera cone; gun silhouette visible again
+
 ## 2026-07-10 — Crash: RigidBody outside Physics
 - Deploy blanked with "This page couldn't load"
 - Console: `useRapier must be used within <Physics />!`

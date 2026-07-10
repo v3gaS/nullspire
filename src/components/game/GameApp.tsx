@@ -114,8 +114,8 @@ export function GameApp() {
           className="absolute inset-0"
         >
           <color attach="background" args={["#1a2433"]} />
-          <fog attach="fog" args={["#2a3548", 45, cfg.fogFar]} />
-          <ambientLight intensity={0.38} />
+          <fog attach="fog" args={["#2a3548", 55, cfg.fogFar]} />
+          <ambientLight intensity={0.48} />
           <directionalLight
             castShadow={cfg.shadows}
             intensity={1.35}
