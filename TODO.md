@@ -87,7 +87,7 @@ Campaign build order. Check items as completed. Loop works top-down.
 - [x] Footsteps / land / jump pad audio
 - [x] More boss telegraph beams
 - [ ] LOD / draw-distance pass
-- [ ] Weapon pickup world models polish
+- [x] Weapon pickup world models polish
 
 ---
 
