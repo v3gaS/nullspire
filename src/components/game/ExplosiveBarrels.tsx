@@ -16,8 +16,8 @@ import {
 import { worldPos } from "@/lib/game/math";
 
 const BARRELS: [number, number, number][] = [
-  [5.5, 0.7, 5.2],
-  [-3.2, 0.7, 2.5],
+  [8, 0.7, -4],
+  [-9, 0.7, -6],
   [10, 0.7, -12],
   [-8, 0.7, -20],
   [2, 0.7, -36],

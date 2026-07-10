@@ -113,22 +113,24 @@ export function WeaponViewmodel() {
   return (
     <group ref={group} userData={{ skipHit: true }}>
       {/* Always-on silhouette so a gun is visible even while GLB streams */}
-      <mesh position={[0.02, -0.02, -0.1]} frustumCulled={false}>
-        <boxGeometry args={[0.1, 0.12, 0.42]} />
+      <mesh position={[0.04, -0.04, -0.05]} frustumCulled={false} renderOrder={10}>
+        <boxGeometry args={[0.14, 0.16, 0.55]} />
         <meshStandardMaterial
-          color="#334155"
+          color="#1e293b"
           emissive={COLORS[active]}
-          emissiveIntensity={0.9}
-          metalness={0.75}
-          roughness={0.3}
+          emissiveIntensity={1.35}
+          metalness={0.8}
+          roughness={0.25}
+          depthTest={false}
         />
       </mesh>
-      <mesh position={[0.02, 0.02, -0.38]} frustumCulled={false}>
-        <boxGeometry args={[0.06, 0.06, 0.22]} />
+      <mesh position={[0.04, 0.02, -0.42]} frustumCulled={false} renderOrder={10}>
+        <boxGeometry args={[0.08, 0.08, 0.28]} />
         <meshStandardMaterial
           color={COLORS[active]}
           emissive={COLORS[active]}
-          emissiveIntensity={1.4}
+          emissiveIntensity={2.2}
+          depthTest={false}
         />
       </mesh>
       <Suspense fallback={null}>

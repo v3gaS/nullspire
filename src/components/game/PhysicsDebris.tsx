@@ -15,10 +15,10 @@ const DEBRIS: {
   color: string;
   mass: number;
 }[] = [
-  { position: [2.2, 0.6, 5.5], size: [0.7, 0.9, 0.7], color: "#94a3b8", mass: 2.2 },
-  { position: [3.4, 0.45, 4.8], size: [0.55, 0.55, 0.55], color: "#a8a29e", mass: 1.4 },
-  { position: [-2.8, 0.5, 4.2], size: [0.8, 0.7, 0.5], color: "#78716c", mass: 2.8 },
-  { position: [1.2, 0.4, -1.5], size: [0.5, 0.5, 0.5], color: "#64748b", mass: 1.2 },
+  { position: [4.5, 0.6, 2], size: [0.7, 0.9, 0.7], color: "#94a3b8", mass: 2.2 },
+  { position: [6, 0.45, 0.5], size: [0.55, 0.55, 0.55], color: "#a8a29e", mass: 1.4 },
+  { position: [-5, 0.5, 1], size: [0.8, 0.7, 0.5], color: "#78716c", mass: 2.8 },
+  { position: [3.5, 0.4, -5], size: [0.5, 0.5, 0.5], color: "#64748b", mass: 1.2 },
   { position: [-4.5, 0.55, -3], size: [0.9, 0.8, 0.6], color: "#57534e", mass: 3.2 },
   { position: [7, 0.5, -6], size: [0.6, 0.7, 0.6], color: "#9ca3af", mass: 1.8 },
   { position: [-1, 0.5, -26], size: [0.7, 0.7, 0.7], color: "#78716c", mass: 2.0 },

@@ -113,7 +113,7 @@ function loadSfxVolume(): number {
 export const useGameStore = create<GameState>((set, get) => ({
   screen: "title",
   health: 100,
-  armor: 25,
+  armor: 40,
   nullEnergy: 100,
   mouseSensitivity: 1,
   muted: false,
@@ -184,7 +184,7 @@ export const useGameStore = create<GameState>((set, get) => ({
     set({
       screen: "playing",
       health: 100,
-      armor: 25,
+      armor: 40,
       nullEnergy: 100,
       activeWeapon: "pulse_smg",
       weapons: structuredClone(defaultWeapons),
