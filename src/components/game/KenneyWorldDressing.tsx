@@ -97,23 +97,24 @@ function ObjProp({
 function GlbDressing() {
   return (
     <group>
-      {/* Right in front of spawn (player at z=8 looking -Z) */}
+      {/* Flanking cover — keep center lane clear for shots toward drones */}
       <GlbProp
         url="/assets/models/kenney-fps/wall-high.glb"
-        position={[4, 0, 3]}
+        position={[6.5, 0, 4]}
         scale={3.5}
         rotation={[0, -0.5, 0]}
       />
       <GlbProp
         url="/assets/models/kenney-fps/wall-high.glb"
-        position={[-5, 0, 2]}
+        position={[-6.5, 0, 3]}
         scale={3.5}
         rotation={[0, 0.7, 0]}
       />
       <GlbProp
         url="/assets/models/kenney-fps/wall-low.glb"
-        position={[0, 0, 1]}
+        position={[-4, 0, 5]}
         scale={3}
+        rotation={[0, 0.4, 0]}
       />
       <GlbProp
         url="/assets/models/kenney-fps/platform.glb"

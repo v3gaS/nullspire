@@ -52,7 +52,12 @@ export function applyHit(obj: THREE.Object3D, damage: number) {
   useFxStore.getState().pushDamage(Math.round(damage));
   const mat = mesh.material;
   if (mat && !Array.isArray(mat) && "emissive" in mat) {
-    (mat as THREE.MeshStandardMaterial).emissive = new THREE.Color("#ff4466");
+    const std = mat as THREE.MeshStandardMaterial;
+    const prev = std.emissive.clone();
+    std.emissive = new THREE.Color("#ff4466");
+    window.setTimeout(() => {
+      if (!mesh.userData?.dead) std.emissive.copy(prev);
+    }, 90);
   }
   if (mesh.userData.hp <= 0) {
     mesh.visible = false;
