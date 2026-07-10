@@ -29,6 +29,8 @@ export function BloomMatriarch() {
 
     const cam = state.camera.position;
     const dist = distToCam(mesh, cam);
+    const wp = worldPos(mesh);
+    if (wp.z > -75) return;
     if (dist < 32) engaged.current = true;
 
     if (engaged.current) {

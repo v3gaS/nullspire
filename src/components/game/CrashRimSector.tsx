@@ -36,6 +36,11 @@ function JumpPad({ position }: { position: [number, number, number] }) {
       sensor
       position={position}
       onIntersectionEnter={() => {
+        const body = playerPhysics.body;
+        if (!body) return;
+        if (performance.now() < playerPhysics.spawnGraceUntil) return;
+        const p = body.translation();
+        if (Math.hypot(p.x - position[0], p.z - position[2]) > 2.4) return;
         playerPhysics.applyImpulse(0, 16, 0, { pad: true });
         playerPhysics.punch(-0.06);
       }}

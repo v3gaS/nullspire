@@ -29,6 +29,8 @@ export function NullspirePrimarch() {
 
     const cam = state.camera.position;
     const dist = distToCam(mesh, cam);
+    const wp = worldPos(mesh);
+    if (wp.z > -110) return;
     if (dist < 35) engaged.current = true;
 
     if (engaged.current) {

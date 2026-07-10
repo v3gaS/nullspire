@@ -47,6 +47,7 @@ export function PlayerController() {
       z: checkpoint.z,
     };
     spawnProtect.current = 6;
+    playerPhysics.beginSpawnGrace(9000);
     const body = bodyRef.current;
     if (body) {
       body.setTranslation(
@@ -59,6 +60,7 @@ export function PlayerController() {
 
   useEffect(() => {
     playerPhysics.register(bodyRef.current);
+    playerPhysics.beginSpawnGrace(9000);
     return () => playerPhysics.register(null);
   }, []);
 
@@ -148,13 +150,27 @@ export function PlayerController() {
     if (typeof window !== "undefined") {
       (
         window as unknown as {
-          __ns?: { y: number; hp: number; armor: number; protect: number };
+          __ns?: {
+            y: number;
+            z: number;
+            velY: number;
+            hp: number;
+            armor: number;
+            protect: number;
+            keys: string;
+          };
         }
       ).__ns = {
         y: body.translation().y,
+        z: body.translation().z,
+        velY: body.linvel().y,
         hp: useGameStore.getState().health,
         armor: useGameStore.getState().armor,
         protect: spawnProtect.current,
+        keys: Object.entries(keys.current)
+          .filter(([, v]) => v)
+          .map(([k]) => k)
+          .join(","),
       };
     }
 
@@ -183,11 +199,12 @@ export function PlayerController() {
       coyote.current = PLAYER.coyoteTime;
       if (wasAirborne.current && spawnProtect.current <= 0) {
         const impact = Math.abs(peakFallSpeed.current);
-        if (impact > 14) {
+        const grace = performance.now() < playerPhysics.spawnGraceUntil;
+        if (!grace && impact > 14) {
           const dmg = Math.round((impact - 14) * 8);
           useGameStore.getState().damagePlayer(dmg);
           playerPhysics.punch(0.08);
-        } else if (impact > 4) {
+        } else if (!grace && impact > 4) {
           playSfx("/assets/audio/kenney-fps/land.ogg", 0.22);
           playerPhysics.punch(0.025);
         } else if (impact > 1.5) {
@@ -252,6 +269,9 @@ export function PlayerController() {
     knock.y *= Math.exp(-dt * 6);
     if (spawnProtect.current > 0) {
       hy = Math.max(0, hy * 0.2);
+    } else if (nearGround && hy < 0) {
+      // Stick to floor — prevents Rapier depenetration launches
+      hy = 0;
     }
 
     body.setLinvel({ x: hx, y: hy, z: hz }, true);
@@ -303,8 +323,9 @@ export function PlayerController() {
 
     padCooldown.current = Math.max(0, padCooldown.current - dt);
     const onPad =
-      (Math.hypot(pos.x - 0, pos.z + 28) < 1.8 && pos.y < 1.5) ||
-      (Math.hypot(pos.x - 8, pos.z + 48) < 1.8 && pos.y < 1.5);
+      performance.now() >= playerPhysics.spawnGraceUntil &&
+      ((Math.hypot(pos.x - 0, pos.z + 28) < 1.8 && pos.y < 1.5) ||
+        (Math.hypot(pos.x - 8, pos.z + 48) < 1.8 && pos.y < 1.5));
     if (onPad && vel.y <= 0.5 && padCooldown.current <= 0) {
       body.applyImpulse({ x: wish.x * 2, y: 16, z: wish.z * 2 }, true);
       playSfx("/assets/audio/kenney-fps/jump_a.ogg", 0.35);

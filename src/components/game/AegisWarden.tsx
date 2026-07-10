@@ -28,6 +28,9 @@ export function AegisWarden() {
 
     const cam = state.camera.position;
     const dist = distToCam(mesh, cam);
+    const wp = worldPos(mesh);
+    // Stale matrixWorld can report the boss at local origin (spawn) — ignore until posed
+    if (wp.z > -50) return;
     if (dist < 28) engaged.current = true;
 
     if (engaged.current) {

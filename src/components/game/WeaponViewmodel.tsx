@@ -46,9 +46,9 @@ function GunModel({ url, color }: { url: string; color: string }) {
   return (
     <primitive
       object={cloned}
-      scale={0.28}
-      position={[0, -0.015, 0.02]}
-      rotation={[0.18, Math.PI, 0]}
+      scale={0.15}
+      position={[0, -0.01, 0.04]}
+      rotation={[0.15, Math.PI, 0]}
     />
   );
 }

@@ -10,9 +10,15 @@ export const playerPhysics = {
   punchPitch: 0,
   punchYaw: 0,
   padUntil: 0,
+  spawnGraceUntil: 0,
 
   register(body: RapierRigidBody | null) {
     this.body = body;
+  },
+
+  beginSpawnGrace(ms = 8000) {
+    this.spawnGraceUntil = performance.now() + ms;
+    this.knock.set(0, 0, 0);
   },
 
   /** Add world-space knockback that decays each frame in PlayerController. */
