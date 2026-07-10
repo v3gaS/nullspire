@@ -190,8 +190,8 @@ export function CrashRimSector() {
         <mesh key={`gx-${x}`} position={[x, 0.02, -20]} rotation={[-Math.PI / 2, 0, 0]}>
           <planeGeometry args={[0.08, 120]} />
           <meshStandardMaterial
-            color="#7a6bff"
-            emissive="#7a6bff"
+            color="#2ee6c8"
+            emissive="#2ee6c8"
             emissiveIntensity={0.3}
             transparent
             opacity={0.3}
@@ -199,7 +199,7 @@ export function CrashRimSector() {
         </mesh>
       ))}
 
-      <Box position={[0, 0.15, 10]} size={[12, 0.3, 12]} color="#3d3554" />
+      <Box position={[0, 0.15, 10]} size={[12, 0.3, 12]} color="#3d4a55" />
       <Box position={[-8, 1.5, 0]} size={[1.5, 3, 10]} color="#5a4a3a" />
       <Box position={[10, 1.5, -4]} size={[1.5, 3, 14]} color="#4a5560" />
       <Box position={[0, 1.2, -18]} size={[20, 2.4, 1.5]} color="#6a5a48" />

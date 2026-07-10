@@ -26,8 +26,8 @@ export function PauseMenu() {
 
   return (
     <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/65 backdrop-blur-sm">
-      <div className="w-full max-w-sm rounded border border-white/15 bg-[#120a1f]/95 p-6 shadow-2xl">
-        <h2 className="font-[family-name:var(--font-display)] text-2xl tracking-[0.2em] text-cyan-100">
+      <div className="w-full max-w-sm rounded border border-white/15 bg-[#121820]/95 p-6 shadow-2xl">
+        <h2 className="font-[family-name:var(--font-display)] text-2xl tracking-[0.2em] text-teal-100">
           PAUSED
         </h2>
         <label className="mt-6 block text-xs uppercase tracking-[0.2em] text-zinc-400">

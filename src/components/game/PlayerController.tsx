@@ -24,6 +24,7 @@ export function PlayerController() {
   const wasAirborne = useRef(false);
   const peakFallSpeed = useRef(0);
   const padCooldown = useRef(0);
+  const footstep = useRef(0);
   const spawn = useRef({ x: 0, y: 2, z: 8 });
   const groundedRay = useRef(new THREE.Raycaster());
   const downDir = useRef(new THREE.Vector3(0, -1, 0));
@@ -152,6 +153,20 @@ export function PlayerController() {
     playerLocomotion.moving = wish.lengthSq() > 0;
     playerLocomotion.sprinting = sprint && playerLocomotion.moving;
     body.setLinvel({ x: wish.x * speed, y: vel.y, z: wish.z * speed }, true);
+
+    // Soft footsteps when grounded and moving
+    if (playerLocomotion.moving && nearGround) {
+      footstep.current -= dt;
+      if (footstep.current <= 0) {
+        playSfx(
+          "/assets/audio/kenney-fps/walking.ogg",
+          playerLocomotion.sprinting ? 0.18 : 0.12,
+        );
+        footstep.current = playerLocomotion.sprinting ? 0.32 : 0.45;
+      }
+    } else {
+      footstep.current = 0.1;
+    }
 
     if (keys.current["Space"] && coyote.current > 0) {
       body.setLinvel(

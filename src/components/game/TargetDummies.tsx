@@ -27,9 +27,9 @@ export function TargetDummies() {
           userData={{ destructible: true, hp: 36, kind: "dummy" }}
         >
           <meshStandardMaterial
-            color="#c45cff"
-            emissive="#4a1a6a"
-            emissiveIntensity={0.4}
+            color="#5eead4"
+            emissive="#134e4a"
+            emissiveIntensity={0.45}
             roughness={0.4}
             metalness={0.3}
           />

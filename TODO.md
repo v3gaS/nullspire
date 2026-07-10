@@ -87,4 +87,4 @@ Campaign build order. Check items as completed. Loop works top-down.
 4. Prefer playable increments over unfinished mega-features.
 
 ## Current focus
-**Feel loop** — combat readability + early-game teaching; next: enemy→player tracers, crosshair spread, ground raycast
+**Feel loop** — continue polish after 30m block; next: footsteps, more enemy telegraph beams, LODs

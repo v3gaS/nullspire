@@ -2,6 +2,15 @@
 
 Build diary. Newest entries at the top.
 
+## 2026-07-10 — Realtime 30m block (wall-clock)
+- Block start unix `1783711253` → end `1783713053` (14:20:53–14:50:53 CDT)
+- Hitscan prefers destructibles; dressing `skipHit`; spawn walls off center lane
+- Damage numbers + hit flash vignette; longer fading beams; enemy→player beams
+- Arid dusk lighting; drop-shield HUD; turret relocated; drones idle during invuln
+- Crosshair kick spread; ground raycast; movement-linked gun bob; muzzle fade
+- Title quality picker + warm palette; SFX volume + pitch jitter; acid/beacon/pad juice
+- Cursor browser WebGL often blacks out after Deploy — assets (colormap/GLBs) still 200 OK
+
 ## 2026-07-10 — Release notes (ship polish)
 - Quality presets (low/med/high), credits screen, ambient drones, hit markers
 - Hitscan prefers destructibles; Kenney dressing marked `skipHit` so props no longer eat shots
