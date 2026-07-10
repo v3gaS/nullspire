@@ -42,11 +42,11 @@ export function GameHUD() {
       {/* Weapon */}
       <div className="absolute bottom-6 right-6 min-w-48 rounded border border-white/10 bg-black/45 px-4 py-3 backdrop-blur-sm">
         <p className="text-[10px] uppercase tracking-[0.25em] text-zinc-500">
-          Weapon
+          Weapon · R reload · F ability · 1-5
         </p>
         <p className="text-lg text-cyan-100">{meta.name}</p>
         <p className="text-xs text-zinc-400">
-          Ability: {meta.ability}
+          Ability: {meta.ability} (Null)
         </p>
         <p className="mt-1 font-mono text-sm text-zinc-200">
           {weapon.ammo} <span className="text-zinc-500">/ {weapon.reserve}</span>

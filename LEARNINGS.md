@@ -2,6 +2,12 @@
 
 Build diary. Newest entries at the top.
 
+## 2026-07-10 — Live deploy + combat loop
+- Production alias: https://nullspire-amber.vercel.app
+- Team project: `rockstar-investments-projects/nullspire` (GitHub connected)
+- Added reload (R), Overclock (F), Null regen, fall/void damage, Drone Scout AI
+- Next: Scatter Carbine, more enemies, expand Crash Rim with Kenney OBJ kitbash
+
 ## 2026-07-10 — Phase 0–2 bootstrap
 - `create-next-app` rejects capital folder names; scaffolded via `nullspire-tmp` then moved up
 - Next template overwrote `AGENTS.md` — restored custom agent rules

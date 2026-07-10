@@ -3,7 +3,11 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
-import { RigidBody, CapsuleCollider, type RapierRigidBody } from "@react-three/rapier";
+import {
+  RigidBody,
+  CapsuleCollider,
+  type RapierRigidBody,
+} from "@react-three/rapier";
 import { PLAYER } from "@/lib/game/constants";
 import { useGameStore } from "@/stores/gameStore";
 
@@ -14,8 +18,10 @@ export function PlayerController() {
   const yaw = useRef(0);
   const pitch = useRef(0);
   const keys = useRef<Keys>({});
-  const grounded = useRef(false);
   const coyote = useRef(0);
+  const wasAirborne = useRef(false);
+  const peakFallSpeed = useRef(0);
+  const spawn = useRef({ x: 0, y: 2, z: 8 });
   const { camera, gl } = useThree();
   const screen = useGameStore((s) => s.screen);
   const sensitivity = useGameStore((s) => s.mouseSensitivity);
@@ -65,14 +71,33 @@ export function PlayerController() {
 
     const vel = body.linvel();
     const pos = body.translation();
+    const nearGround = Math.abs(vel.y) < 0.2 && pos.y < 3.5;
 
-    // Ground probe via downward velocity heuristic + coyote
-    if (Math.abs(vel.y) < 0.15) {
-      grounded.current = true;
+    if (vel.y < -0.5) {
+      wasAirborne.current = true;
+      peakFallSpeed.current = Math.min(peakFallSpeed.current, vel.y);
+    }
+
+    if (nearGround) {
       coyote.current = PLAYER.coyoteTime;
+      if (wasAirborne.current) {
+        const impact = Math.abs(peakFallSpeed.current);
+        if (impact > 14) {
+          const dmg = Math.round((impact - 14) * 8);
+          useGameStore.getState().damagePlayer(dmg);
+        }
+        wasAirborne.current = false;
+        peakFallSpeed.current = 0;
+      }
     } else {
-      grounded.current = false;
       coyote.current = Math.max(0, coyote.current - dt);
+    }
+
+    // Soft kill floor / void
+    if (pos.y < -20) {
+      body.setTranslation(spawn.current, true);
+      body.setLinvel({ x: 0, y: 0, z: 0 }, true);
+      useGameStore.getState().damagePlayer(35);
     }
 
     const forward = new THREE.Vector3(
@@ -95,10 +120,7 @@ export function PlayerController() {
 
     const sprint = !!keys.current["ShiftLeft"] || !!keys.current["ShiftRight"];
     const speed = sprint ? PLAYER.sprintSpeed : PLAYER.walkSpeed;
-    body.setLinvel(
-      { x: wish.x * speed, y: vel.y, z: wish.z * speed },
-      true,
-    );
+    body.setLinvel({ x: wish.x * speed, y: vel.y, z: wish.z * speed }, true);
 
     if (keys.current["Space"] && coyote.current > 0) {
       body.setLinvel(

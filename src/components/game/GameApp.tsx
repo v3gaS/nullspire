@@ -11,7 +11,10 @@ import { TitleScreen } from "./TitleScreen";
 import { PauseMenu } from "./PauseMenu";
 import { WeaponSystem } from "./WeaponSystem";
 import { TargetDummies } from "./TargetDummies";
+import { DroneSquad } from "./DroneScout";
+import { WeaponPickup } from "./WeaponPickup";
 import { useGameStore } from "@/stores/gameStore";
+import { useCombatInput } from "@/lib/game/useCombatInput";
 
 function World() {
   return (
@@ -19,6 +22,8 @@ function World() {
       <PlayerController />
       <CrashRimSector />
       <TargetDummies />
+      <DroneSquad />
+      <WeaponPickup id="scatter_carbine" position={[-4, 1.8, -6]} />
       <WeaponSystem />
     </Physics>
   );
@@ -26,6 +31,7 @@ function World() {
 
 export function GameApp() {
   const screen = useGameStore((s) => s.screen);
+  useCombatInput();
 
   return (
     <div className="relative h-dvh w-dvw overflow-hidden bg-[#0b0614]">
@@ -54,7 +60,14 @@ export function GameApp() {
             mieCoefficient={0.01}
             rayleigh={1.2}
           />
-          <Stars radius={120} depth={40} count={4000} factor={3} fade speed={0.4} />
+          <Stars
+            radius={120}
+            depth={40}
+            count={4000}
+            factor={3}
+            fade
+            speed={0.4}
+          />
           <Suspense fallback={null}>
             <World />
           </Suspense>
@@ -69,7 +82,9 @@ export function GameApp() {
           <h2 className="font-[family-name:var(--font-display)] text-4xl tracking-wide text-[#ff6b7a]">
             Signal Lost
           </h2>
-          <p className="mt-2 text-sm text-zinc-300">You were overrun on Nullspire.</p>
+          <p className="mt-2 text-sm text-zinc-300">
+            You were overrun on Nullspire.
+          </p>
           <button
             type="button"
             className="mt-8 rounded border border-cyan-400/40 bg-cyan-500/20 px-6 py-3 text-sm uppercase tracking-[0.2em] text-cyan-100 hover:bg-cyan-400/30"

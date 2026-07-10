@@ -12,7 +12,7 @@ Campaign build order. Check items as completed. Loop works top-down; pause every
 - [x] Scaffold Next.js (App Router, TS, Tailwind)
 - [x] Install R3F, drei, rapier, zustand
 - [x] Repo init + GitHub remote + first push
-- [ ] Vercel project link + first deploy
+- [x] Vercel project link + first deploy
 - [x] `AGENTS.md`, `GDD.md`, `CREDITS.md`, `LEARNINGS.md`
 - [x] Base app shell: title screen → Play canvas
 
@@ -25,22 +25,22 @@ Campaign build order. Check items as completed. Loop works top-down; pause every
 
 ## Phase 2 — Combat baseline
 - [x] Hitscan / projectile fire + tracers
-- [ ] Ammo + reload
+- [x] Ammo + reload
 - [x] Damageable targets (dummy + health)
 - [x] Hit feedback (flash / particles)
-- [ ] Death / respawn at checkpoint
+- [x] Death / respawn at checkpoint
 
 ## Phase 3 — Weapons (full set)
-- [ ] Pulse SMG + Overclock ability
-- [ ] Scatter Carbine + Shockwave
+- [x] Pulse SMG + Overclock ability
+- [x] Scatter Carbine + Shockwave
 - [ ] Arc Caster + Storm Nest
 - [ ] Rail Lance + Mark
 - [ ] Void Launcher + Singularity
-- [ ] Weapon switch 1–5 + pickup unlocks
-- [ ] Null Energy resource + regen rules
+- [x] Weapon switch 1–5 + pickup unlocks
+- [x] Null Energy resource + regen rules
 
 ## Phase 4 — Enemies & AI
-- [ ] Drone Scout
+- [x] Drone Scout
 - [ ] Sentry Turret
 - [ ] Skitter
 - [ ] Spitter
@@ -73,7 +73,7 @@ Campaign build order. Check items as completed. Loop works top-down; pause every
 - [ ] CREDITS screen + in-repo credits
 
 ## Phase 8 — Ship
-- [ ] Production Vercel deploy
+- [x] Production Vercel deploy
 - [ ] Visual QA in browser (movement, combat, bosses)
 - [ ] Fix ship blockers
 - [ ] Tag release notes in LEARNINGS.md
@@ -87,4 +87,4 @@ Campaign build order. Check items as completed. Loop works top-down; pause every
 4. Prefer playable increments over unfinished mega-features.
 
 ## Current focus
-**Phase 2** — ammo reload + death/respawn; then Phase 3 weapons
+**Phase 3** — Scatter Carbine + Shockwave; then remaining weapons / Phase 4 AI
