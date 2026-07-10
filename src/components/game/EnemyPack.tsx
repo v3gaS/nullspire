@@ -106,10 +106,15 @@ export function Skitter({ position }: { position: [number, number, number] }) {
       mesh.lookAt(cam.x, mesh.position.y, cam.z);
     }
     cooldown.current = Math.max(0, cooldown.current - dt);
-    if (dist < 2.0 && cooldown.current <= 0) {
+    if (
+      dist < 2.0 &&
+      cooldown.current <= 0 &&
+      performance.now() >= useGameStore.getState().invulnerableUntil
+    ) {
       cooldown.current = 1.0;
       useGameStore.getState().damagePlayer(7);
       playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.3);
+      combatFx.pushImpact(cam.clone(), "#7dff6a");
     }
   });
 
@@ -149,10 +154,22 @@ export function Spitter({ position }: { position: [number, number, number] }) {
     mesh.position.y = position[1] + Math.sin(state.clock.elapsedTime * 2) * 0.2;
     cooldown.current = Math.max(0, cooldown.current - dt);
     const dist = distToCam(mesh, cam);
-    if (dist < 20 && dist > 6 && cooldown.current <= 0) {
+    if (
+      dist < 20 &&
+      dist > 6 &&
+      cooldown.current <= 0 &&
+      performance.now() >= useGameStore.getState().invulnerableUntil
+    ) {
       cooldown.current = 2.4;
       useGameStore.getState().damagePlayer(5);
       playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.26);
+      combatFx.pushBeam(
+        worldPos(mesh).clone().add(new THREE.Vector3(0, 0.4, 0)),
+        cam.clone(),
+        "#a3e635",
+        0.06,
+      );
+      combatFx.pushImpact(cam.clone(), "#a3e635");
     }
   });
 
