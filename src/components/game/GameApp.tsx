@@ -53,65 +53,55 @@ function LoadingBeacon() {
 function World({ showDressing }: { showDressing: boolean }) {
   const runId = useGameStore((s) => s.runId);
   return (
-    <>
-      <Suspense fallback={null}>
-        <CombatVfx />
-      </Suspense>
-      <Suspense fallback={null}>
-        <WeaponViewmodel />
-      </Suspense>
-      <Suspense fallback={<LoadingBeacon />}>
-        <Physics gravity={[0, -18, 0]}>
-          <RigidBody type="fixed" colliders={false} position={[0, 0, 0]}>
-            <CuboidCollider args={[90, 1.2, 90]} position={[0, -1.2, 0]} />
-            <mesh position={[0, -0.5, 0]} receiveShadow>
-              <boxGeometry args={[180, 1, 180]} />
-              <meshStandardMaterial
-                color="#2a3548"
-                roughness={0.92}
-                metalness={0.08}
-              />
-            </mesh>
-          </RigidBody>
-          <RigidBody type="fixed" colliders={false} position={[0, 0, 8]}>
-            <CuboidCollider args={[8, 0.5, 8]} position={[0, -0.15, 0]} />
-            <mesh position={[0, 0.05, 0]} receiveShadow>
-              <boxGeometry args={[16, 0.4, 16]} />
-              <meshStandardMaterial
-                color="#4a5d6e"
-                roughness={0.8}
-                metalness={0.2}
-                emissive="#2ee6c8"
-                emissiveIntensity={0.35}
-              />
-            </mesh>
-          </RigidBody>
-          <PlayerController key={runId} />
+    <Physics gravity={[0, -18, 0]}>
+      <RigidBody type="fixed" colliders={false} position={[0, 0, 0]}>
+        <CuboidCollider args={[90, 1.2, 90]} position={[0, -1.2, 0]} />
+        <mesh position={[0, -0.5, 0]} receiveShadow>
+          <boxGeometry args={[180, 1, 180]} />
+          <meshStandardMaterial
+            color="#2a3548"
+            roughness={0.92}
+            metalness={0.08}
+          />
+        </mesh>
+      </RigidBody>
+      <RigidBody type="fixed" colliders={false} position={[0, 0, 8]}>
+        <CuboidCollider args={[8, 0.5, 8]} position={[0, -0.15, 0]} />
+        <mesh position={[0, 0.05, 0]} receiveShadow>
+          <boxGeometry args={[16, 0.4, 16]} />
+          <meshStandardMaterial
+            color="#4a5d6e"
+            roughness={0.8}
+            metalness={0.2}
+            emissive="#2ee6c8"
+            emissiveIntensity={0.35}
+          />
+        </mesh>
+      </RigidBody>
+      <PlayerController key={runId} />
 
-          <Suspense fallback={null}>
-            {showDressing && <KenneyWorldDressing />}
-            <CrashRimSector />
-            <BiolumeVaults />
-            <CheckpointGates />
-            <TargetDummies />
-            <DroneSquad />
-            <EnemyPack />
-            <EliteAndLoot />
-            <AegisWarden />
-            <BloomMatriarch />
-            <NullspirePrimarch />
-            <WeaponPickup id="scatter_carbine" position={[-4, 1.8, -6]} />
-            <WeaponPickup id="arc_caster" position={[-7, 3.2, -10]} />
-            <WeaponPickup id="rail_lance" position={[2, 5.8, -16]} />
-            <WeaponPickup id="void_launcher" position={[0, 1.2, -70]} />
-            <PhysicsDebris />
-            <ExplosiveBarrels />
-            <SecretCaches />
-            <WeaponSystem />
-          </Suspense>
-        </Physics>
+      <Suspense fallback={null}>
+        {showDressing && <KenneyWorldDressing />}
+        <CrashRimSector />
+        <BiolumeVaults />
+        <CheckpointGates />
+        <TargetDummies />
+        <DroneSquad />
+        <EnemyPack />
+        <EliteAndLoot />
+        <AegisWarden />
+        <BloomMatriarch />
+        <NullspirePrimarch />
+        <WeaponPickup id="scatter_carbine" position={[-4, 1.8, -6]} />
+        <WeaponPickup id="arc_caster" position={[-7, 3.2, -10]} />
+        <WeaponPickup id="rail_lance" position={[2, 5.8, -16]} />
+        <WeaponPickup id="void_launcher" position={[0, 1.2, -70]} />
+        <PhysicsDebris />
+        <ExplosiveBarrels />
+        <SecretCaches />
+        <WeaponSystem />
       </Suspense>
-    </>
+    </Physics>
   );
 }
 
@@ -189,6 +179,12 @@ export function GameApp() {
             <boxGeometry args={[2, 1.4, 2]} />
             <meshBasicMaterial color="#f4a261" />
           </mesh>
+          <Suspense fallback={null}>
+            <CombatVfx />
+          </Suspense>
+          <Suspense fallback={null}>
+            <WeaponViewmodel />
+          </Suspense>
           <Suspense fallback={<LoadingBeacon />}>
             <World showDressing={quality !== "low"} />
           </Suspense>
