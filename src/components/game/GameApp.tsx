@@ -145,30 +145,18 @@ export function GameApp() {
             preserveDrawingBuffer: true,
           }}
           className="absolute inset-0"
-          onCreated={({ scene, camera, gl }) => {
-            (
-              window as unknown as {
-                __canvasReady?: Record<string, unknown>;
-              }
-            ).__canvasReady = {
-              children: scene.children.length,
-              cam: camera.position.toArray(),
-              size: [gl.domElement.width, gl.domElement.height],
-              at: performance.now(),
-            };
-          }}
         >
-          <color attach="background" args={["#4a6d8c"]} />
-          <fog attach="fog" args={["#5a7d9c", 90, cfg.fogFar]} />
-          <ambientLight intensity={1.1} />
+          <color attach="background" args={["#2a3a4d"]} />
+          <fog attach="fog" args={["#3a4a5e", 75, cfg.fogFar]} />
+          <ambientLight intensity={0.85} />
           <directionalLight
             castShadow={cfg.shadows}
-            intensity={1.8}
+            intensity={1.55}
             position={[30, 42, 8]}
-            color="#fff0d0"
+            color="#f0d9a8"
             shadow-mapSize={cfg.shadows ? [2048, 2048] : [512, 512]}
           />
-          <hemisphereLight args={["#ffe0b0", "#1e2d3d", 0.85]} />
+          <hemisphereLight args={["#d4b896", "#1e2d3d", 0.7]} />
           <pointLight
             position={[16, 12, -20]}
             intensity={2.5}
@@ -177,9 +165,9 @@ export function GameApp() {
           />
           <pointLight
             position={[0, 8, 8]}
-            intensity={3}
+            intensity={2.4}
             color="#f4a261"
-            distance={40}
+            distance={36}
           />
           <Stars
             radius={140}
@@ -189,10 +177,6 @@ export function GameApp() {
             fade
             speed={0.35}
           />
-          <mesh position={[0, 1.5, 4]}>
-            <boxGeometry args={[3, 2, 1]} />
-            <meshBasicMaterial color="#ff4d6d" toneMapped={false} />
-          </mesh>
           <Suspense fallback={null}>
             <CombatVfx />
           </Suspense>
@@ -209,9 +193,6 @@ export function GameApp() {
       {screen === "title" && <TitleScreen />}
       {(screen === "playing" || screen === "paused") && (
         <>
-          <div className="pointer-events-none absolute left-3 top-3 z-[30] rounded border border-teal-400/40 bg-black/70 px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-teal-200">
-            3D mount check
-          </div>
           <DamageVignette />
           <MuzzleFlashOverlay />
           <HitMarker />
