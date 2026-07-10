@@ -55,7 +55,8 @@ export function TitleScreen() {
       </h1>
       <p className="relative z-10 mt-4 max-w-md px-6 text-center text-sm leading-relaxed text-zinc-300/90">
         Survive the ruined research world. Master vertical ruins, alien packs, and
-        tech remnants. Unlock five weapons. Bring down the Primarch.
+        tech remnants. Unlock five weapons. Hunt secrets. Blow everything up.
+        Bring down the Primarch.
       </p>
 
       <div className="relative z-10 mt-10 flex flex-col items-center gap-3">

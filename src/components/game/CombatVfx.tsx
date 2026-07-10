@@ -22,13 +22,23 @@ export interface BeamSpec {
   width: number;
 }
 
+export interface BoomSpec {
+  id: number;
+  pos: THREE.Vector3;
+  color: string;
+  born: number;
+  radius: number;
+}
+
 let impactId = 0;
 let beamId = 0;
+let boomId = 0;
 
 /** Shared mutable FX queues — WeaponSystem pushes, this renders. */
 export const combatFx = {
   impacts: [] as ImpactSpec[],
   beams: [] as BeamSpec[],
+  booms: [] as BoomSpec[],
   pushImpact(pos: THREE.Vector3, color: string) {
     this.impacts.push({
       id: impactId++,
@@ -52,6 +62,15 @@ export const combatFx = {
       width,
     });
   },
+  pushBoom(pos: THREE.Vector3, color: string, radius = 3.5) {
+    this.booms.push({
+      id: boomId++,
+      pos: pos.clone(),
+      color,
+      born: performance.now(),
+      radius,
+    });
+  },
 };
 
 /** Visible muzzle flash, fat beams, impact bursts. */
@@ -61,6 +80,7 @@ export function CombatVfx() {
   const flashMesh = useRef<THREE.Mesh>(null);
   const beamsGroup = useRef<THREE.Group>(null);
   const impactsGroup = useRef<THREE.Group>(null);
+  const boomsGroup = useRef<THREE.Group>(null);
   const hitMap = useTexture("/assets/sprites/kenney-fps/hit.png");
   const burstMap = useTexture("/assets/sprites/kenney-fps/burst.png");
 
@@ -171,6 +191,58 @@ export function CombatVfx() {
         ig.add(spark);
       }
     }
+
+    // DOOM-style explosion spheres
+    combatFx.booms = combatFx.booms.filter((b) => now - b.born < 420);
+    const bgBoom = boomsGroup.current;
+    if (bgBoom) {
+      while (bgBoom.children.length) {
+        const c = bgBoom.children[0];
+        bgBoom.remove(c);
+        if (c instanceof THREE.Mesh) {
+          c.geometry.dispose();
+          (c.material as THREE.Material).dispose();
+        }
+      }
+      for (const boom of combatFx.booms) {
+        const age = (now - boom.born) / 420;
+        const scale = boom.radius * (0.35 + age * 1.4);
+        const shell = new THREE.Mesh(
+          new THREE.SphereGeometry(1, 14, 12),
+          new THREE.MeshBasicMaterial({
+            color: boom.color,
+            transparent: true,
+            opacity: 0.75 * (1 - age),
+            depthWrite: false,
+            wireframe: age > 0.35,
+          }),
+        );
+        shell.position.copy(boom.pos);
+        shell.scale.setScalar(scale);
+        bgBoom.add(shell);
+
+        const core = new THREE.Mesh(
+          new THREE.SphereGeometry(1, 10, 8),
+          new THREE.MeshBasicMaterial({
+            color: "#ffffff",
+            transparent: true,
+            opacity: 0.9 * (1 - age * 1.2),
+            depthWrite: false,
+          }),
+        );
+        core.position.copy(boom.pos);
+        core.scale.setScalar(scale * 0.35);
+        bgBoom.add(core);
+
+        const light = new THREE.PointLight(
+          boom.color,
+          12 * (1 - age),
+          boom.radius * 4,
+        );
+        light.position.copy(boom.pos);
+        bgBoom.add(light);
+      }
+    }
   });
 
   return (
@@ -181,6 +253,7 @@ export function CombatVfx() {
       </mesh>
       <group ref={beamsGroup} />
       <group ref={impactsGroup} />
+      <group ref={boomsGroup} />
     </group>
   );
 }

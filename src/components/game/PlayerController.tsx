@@ -14,6 +14,7 @@ import { playerLocomotion } from "@/lib/game/playerLocomotion";
 import { playerPhysics } from "@/lib/game/playerPhysics";
 import { playSfx } from "@/lib/game/audio";
 import { intersectScene } from "@/lib/game/raycast";
+import { useFxStore } from "@/stores/fxStore";
 
 type Keys = Record<string, boolean>;
 
@@ -247,11 +248,22 @@ export function PlayerController() {
       playerPhysics.punch(-0.06);
     }
 
-    // Camera punch decay
+    // Camera punch + Quake-style explosion shake
     playerPhysics.punchPitch *= Math.exp(-dt * 10);
     playerPhysics.punchYaw *= Math.exp(-dt * 10);
+    const fx = useFxStore.getState();
+    let shakeX = 0;
+    let shakeY = 0;
+    if (performance.now() < fx.shakeUntil) {
+      const t = (fx.shakeUntil - performance.now()) / 280;
+      const amp = fx.shakeAmp * t;
+      shakeX = (Math.random() - 0.5) * amp;
+      shakeY = (Math.random() - 0.5) * amp;
+    } else if (fx.shakeAmp > 0) {
+      useFxStore.setState({ shakeAmp: 0 });
+    }
 
-    camera.position.set(pos.x, pos.y + 0.6, pos.z);
+    camera.position.set(pos.x + shakeX, pos.y + 0.6 + shakeY, pos.z);
     camera.rotation.order = "YXZ";
     camera.rotation.y = yaw.current + playerPhysics.punchYaw;
     camera.rotation.x = pitch.current + playerPhysics.punchPitch;

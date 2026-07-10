@@ -42,7 +42,7 @@ function fireInterval(id: WeaponId, overclocked: boolean): number {
     case "rail_lance":
       return 0.9;
     case "void_launcher":
-      return 1.1;
+      return 0.85;
     default: {
       const _exhaustive: never = id;
       return _exhaustive;
@@ -86,10 +86,29 @@ export function applyHit(
       );
       mesh.userData.hp = 1;
       mesh.userData.destructible = false;
+    } else if (mesh.userData.kind === "barrel") {
+      // Barrel death handled by ExplosiveBarrels tick
+      mesh.userData.hp = 0;
     } else {
+      // Quake-ish gib spray
+      const wp = worldPos(mesh);
+      for (let i = 0; i < 5; i++) {
+        const gib = wp
+          .clone()
+          .add(
+            new THREE.Vector3(
+              (Math.random() - 0.5) * 1.2,
+              Math.random() * 0.8,
+              (Math.random() - 0.5) * 1.2,
+            ),
+          );
+        combatFx.pushImpact(gib, "#ff4466");
+      }
+      combatFx.pushBoom(wp, "#ff6644", 1.6);
       mesh.visible = false;
       mesh.userData.dead = true;
       playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.4);
+      useFxStore.getState().pulseShake(0.06, 120);
     }
   } else {
     playSfx("/assets/audio/kenney-fps/enemy_hurt.ogg", 0.3);
@@ -158,7 +177,13 @@ export function WeaponSystem() {
             -forward.z * 6,
           );
           playerPhysics.punch(0.07);
+          combatFx.pushBoom(
+            origin.clone().add(forward.clone().multiplyScalar(2.5)),
+            "#ffb347",
+            3.2,
+          );
           combatFx.pushImpact(origin.clone().add(forward.clone().multiplyScalar(2)), "#ffb347");
+          useFxStore.getState().pulseShake(0.16, 260);
           playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.5);
           break;
         }
@@ -274,7 +299,9 @@ export function WeaponSystem() {
           playerPhysics.punch(0.12);
         }
         playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.55);
+        combatFx.pushBoom(s.pos.clone(), "#c084fc", 5.5);
         combatFx.pushImpact(s.pos.clone(), "#c084fc");
+        useFxStore.getState().pulseShake(0.28, 400);
       }
     }
     singularities.current = singularities.current.filter(
@@ -332,9 +359,9 @@ export function WeaponSystem() {
             shots.push({ dir: forward.clone(), damage: 45, color: "#e879f9" });
             break;
           case "void_launcher":
-            playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.35);
-            useFxStore.getState().pulseMuzzle("#c084fc", 110);
-            shots.push({ dir: forward.clone(), damage: 30, color: "#c084fc" });
+            playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.4);
+            useFxStore.getState().pulseMuzzle("#c084fc", 140);
+            shots.push({ dir: forward.clone(), damage: 42, color: "#c084fc" });
             break;
           default: {
             const _exhaustive: never = id;
@@ -401,13 +428,20 @@ export function WeaponSystem() {
             if (id === "void_launcher") {
               for (const obj of collectDestructibles(scene)) {
                 const op = worldPos(obj);
-                if (op.distanceTo(impact) < 5) {
-                  applyHit(obj, 18, impact);
-                  impulseRigid(obj, op.clone().sub(impact), 10);
+                if (op.distanceTo(impact) < 6.5) {
+                  applyHit(obj, 28, impact);
+                  impulseRigid(obj, op.clone().sub(impact), 14);
                 }
               }
+              combatFx.pushBoom(impact, "#c084fc", 4.5);
               combatFx.pushImpact(impact, "#c084fc");
-              playerPhysics.punch(0.05);
+              useFxStore.getState().pulseShake(0.2, 300);
+              playerPhysics.punch(0.06);
+              // Soft rocket-jump if close
+              if (origin.distanceTo(impact) < 5) {
+                const up = origin.clone().sub(impact).normalize();
+                playerPhysics.pushKnock(up.x * 5, 6, up.z * 5);
+              }
             }
 
             if (id === "rail_lance") {

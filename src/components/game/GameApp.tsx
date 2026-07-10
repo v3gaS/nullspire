@@ -30,6 +30,8 @@ import { NullspirePrimarch } from "./NullspirePrimarch";
 import { CheckpointGates } from "./CheckpointGates";
 import { WeaponPickup } from "./WeaponPickup";
 import { PhysicsDebris } from "./PhysicsDebris";
+import { ExplosiveBarrels } from "./ExplosiveBarrels";
+import { SecretCaches } from "./SecretCaches";
 import { GameErrorBoundary } from "./GameErrorBoundary";
 import { useGameStore } from "@/stores/gameStore";
 import { useCombatInput } from "@/lib/game/useCombatInput";
@@ -64,6 +66,8 @@ function World({ showDressing }: { showDressing: boolean }) {
         <WeaponPickup id="rail_lance" position={[2, 5.8, -16]} />
         <WeaponPickup id="void_launcher" position={[0, 1.2, -70]} />
         <PhysicsDebris />
+        <ExplosiveBarrels />
+        <SecretCaches />
         <WeaponSystem />
       </Physics>
     </>
