@@ -141,20 +141,22 @@ export function GameApp() {
           gl={{
             antialias: cfg.antialias,
             powerPreference: "high-performance",
+            alpha: false,
+            preserveDrawingBuffer: true,
           }}
           className="absolute inset-0"
         >
-          <color attach="background" args={["#243044"]} />
-          <fog attach="fog" args={["#2f3d52", 70, cfg.fogFar]} />
-          <ambientLight intensity={0.72} />
+          <color attach="background" args={["#4a6d8c"]} />
+          <fog attach="fog" args={["#5a7d9c", 90, cfg.fogFar]} />
+          <ambientLight intensity={1.1} />
           <directionalLight
             castShadow={cfg.shadows}
-            intensity={1.55}
+            intensity={1.8}
             position={[30, 42, 8]}
-            color="#f0d9a8"
+            color="#fff0d0"
             shadow-mapSize={cfg.shadows ? [2048, 2048] : [512, 512]}
           />
-          <hemisphereLight args={["#d4b896", "#1e2d3d", 0.7]} />
+          <hemisphereLight args={["#ffe0b0", "#1e2d3d", 0.85]} />
           <pointLight
             position={[16, 12, -20]}
             intensity={2.5}
@@ -163,9 +165,9 @@ export function GameApp() {
           />
           <pointLight
             position={[0, 8, 8]}
-            intensity={2.2}
+            intensity={3}
             color="#f4a261"
-            distance={36}
+            distance={40}
           />
           <Stars
             radius={140}
@@ -175,9 +177,9 @@ export function GameApp() {
             fade
             speed={0.35}
           />
-          <mesh position={[0, 0.8, 5]}>
-            <boxGeometry args={[2, 1.4, 2]} />
-            <meshBasicMaterial color="#f4a261" />
+          <mesh position={[0, 1.5, 4]}>
+            <boxGeometry args={[3, 2, 1]} />
+            <meshBasicMaterial color="#ff4d6d" toneMapped={false} />
           </mesh>
           <Suspense fallback={null}>
             <CombatVfx />
