@@ -111,6 +111,8 @@ export function PlayerController() {
         if (impact > 14) {
           const dmg = Math.round((impact - 14) * 8);
           useGameStore.getState().damagePlayer(dmg);
+        } else if (impact > 4) {
+          playSfx("/assets/audio/kenney-fps/land.ogg", 0.22);
         }
         wasAirborne.current = false;
         peakFallSpeed.current = 0;

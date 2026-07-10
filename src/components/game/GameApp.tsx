@@ -70,6 +70,7 @@ export function GameApp() {
   const boss = useGameStore((s) => s.boss);
   const quality = useSettingsStore((s) => s.quality);
   const cfg = qualityConfig(quality);
+  const checkpointLabel = useGameStore((s) => s.checkpoint.label);
   useCombatInput();
 
   useEffect(() => {
@@ -188,9 +189,12 @@ export function GameApp() {
           <p className="mt-2 text-sm text-zinc-300">
             You were overrun on Nullspire.
           </p>
+          <p className="mt-1 text-xs uppercase tracking-[0.2em] text-zinc-500">
+            Last CP · {checkpointLabel}
+          </p>
           <button
             type="button"
-            className="mt-8 rounded border border-cyan-400/40 bg-cyan-500/20 px-6 py-3 text-sm uppercase tracking-[0.2em] text-cyan-100 hover:bg-cyan-400/30"
+            className="mt-8 rounded border border-teal-400/40 bg-teal-500/20 px-6 py-3 text-sm uppercase tracking-[0.2em] text-teal-100 hover:bg-teal-400/30"
             onClick={() => useGameStore.getState().resetRun()}
           >
             Reboot Drop
