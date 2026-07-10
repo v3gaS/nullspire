@@ -33,26 +33,29 @@ function GunModel({ url, color }: { url: string; color: string }) {
         const base = Array.isArray(m.material) ? m.material[0] : m.material;
         const mat = (base as THREE.MeshStandardMaterial).clone();
         mat.emissive = new THREE.Color(color);
-        mat.emissiveIntensity = 0.55;
-        mat.metalness = 0.6;
+        mat.emissiveIntensity = 0.7;
+        mat.metalness = 0.55;
         mat.roughness = 0.35;
         m.material = mat;
+        m.frustumCulled = false;
       }
     });
     return c;
   }, [scene, color]);
-  // Kenney blasters face +Z in kit — flip and enlarge for FPS hold
   return (
     <primitive
       object={cloned}
-      scale={4.2}
-      position={[0, -0.05, 0.05]}
-      rotation={[0.15, Math.PI, 0]}
+      scale={5}
+      position={[0, -0.02, 0]}
+      rotation={[0.2, Math.PI, 0]}
     />
   );
 }
 
-/** Kenney blaster viewmodel + recoil kick + barrel glow on fire. */
+/**
+ * Kenney blaster viewmodel.
+ * World-space follow (not camera.add) so R3F cannot detach the mesh.
+ */
 export function WeaponViewmodel() {
   const group = useRef<THREE.Group>(null);
   const glowRef = useRef<THREE.Mesh>(null);
@@ -63,36 +66,53 @@ export function WeaponViewmodel() {
 
   useFrame((_, dt) => {
     const g = group.current;
-    if (!g || screen !== "playing") return;
+    if (!g || screen !== "playing") {
+      if (g) g.visible = false;
+      return;
+    }
+    g.visible = true;
     const fx = useFxStore.getState();
     const kicking = performance.now() < fx.muzzleUntil;
     bob.current += dt * 8;
-    const kickZ = kicking ? 0.1 : fx.kick * 0.06;
-    const kickPitch = kicking ? -0.08 : 0;
-    const y = -0.28 + Math.sin(bob.current) * 0.01;
-    const x = 0.3 + Math.cos(bob.current * 0.5) * 0.005;
-    g.position.set(x, y, -0.55 + kickZ);
-    g.rotation.set(0.05 + kickPitch, 0, 0.03);
-    camera.add(g);
+
+    const kickZ = kicking ? 0.12 : fx.kick * 0.07;
+    const right = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion);
+    const up = new THREE.Vector3(0, 1, 0).applyQuaternion(camera.quaternion);
+    const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(
+      camera.quaternion,
+    );
+
+    const x = 0.28 + Math.cos(bob.current * 0.5) * 0.004;
+    const y = -0.22 + Math.sin(bob.current) * 0.008;
+    const z = -0.48 + kickZ;
+
+    g.position
+      .copy(camera.position)
+      .addScaledVector(right, x)
+      .addScaledVector(up, y)
+      .addScaledVector(forward, -z);
+    g.quaternion.copy(camera.quaternion);
+    g.rotateX(kicking ? -0.1 : 0.05);
+    g.rotateY(0.08);
 
     if (glowRef.current) {
       glowRef.current.visible = kicking;
-      const mat = glowRef.current.material as THREE.MeshBasicMaterial;
-      mat.color.set(fx.muzzleColor);
-      glowRef.current.scale.setScalar(kicking ? 1.6 : 1);
+      (glowRef.current.material as THREE.MeshBasicMaterial).color.set(
+        fx.muzzleColor,
+      );
     }
   });
 
   return (
-    <group ref={group} userData={{ skipHit: true }}>
+    <group ref={group} userData={{ skipHit: true }} visible={false}>
       <Suspense
         fallback={
-          <mesh position={[0, 0, -0.1]}>
-            <boxGeometry args={[0.12, 0.14, 0.5]} />
+          <mesh position={[0, 0, -0.15]} frustumCulled={false}>
+            <boxGeometry args={[0.14, 0.16, 0.55]} />
             <meshStandardMaterial
-              color="#334155"
+              color="#475569"
               emissive={COLORS[active]}
-              emissiveIntensity={0.8}
+              emissiveIntensity={1.2}
               metalness={0.7}
             />
           </mesh>
@@ -100,8 +120,13 @@ export function WeaponViewmodel() {
       >
         <GunModel url={GUN_URL[active]} color={COLORS[active]} />
       </Suspense>
-      <mesh ref={glowRef} position={[0, 0.02, -0.72]} visible={false}>
-        <sphereGeometry args={[0.09, 10, 10]} />
+      <mesh
+        ref={glowRef}
+        position={[0, 0.04, -0.85]}
+        visible={false}
+        frustumCulled={false}
+      >
+        <sphereGeometry args={[0.1, 10, 10]} />
         <meshBasicMaterial color="#fff" toneMapped={false} />
       </mesh>
     </group>
