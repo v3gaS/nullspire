@@ -88,6 +88,7 @@ Campaign build order. Check items as completed. Loop works top-down.
 - [x] More boss telegraph beams
 - [x] LOD / draw-distance pass
 - [x] Weapon pickup world models polish
+- [x] Physics feel (knockback, debris, pad sensors, camera punch)
 
 ---
 

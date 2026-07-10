@@ -8,6 +8,11 @@ import { playSfx } from "@/lib/game/audio";
 import { useFxStore } from "@/stores/fxStore";
 import { combatFx } from "@/components/game/CombatVfx";
 import { worldPos } from "@/lib/game/math";
+import {
+  impulseRigid,
+  playerPhysics,
+  staggerObject,
+} from "@/lib/game/playerPhysics";
 
 interface StormNest {
   id: number;
@@ -44,12 +49,24 @@ function fireInterval(id: WeaponId, overclocked: boolean): number {
   }
 }
 
-export function applyHit(obj: THREE.Object3D, damage: number) {
+export function applyHit(
+  obj: THREE.Object3D,
+  damage: number,
+  from?: THREE.Vector3,
+) {
   const mesh = obj as THREE.Mesh;
   if (!mesh.userData?.destructible || !mesh.visible) return false;
   mesh.userData.hp = (mesh.userData.hp ?? 30) - damage;
   useFxStore.getState().pulseHit();
   useFxStore.getState().pushDamage(Math.round(damage));
+
+  if (from) {
+    const dir = worldPos(mesh).clone().sub(from);
+    if (!impulseRigid(mesh, dir, 4 + damage * 0.15)) {
+      staggerObject(mesh, from, 0.35 + Math.min(0.8, damage * 0.02));
+    }
+  }
+
   const mat = mesh.material;
   if (mat && !Array.isArray(mat) && "emissive" in mat) {
     const std = mat as THREE.MeshStandardMaterial;
@@ -60,9 +77,19 @@ export function applyHit(obj: THREE.Object3D, damage: number) {
     }, 90);
   }
   if (mesh.userData.hp <= 0) {
-    mesh.visible = false;
-    mesh.userData.dead = true;
-    playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.4);
+    if (mesh.userData.kind === "debris" && mesh.userData.rigidBody) {
+      impulseRigid(
+        mesh,
+        from ? worldPos(mesh).clone().sub(from) : new THREE.Vector3(0, 1, 0),
+        12,
+      );
+      mesh.userData.hp = 1;
+      mesh.userData.destructible = false;
+    } else {
+      mesh.visible = false;
+      mesh.userData.dead = true;
+      playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.4);
+    }
   } else {
     playSfx("/assets/audio/kenney-fps/enemy_hurt.ogg", 0.3);
   }
@@ -117,8 +144,20 @@ export function WeaponSystem() {
         case "scatter_carbine": {
           if (!state.spendNullEnergy(40)) return;
           for (const obj of collectDestructibles(scene)) {
-            if (obj.position.distanceTo(origin) < 8) applyHit(obj, 40);
+            const op = worldPos(obj);
+            if (op.distanceTo(origin) < 8) {
+              applyHit(obj, 40, origin);
+              impulseRigid(obj, op.clone().sub(origin), 14);
+            }
           }
+          // Self knockback — shockwave kick
+          playerPhysics.pushKnock(
+            -forward.x * 6,
+            2.5,
+            -forward.z * 6,
+          );
+          playerPhysics.punch(0.07);
+          combatFx.pushImpact(origin.clone().add(forward.clone().multiplyScalar(2)), "#ffb347");
           playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.5);
           break;
         }
@@ -190,29 +229,51 @@ export function WeaponSystem() {
     for (const nest of nests.current) {
       if (now > nest.until) continue;
       for (const obj of collectDestructibles(scene)) {
-        if (obj.position.distanceTo(nest.pos) < 5 && Math.random() < dt * 4) {
-          applyHit(obj, 6);
+        const op = worldPos(obj);
+        if (op.distanceTo(nest.pos) < 5 && Math.random() < dt * 4) {
+          applyHit(obj, 6, nest.pos);
         }
       }
     }
     nests.current = nests.current.filter((n) => now < n.until);
 
-    // Singularity pull then boom
+    // Singularity pull then boom — physics pull on debris, stagger on meshes
     for (const s of singularities.current) {
       if (!s.detonated && now < s.until) {
         for (const obj of collectDestructibles(scene)) {
-          const to = new THREE.Vector3().subVectors(s.pos, obj.position);
-          if (to.length() < 12) {
-            obj.position.add(to.normalize().multiplyScalar(dt * 6));
+          const op = worldPos(obj);
+          const to = new THREE.Vector3().subVectors(s.pos, op);
+          const dist = to.length();
+          if (dist < 12 && dist > 0.2) {
+            to.normalize();
+            if (!impulseRigid(obj, to, dt * 28)) {
+              obj.position.add(to.multiplyScalar(dt * 6));
+            }
           }
+        }
+        const cam = camera.position;
+        if (cam.distanceTo(s.pos) < 10) {
+          const pull = new THREE.Vector3().subVectors(s.pos, cam).normalize();
+          playerPhysics.pushKnock(pull.x * dt * 8, 0, pull.z * dt * 8);
         }
       }
       if (!s.detonated && now >= s.until) {
         s.detonated = true;
         for (const obj of collectDestructibles(scene)) {
-          if (obj.position.distanceTo(s.pos) < 9) applyHit(obj, 55);
+          const op = worldPos(obj);
+          if (op.distanceTo(s.pos) < 9) {
+            applyHit(obj, 55, s.pos);
+            impulseRigid(obj, op.clone().sub(s.pos), 22);
+          }
+        }
+        const cam = camera.position;
+        if (cam.distanceTo(s.pos) < 12) {
+          const blast = cam.clone().sub(s.pos).normalize();
+          playerPhysics.pushKnock(blast.x * 10, 5, blast.z * 10);
+          playerPhysics.punch(0.12);
         }
         playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.55);
+        combatFx.pushImpact(s.pos.clone(), "#c084fc");
       }
     }
     singularities.current = singularities.current.filter(
@@ -319,7 +380,7 @@ export function WeaponSystem() {
             ) {
               dmg = Math.round(dmg * 1.5);
             }
-            applyHit(valid.object, dmg);
+            applyHit(valid.object, dmg, origin);
 
             if (id === "arc_caster") {
               const primary = worldPos(valid.object).clone();
@@ -328,7 +389,7 @@ export function WeaponSystem() {
                 if (obj === valid.object) continue;
                 const op = worldPos(obj);
                 if (op.distanceTo(primary) < 7 && chained < 3) {
-                  applyHit(obj, 10);
+                  applyHit(obj, 10, primary);
                   combatFx.pushBeam(primary, op, "#93c5fd", 0.05);
                   combatFx.pushImpact(op, "#93c5fd");
                   chained++;
@@ -338,9 +399,18 @@ export function WeaponSystem() {
 
             if (id === "void_launcher") {
               for (const obj of collectDestructibles(scene)) {
-                if (worldPos(obj).distanceTo(impact) < 5) applyHit(obj, 18);
+                const op = worldPos(obj);
+                if (op.distanceTo(impact) < 5) {
+                  applyHit(obj, 18, impact);
+                  impulseRigid(obj, op.clone().sub(impact), 10);
+                }
               }
               combatFx.pushImpact(impact, "#c084fc");
+              playerPhysics.punch(0.05);
+            }
+
+            if (id === "rail_lance") {
+              playerPhysics.punch(0.035);
             }
           }
         }

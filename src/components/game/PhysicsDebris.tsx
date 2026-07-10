@@ -1,0 +1,93 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import * as THREE from "three";
+import {
+  RigidBody,
+  type RapierRigidBody,
+} from "@react-three/rapier";
+
+const DEBRIS: {
+  position: [number, number, number];
+  size: [number, number, number];
+  color: string;
+  mass: number;
+}[] = [
+  { position: [2.2, 0.6, 5.5], size: [0.7, 0.9, 0.7], color: "#94a3b8", mass: 2.2 },
+  { position: [3.4, 0.45, 4.8], size: [0.55, 0.55, 0.55], color: "#a8a29e", mass: 1.4 },
+  { position: [-2.8, 0.5, 4.2], size: [0.8, 0.7, 0.5], color: "#78716c", mass: 2.8 },
+  { position: [1.2, 0.4, -1.5], size: [0.5, 0.5, 0.5], color: "#64748b", mass: 1.2 },
+  { position: [-4.5, 0.55, -3], size: [0.9, 0.8, 0.6], color: "#57534e", mass: 3.2 },
+  { position: [7, 0.5, -6], size: [0.6, 0.7, 0.6], color: "#9ca3af", mass: 1.8 },
+];
+
+function DebrisChunk({
+  position,
+  size,
+  color,
+  mass,
+}: {
+  position: [number, number, number];
+  size: [number, number, number];
+  color: string;
+  mass: number;
+}) {
+  const bodyRef = useRef<RapierRigidBody>(null);
+  const meshRef = useRef<THREE.Mesh>(null);
+
+  useEffect(() => {
+    const mesh = meshRef.current;
+    const body = bodyRef.current;
+    if (!mesh || !body) return;
+    mesh.userData.destructible = true;
+    mesh.userData.hp = 45;
+    mesh.userData.kind = "debris";
+    mesh.userData.rigidBody = body;
+    mesh.userData.skipHit = false;
+  }, []);
+
+  return (
+    <RigidBody
+      ref={bodyRef}
+      position={position}
+      colliders="cuboid"
+      mass={mass}
+      restitution={0.25}
+      friction={0.85}
+      linearDamping={0.35}
+      angularDamping={0.45}
+      canSleep
+    >
+      <mesh
+        ref={meshRef}
+        castShadow
+        receiveShadow
+        userData={{
+          destructible: true,
+          hp: 45,
+          kind: "debris",
+        }}
+      >
+        <boxGeometry args={size} />
+        <meshStandardMaterial
+          color={color}
+          roughness={0.65}
+          metalness={0.35}
+          emissive={color}
+          emissiveIntensity={0.08}
+        />
+      </mesh>
+    </RigidBody>
+  );
+}
+
+/** Dynamic crates/barrels — shoot or blast them for real FPS physics juice. */
+export function PhysicsDebris() {
+  return (
+    <group>
+      {DEBRIS.map((d, i) => (
+        <DebrisChunk key={i} {...d} />
+      ))}
+    </group>
+  );
+}

@@ -2,6 +2,12 @@
 
 Build diary. Newest entries at the top.
 
+## 2026-07-10 — Physics feel pass
+- Shared `playerPhysics` impulse/knock/camera-punch layer (survives wishdir overwrites)
+- Jump uses Rapier `applyImpulse`; pads are sensors + proximity fallback
+- Dynamic shootable debris crates near spawn; shockwave/singularity pull+blast
+- Hits stagger mesh enemies; debris flies with torque; damage punches the camera
+
 ## 2026-07-10 — Realtime 30m block COMPLETE (wall-clock)
 - Start `1783711253` → end `1783713053` (14:20:53–14:50:53 CDT) — tracked via `/tmp/nullspire_realtime_block_start.txt`
 - Shipped across the hour: hitscan fix, damage numbers/flash, arid lighting, drop shield, enemy/boss beams, gun bob, muzzle fade, SFX volume, footsteps/land/pads, Kenney pickups, distance cull, loot/gate lights, de-purple UI

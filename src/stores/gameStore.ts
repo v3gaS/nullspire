@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { playerPhysics } from "@/lib/game/playerPhysics";
 
 export type GameScreen = "title" | "playing" | "paused" | "dead" | "victory";
 
@@ -163,6 +164,12 @@ export const useGameStore = create<GameState>((set, get) => ({
       health: nextHealth,
       lastDamagedAt: performance.now(),
     });
+    playerPhysics.punch(0.055 + amount * 0.004, (Math.random() - 0.5) * 0.02);
+    playerPhysics.pushKnock(
+      (Math.random() - 0.5) * 1.2,
+      0.4,
+      (Math.random() - 0.5) * 1.2,
+    );
     if (nextHealth <= 0) set({ screen: "dead" });
   },
   healPlayer: (amount) =>

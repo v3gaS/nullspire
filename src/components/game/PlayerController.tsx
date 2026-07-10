@@ -11,6 +11,7 @@ import {
 import { PLAYER } from "@/lib/game/constants";
 import { useGameStore } from "@/stores/gameStore";
 import { playerLocomotion } from "@/lib/game/playerLocomotion";
+import { playerPhysics } from "@/lib/game/playerPhysics";
 import { playSfx } from "@/lib/game/audio";
 
 type Keys = Record<string, boolean>;
@@ -40,6 +41,11 @@ export function PlayerController() {
       z: checkpoint.z,
     };
   }, [checkpoint]);
+
+  useEffect(() => {
+    playerPhysics.register(bodyRef.current);
+    return () => playerPhysics.register(null);
+  }, []);
 
   useEffect(() => {
     const canvas = gl.domElement;
@@ -83,6 +89,7 @@ export function PlayerController() {
   useFrame((_, dt) => {
     const body = bodyRef.current;
     if (!body || screen !== "playing") return;
+    playerPhysics.register(body);
 
     const vel = body.linvel();
     const pos = body.translation();
@@ -94,7 +101,8 @@ export function PlayerController() {
     const groundHit = hits.find(
       (h) =>
         h.distance < 1.35 &&
-        !(h.object as THREE.Object3D).userData?.destructible,
+        !(h.object as THREE.Object3D).userData?.destructible &&
+        !(h.object as THREE.Object3D).userData?.jumpPad,
     );
     const nearGround =
       !!groundHit || (Math.abs(vel.y) < 0.25 && pos.y < 3.5);
@@ -111,8 +119,10 @@ export function PlayerController() {
         if (impact > 14) {
           const dmg = Math.round((impact - 14) * 8);
           useGameStore.getState().damagePlayer(dmg);
+          playerPhysics.punch(0.08);
         } else if (impact > 4) {
           playSfx("/assets/audio/kenney-fps/land.ogg", 0.22);
+          playerPhysics.punch(0.025);
         }
         wasAirborne.current = false;
         peakFallSpeed.current = 0;
@@ -121,11 +131,11 @@ export function PlayerController() {
       coyote.current = Math.max(0, coyote.current - dt);
     }
 
-    // Soft kill floor / void → checkpoint
     if (pos.y < -20) {
       const cp = useGameStore.getState().checkpoint;
       body.setTranslation({ x: cp.x, y: cp.y, z: cp.z }, true);
       body.setLinvel({ x: 0, y: 0, z: 0 }, true);
+      playerPhysics.knock.set(0, 0, 0);
       useGameStore.getState().damagePlayer(20);
       useGameStore.setState({
         invulnerableUntil: performance.now() + 2000,
@@ -154,9 +164,20 @@ export function PlayerController() {
     const speed = sprint ? PLAYER.sprintSpeed : PLAYER.walkSpeed;
     playerLocomotion.moving = wish.lengthSq() > 0;
     playerLocomotion.sprinting = sprint && playerLocomotion.moving;
-    body.setLinvel({ x: wish.x * speed, y: vel.y, z: wish.z * speed }, true);
 
-    // Soft footsteps when grounded and moving
+    // Decay knockback; blend with wish so explosions/hits feel physical
+    const knock = playerPhysics.knock;
+    knock.multiplyScalar(Math.exp(-dt * 4.2));
+    if (knock.lengthSq() < 0.01) knock.set(0, 0, 0);
+
+    const airControl = nearGround ? 1 : 0.55;
+    const hx = wish.x * speed * airControl + knock.x;
+    const hz = wish.z * speed * airControl + knock.z;
+    let hy = vel.y + knock.y;
+    knock.y *= Math.exp(-dt * 6);
+
+    body.setLinvel({ x: hx, y: hy, z: hz }, true);
+
     if (playerLocomotion.moving && nearGround) {
       footstep.current -= dt;
       if (footstep.current <= 0) {
@@ -171,28 +192,34 @@ export function PlayerController() {
     }
 
     if (keys.current["Space"] && coyote.current > 0) {
-      body.setLinvel(
-        { x: wish.x * speed, y: PLAYER.jumpImpulse, z: wish.z * speed },
-        true,
-      );
+      // Physical jump impulse instead of hard-set velocity
+      const v = body.linvel();
+      body.setLinvel({ x: v.x, y: Math.max(v.y, 0), z: v.z }, true);
+      body.applyImpulse({ x: 0, y: PLAYER.jumpImpulse * 1.15, z: 0 }, true);
       coyote.current = 0;
+      playerPhysics.punch(-0.02);
     }
 
-    // Pink jump pads (world markers near y≈0.2)
+    // Jump pads — impulse via physics (sensor + proximity fallback)
     padCooldown.current = Math.max(0, padCooldown.current - dt);
     const onPad =
       (Math.hypot(pos.x - 0, pos.z + 28) < 1.8 && pos.y < 1.5) ||
       (Math.hypot(pos.x - 8, pos.z + 48) < 1.8 && pos.y < 1.5);
     if (onPad && vel.y <= 0.5 && padCooldown.current <= 0) {
-      body.setLinvel({ x: wish.x * speed, y: 14, z: wish.z * speed }, true);
+      body.applyImpulse({ x: wish.x * 2, y: 16, z: wish.z * 2 }, true);
       playSfx("/assets/audio/kenney-fps/jump_a.ogg", 0.35);
       padCooldown.current = 0.6;
+      playerPhysics.punch(-0.06);
     }
+
+    // Camera punch decay
+    playerPhysics.punchPitch *= Math.exp(-dt * 10);
+    playerPhysics.punchYaw *= Math.exp(-dt * 10);
 
     camera.position.set(pos.x, pos.y + 0.6, pos.z);
     camera.rotation.order = "YXZ";
-    camera.rotation.y = yaw.current;
-    camera.rotation.x = pitch.current;
+    camera.rotation.y = yaw.current + playerPhysics.punchYaw;
+    camera.rotation.x = pitch.current + playerPhysics.punchPitch;
   });
 
   return (
@@ -202,8 +229,8 @@ export function PlayerController() {
       enabledRotations={[false, false, false]}
       colliders={false}
       mass={1}
-      friction={1}
-      linearDamping={0.1}
+      friction={1.2}
+      linearDamping={0.05}
     >
       <CapsuleCollider args={[PLAYER.height * 0.25, PLAYER.radius]} />
     </RigidBody>

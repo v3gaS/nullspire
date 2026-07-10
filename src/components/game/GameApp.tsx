@@ -29,6 +29,7 @@ import { BloomMatriarch } from "./BloomMatriarch";
 import { NullspirePrimarch } from "./NullspirePrimarch";
 import { CheckpointGates } from "./CheckpointGates";
 import { WeaponPickup } from "./WeaponPickup";
+import { PhysicsDebris } from "./PhysicsDebris";
 import { useGameStore } from "@/stores/gameStore";
 import { useCombatInput } from "@/lib/game/useCombatInput";
 import {
@@ -59,6 +60,7 @@ function World({ showDressing }: { showDressing: boolean }) {
         <WeaponPickup id="arc_caster" position={[-7, 3.2, -10]} />
         <WeaponPickup id="rail_lance" position={[2, 5.8, -16]} />
         <WeaponPickup id="void_launcher" position={[0, 1.2, -70]} />
+        <PhysicsDebris />
         <WeaponSystem />
       </Physics>
     </>

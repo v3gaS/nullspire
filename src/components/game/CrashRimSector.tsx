@@ -7,6 +7,7 @@ import { Suspense, useRef } from "react";
 import * as THREE from "three";
 import { useGameStore } from "@/stores/gameStore";
 import { playSfx } from "@/lib/game/audio";
+import { playerPhysics } from "@/lib/game/playerPhysics";
 
 function Box({
   position,
@@ -32,9 +33,11 @@ function JumpPad({ position }: { position: [number, number, number] }) {
     <RigidBody
       type="fixed"
       colliders="cuboid"
+      sensor
       position={position}
-      onCollisionEnter={() => {
-        /* impulse applied via sensor-less boost zones in PlayerController later */
+      onIntersectionEnter={() => {
+        playerPhysics.applyImpulse(0, 16, 0, { pad: true });
+        playerPhysics.punch(-0.06);
       }}
     >
       <mesh castShadow receiveShadow userData={{ jumpPad: true, boost: 14 }}>
