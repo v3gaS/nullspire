@@ -2,6 +2,11 @@
 
 Build diary. Newest entries at the top.
 
+## 2026-07-10 — Why assets were invisible
+- Kenney GLBs reference `Textures/colormap.png` next to the models — we never copied it (404) so meshes looked broken/empty
+- Viewmodel used `camera.add()` which R3F can detach — switched to world-space camera follow
+- Fire VFX: fat beams + 2D muzzle bloom overlay; thicker longer-lived tracers
+
 ## 2026-07-10 — Visible assets + fire VFX
 - User: free assets not obvious; fire heard but not seen
 - Added `KenneyWorldDressing` (walls, platforms, blasters, alien/robot/craft OBJs near spawn)
