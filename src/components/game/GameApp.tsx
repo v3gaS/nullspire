@@ -3,7 +3,7 @@
 import { Canvas } from "@react-three/fiber";
 import { Stars } from "@react-three/drei";
 import { Physics } from "@react-three/rapier";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { PlayerController } from "./PlayerController";
 import { CrashRimSector } from "./CrashRimSector";
 import { GameHUD } from "./GameHUD";
@@ -15,7 +15,9 @@ import { CombatVfx } from "./CombatVfx";
 import { KenneyWorldDressing } from "./KenneyWorldDressing";
 import { DamageVignette } from "./DamageVignette";
 import { MuzzleFlashOverlay } from "./MuzzleFlashOverlay";
+import { HitMarker } from "./HitMarker";
 import { BossHUD } from "./BossHUD";
+import { AmbientAudio } from "./AmbientAudio";
 import { TargetDummies } from "./TargetDummies";
 import { DroneSquad } from "./DroneScout";
 import { EnemyPack } from "./EnemyPack";
@@ -28,13 +30,18 @@ import { CheckpointGates } from "./CheckpointGates";
 import { WeaponPickup } from "./WeaponPickup";
 import { useGameStore } from "@/stores/gameStore";
 import { useCombatInput } from "@/lib/game/useCombatInput";
+import {
+  hydrateSettings,
+  qualityConfig,
+  useSettingsStore,
+} from "@/stores/settingsStore";
 
-function World() {
+function World({ showDressing }: { showDressing: boolean }) {
   return (
     <>
       <CombatVfx />
       <WeaponViewmodel />
-      <KenneyWorldDressing />
+      {showDressing && <KenneyWorldDressing />}
       <Physics gravity={[0, -18, 0]}>
         <PlayerController />
         <CrashRimSector />
@@ -60,29 +67,40 @@ function World() {
 export function GameApp() {
   const screen = useGameStore((s) => s.screen);
   const boss = useGameStore((s) => s.boss);
+  const quality = useSettingsStore((s) => s.quality);
+  const cfg = qualityConfig(quality);
   useCombatInput();
+
+  useEffect(() => {
+    hydrateSettings();
+  }, []);
 
   return (
     <div className="relative h-dvh w-dvw overflow-hidden bg-[#0b0614]">
+      <AmbientAudio />
       {(screen === "playing" ||
         screen === "paused" ||
         screen === "dead" ||
         screen === "victory") && (
         <Canvas
-          shadows
-          camera={{ fov: 75, near: 0.1, far: 320, position: [0, 2, 8] }}
-          gl={{ antialias: true, powerPreference: "high-performance" }}
+          shadows={cfg.shadows}
+          dpr={[1, cfg.dpr]}
+          camera={{ fov: 75, near: 0.08, far: 320, position: [0, 2, 8] }}
+          gl={{
+            antialias: cfg.antialias,
+            powerPreference: "high-performance",
+          }}
           className="absolute inset-0"
         >
           <color attach="background" args={["#0c0820"]} />
-          <fog attach="fog" args={["#0c0820", 45, 120]} />
-          <ambientLight intensity={0.42} />
+          <fog attach="fog" args={["#0c0820", 40, cfg.fogFar]} />
+          <ambientLight intensity={0.45} />
           <directionalLight
-            castShadow
-            intensity={1.15}
+            castShadow={cfg.shadows}
+            intensity={1.2}
             position={[25, 40, 12]}
             color="#ddd6fe"
-            shadow-mapSize={[2048, 2048]}
+            shadow-mapSize={cfg.shadows ? [2048, 2048] : [512, 512]}
           />
           <hemisphereLight args={["#7c3aed", "#1a1028", 0.65]} />
           <pointLight
@@ -100,13 +118,13 @@ export function GameApp() {
           <Stars
             radius={140}
             depth={50}
-            count={5500}
+            count={cfg.starCount}
             factor={3.5}
             fade
             speed={0.35}
           />
           <Suspense fallback={null}>
-            <World />
+            <World showDressing={quality !== "low"} />
           </Suspense>
         </Canvas>
       )}
@@ -116,6 +134,7 @@ export function GameApp() {
         <>
           <DamageVignette />
           <MuzzleFlashOverlay />
+          <HitMarker />
           <GameHUD />
           {boss.active && (
             <BossHUD

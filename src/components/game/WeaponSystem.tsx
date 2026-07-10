@@ -48,6 +48,7 @@ export function applyHit(obj: THREE.Object3D, damage: number) {
   const mesh = obj as THREE.Mesh;
   if (!mesh.userData?.destructible || !mesh.visible) return false;
   mesh.userData.hp = (mesh.userData.hp ?? 30) - damage;
+  useFxStore.getState().pulseHit();
   const mat = mesh.material;
   if (mat && !Array.isArray(mat) && "emissive" in mat) {
     (mat as THREE.MeshStandardMaterial).emissive = new THREE.Color("#ff4466");

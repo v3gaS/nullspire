@@ -35,9 +35,9 @@ export function DroneScout({ position, id }: DroneProps) {
 
     cooldown.current = Math.max(0, cooldown.current - dt);
     // Nerf: shorter range, less damage, longer CD
-    if (dist < 16 && cooldown.current <= 0) {
-      cooldown.current = 2.2;
-      useGameStore.getState().damagePlayer(4);
+    if (dist < 14 && cooldown.current <= 0) {
+      cooldown.current = 2.6;
+      useGameStore.getState().damagePlayer(3);
       playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.2);
       const mat = mesh.material as THREE.MeshStandardMaterial;
       mat.emissive = new THREE.Color("#ff3344");
@@ -75,8 +75,7 @@ export function DroneSquad() {
   return (
     <group>
       <DroneScout id="d1" position={[4, 3, -6]} />
-      <DroneScout id="d2" position={[-8, 3.5, -12]} />
-      <DroneScout id="d3" position={[14, 4, -18]} />
+      <DroneScout id="d2" position={[14, 4, -18]} />
     </group>
   );
 }

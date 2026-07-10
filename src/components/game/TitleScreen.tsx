@@ -1,10 +1,17 @@
 "use client";
 
+import { useState } from "react";
 import { useGameStore } from "@/stores/gameStore";
+import { CreditsScreen } from "./CreditsScreen";
 
 export function TitleScreen() {
   const setScreen = useGameStore((s) => s.setScreen);
   const resetRun = useGameStore((s) => s.resetRun);
+  const [showCredits, setShowCredits] = useState(false);
+
+  if (showCredits) {
+    return <CreditsScreen onBack={() => setShowCredits(false)} />;
+  }
 
   return (
     <div className="absolute inset-0 z-30 flex flex-col items-center justify-center overflow-hidden">
@@ -52,6 +59,13 @@ export function TitleScreen() {
           }}
         >
           Deploy
+        </button>
+        <button
+          type="button"
+          className="min-w-52 rounded border border-white/15 px-8 py-2 text-xs uppercase tracking-[0.25em] text-zinc-400 transition hover:bg-white/5"
+          onClick={() => setShowCredits(true)}
+        >
+          Credits
         </button>
         <p className="text-[11px] uppercase tracking-[0.2em] text-zinc-500">
           WASD · Mouse · Space · Shift · Esc

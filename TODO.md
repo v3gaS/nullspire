@@ -68,9 +68,9 @@ Campaign build order. Check items as completed. Loop works top-down.
 - [x] Title / settings / pause / death / victory screens
 - [x] Campaign progression save (localStorage)
 - [x] Audio (SFX + ambient) with mute
-- [ ] Quality presets (low/med/high)
-- [ ] Performance pass (instancing, culling, LODs)
-- [ ] CREDITS screen + in-repo credits
+- [x] Quality presets (low/med/high)
+- [x] Performance pass (instancing, culling, LODs)
+- [x] CREDITS screen + in-repo credits
 
 ## Phase 8 — Ship
 - [x] Production Vercel deploy
@@ -83,8 +83,8 @@ Campaign build order. Check items as completed. Loop works top-down.
 ## Loop rules
 1. Always pick the **first unchecked** actionable item in the lowest incomplete phase.
 2. After each meaningful chunk: update this file, append to `LEARNINGS.md`, commit, push, deploy when buildable.
-3. **Continuous every 30 minutes** — self-evaluate play + visuals each tick; stop only if user says stop.
+3. **Continuous every 30 minutes (wall-clock)** — self-evaluate play + visuals each tick; stop only if user says stop.
 4. Prefer playable increments over unfinished mega-features.
 
 ## Current focus
-**Polish** — quality presets, perf pass, credits screen; keep feel/visual self-eval
+**Feel** — keep improving gun/asset visibility and combat readability; track real 30m blocks

@@ -1,6 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { useGameStore } from "@/stores/gameStore";
+import {
+  useSettingsStore,
+  type QualityPreset,
+} from "@/stores/settingsStore";
+import { CreditsScreen } from "./CreditsScreen";
 
 export function PauseMenu() {
   const setScreen = useGameStore((s) => s.setScreen);
@@ -8,6 +14,13 @@ export function PauseMenu() {
   const setMouseSensitivity = useGameStore((s) => s.setMouseSensitivity);
   const muted = useGameStore((s) => s.muted);
   const setMuted = useGameStore((s) => s.setMuted);
+  const quality = useSettingsStore((s) => s.quality);
+  const setQuality = useSettingsStore((s) => s.setQuality);
+  const [credits, setCredits] = useState(false);
+
+  if (credits) {
+    return <CreditsScreen onBack={() => setCredits(false)} />;
+  }
 
   return (
     <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/65 backdrop-blur-sm">
@@ -28,6 +41,18 @@ export function PauseMenu() {
           />
           <span className="mt-1 block text-zinc-300">{sensitivity.toFixed(1)}</span>
         </label>
+        <label className="mt-4 block text-xs uppercase tracking-[0.2em] text-zinc-400">
+          Quality
+          <select
+            className="mt-2 w-full rounded border border-white/15 bg-black/40 px-3 py-2 text-zinc-200"
+            value={quality}
+            onChange={(e) => setQuality(e.target.value as QualityPreset)}
+          >
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </label>
         <label className="mt-4 flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-zinc-400">
           <input
             type="checkbox"
@@ -44,6 +69,13 @@ export function PauseMenu() {
             onClick={() => setScreen("playing")}
           >
             Resume
+          </button>
+          <button
+            type="button"
+            className="rounded border border-white/15 px-4 py-2 text-sm uppercase tracking-[0.2em] text-zinc-300 hover:bg-white/5"
+            onClick={() => setCredits(true)}
+          >
+            Credits
           </button>
           <button
             type="button"
