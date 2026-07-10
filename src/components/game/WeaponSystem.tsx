@@ -8,6 +8,7 @@ import { playSfx } from "@/lib/game/audio";
 import { useFxStore } from "@/stores/fxStore";
 import { combatFx } from "@/components/game/CombatVfx";
 import { worldPos } from "@/lib/game/math";
+import { intersectScene } from "@/lib/game/raycast";
 import {
   impulseRigid,
   playerPhysics,
@@ -176,7 +177,7 @@ export function WeaponSystem() {
         case "rail_lance": {
           if (!state.spendNullEnergy(30)) return;
           raycaster.current.set(origin, forward);
-          const hits = raycaster.current.intersectObjects(scene.children, true);
+          const hits = intersectScene(raycaster.current, scene);
           const valid = hits.find(
             (h) => h.distance > 1.2 && h.object.userData?.destructible,
           );
@@ -350,7 +351,7 @@ export function WeaponSystem() {
 
         for (const shot of shots) {
           raycaster.current.set(origin, shot.dir);
-          const hits = raycaster.current.intersectObjects(scene.children, true);
+          const hits = intersectScene(raycaster.current, scene);
           // Prefer destructibles; skip decorative dressing that would eat shots.
           const valid =
             hits.find(

@@ -13,6 +13,7 @@ import { useGameStore } from "@/stores/gameStore";
 import { playerLocomotion } from "@/lib/game/playerLocomotion";
 import { playerPhysics } from "@/lib/game/playerPhysics";
 import { playSfx } from "@/lib/game/audio";
+import { intersectScene } from "@/lib/game/raycast";
 
 type Keys = Record<string, boolean>;
 
@@ -97,7 +98,7 @@ export function PlayerController() {
       new THREE.Vector3(pos.x, pos.y, pos.z),
       downDir.current,
     );
-    const hits = groundedRay.current.intersectObjects(scene.children, true);
+    const hits = intersectScene(groundedRay.current, scene);
     const groundHit = hits.find(
       (h) =>
         h.distance < 1.35 &&
