@@ -145,6 +145,18 @@ export function GameApp() {
             preserveDrawingBuffer: true,
           }}
           className="absolute inset-0"
+          onCreated={({ scene, camera, gl }) => {
+            (
+              window as unknown as {
+                __canvasReady?: Record<string, unknown>;
+              }
+            ).__canvasReady = {
+              children: scene.children.length,
+              cam: camera.position.toArray(),
+              size: [gl.domElement.width, gl.domElement.height],
+              at: performance.now(),
+            };
+          }}
         >
           <color attach="background" args={["#4a6d8c"]} />
           <fog attach="fog" args={["#5a7d9c", 90, cfg.fogFar]} />
@@ -197,6 +209,9 @@ export function GameApp() {
       {screen === "title" && <TitleScreen />}
       {(screen === "playing" || screen === "paused") && (
         <>
+          <div className="pointer-events-none absolute left-3 top-3 z-[30] rounded border border-teal-400/40 bg-black/70 px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-teal-200">
+            3D mount check
+          </div>
           <DamageVignette />
           <MuzzleFlashOverlay />
           <HitMarker />
