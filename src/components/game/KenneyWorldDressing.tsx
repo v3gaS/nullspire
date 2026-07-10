@@ -6,6 +6,7 @@ import { useLoader } from "@react-three/fiber";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
 import * as THREE from "three";
 import { RigidBody } from "@react-three/rapier";
+import { DistanceCull } from "./DistanceCull";
 
 function GlbProp({
   url,
@@ -251,14 +252,16 @@ function ObjDressing() {
 /** Dense Kenney kitbash — GLBs and OBJs in separate Suspense so one failure cannot blank both. */
 export function KenneyWorldDressing() {
   return (
-    <group>
-      <Suspense fallback={null}>
-        <GlbDressing />
-      </Suspense>
-      <Suspense fallback={null}>
-        <ObjDressing />
-      </Suspense>
-    </group>
+    <DistanceCull anchor={[0, 0, 4]} maxDist={55}>
+      <group>
+        <Suspense fallback={null}>
+          <GlbDressing />
+        </Suspense>
+        <Suspense fallback={null}>
+          <ObjDressing />
+        </Suspense>
+      </group>
+    </DistanceCull>
   );
 }
 

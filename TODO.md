@@ -86,7 +86,7 @@ Campaign build order. Check items as completed. Loop works top-down.
 - [x] Movement gun bob + muzzle fade + SFX volume
 - [x] Footsteps / land / jump pad audio
 - [x] More boss telegraph beams
-- [ ] LOD / draw-distance pass
+- [x] LOD / draw-distance pass
 - [x] Weapon pickup world models polish
 
 ---
