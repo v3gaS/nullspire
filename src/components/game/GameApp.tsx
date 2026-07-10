@@ -11,6 +11,8 @@ import { TitleScreen } from "./TitleScreen";
 import { PauseMenu } from "./PauseMenu";
 import { WeaponSystem } from "./WeaponSystem";
 import { WeaponViewmodel } from "./WeaponViewmodel";
+import { CombatVfx } from "./CombatVfx";
+import { KenneyWorldDressing } from "./KenneyWorldDressing";
 import { DamageVignette } from "./DamageVignette";
 import { BossHUD } from "./BossHUD";
 import { TargetDummies } from "./TargetDummies";
@@ -31,7 +33,9 @@ function World() {
     <Physics gravity={[0, -18, 0]}>
       <PlayerController />
       <WeaponViewmodel />
+      <CombatVfx />
       <CrashRimSector />
+      <KenneyWorldDressing />
       <BiolumeVaults />
       <CheckpointGates />
       <TargetDummies />

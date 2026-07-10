@@ -1,7 +1,6 @@
 "use client";
 
 import { useGameStore } from "@/stores/gameStore";
-import { WEAPON_META } from "@/lib/game/constants";
 
 export function TitleScreen() {
   const setScreen = useGameStore((s) => s.setScreen);
@@ -59,8 +58,8 @@ export function TitleScreen() {
         </p>
       </div>
 
-      <p className="relative z-10 mt-16 text-[10px] uppercase tracking-[0.3em] text-zinc-600">
-        Free assets credited in-game · {WEAPON_META.pulse_smg.name} ready
+      <p className="relative z-10 mt-16 max-w-lg px-6 text-center text-[10px] uppercase tracking-[0.25em] text-zinc-500">
+        Assets: Kenney Space Kit + Starter Kit FPS (CC0) · see CREDITS.md
       </p>
     </div>
   );

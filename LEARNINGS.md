@@ -2,6 +2,12 @@
 
 Build diary. Newest entries at the top.
 
+## 2026-07-10 — Visible assets + fire VFX
+- User: free assets not obvious; fire heard but not seen
+- Added `KenneyWorldDressing` (walls, platforms, blasters, alien/robot/craft OBJs near spawn)
+- Replaced thin Line tracers with fat cylinder beams + muzzle pointlight + Kenney hit/burst sprites
+- Viewmodel now uses Kenney blaster GLBs with barrel glow/recoil kick
+
 ## 2026-07-10 — World-space aggro fix
 - Bosses/elites used `mesh.position` (local) so Primarch engaged at Drop Zone
 - Added `distToCam` / `worldPos` helper; bosses no longer snipe from z=-130 at spawn

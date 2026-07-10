@@ -5,14 +5,9 @@ import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useGameStore, type WeaponId } from "@/stores/gameStore";
 import { playSfx } from "@/lib/game/audio";
-
-interface Tracer {
-  id: number;
-  origin: THREE.Vector3;
-  end: THREE.Vector3;
-  born: number;
-  color: string;
-}
+import { useFxStore } from "@/stores/fxStore";
+import { combatFx } from "@/components/game/CombatVfx";
+import { worldPos } from "@/lib/game/math";
 
 interface StormNest {
   id: number;
@@ -27,7 +22,6 @@ interface Singularity {
   detonated: boolean;
 }
 
-let tracerId = 0;
 let nestId = 0;
 let singId = 0;
 
@@ -79,11 +73,9 @@ function collectDestructibles(scene: THREE.Scene): THREE.Object3D[] {
 /** Multi-weapon combat + unique abilities (F). */
 export function WeaponSystem() {
   const { camera, scene, gl } = useThree();
-  const tracers = useRef<Tracer[]>([]);
   const nests = useRef<StormNest[]>([]);
   const singularities = useRef<Singularity[]>([]);
   const marked = useRef<THREE.Object3D | null>(null);
-  const groupRef = useRef<THREE.Group>(null);
   const fxRef = useRef<THREE.Group>(null);
   const fireCooldown = useRef(0);
   const firing = useRef(false);
@@ -240,6 +232,7 @@ export function WeaponSystem() {
         switch (id) {
           case "pulse_smg":
             playSfx("/assets/audio/kenney-fps/blaster_repeater.ogg", 0.22);
+            useFxStore.getState().pulseMuzzle(overclocked ? "#ffe066" : "#7dffef", 55);
             shots.push({
               dir: forward.clone(),
               damage: overclocked ? 18 : 12,
@@ -248,6 +241,7 @@ export function WeaponSystem() {
             break;
           case "scatter_carbine":
             playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.35);
+            useFxStore.getState().pulseMuzzle("#ffb347", 90);
             for (let i = 0; i < 8; i++) {
               const dir = forward.clone();
               dir.x += (Math.random() - 0.5) * 0.25;
@@ -259,16 +253,18 @@ export function WeaponSystem() {
             break;
           case "arc_caster": {
             playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.28);
+            useFxStore.getState().pulseMuzzle("#60a5fa", 80);
             shots.push({ dir: forward.clone(), damage: 14, color: "#60a5fa" });
-            // Chain to nearby enemies from first hit
             break;
           }
           case "rail_lance":
             playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.4);
+            useFxStore.getState().pulseMuzzle("#e879f9", 120);
             shots.push({ dir: forward.clone(), damage: 45, color: "#e879f9" });
             break;
           case "void_launcher":
             playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.35);
+            useFxStore.getState().pulseMuzzle("#c084fc", 110);
             shots.push({ dir: forward.clone(), damage: 30, color: "#c084fc" });
             break;
           default: {
@@ -277,42 +273,50 @@ export function WeaponSystem() {
           }
         }
 
+        const muzzle = origin
+          .clone()
+          .add(forward.clone().multiplyScalar(0.85))
+          .add(
+            new THREE.Vector3(0.22, -0.12, 0).applyQuaternion(camera.quaternion),
+          );
+
         for (const shot of shots) {
           raycaster.current.set(origin, shot.dir);
           const hits = raycaster.current.intersectObjects(scene.children, true);
-          const valid = hits.find((h) => h.distance > 1.2);
+          const valid = hits.find(
+            (h) =>
+              h.distance > 1.2 &&
+              !(h.object as THREE.Object3D).userData?.skipHit,
+          );
           const impact = valid
             ? valid.point.clone()
             : origin.clone().add(shot.dir.clone().multiplyScalar(80));
-          tracers.current.push({
-            id: tracerId++,
-            origin: origin.clone().add(shot.dir.clone().multiplyScalar(0.8)),
-            end: impact,
-            born: now,
-            color: shot.color,
-          });
+
+          const beamWidth =
+            id === "rail_lance" ? 0.12 : id === "scatter_carbine" ? 0.04 : 0.07;
+          combatFx.pushBeam(muzzle, impact, shot.color, beamWidth);
+          combatFx.pushImpact(impact, shot.color);
 
           if (valid?.object?.userData?.destructible) {
             let dmg = shot.damage;
-            if (valid.object.userData.marked || marked.current === valid.object) {
+            if (
+              valid.object.userData.marked ||
+              marked.current === valid.object
+            ) {
               dmg = Math.round(dmg * 1.5);
             }
             applyHit(valid.object, dmg);
 
             if (id === "arc_caster") {
-              const primary = valid.object.position.clone();
+              const primary = worldPos(valid.object).clone();
               let chained = 0;
               for (const obj of collectDestructibles(scene)) {
                 if (obj === valid.object) continue;
-                if (obj.position.distanceTo(primary) < 7 && chained < 3) {
+                const op = worldPos(obj);
+                if (op.distanceTo(primary) < 7 && chained < 3) {
                   applyHit(obj, 10);
-                  tracers.current.push({
-                    id: tracerId++,
-                    origin: primary.clone(),
-                    end: obj.position.clone(),
-                    born: now,
-                    color: "#93c5fd",
-                  });
+                  combatFx.pushBeam(primary, op, "#93c5fd", 0.05);
+                  combatFx.pushImpact(op, "#93c5fd");
                   chained++;
                 }
               }
@@ -320,8 +324,9 @@ export function WeaponSystem() {
 
             if (id === "void_launcher") {
               for (const obj of collectDestructibles(scene)) {
-                if (obj.position.distanceTo(impact) < 5) applyHit(obj, 18);
+                if (worldPos(obj).distanceTo(impact) < 5) applyHit(obj, 18);
               }
+              combatFx.pushImpact(impact, "#c084fc");
             }
           }
         }
@@ -331,33 +336,6 @@ export function WeaponSystem() {
     if (Math.random() < dt * 2) {
       const e = useGameStore.getState().nullEnergy;
       if (e < 100) useGameStore.getState().setNullEnergy(Math.min(100, e + 1));
-    }
-
-    tracers.current = tracers.current.filter((t) => now - t.born < 100);
-
-    const group = groupRef.current;
-    if (group) {
-      while (group.children.length) {
-        const child = group.children[0];
-        group.remove(child);
-        if (child instanceof THREE.Line) {
-          child.geometry.dispose();
-          (child.material as THREE.Material).dispose();
-        }
-      }
-      for (const t of tracers.current) {
-        const geo = new THREE.BufferGeometry().setFromPoints([t.origin, t.end]);
-        group.add(
-          new THREE.Line(
-            geo,
-            new THREE.LineBasicMaterial({
-              color: t.color,
-              transparent: true,
-              opacity: 0.85,
-            }),
-          ),
-        );
-      }
     }
 
     const fx = fxRef.current;
@@ -401,10 +379,5 @@ export function WeaponSystem() {
     }
   });
 
-  return (
-    <>
-      <group ref={groupRef} />
-      <group ref={fxRef} />
-    </>
-  );
+  return <group ref={fxRef} />;
 }
