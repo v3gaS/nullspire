@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nullspire
 
-## Getting Started
+Single-player sci-fi FPS in the browser. Survive a ruined exoplanet research world — parkour ruins, alien/tech enemies, five unique weapons, and boss fights.
 
-First, run the development server:
+**Play:** deploy on Vercel or run locally.
+
+## Stack
+- Next.js (App Router) + TypeScript + Tailwind
+- React Three Fiber + Drei + Rapier
+- Zustand
+
+## Docs
+- [GDD.md](./GDD.md) — full game design
+- [TODO.md](./TODO.md) — implementation phases
+- [AGENTS.md](./AGENTS.md) — agent / loop rules
+- [CREDITS.md](./CREDITS.md) — free asset licenses
+- [LEARNINGS.md](./LEARNINGS.md) — build diary
+
+## Develop
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) — click **Deploy**, click the canvas for pointer lock.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Controls
+| Input | Action |
+|-------|--------|
+| WASD | Move |
+| Mouse | Look |
+| Space | Jump |
+| Shift | Sprint |
+| Esc | Pause |
+| 1–5 | Weapons (as unlocked) |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+Game code: MIT (unless noted). Third-party assets: see `CREDITS.md` (mostly CC0 Kenney packs).
