@@ -5,6 +5,7 @@ import { useRef, type MutableRefObject, type RefObject } from "react";
 import * as THREE from "three";
 import { useGameStore } from "@/stores/gameStore";
 import { playSfx } from "@/lib/game/audio";
+import { distToCam, worldPos } from "@/lib/game/math";
 
 function useDestructibleSync(
   meshRef: RefObject<THREE.Mesh | null>,
@@ -40,9 +41,10 @@ export function SentryTurret({
     if (dead.current) return;
 
     const cam = state.camera.position;
-    mesh.lookAt(cam.x, mesh.position.y, cam.z);
+    const wp = worldPos(mesh);
+    mesh.lookAt(cam.x, wp.y, cam.z);
     cooldown.current = Math.max(0, cooldown.current - dt);
-    const dist = cam.distanceTo(mesh.position);
+    const dist = distToCam(mesh, cam);
     if (dist < 22 && cooldown.current <= 0) {
       cooldown.current = 1.8;
       useGameStore.getState().damagePlayer(5);
@@ -139,7 +141,7 @@ export function Spitter({ position }: { position: [number, number, number] }) {
     mesh.lookAt(cam);
     mesh.position.y = position[1] + Math.sin(state.clock.elapsedTime * 2) * 0.2;
     cooldown.current = Math.max(0, cooldown.current - dt);
-    const dist = cam.distanceTo(mesh.position);
+    const dist = distToCam(mesh, cam);
     if (dist < 20 && dist > 6 && cooldown.current <= 0) {
       cooldown.current = 2.4;
       useGameStore.getState().damagePlayer(5);

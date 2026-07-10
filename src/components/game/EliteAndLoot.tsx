@@ -5,6 +5,7 @@ import { useRef } from "react";
 import * as THREE from "three";
 import { useGameStore } from "@/stores/gameStore";
 import { playSfx } from "@/lib/game/audio";
+import { distToCam, worldPos } from "@/lib/game/math";
 
 export function BastionUnit({
   position,
@@ -24,7 +25,6 @@ export function BastionUnit({
     if (useGameStore.getState().screen !== "playing") return;
 
     if (typeof mesh.userData.hp === "number") {
-      // Hits reduce userData.hp; map excess into shield first conceptually
       const reported = mesh.userData.hp as number;
       if (reported < hp.current + shield.current) {
         const lost = hp.current + shield.current - reported;
@@ -52,12 +52,13 @@ export function BastionUnit({
     }
 
     const cam = state.camera.position;
-    mesh.lookAt(cam.x, mesh.position.y, cam.z);
+    const wp = worldPos(mesh);
+    mesh.lookAt(cam.x, wp.y, cam.z);
     cooldown.current = Math.max(0, cooldown.current - dt);
-    const dist = cam.distanceTo(mesh.position);
-    if (dist < 30 && cooldown.current <= 0) {
-      cooldown.current = 1.4;
-      useGameStore.getState().damagePlayer(14);
+    const dist = distToCam(mesh, cam);
+    if (dist < 24 && cooldown.current <= 0) {
+      cooldown.current = 1.8;
+      useGameStore.getState().damagePlayer(7);
       playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.32);
     }
   });
@@ -124,15 +125,17 @@ export function NullStalker({
     mat.opacity = cloaked ? 0.15 : 0.85;
     mat.transparent = true;
 
-    if (blink.current <= 0 && cam.distanceTo(mesh.position) < 28) {
+    if (blink.current <= 0 && distToCam(mesh, cam) < 22) {
       blink.current = 2.4;
-      const dir = new THREE.Vector3().subVectors(cam, mesh.position).normalize();
+      const dir = new THREE.Vector3()
+        .subVectors(cam, worldPos(mesh))
+        .normalize();
       mesh.position.add(dir.multiplyScalar(6));
       playSfx("/assets/audio/kenney-fps/jump_a.ogg", 0.2);
     }
 
     cooldown.current = Math.max(0, cooldown.current - dt);
-    if (cam.distanceTo(mesh.position) < 2.4 && cooldown.current <= 0) {
+    if (distToCam(mesh, cam) < 2.4 && cooldown.current <= 0) {
       cooldown.current = 0.85;
       useGameStore.getState().damagePlayer(16);
       playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.35);

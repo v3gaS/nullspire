@@ -6,6 +6,7 @@ import { useRef } from "react";
 import * as THREE from "three";
 import { useGameStore } from "@/stores/gameStore";
 import { playSfx } from "@/lib/game/audio";
+import { distToCam } from "@/lib/game/math";
 
 /** Final boss — Nullspire Primarch at the Null Core. */
 export function NullspirePrimarch() {
@@ -26,7 +27,7 @@ export function NullspirePrimarch() {
     mesh.userData.hp = hp.current;
 
     const cam = state.camera.position;
-    const dist = cam.distanceTo(mesh.position);
+    const dist = distToCam(mesh, cam);
     if (dist < 35) engaged.current = true;
 
     if (engaged.current) {

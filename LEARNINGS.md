@@ -2,6 +2,10 @@
 
 Build diary. Newest entries at the top.
 
+## 2026-07-10 — World-space aggro fix
+- Bosses/elites used `mesh.position` (local) so Primarch engaged at Drop Zone
+- Added `distToCam` / `worldPos` helper; bosses no longer snipe from z=-130 at spawn
+
 ## 2026-07-10 — 30m loop + play/visual self-eval
 - Loop cadence set to **30 minutes** (pid in `/tmp/nullspire_loop.pid`)
 - Eval: spawn melted in seconds (Hull→death) — nerfed enemy DPS/range, +3.5s spawn invuln, start armor 25
