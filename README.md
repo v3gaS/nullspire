@@ -2,7 +2,7 @@
 
 Single-player sci-fi FPS in the browser. Survive a ruined exoplanet research world — parkour ruins, alien/tech enemies, five unique weapons, and boss fights.
 
-**Play:** deploy on Vercel or run locally.
+**Play:** https://nullspire-amber.vercel.app
 
 ## Stack
 - Next.js (App Router) + TypeScript + Tailwind
@@ -32,6 +32,9 @@ Open [http://localhost:3000](http://localhost:3000) — click **Deploy**, click 
 | Mouse | Look |
 | Space | Jump |
 | Shift | Sprint |
+| LMB | Fire |
+| R | Reload |
+| F | Ability (Null) |
 | Esc | Pause |
 | 1–5 | Weapons (as unlocked) |
 
