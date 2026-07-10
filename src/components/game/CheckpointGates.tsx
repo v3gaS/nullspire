@@ -55,8 +55,14 @@ function Gate({
 
   useFrame((state) => {
     const mesh = meshRef.current;
-    if (!mesh || claimed.current[label]) return;
+    if (!mesh) return;
+    if (claimed.current[label]) {
+      mesh.rotation.y += 0.004;
+      return;
+    }
     mesh.rotation.y += 0.01;
+    const pulse = 1.2 + Math.sin(state.clock.elapsedTime * 2.5) * 0.5;
+    (mesh.material as THREE.MeshStandardMaterial).emissiveIntensity = pulse;
     if (state.camera.position.distanceTo(mesh.position) < 3.2) {
       claimed.current[label] = true;
       useGameStore.getState().setCheckpoint({
@@ -77,15 +83,18 @@ function Gate({
   });
 
   return (
-    <mesh ref={meshRef} position={pos}>
-      <torusGeometry args={[1.6, 0.12, 8, 32]} />
-      <meshStandardMaterial
-        color="#67e8f9"
-        emissive="#22d3ee"
-        emissiveIntensity={1.4}
-        metalness={0.5}
-        roughness={0.3}
-      />
-    </mesh>
+    <group>
+      <mesh ref={meshRef} position={pos}>
+        <torusGeometry args={[1.6, 0.12, 8, 32]} />
+        <meshStandardMaterial
+          color="#67e8f9"
+          emissive="#22d3ee"
+          emissiveIntensity={1.4}
+          metalness={0.5}
+          roughness={0.3}
+        />
+      </mesh>
+      <pointLight position={pos} color="#67e8f9" intensity={1.2} distance={8} />
+    </group>
   );
 }
