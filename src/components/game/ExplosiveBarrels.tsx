@@ -78,7 +78,7 @@ function ExplosiveBarrel({ position }: { position: [number, number, number] }) {
     <RigidBody
       ref={bodyRef}
       position={position}
-      colliders="hull"
+      colliders="cuboid"
       mass={3.5}
       restitution={0.15}
       friction={0.9}

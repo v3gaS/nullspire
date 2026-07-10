@@ -31,6 +31,7 @@ export function PlayerController() {
   const jumpHeld = useRef(false);
   const jumpBuffer = useRef(0);
   const canCutJump = useRef(false);
+  const spawnProtect = useRef(2.5);
   const spawn = useRef({ x: 0, y: 2, z: 8 });
   const groundedRay = useRef(new THREE.Raycaster());
   const downDir = useRef(new THREE.Vector3(0, -1, 0));
@@ -103,6 +104,13 @@ export function PlayerController() {
 
     const vel = body.linvel();
     const pos = body.translation();
+
+    // Hold above ground until Rapier colliders finish streaming in
+    spawnProtect.current = Math.max(0, spawnProtect.current - dt);
+    if (spawnProtect.current > 0 && pos.y < 1.6) {
+      body.setTranslation({ x: pos.x, y: 2.2, z: pos.z }, true);
+      body.setLinvel({ x: vel.x * 0.2, y: 0, z: vel.z * 0.2 }, true);
+    }
     groundedRay.current.set(
       new THREE.Vector3(pos.x, pos.y, pos.z),
       downDir.current,
@@ -272,12 +280,13 @@ export function PlayerController() {
   return (
     <RigidBody
       ref={bodyRef}
-      position={[0, 2, 8]}
+      position={[0, 2.4, 8]}
       enabledRotations={[false, false, false]}
       colliders={false}
       mass={1}
       friction={1.2}
       linearDamping={0.05}
+      ccd
     >
       <CapsuleCollider args={[PLAYER.height * 0.25, PLAYER.radius]} />
     </RigidBody>
