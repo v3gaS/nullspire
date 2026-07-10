@@ -31,27 +31,29 @@ import { useCombatInput } from "@/lib/game/useCombatInput";
 
 function World() {
   return (
-    <Physics gravity={[0, -18, 0]}>
-      <PlayerController />
-      <WeaponViewmodel />
+    <>
       <CombatVfx />
-      <CrashRimSector />
+      <WeaponViewmodel />
       <KenneyWorldDressing />
-      <BiolumeVaults />
-      <CheckpointGates />
-      <TargetDummies />
-      <DroneSquad />
-      <EnemyPack />
-      <EliteAndLoot />
-      <AegisWarden />
-      <BloomMatriarch />
-      <NullspirePrimarch />
-      <WeaponPickup id="scatter_carbine" position={[-4, 1.8, -6]} />
-      <WeaponPickup id="arc_caster" position={[-7, 3.2, -10]} />
-      <WeaponPickup id="rail_lance" position={[2, 5.8, -16]} />
-      <WeaponPickup id="void_launcher" position={[0, 1.2, -70]} />
-      <WeaponSystem />
-    </Physics>
+      <Physics gravity={[0, -18, 0]}>
+        <PlayerController />
+        <CrashRimSector />
+        <BiolumeVaults />
+        <CheckpointGates />
+        <TargetDummies />
+        <DroneSquad />
+        <EnemyPack />
+        <EliteAndLoot />
+        <AegisWarden />
+        <BloomMatriarch />
+        <NullspirePrimarch />
+        <WeaponPickup id="scatter_carbine" position={[-4, 1.8, -6]} />
+        <WeaponPickup id="arc_caster" position={[-7, 3.2, -10]} />
+        <WeaponPickup id="rail_lance" position={[2, 5.8, -16]} />
+        <WeaponPickup id="void_launcher" position={[0, 1.2, -70]} />
+        <WeaponSystem />
+      </Physics>
+    </>
   );
 }
 

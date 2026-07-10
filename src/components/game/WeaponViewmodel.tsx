@@ -66,11 +66,7 @@ export function WeaponViewmodel() {
 
   useFrame((_, dt) => {
     const g = group.current;
-    if (!g || screen !== "playing") {
-      if (g) g.visible = false;
-      return;
-    }
-    g.visible = true;
+    if (!g || screen !== "playing") return;
     const fx = useFxStore.getState();
     const kicking = performance.now() < fx.muzzleUntil;
     bob.current += dt * 8;
@@ -84,13 +80,13 @@ export function WeaponViewmodel() {
 
     const x = 0.28 + Math.cos(bob.current * 0.5) * 0.004;
     const y = -0.22 + Math.sin(bob.current) * 0.008;
-    const z = -0.48 + kickZ;
+    const z = 0.55 - kickZ;
 
     g.position
       .copy(camera.position)
       .addScaledVector(right, x)
       .addScaledVector(up, y)
-      .addScaledVector(forward, -z);
+      .addScaledVector(forward, z);
     g.quaternion.copy(camera.quaternion);
     g.rotateX(kicking ? -0.1 : 0.05);
     g.rotateY(0.08);
@@ -104,29 +100,38 @@ export function WeaponViewmodel() {
   });
 
   return (
-    <group ref={group} userData={{ skipHit: true }} visible={false}>
-      <Suspense
-        fallback={
-          <mesh position={[0, 0, -0.15]} frustumCulled={false}>
-            <boxGeometry args={[0.14, 0.16, 0.55]} />
-            <meshStandardMaterial
-              color="#475569"
-              emissive={COLORS[active]}
-              emissiveIntensity={1.2}
-              metalness={0.7}
-            />
-          </mesh>
-        }
-      >
-        <GunModel url={GUN_URL[active]} color={COLORS[active]} />
+    <group ref={group} userData={{ skipHit: true }}>
+      {/* Always-on silhouette so a gun is visible even while GLB streams */}
+      <mesh position={[0.02, -0.02, -0.1]} frustumCulled={false}>
+        <boxGeometry args={[0.1, 0.12, 0.42]} />
+        <meshStandardMaterial
+          color="#334155"
+          emissive={COLORS[active]}
+          emissiveIntensity={0.9}
+          metalness={0.75}
+          roughness={0.3}
+        />
+      </mesh>
+      <mesh position={[0.02, 0.02, -0.38]} frustumCulled={false}>
+        <boxGeometry args={[0.06, 0.06, 0.22]} />
+        <meshStandardMaterial
+          color={COLORS[active]}
+          emissive={COLORS[active]}
+          emissiveIntensity={1.4}
+        />
+      </mesh>
+      <Suspense fallback={null}>
+        <group position={[0, 0, 0.05]}>
+          <GunModel url={GUN_URL[active]} color={COLORS[active]} />
+        </group>
       </Suspense>
       <mesh
         ref={glowRef}
-        position={[0, 0.04, -0.85]}
+        position={[0, 0.04, -0.55]}
         visible={false}
         frustumCulled={false}
       >
-        <sphereGeometry args={[0.1, 10, 10]} />
+        <sphereGeometry args={[0.12, 10, 10]} />
         <meshBasicMaterial color="#fff" toneMapped={false} />
       </mesh>
     </group>
