@@ -227,14 +227,22 @@ export function LootDrop({
     kind === "health" ? "#ff6b7a" : kind === "ammo" ? "#fbbf24" : "#5dffd7";
 
   return (
-    <mesh ref={meshRef} position={position}>
-      <octahedronGeometry args={[0.35, 0]} />
-      <meshStandardMaterial
+    <group>
+      <mesh ref={meshRef} position={position}>
+        <octahedronGeometry args={[0.35, 0]} />
+        <meshStandardMaterial
+          color={color}
+          emissive={color}
+          emissiveIntensity={1.2}
+        />
+      </mesh>
+      <pointLight
+        position={position}
         color={color}
-        emissive={color}
-        emissiveIntensity={1.2}
+        intensity={1.1}
+        distance={5}
       />
-    </mesh>
+    </group>
   );
 }
 
