@@ -46,9 +46,9 @@ function GunModel({ url, color }: { url: string; color: string }) {
   return (
     <primitive
       object={cloned}
-      scale={0.45}
-      position={[0, -0.02, 0]}
-      rotation={[0.2, Math.PI, 0]}
+      scale={0.28}
+      position={[0, -0.015, 0.02]}
+      rotation={[0.18, Math.PI, 0]}
     />
   );
 }
@@ -86,12 +86,12 @@ export function WeaponViewmodel() {
     );
 
     const x =
-      0.28 +
+      0.26 +
       (playerLocomotion.moving ? Math.cos(bob.current * 0.5) * amp : 0);
     const y =
-      -0.22 +
+      -0.24 +
       (playerLocomotion.moving ? Math.sin(bob.current) * amp * 0.6 : 0);
-    const z = 0.72 - kickZ;
+    const z = 0.55 - kickZ;
 
     g.position
       .copy(camera.position)
@@ -113,36 +113,36 @@ export function WeaponViewmodel() {
   return (
     <group ref={group} userData={{ skipHit: true }}>
       {/* Always-on silhouette so a gun is visible even while GLB streams */}
-      <mesh position={[0.04, -0.04, -0.05]} frustumCulled={false}>
-        <boxGeometry args={[0.14, 0.16, 0.55]} />
+      <mesh position={[0.03, -0.03, -0.04]} frustumCulled={false}>
+        <boxGeometry args={[0.1, 0.11, 0.38]} />
         <meshStandardMaterial
           color="#1e293b"
           emissive={COLORS[active]}
-          emissiveIntensity={1.35}
+          emissiveIntensity={0.9}
           metalness={0.8}
           roughness={0.25}
         />
       </mesh>
-      <mesh position={[0.04, 0.02, -0.42]} frustumCulled={false}>
-        <boxGeometry args={[0.08, 0.08, 0.28]} />
+      <mesh position={[0.03, 0.015, -0.28]} frustumCulled={false}>
+        <boxGeometry args={[0.055, 0.055, 0.2]} />
         <meshStandardMaterial
           color={COLORS[active]}
           emissive={COLORS[active]}
-          emissiveIntensity={2.2}
+          emissiveIntensity={1.6}
         />
       </mesh>
       <Suspense fallback={null}>
-        <group position={[0, 0, 0.05]}>
+        <group position={[0, 0, 0.02]}>
           <GunModel url={GUN_URL[active]} color={COLORS[active]} />
         </group>
       </Suspense>
       <mesh
         ref={glowRef}
-        position={[0, 0.04, -0.55]}
+        position={[0, 0.03, -0.4]}
         visible={false}
         frustumCulled={false}
       >
-        <sphereGeometry args={[0.12, 10, 10]} />
+        <sphereGeometry args={[0.08, 10, 10]} />
         <meshBasicMaterial color="#fff" toneMapped={false} />
       </mesh>
     </group>
