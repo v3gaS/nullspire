@@ -43,9 +43,9 @@ export function SentryTurret({
     mesh.lookAt(cam.x, mesh.position.y, cam.z);
     cooldown.current = Math.max(0, cooldown.current - dt);
     const dist = cam.distanceTo(mesh.position);
-    if (dist < 35 && cooldown.current <= 0) {
-      cooldown.current = 1.1;
-      useGameStore.getState().damagePlayer(10);
+    if (dist < 22 && cooldown.current <= 0) {
+      cooldown.current = 1.8;
+      useGameStore.getState().damagePlayer(5);
       playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.28);
       (mesh.material as THREE.MeshStandardMaterial).emissive = new THREE.Color(
         "#ff5533",
@@ -89,17 +89,17 @@ export function Skitter({ position }: { position: [number, number, number] }) {
     const cam = state.camera.position;
     const to = new THREE.Vector3().subVectors(cam, mesh.position);
     const dist = to.length();
-    if (dist < 40 && dist > 1.4) {
+    if (dist < 22 && dist > 1.4) {
       to.y = 0;
       to.normalize();
-      mesh.position.add(to.multiplyScalar(dt * 7.5));
+      mesh.position.add(to.multiplyScalar(dt * 5.5));
       mesh.position.y = origin.current.y + Math.abs(Math.sin(state.clock.elapsedTime * 10)) * 0.25;
       mesh.lookAt(cam.x, mesh.position.y, cam.z);
     }
     cooldown.current = Math.max(0, cooldown.current - dt);
-    if (dist < 2.2 && cooldown.current <= 0) {
-      cooldown.current = 0.7;
-      useGameStore.getState().damagePlayer(12);
+    if (dist < 2.0 && cooldown.current <= 0) {
+      cooldown.current = 1.0;
+      useGameStore.getState().damagePlayer(7);
       playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.3);
     }
   });
@@ -140,9 +140,9 @@ export function Spitter({ position }: { position: [number, number, number] }) {
     mesh.position.y = position[1] + Math.sin(state.clock.elapsedTime * 2) * 0.2;
     cooldown.current = Math.max(0, cooldown.current - dt);
     const dist = cam.distanceTo(mesh.position);
-    if (dist < 32 && dist > 6 && cooldown.current <= 0) {
-      cooldown.current = 1.8;
-      useGameStore.getState().damagePlayer(9);
+    if (dist < 20 && dist > 6 && cooldown.current <= 0) {
+      cooldown.current = 2.4;
+      useGameStore.getState().damagePlayer(5);
       playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.26);
     }
   });

@@ -4,7 +4,7 @@ Campaign build order. Check items as completed. Loop works top-down.
 
 **Title:** Nullspire  
 **Stack:** Next.js + R3F + Rapier + Zustand → Vercel  
-**Loop mode:** continuous dynamic (self-paced) — keep building until user stops
+**Loop mode:** continuous — wake every **30 minutes**; self-evaluate play + visuals each tick
 
 ---
 
@@ -46,7 +46,7 @@ Campaign build order. Check items as completed. Loop works top-down.
 - [x] Spitter
 - [x] Bastion Unit
 - [x] Null Stalker
-- [ ] Spawn waves / patrols / aggro ranges
+- [x] Spawn waves / patrols / aggro ranges
 - [x] Loot drops (shards, ammo, health)
 
 ## Phase 5 — World: large area + traversal
@@ -56,18 +56,18 @@ Campaign build order. Check items as completed. Loop works top-down.
 - [x] Biolume Vaults interiors
 - [x] Hazards (acid / energy grids)
 - [x] Objectives (beacons, terminals, nests)
-- [ ] Checkpoints + sector gates
+- [x] Checkpoints + sector gates
 
 ## Phase 6 — Bosses
 - [x] Aegis Warden (phases + arena)
 - [x] Bloom Matriarch (vertical arena)
-- [ ] Nullspire Primarch (final)
-- [ ] Boss HUD + stingers / telegraphs
+- [x] Nullspire Primarch (final)
+- [x] Boss HUD + stingers / telegraphs
 
 ## Phase 7 — Game flow & polish
 - [x] Title / settings / pause / death / victory screens
-- [ ] Campaign progression save (localStorage)
-- [ ] Audio (SFX + ambient) with mute
+- [x] Campaign progression save (localStorage)
+- [x] Audio (SFX + ambient) with mute
 - [ ] Quality presets (low/med/high)
 - [ ] Performance pass (instancing, culling, LODs)
 - [ ] CREDITS screen + in-repo credits
@@ -75,7 +75,7 @@ Campaign build order. Check items as completed. Loop works top-down.
 ## Phase 8 — Ship
 - [x] Production Vercel deploy
 - [x] Visual QA in browser (movement, combat, bosses)
-- [ ] Fix ship blockers
+- [x] Fix ship blockers
 - [ ] Tag release notes in LEARNINGS.md
 
 ---
@@ -83,8 +83,8 @@ Campaign build order. Check items as completed. Loop works top-down.
 ## Loop rules
 1. Always pick the **first unchecked** actionable item in the lowest incomplete phase.
 2. After each meaningful chunk: update this file, append to `LEARNINGS.md`, commit, push, deploy when buildable.
-3. **Continuous** — re-arm dynamic wakes; do not hard-stop unless the user says stop/pause.
+3. **Continuous every 30 minutes** — self-evaluate play + visuals each tick; stop only if user says stop.
 4. Prefer playable increments over unfinished mega-features.
 
 ## Current focus
-**Phase 6–7** — Nullspire Primarch, boss HUD, checkpoints, localStorage save, polish
+**Polish** — quality presets, perf pass, credits screen; keep feel/visual self-eval

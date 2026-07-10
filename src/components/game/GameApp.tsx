@@ -10,6 +10,9 @@ import { GameHUD } from "./GameHUD";
 import { TitleScreen } from "./TitleScreen";
 import { PauseMenu } from "./PauseMenu";
 import { WeaponSystem } from "./WeaponSystem";
+import { WeaponViewmodel } from "./WeaponViewmodel";
+import { DamageVignette } from "./DamageVignette";
+import { BossHUD } from "./BossHUD";
 import { TargetDummies } from "./TargetDummies";
 import { DroneSquad } from "./DroneScout";
 import { EnemyPack } from "./EnemyPack";
@@ -17,6 +20,8 @@ import { EliteAndLoot } from "./EliteAndLoot";
 import { AegisWarden } from "./AegisWarden";
 import { BiolumeVaults } from "./BiolumeVaults";
 import { BloomMatriarch } from "./BloomMatriarch";
+import { NullspirePrimarch } from "./NullspirePrimarch";
+import { CheckpointGates } from "./CheckpointGates";
 import { WeaponPickup } from "./WeaponPickup";
 import { useGameStore } from "@/stores/gameStore";
 import { useCombatInput } from "@/lib/game/useCombatInput";
@@ -25,14 +30,17 @@ function World() {
   return (
     <Physics gravity={[0, -18, 0]}>
       <PlayerController />
+      <WeaponViewmodel />
       <CrashRimSector />
       <BiolumeVaults />
+      <CheckpointGates />
       <TargetDummies />
       <DroneSquad />
       <EnemyPack />
       <EliteAndLoot />
       <AegisWarden />
       <BloomMatriarch />
+      <NullspirePrimarch />
       <WeaponPickup id="scatter_carbine" position={[-4, 1.8, -6]} />
       <WeaponPickup id="arc_caster" position={[-7, 3.2, -10]} />
       <WeaponPickup id="rail_lance" position={[2, 5.8, -16]} />
@@ -44,29 +52,44 @@ function World() {
 
 export function GameApp() {
   const screen = useGameStore((s) => s.screen);
+  const boss = useGameStore((s) => s.boss);
   useCombatInput();
 
   return (
     <div className="relative h-dvh w-dvw overflow-hidden bg-[#0b0614]">
-      {(screen === "playing" || screen === "paused" || screen === "dead") && (
+      {(screen === "playing" ||
+        screen === "paused" ||
+        screen === "dead" ||
+        screen === "victory") && (
         <Canvas
           shadows
-          camera={{ fov: 75, near: 0.1, far: 300, position: [0, 2, 8] }}
+          camera={{ fov: 75, near: 0.1, far: 320, position: [0, 2, 8] }}
           gl={{ antialias: true, powerPreference: "high-performance" }}
           className="absolute inset-0"
         >
-          <color attach="background" args={["#0a0618"]} />
-          <fog attach="fog" args={["#0a0618", 35, 100]} />
-          <ambientLight intensity={0.28} />
+          <color attach="background" args={["#0c0820"]} />
+          <fog attach="fog" args={["#0c0820", 45, 120]} />
+          <ambientLight intensity={0.42} />
           <directionalLight
             castShadow
-            intensity={0.85}
-            position={[20, 35, 8]}
-            color="#c4b5fd"
+            intensity={1.15}
+            position={[25, 40, 12]}
+            color="#ddd6fe"
             shadow-mapSize={[2048, 2048]}
           />
-          <hemisphereLight args={["#4c1d95", "#0f0a1a", 0.55]} />
-          <pointLight position={[16, 12, -20]} intensity={2.2} color="#2ee6c8" distance={40} />
+          <hemisphereLight args={["#7c3aed", "#1a1028", 0.65]} />
+          <pointLight
+            position={[16, 12, -20]}
+            intensity={2.5}
+            color="#2ee6c8"
+            distance={45}
+          />
+          <pointLight
+            position={[0, 6, 8]}
+            intensity={1.2}
+            color="#a78bfa"
+            distance={25}
+          />
           <Stars
             radius={140}
             depth={50}
@@ -82,15 +105,28 @@ export function GameApp() {
       )}
 
       {screen === "title" && <TitleScreen />}
-      {(screen === "playing" || screen === "paused") && <GameHUD />}
+      {(screen === "playing" || screen === "paused") && (
+        <>
+          <DamageVignette />
+          <GameHUD />
+          {boss.active && (
+            <BossHUD
+              name={boss.name}
+              hp={boss.hp}
+              maxHp={boss.maxHp}
+              phase={boss.phase}
+            />
+          )}
+        </>
+      )}
       {screen === "paused" && <PauseMenu />}
       {screen === "victory" && (
         <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/70">
           <h2 className="font-[family-name:var(--font-display)] text-4xl tracking-wide text-[#5dffd7]">
-            Sector Cleared
+            Nullspire Cleared
           </h2>
           <p className="mt-2 max-w-md px-6 text-center text-sm text-zinc-300">
-            Aegis Warden is offline. Deeper Nullspire sectors await.
+            The Primarch is offline. The exoplanet falls silent — for now.
           </p>
           <button
             type="button"

@@ -2,6 +2,13 @@
 
 Build diary. Newest entries at the top.
 
+## 2026-07-10 — 30m loop + play/visual self-eval
+- Loop cadence set to **30 minutes** (pid in `/tmp/nullspire_loop.pid`)
+- Eval: spawn melted in seconds (Hull→death) — nerfed enemy DPS/range, +3.5s spawn invuln, start armor 25
+- Eval: world too dark/flat — brighter lights, fog push, emissive ground grid
+- Added: viewmodel, damage vignette, boss HUD, mute, checkpoints/gates, Primarch final boss
+- Campaign no longer ends on Aegis; victory only after Primarch
+
 ## 2026-07-10 — Continuous resume (user override)
 - User asked to keep looping; removed hard 1h stop from TODO/AGENTS
 - Prior wake PIDs had exited without a follow-up agent turn — re-armed continuous wakes

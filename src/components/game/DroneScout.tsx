@@ -26,8 +26,7 @@ export function DroneScout({ position, id }: DroneProps) {
 
     const t = state.clock.elapsedTime;
     const cam = state.camera.position;
-    const toPlayer = new THREE.Vector3().subVectors(cam, mesh.position);
-    const dist = toPlayer.length();
+    const dist = cam.distanceTo(mesh.position);
 
     mesh.position.x = origin.current.x + Math.sin(t + id.length) * 2.5;
     mesh.position.y = origin.current.y + Math.sin(t * 1.4) * 0.4;
@@ -35,24 +34,18 @@ export function DroneScout({ position, id }: DroneProps) {
     mesh.lookAt(cam);
 
     cooldown.current = Math.max(0, cooldown.current - dt);
-    if (dist < 28 && cooldown.current <= 0) {
-      cooldown.current = 1.6;
-      useGameStore.getState().damagePlayer(8);
-      playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.25);
+    // Nerf: shorter range, less damage, longer CD
+    if (dist < 16 && cooldown.current <= 0) {
+      cooldown.current = 2.2;
+      useGameStore.getState().damagePlayer(4);
+      playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.2);
       const mat = mesh.material as THREE.MeshStandardMaterial;
       mat.emissive = new THREE.Color("#ff3344");
     }
 
-    // Sync destructible userData for hitscan
     mesh.userData.destructible = true;
+    if (typeof mesh.userData.hp === "number") hp.current = mesh.userData.hp;
     mesh.userData.hp = hp.current;
-    if (mesh.userData._hitHp !== undefined && mesh.userData._hitHp < hp.current) {
-      hp.current = mesh.userData._hitHp;
-    }
-    // WeaponSystem mutates userData.hp — pull it back
-    if (typeof mesh.userData.hp === "number") {
-      hp.current = mesh.userData.hp;
-    }
     if (hp.current <= 0) {
       dead.current = true;
       mesh.visible = false;

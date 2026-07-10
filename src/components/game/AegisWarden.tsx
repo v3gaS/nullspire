@@ -13,7 +13,7 @@ export function AegisWarden() {
   const dead = useRef(false);
   const phase = useRef(1);
   const cooldown = useRef(0);
-  const addCooldown = useRef(0);
+  const engaged = useRef(false);
 
   useFrame((state, dt) => {
     const mesh = bodyRef.current;
@@ -24,16 +24,37 @@ export function AegisWarden() {
     mesh.userData.destructible = true;
     mesh.userData.hp = hp.current;
 
+    const cam = state.camera.position;
+    const dist = cam.distanceTo(mesh.position);
+    if (dist < 28) engaged.current = true;
+
+    if (engaged.current) {
+      useGameStore.getState().setBoss({
+        name: "Aegis Warden",
+        hp: hp.current,
+        maxHp: 500,
+        phase: phase.current,
+      });
+    }
+
     if (hp.current <= 0) {
       dead.current = true;
       mesh.visible = false;
-      useGameStore.getState().setScreen("victory");
+      useGameStore.getState().clearBoss();
+      useGameStore.getState().setCheckpoint({
+        x: 0,
+        y: 2,
+        z: -68,
+        label: "Warden Plaza",
+      });
       useGameStore
         .getState()
-        .setObjective("Aegis Warden down — Nullspire yields… for now");
+        .setObjective("Aegis Warden down — enter Biolume Vaults");
       playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.7);
       return;
     }
+
+    if (!engaged.current) return;
 
     const nextPhase = hp.current > 330 ? 1 : hp.current > 160 ? 2 : 3;
     if (nextPhase !== phase.current) {
@@ -48,26 +69,24 @@ export function AegisWarden() {
     mesh.position.y = 2.5 + Math.sin(t * 1.2) * 0.4;
     mesh.rotation.y += dt * (0.4 + phase.current * 0.25);
 
-    const cam = state.camera.position;
-    const dist = cam.distanceTo(mesh.position);
     cooldown.current = Math.max(0, cooldown.current - dt);
-    addCooldown.current = Math.max(0, addCooldown.current - dt);
-
-    if (dist < 45 && cooldown.current <= 0) {
-      const interval = phase.current === 1 ? 1.5 : phase.current === 2 ? 1.1 : 0.75;
+    if (dist < 26 && cooldown.current <= 0) {
+      const interval = phase.current === 1 ? 2.0 : phase.current === 2 ? 1.5 : 1.1;
       cooldown.current = interval;
-      const dmg = 8 + phase.current * 4;
-      useGameStore.getState().damagePlayer(dmg);
+      useGameStore.getState().damagePlayer(5 + phase.current * 2);
       playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.3);
-      // Slam telegraph in phase 3
-      if (phase.current === 3 && dist < 12) {
-        useGameStore.getState().damagePlayer(10);
+      if (phase.current === 3 && dist < 10) {
+        useGameStore.getState().damagePlayer(6);
       }
     }
 
     const mat = mesh.material as THREE.MeshStandardMaterial;
     mat.emissive = new THREE.Color(
-      phase.current === 1 ? "#334155" : phase.current === 2 ? "#7c3aed" : "#dc2626",
+      phase.current === 1
+        ? "#334155"
+        : phase.current === 2
+          ? "#7c3aed"
+          : "#dc2626",
     );
     mat.emissiveIntensity = 0.6 + phase.current * 0.35;
   });
@@ -89,7 +108,6 @@ export function AegisWarden() {
           emissiveIntensity={0.7}
         />
       </mesh>
-      {/* Arena ring */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.05, 0]}>
         <ringGeometry args={[10, 11, 48]} />
         <meshStandardMaterial

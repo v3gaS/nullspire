@@ -21,10 +21,9 @@ Ship a **complete single-player browser FPS** (Nullspire) on Vercel: large sci-f
 7. Keep shipping playable increments; only pause if the user says stop/pause.
 
 ## Loop protocol
-- Mode: **continuous dynamic** (self-paced wake).
-- On each wake: read `TODO.md` + `LEARNINGS.md`, implement next items, update docs, push/deploy.
-- Sentinel / wake prompts carry the build continuation instruction.
-- Re-arm the next wake every tick until the user stops the loop.
+- Mode: **continuous**, wake every **30 minutes**.
+- On each wake: self-evaluate play + visuals (browser if needed), implement next TODO + feel/art fixes, update docs, push/deploy.
+- Re-arm is handled by the fixed 30m sleeper until the user says stop.
 
 ## Code conventions
 - Imports at top of files (no inline imports).

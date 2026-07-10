@@ -14,6 +14,7 @@ export function BloomMatriarch() {
   const dead = useRef(false);
   const phase = useRef(1);
   const cooldown = useRef(0);
+  const engaged = useRef(false);
 
   useFrame((state, dt) => {
     const mesh = bodyRef.current;
@@ -24,16 +25,38 @@ export function BloomMatriarch() {
     mesh.userData.destructible = true;
     mesh.userData.hp = hp.current;
 
+    const cam = state.camera.position;
+    const dist = cam.distanceTo(mesh.position);
+    if (dist < 32) engaged.current = true;
+
+    if (engaged.current) {
+      useGameStore.getState().setBoss({
+        name: "Bloom Matriarch",
+        hp: hp.current,
+        maxHp: 650,
+        phase: phase.current,
+      });
+    }
+
     if (hp.current <= 0) {
       dead.current = true;
       mesh.visible = false;
       for (const sac of sacRefs.current) if (sac) sac.visible = false;
+      useGameStore.getState().clearBoss();
+      useGameStore.getState().setCheckpoint({
+        x: 0,
+        y: 15,
+        z: -95,
+        label: "Vault Apex",
+      });
       useGameStore
         .getState()
         .setObjective("Bloom Matriarch slain — approach the Null Core");
       playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.7);
       return;
     }
+
+    if (!engaged.current) return;
 
     const next = hp.current > 420 ? 1 : hp.current > 200 ? 2 : 3;
     if (next !== phase.current) {
@@ -51,7 +74,11 @@ export function BloomMatriarch() {
     sacRefs.current.forEach((sac, i) => {
       if (!sac || !sac.visible) return;
       const a = t + i * 2.1;
-      sac.position.set(Math.cos(a) * 5, 14 + Math.sin(a * 1.3), Math.sin(a) * 5);
+      sac.position.set(
+        Math.cos(a) * 5,
+        14 + Math.sin(a * 1.3),
+        Math.sin(a) * 5,
+      );
       sac.userData.destructible = true;
       if (typeof sac.userData.hp !== "number") sac.userData.hp = 35;
       if (sac.userData.hp <= 0) {
@@ -61,15 +88,12 @@ export function BloomMatriarch() {
       }
     });
 
-    const cam = state.camera.position;
-    const dist = cam.distanceTo(mesh.position);
     cooldown.current = Math.max(0, cooldown.current - dt);
-    if (dist < 40 && cooldown.current <= 0) {
-      cooldown.current = phase.current === 3 ? 0.7 : 1.2;
-      useGameStore.getState().damagePlayer(7 + phase.current * 3);
-      // Vine grab / acid rain feel: extra damage when below boss
+    if (dist < 28 && cooldown.current <= 0) {
+      cooldown.current = phase.current === 3 ? 1.2 : 1.8;
+      useGameStore.getState().damagePlayer(4 + phase.current * 2);
       if (cam.y < mesh.position.y - 2 && phase.current >= 2) {
-        useGameStore.getState().damagePlayer(5);
+        useGameStore.getState().damagePlayer(3);
       }
       playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.28);
     }

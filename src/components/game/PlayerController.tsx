@@ -25,6 +25,15 @@ export function PlayerController() {
   const { camera, gl } = useThree();
   const screen = useGameStore((s) => s.screen);
   const sensitivity = useGameStore((s) => s.mouseSensitivity);
+  const checkpoint = useGameStore((s) => s.checkpoint);
+
+  useEffect(() => {
+    spawn.current = {
+      x: checkpoint.x,
+      y: checkpoint.y,
+      z: checkpoint.z,
+    };
+  }, [checkpoint]);
 
   useEffect(() => {
     const canvas = gl.domElement;
@@ -93,11 +102,15 @@ export function PlayerController() {
       coyote.current = Math.max(0, coyote.current - dt);
     }
 
-    // Soft kill floor / void
+    // Soft kill floor / void → checkpoint
     if (pos.y < -20) {
-      body.setTranslation(spawn.current, true);
+      const cp = useGameStore.getState().checkpoint;
+      body.setTranslation({ x: cp.x, y: cp.y, z: cp.z }, true);
       body.setLinvel({ x: 0, y: 0, z: 0 }, true);
-      useGameStore.getState().damagePlayer(35);
+      useGameStore.getState().damagePlayer(20);
+      useGameStore.setState({
+        invulnerableUntil: performance.now() + 2000,
+      });
     }
 
     const forward = new THREE.Vector3(

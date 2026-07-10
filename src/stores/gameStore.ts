@@ -16,22 +16,45 @@ export interface WeaponState {
   reserve: number;
 }
 
+export interface Checkpoint {
+  x: number;
+  y: number;
+  z: number;
+  label: string;
+}
+
+export interface BossHudState {
+  name: string;
+  hp: number;
+  maxHp: number;
+  phase: number;
+  active: boolean;
+}
+
 export interface GameState {
   screen: GameScreen;
   health: number;
   armor: number;
   nullEnergy: number;
   mouseSensitivity: number;
+  muted: boolean;
   activeWeapon: WeaponId;
   weapons: Record<WeaponId, WeaponState>;
   objective: string;
+  invulnerableUntil: number;
+  checkpoint: Checkpoint;
+  boss: BossHudState;
   setScreen: (screen: GameScreen) => void;
   setHealth: (health: number) => void;
   setArmor: (armor: number) => void;
   setNullEnergy: (energy: number) => void;
   setMouseSensitivity: (value: number) => void;
+  setMuted: (muted: boolean) => void;
   setActiveWeapon: (id: WeaponId) => void;
   setObjective: (text: string) => void;
+  setCheckpoint: (cp: Checkpoint) => void;
+  setBoss: (boss: Partial<BossHudState>) => void;
+  clearBoss: () => void;
   damagePlayer: (amount: number) => void;
   healPlayer: (amount: number) => void;
   spendNullEnergy: (amount: number) => boolean;
@@ -56,23 +79,58 @@ const defaultWeapons: Record<WeaponId, WeaponState> = {
   },
 };
 
+const defaultBoss: BossHudState = {
+  name: "",
+  hp: 0,
+  maxHp: 1,
+  phase: 1,
+  active: false,
+};
+
+const startCheckpoint: Checkpoint = {
+  x: 0,
+  y: 2,
+  z: 8,
+  label: "Drop Zone",
+};
+
+function loadSens(): number {
+  if (typeof window === "undefined") return 1;
+  const v = Number(window.localStorage.getItem("nullspire_sens"));
+  return Number.isFinite(v) && v > 0 ? v : 1;
+}
+
 export const useGameStore = create<GameState>((set, get) => ({
   screen: "title",
   health: 100,
-  armor: 0,
+  armor: 25,
   nullEnergy: 100,
   mouseSensitivity: 1,
+  muted: false,
   activeWeapon: "pulse_smg",
   weapons: defaultWeapons,
   objective: "Reach the Crash Rim beacon",
+  invulnerableUntil: 0,
+  checkpoint: startCheckpoint,
+  boss: defaultBoss,
   setScreen: (screen) => set({ screen }),
   setHealth: (health) => set({ health }),
   setArmor: (armor) => set({ armor }),
   setNullEnergy: (nullEnergy) => set({ nullEnergy }),
-  setMouseSensitivity: (mouseSensitivity) => set({ mouseSensitivity }),
+  setMouseSensitivity: (mouseSensitivity) => {
+    set({ mouseSensitivity });
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("nullspire_sens", String(mouseSensitivity));
+    }
+  },
+  setMuted: (muted) => set({ muted }),
   setActiveWeapon: (activeWeapon) => set({ activeWeapon }),
   setObjective: (objective) => set({ objective }),
+  setCheckpoint: (checkpoint) => set({ checkpoint }),
+  setBoss: (partial) => set({ boss: { ...get().boss, ...partial, active: true } }),
+  clearBoss: () => set({ boss: { ...defaultBoss } }),
   damagePlayer: (amount) => {
+    if (performance.now() < get().invulnerableUntil) return;
     const { armor, health } = get();
     let remaining = amount;
     let nextArmor = armor;
@@ -97,10 +155,14 @@ export const useGameStore = create<GameState>((set, get) => ({
     set({
       screen: "playing",
       health: 100,
-      armor: 0,
+      armor: 25,
       nullEnergy: 100,
       activeWeapon: "pulse_smg",
       weapons: structuredClone(defaultWeapons),
       objective: "Reach the Crash Rim beacon",
+      invulnerableUntil: performance.now() + 3500,
+      checkpoint: startCheckpoint,
+      boss: defaultBoss,
+      mouseSensitivity: loadSens(),
     }),
 }));

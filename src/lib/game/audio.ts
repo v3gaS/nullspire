@@ -1,7 +1,10 @@
+import { useGameStore } from "@/stores/gameStore";
+
 const cache = new Map<string, HTMLAudioElement>();
 
 export function playSfx(path: string, volume = 0.35) {
   if (typeof window === "undefined") return;
+  if (useGameStore.getState().muted) return;
   let audio = cache.get(path);
   if (!audio) {
     audio = new Audio(path);

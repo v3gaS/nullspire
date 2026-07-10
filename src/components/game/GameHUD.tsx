@@ -10,6 +10,7 @@ export function GameHUD() {
   const activeWeapon = useGameStore((s) => s.activeWeapon);
   const weapons = useGameStore((s) => s.weapons);
   const objective = useGameStore((s) => s.objective);
+  const checkpoint = useGameStore((s) => s.checkpoint);
 
   const weapon = weapons[activeWeapon];
   const meta = WEAPON_META[activeWeapon];
@@ -27,7 +28,7 @@ export function GameHUD() {
       {/* Objective */}
       <div className="absolute left-1/2 top-6 max-w-lg -translate-x-1/2 rounded border border-white/10 bg-black/40 px-4 py-2 text-center backdrop-blur-sm">
         <p className="text-[10px] uppercase tracking-[0.25em] text-cyan-300/70">
-          Objective
+          Objective · CP {checkpoint.label}
         </p>
         <p className="text-sm text-zinc-100">{objective}</p>
       </div>

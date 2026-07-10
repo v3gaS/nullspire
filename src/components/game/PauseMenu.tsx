@@ -6,6 +6,8 @@ export function PauseMenu() {
   const setScreen = useGameStore((s) => s.setScreen);
   const sensitivity = useGameStore((s) => s.mouseSensitivity);
   const setMouseSensitivity = useGameStore((s) => s.setMouseSensitivity);
+  const muted = useGameStore((s) => s.muted);
+  const setMuted = useGameStore((s) => s.setMuted);
 
   return (
     <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/65 backdrop-blur-sm">
@@ -25,6 +27,15 @@ export function PauseMenu() {
             className="mt-2 w-full accent-cyan-400"
           />
           <span className="mt-1 block text-zinc-300">{sensitivity.toFixed(1)}</span>
+        </label>
+        <label className="mt-4 flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-zinc-400">
+          <input
+            type="checkbox"
+            checked={muted}
+            onChange={(e) => setMuted(e.target.checked)}
+            className="accent-cyan-400"
+          />
+          Mute audio
         </label>
         <div className="mt-6 flex flex-col gap-2">
           <button

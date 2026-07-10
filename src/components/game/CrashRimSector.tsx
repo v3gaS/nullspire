@@ -158,9 +158,38 @@ export function CrashRimSector() {
       <RigidBody type="fixed" colliders="cuboid" position={[0, -0.5, 0]}>
         <mesh receiveShadow>
           <boxGeometry args={[180, 1, 180]} />
-          <meshStandardMaterial color="#2a2438" roughness={1} />
+          <meshStandardMaterial
+            color="#1f1830"
+            roughness={0.95}
+            metalness={0.05}
+          />
         </mesh>
       </RigidBody>
+      {/* Ground grid accents */}
+      {[-40, -20, 0, 20].map((z) => (
+        <mesh key={`gz-${z}`} position={[0, 0.02, z]} rotation={[-Math.PI / 2, 0, 0]}>
+          <planeGeometry args={[100, 0.08]} />
+          <meshStandardMaterial
+            color="#2ee6c8"
+            emissive="#2ee6c8"
+            emissiveIntensity={0.35}
+            transparent
+            opacity={0.35}
+          />
+        </mesh>
+      ))}
+      {[-40, -20, 0, 20].map((x) => (
+        <mesh key={`gx-${x}`} position={[x, 0.02, -20]} rotation={[-Math.PI / 2, 0, 0]}>
+          <planeGeometry args={[0.08, 120]} />
+          <meshStandardMaterial
+            color="#7a6bff"
+            emissive="#7a6bff"
+            emissiveIntensity={0.3}
+            transparent
+            opacity={0.3}
+          />
+        </mesh>
+      ))}
 
       <Box position={[0, 0.15, 10]} size={[12, 0.3, 12]} color="#3d3554" />
       <Box position={[-8, 1.5, 0]} size={[1.5, 3, 10]} color="#5a4a3a" />

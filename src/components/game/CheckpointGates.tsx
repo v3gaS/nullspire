@@ -1,0 +1,91 @@
+"use client";
+
+import { useFrame } from "@react-three/fiber";
+import { useRef, type MutableRefObject } from "react";
+import * as THREE from "three";
+import { useGameStore } from "@/stores/gameStore";
+import { playSfx } from "@/lib/game/audio";
+
+const GATES: {
+  pos: [number, number, number];
+  label: string;
+  objective: string;
+}[] = [
+  {
+    pos: [0, 0.4, -25],
+    label: "Canyon Gate",
+    objective: "Rust Canyons open — push to the Warden plaza",
+  },
+  {
+    pos: [0, 0.4, -88],
+    label: "Vault Gate",
+    objective: "Biolume Vaults — destroy the nest, climb the shaft",
+  },
+  {
+    pos: [0, 0.4, -118],
+    label: "Core Gate",
+    objective: "Null Core ahead — Primarch awaits",
+  },
+];
+
+export function CheckpointGates() {
+  const claimed = useRef<Record<string, boolean>>({});
+
+  return (
+    <group>
+      {GATES.map((g) => (
+        <Gate key={g.label} {...g} claimed={claimed} />
+      ))}
+    </group>
+  );
+}
+
+function Gate({
+  pos,
+  label,
+  objective,
+  claimed,
+}: {
+  pos: [number, number, number];
+  label: string;
+  objective: string;
+  claimed: MutableRefObject<Record<string, boolean>>;
+}) {
+  const meshRef = useRef<THREE.Mesh>(null);
+
+  useFrame((state) => {
+    const mesh = meshRef.current;
+    if (!mesh || claimed.current[label]) return;
+    mesh.rotation.y += 0.01;
+    if (state.camera.position.distanceTo(mesh.position) < 3.2) {
+      claimed.current[label] = true;
+      useGameStore.getState().setCheckpoint({
+        x: pos[0],
+        y: pos[1] + 1.5,
+        z: pos[2],
+        label,
+      });
+      useGameStore.getState().setObjective(objective);
+      useGameStore.getState().healPlayer(20);
+      useGameStore.getState().setArmor(
+        Math.min(100, useGameStore.getState().armor + 15),
+      );
+      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.4);
+      mesh.scale.setScalar(0.5);
+      (mesh.material as THREE.MeshStandardMaterial).emissiveIntensity = 0.3;
+    }
+  });
+
+  return (
+    <mesh ref={meshRef} position={pos}>
+      <torusGeometry args={[1.6, 0.12, 8, 32]} />
+      <meshStandardMaterial
+        color="#67e8f9"
+        emissive="#22d3ee"
+        emissiveIntensity={1.4}
+        metalness={0.5}
+        roughness={0.3}
+      />
+    </mesh>
+  );
+}
