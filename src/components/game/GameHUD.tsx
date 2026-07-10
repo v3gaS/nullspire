@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useGameStore } from "@/stores/gameStore";
+import { useFxStore } from "@/stores/fxStore";
 import { WEAPON_META } from "@/lib/game/constants";
 
 export function GameHUD() {
@@ -14,6 +15,7 @@ export function GameHUD() {
   const checkpoint = useGameStore((s) => s.checkpoint);
   const invulnerableUntil = useGameStore((s) => s.invulnerableUntil);
   const [shieldActive, setShieldActive] = useState(false);
+  const [spread, setSpread] = useState(0);
 
   useEffect(() => {
     const tick = () => setShieldActive(performance.now() < invulnerableUntil);
@@ -22,17 +24,40 @@ export function GameHUD() {
     return () => window.clearInterval(id);
   }, [invulnerableUntil]);
 
+  useEffect(() => {
+    let raf = 0;
+    const tick = () => {
+      setSpread(useFxStore.getState().kick);
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
   const weapon = weapons[activeWeapon];
   const meta = WEAPON_META[activeWeapon];
+  const arm = 6 + spread * 10;
 
   return (
     <div className="pointer-events-none absolute inset-0 z-10">
-      {/* Crosshair */}
-      <div className="absolute left-1/2 top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2">
-        <div className="absolute left-1/2 top-0 h-1.5 w-px -translate-x-1/2 bg-cyan-200/90" />
-        <div className="absolute bottom-0 left-1/2 h-1.5 w-px -translate-x-1/2 bg-cyan-200/90" />
-        <div className="absolute left-0 top-1/2 h-px w-1.5 -translate-y-1/2 bg-cyan-200/90" />
-        <div className="absolute right-0 top-1/2 h-px w-1.5 -translate-y-1/2 bg-cyan-200/90" />
+      {/* Crosshair — spreads on fire kick */}
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div
+          className="absolute left-1/2 w-px bg-cyan-200/90"
+          style={{ height: 6, top: -arm, transform: "translateX(-50%)" }}
+        />
+        <div
+          className="absolute left-1/2 w-px bg-cyan-200/90"
+          style={{ height: 6, bottom: -arm, transform: "translateX(-50%)" }}
+        />
+        <div
+          className="absolute top-1/2 h-px bg-cyan-200/90"
+          style={{ width: 6, left: -arm, transform: "translateY(-50%)" }}
+        />
+        <div
+          className="absolute top-1/2 h-px bg-cyan-200/90"
+          style={{ width: 6, right: -arm, transform: "translateY(-50%)" }}
+        />
       </div>
 
       {/* Objective */}

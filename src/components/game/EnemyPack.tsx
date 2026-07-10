@@ -5,6 +5,7 @@ import { useRef, type MutableRefObject, type RefObject } from "react";
 import * as THREE from "three";
 import { useGameStore } from "@/stores/gameStore";
 import { playSfx } from "@/lib/game/audio";
+import { combatFx } from "@/components/game/CombatVfx";
 import { distToCam, worldPos } from "@/lib/game/math";
 
 function useDestructibleSync(
@@ -45,10 +46,16 @@ export function SentryTurret({
     mesh.lookAt(cam.x, wp.y, cam.z);
     cooldown.current = Math.max(0, cooldown.current - dt);
     const dist = distToCam(mesh, cam);
-    if (dist < 22 && cooldown.current <= 0) {
+    if (
+      dist < 22 &&
+      cooldown.current <= 0 &&
+      performance.now() >= useGameStore.getState().invulnerableUntil
+    ) {
       cooldown.current = 1.8;
       useGameStore.getState().damagePlayer(5);
       playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.28);
+      combatFx.pushBeam(wp.clone().add(new THREE.Vector3(0, 0.6, 0)), cam.clone(), "#ff6644", 0.07);
+      combatFx.pushImpact(cam.clone(), "#ff6644");
       (mesh.material as THREE.MeshStandardMaterial).emissive = new THREE.Color(
         "#ff5533",
       );

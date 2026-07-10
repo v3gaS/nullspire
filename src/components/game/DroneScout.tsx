@@ -5,6 +5,7 @@ import { useRef } from "react";
 import * as THREE from "three";
 import { useGameStore } from "@/stores/gameStore";
 import { playSfx } from "@/lib/game/audio";
+import { combatFx } from "@/components/game/CombatVfx";
 
 interface DroneProps {
   position: [number, number, number];
@@ -34,7 +35,6 @@ export function DroneScout({ position, id }: DroneProps) {
     mesh.lookAt(cam);
 
     cooldown.current = Math.max(0, cooldown.current - dt);
-    // Nerf: shorter range, less damage, longer CD; respect drop shield
     if (
       dist < 14 &&
       cooldown.current <= 0 &&
@@ -42,7 +42,9 @@ export function DroneScout({ position, id }: DroneProps) {
     ) {
       cooldown.current = 2.6;
       useGameStore.getState().damagePlayer(3);
-      playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.2);
+      playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.22);
+      combatFx.pushBeam(mesh.position.clone(), cam.clone(), "#ff8866", 0.05);
+      combatFx.pushImpact(cam.clone(), "#ff8866");
       const mat = mesh.material as THREE.MeshStandardMaterial;
       mat.emissive = new THREE.Color("#ff3344");
     }
