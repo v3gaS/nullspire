@@ -109,6 +109,15 @@ export function PlayerController() {
   }, [gl, sensitivity]);
 
   useFrame((_, dt) => {
+    if (typeof window !== "undefined") {
+      (
+        window as unknown as { __ns?: Record<string, unknown> }
+      ).__ns = {
+        tick: performance.now(),
+        hasBody: !!bodyRef.current,
+        screen: useGameStore.getState().screen,
+      };
+    }
     const body = bodyRef.current;
     if (!body || useGameStore.getState().screen !== "playing") return;
     playerPhysics.register(body);

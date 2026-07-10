@@ -41,64 +41,81 @@ import {
   useSettingsStore,
 } from "@/stores/settingsStore";
 
+function LoadingBeacon() {
+  return (
+    <mesh position={[0, 2, 5]}>
+      <boxGeometry args={[1.2, 1.2, 1.2]} />
+      <meshBasicMaterial color="#2ee6c8" />
+    </mesh>
+  );
+}
+
 function World({ showDressing }: { showDressing: boolean }) {
   const runId = useGameStore((s) => s.runId);
   return (
     <>
-      {/* Viewmodel/VFX stay outside Physics — camera-follow meshes must not be reparented */}
+      {/* Always-on landmark so a blank Suspense cannot look like a void death */}
+      <mesh position={[0, 0.6, 6]} castShadow>
+        <boxGeometry args={[1.5, 1.2, 1.5]} />
+        <meshStandardMaterial
+          color="#f4a261"
+          emissive="#f4a261"
+          emissiveIntensity={0.85}
+        />
+      </mesh>
       <CombatVfx />
       <WeaponViewmodel />
-      <Physics gravity={[0, -18, 0]}>
-        {/* Explicit colliders — auto mesh cuboids were tunneling on Deploy */}
-        <RigidBody type="fixed" colliders={false} position={[0, 0, 0]}>
-          <CuboidCollider args={[90, 1.2, 90]} position={[0, -1.2, 0]} />
-          <mesh position={[0, -0.5, 0]} receiveShadow>
-            <boxGeometry args={[180, 1, 180]} />
-            <meshStandardMaterial
-              color="#1f1830"
-              roughness={0.95}
-              metalness={0.05}
-            />
-          </mesh>
-        </RigidBody>
-        <RigidBody type="fixed" colliders={false} position={[0, 0, 8]}>
-          <CuboidCollider args={[8, 0.5, 8]} position={[0, -0.15, 0]} />
-          <mesh position={[0, 0.05, 0]} receiveShadow>
-            <boxGeometry args={[16, 0.4, 16]} />
-            <meshStandardMaterial
-              color="#3d4a55"
-              roughness={0.85}
-              metalness={0.2}
-              emissive="#2ee6c8"
-              emissiveIntensity={0.25}
-            />
-          </mesh>
-        </RigidBody>
-        <PlayerController key={runId} />
+      <Suspense fallback={<LoadingBeacon />}>
+        <Physics gravity={[0, -18, 0]}>
+          <RigidBody type="fixed" colliders={false} position={[0, 0, 0]}>
+            <CuboidCollider args={[90, 1.2, 90]} position={[0, -1.2, 0]} />
+            <mesh position={[0, -0.5, 0]} receiveShadow>
+              <boxGeometry args={[180, 1, 180]} />
+              <meshStandardMaterial
+                color="#2a3548"
+                roughness={0.92}
+                metalness={0.08}
+              />
+            </mesh>
+          </RigidBody>
+          <RigidBody type="fixed" colliders={false} position={[0, 0, 8]}>
+            <CuboidCollider args={[8, 0.5, 8]} position={[0, -0.15, 0]} />
+            <mesh position={[0, 0.05, 0]} receiveShadow>
+              <boxGeometry args={[16, 0.4, 16]} />
+              <meshStandardMaterial
+                color="#4a5d6e"
+                roughness={0.8}
+                metalness={0.2}
+                emissive="#2ee6c8"
+                emissiveIntensity={0.35}
+              />
+            </mesh>
+          </RigidBody>
+          <PlayerController key={runId} />
 
-        {/* Asset-heavy / GLB content — nested Suspense so they cannot blank the pad */}
-        <Suspense fallback={null}>
-          {showDressing && <KenneyWorldDressing />}
-          <CrashRimSector />
-          <BiolumeVaults />
-          <CheckpointGates />
-          <TargetDummies />
-          <DroneSquad />
-          <EnemyPack />
-          <EliteAndLoot />
-          <AegisWarden />
-          <BloomMatriarch />
-          <NullspirePrimarch />
-          <WeaponPickup id="scatter_carbine" position={[-4, 1.8, -6]} />
-          <WeaponPickup id="arc_caster" position={[-7, 3.2, -10]} />
-          <WeaponPickup id="rail_lance" position={[2, 5.8, -16]} />
-          <WeaponPickup id="void_launcher" position={[0, 1.2, -70]} />
-          <PhysicsDebris />
-          <ExplosiveBarrels />
-          <SecretCaches />
-          <WeaponSystem />
-        </Suspense>
-      </Physics>
+          <Suspense fallback={null}>
+            {showDressing && <KenneyWorldDressing />}
+            <CrashRimSector />
+            <BiolumeVaults />
+            <CheckpointGates />
+            <TargetDummies />
+            <DroneSquad />
+            <EnemyPack />
+            <EliteAndLoot />
+            <AegisWarden />
+            <BloomMatriarch />
+            <NullspirePrimarch />
+            <WeaponPickup id="scatter_carbine" position={[-4, 1.8, -6]} />
+            <WeaponPickup id="arc_caster" position={[-7, 3.2, -10]} />
+            <WeaponPickup id="rail_lance" position={[2, 5.8, -16]} />
+            <WeaponPickup id="void_launcher" position={[0, 1.2, -70]} />
+            <PhysicsDebris />
+            <ExplosiveBarrels />
+            <SecretCaches />
+            <WeaponSystem />
+          </Suspense>
+        </Physics>
+      </Suspense>
     </>
   );
 }
@@ -173,7 +190,7 @@ export function GameApp() {
             fade
             speed={0.35}
           />
-          <Suspense fallback={null}>
+          <Suspense fallback={<LoadingBeacon />}>
             <World showDressing={quality !== "low"} />
           </Suspense>
         </Canvas>
