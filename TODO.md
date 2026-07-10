@@ -98,4 +98,4 @@ Campaign build order. Check items as completed. Loop works top-down.
 4. Prefer playable increments over unfinished mega-features.
 
 ## Current focus
-**Feel loop** — continue polish after 30m block; next: footsteps, more enemy telegraph beams, LODs
+**Next 30m block armed** — continue feel/balance; Phase 9 feel items largely shipped
