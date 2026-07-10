@@ -2,7 +2,7 @@
 
 import { Canvas } from "@react-three/fiber";
 import { Stars } from "@react-three/drei";
-import { Physics, RigidBody } from "@react-three/rapier";
+import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
 import { Suspense, useEffect } from "react";
 import { PlayerController } from "./PlayerController";
 import { CrashRimSector } from "./CrashRimSector";
@@ -49,9 +49,10 @@ function World({ showDressing }: { showDressing: boolean }) {
       <CombatVfx />
       <WeaponViewmodel />
       <Physics gravity={[0, -18, 0]}>
-        {/* Core arena never suspends — floors + player always exist on Deploy */}
-        <RigidBody type="fixed" colliders="cuboid" position={[0, -0.5, 0]}>
-          <mesh receiveShadow>
+        {/* Explicit colliders — auto mesh cuboids were tunneling on Deploy */}
+        <RigidBody type="fixed" colliders={false} position={[0, 0, 0]}>
+          <CuboidCollider args={[90, 1.2, 90]} position={[0, -1.2, 0]} />
+          <mesh position={[0, -0.5, 0]} receiveShadow>
             <boxGeometry args={[180, 1, 180]} />
             <meshStandardMaterial
               color="#1f1830"
@@ -60,15 +61,16 @@ function World({ showDressing }: { showDressing: boolean }) {
             />
           </mesh>
         </RigidBody>
-        <RigidBody type="fixed" colliders="cuboid" position={[0, -0.05, 8]}>
-          <mesh receiveShadow>
+        <RigidBody type="fixed" colliders={false} position={[0, 0, 8]}>
+          <CuboidCollider args={[8, 0.5, 8]} position={[0, -0.15, 0]} />
+          <mesh position={[0, 0.05, 0]} receiveShadow>
             <boxGeometry args={[16, 0.4, 16]} />
             <meshStandardMaterial
               color="#3d4a55"
               roughness={0.85}
               metalness={0.2}
               emissive="#2ee6c8"
-              emissiveIntensity={0.15}
+              emissiveIntensity={0.25}
             />
           </mesh>
         </RigidBody>
@@ -140,17 +142,17 @@ export function GameApp() {
           }}
           className="absolute inset-0"
         >
-          <color attach="background" args={["#1a2433"]} />
-          <fog attach="fog" args={["#2a3548", 55, cfg.fogFar]} />
-          <ambientLight intensity={0.48} />
+          <color attach="background" args={["#243044"]} />
+          <fog attach="fog" args={["#2f3d52", 70, cfg.fogFar]} />
+          <ambientLight intensity={0.72} />
           <directionalLight
             castShadow={cfg.shadows}
-            intensity={1.35}
+            intensity={1.55}
             position={[30, 42, 8]}
             color="#f0d9a8"
             shadow-mapSize={cfg.shadows ? [2048, 2048] : [512, 512]}
           />
-          <hemisphereLight args={["#c9a66b", "#1e2d3d", 0.55]} />
+          <hemisphereLight args={["#d4b896", "#1e2d3d", 0.7]} />
           <pointLight
             position={[16, 12, -20]}
             intensity={2.5}
@@ -158,10 +160,10 @@ export function GameApp() {
             distance={45}
           />
           <pointLight
-            position={[0, 6, 8]}
-            intensity={1.05}
+            position={[0, 8, 8]}
+            intensity={2.2}
             color="#f4a261"
-            distance={28}
+            distance={36}
           />
           <Stars
             radius={140}

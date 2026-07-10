@@ -114,6 +114,16 @@ export function PlayerController() {
     const vel = body.linvel();
     const pos = body.translation();
 
+    // Soft floor catch — if Rapier tunnels, snap back onto the arena
+    if (pos.y < -0.35) {
+      body.setTranslation(
+        { x: pos.x, y: 1.35, z: pos.z },
+        true,
+      );
+      body.setLinvel({ x: vel.x * 0.4, y: 0, z: vel.z * 0.4 }, true);
+      spawnProtect.current = Math.max(spawnProtect.current, 1.2);
+    }
+
     // Pin to pad until physics world is trustworthy — no void, no fall damage
     spawnProtect.current = Math.max(0, spawnProtect.current - dt);
     if (spawnProtect.current > 0) {
@@ -133,6 +143,19 @@ export function PlayerController() {
         { x: vel.x * 0.35, y: Math.max(vel.y, 0), z: vel.z * 0.35 },
         true,
       );
+    }
+
+    if (typeof window !== "undefined") {
+      (
+        window as unknown as {
+          __ns?: { y: number; hp: number; armor: number; protect: number };
+        }
+      ).__ns = {
+        y: body.translation().y,
+        hp: useGameStore.getState().health,
+        armor: useGameStore.getState().armor,
+        protect: spawnProtect.current,
+      };
     }
 
     groundedRay.current.set(
