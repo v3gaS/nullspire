@@ -27,6 +27,9 @@ export function PlayerController() {
   const peakFallSpeed = useRef(0);
   const padCooldown = useRef(0);
   const footstep = useRef(0);
+  const jumpHeld = useRef(false);
+  const jumpBuffer = useRef(0);
+  const canCutJump = useRef(false);
   const spawn = useRef({ x: 0, y: 2, z: 8 });
   const groundedRay = useRef(new THREE.Raycaster());
   const downDir = useRef(new THREE.Vector3(0, -1, 0));
@@ -53,6 +56,10 @@ export function PlayerController() {
 
     const onKeyDown = (e: KeyboardEvent) => {
       keys.current[e.code] = true;
+      if (e.code === "Space") {
+        jumpHeld.current = true;
+        jumpBuffer.current = 0.12;
+      }
       if (e.code === "Escape" && useGameStore.getState().screen === "playing") {
         useGameStore.getState().setScreen("paused");
         document.exitPointerLock();
@@ -60,6 +67,7 @@ export function PlayerController() {
     };
     const onKeyUp = (e: KeyboardEvent) => {
       keys.current[e.code] = false;
+      if (e.code === "Space") jumpHeld.current = false;
     };
     const onMouseMove = (e: MouseEvent) => {
       if (document.pointerLockElement !== canvas) return;
@@ -192,14 +200,38 @@ export function PlayerController() {
       footstep.current = 0.1;
     }
 
-    if (keys.current["Space"] && coyote.current > 0) {
-      // Physical jump impulse instead of hard-set velocity
+    jumpBuffer.current = Math.max(0, jumpBuffer.current - dt);
+
+    const tryJump = () => {
       const v = body.linvel();
       body.setLinvel({ x: v.x, y: Math.max(v.y, 0), z: v.z }, true);
-      body.applyImpulse({ x: 0, y: PLAYER.jumpImpulse * 1.15, z: 0 }, true);
+      body.applyImpulse(
+        {
+          x: wish.x * (sprint ? 2.2 : 1.2),
+          y: PLAYER.jumpImpulse * 1.15,
+          z: wish.z * (sprint ? 2.2 : 1.2),
+        },
+        true,
+      );
       coyote.current = 0;
+      jumpBuffer.current = 0;
+      canCutJump.current = true;
       playerPhysics.punch(-0.02);
+    };
+
+    if (coyote.current > 0 && jumpBuffer.current > 0) {
+      tryJump();
     }
+
+    // Variable jump — release Space once to cut upward velocity
+    if (!jumpHeld.current && canCutJump.current) {
+      const v = body.linvel();
+      if (v.y > 2) {
+        body.setLinvel({ x: v.x, y: v.y * 0.45, z: v.z }, true);
+      }
+      canCutJump.current = false;
+    }
+    if (nearGround) canCutJump.current = false;
 
     // Jump pads — impulse via physics (sensor + proximity fallback)
     padCooldown.current = Math.max(0, padCooldown.current - dt);

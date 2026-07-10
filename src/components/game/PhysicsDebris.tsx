@@ -5,7 +5,9 @@ import * as THREE from "three";
 import {
   RigidBody,
   type RapierRigidBody,
+  type CollisionEnterPayload,
 } from "@react-three/rapier";
+import { impulseRigid, playerPhysics } from "@/lib/game/playerPhysics";
 
 const DEBRIS: {
   position: [number, number, number];
@@ -46,6 +48,21 @@ function DebrisChunk({
     mesh.userData.skipHit = false;
   }, []);
 
+  const onBump = (payload: CollisionEnterPayload) => {
+    const other = payload.other.rigidBodyObject;
+    if (!other || other.userData?.kind === "debris") return;
+    const mesh = meshRef.current;
+    if (!mesh) return;
+    const dir = new THREE.Vector3(
+      mesh.position.x - other.position.x,
+      0.2,
+      mesh.position.z - other.position.z,
+    );
+    impulseRigid(mesh, dir, 5);
+    playerPhysics.pushKnock(-dir.x * 0.35, 0.15, -dir.z * 0.35);
+    playerPhysics.punch(0.012);
+  };
+
   return (
     <RigidBody
       ref={bodyRef}
@@ -57,6 +74,7 @@ function DebrisChunk({
       linearDamping={0.35}
       angularDamping={0.45}
       canSleep
+      onCollisionEnter={onBump}
     >
       <mesh
         ref={meshRef}
