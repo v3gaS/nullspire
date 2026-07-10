@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useGameStore } from "@/stores/gameStore";
 import { WEAPON_META } from "@/lib/game/constants";
 
@@ -11,6 +12,15 @@ export function GameHUD() {
   const weapons = useGameStore((s) => s.weapons);
   const objective = useGameStore((s) => s.objective);
   const checkpoint = useGameStore((s) => s.checkpoint);
+  const invulnerableUntil = useGameStore((s) => s.invulnerableUntil);
+  const [shieldActive, setShieldActive] = useState(false);
+
+  useEffect(() => {
+    const tick = () => setShieldActive(performance.now() < invulnerableUntil);
+    tick();
+    const id = window.setInterval(tick, 120);
+    return () => window.clearInterval(id);
+  }, [invulnerableUntil]);
 
   const weapon = weapons[activeWeapon];
   const meta = WEAPON_META[activeWeapon];
@@ -32,6 +42,17 @@ export function GameHUD() {
         </p>
         <p className="text-sm text-zinc-100">{objective}</p>
       </div>
+
+      {shieldActive && (
+        <div className="absolute left-1/2 top-24 max-w-md -translate-x-1/2 text-center">
+          <p className="text-xs uppercase tracking-[0.2em] text-teal-300/90">
+            Drop shield active
+          </p>
+          <p className="mt-1 text-[11px] text-zinc-400">
+            WASD move · click to fire · R reload · F ability
+          </p>
+        </div>
+      )}
 
       {/* Vitals */}
       <div className="absolute bottom-6 left-6 w-56 space-y-2">

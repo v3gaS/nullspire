@@ -76,7 +76,7 @@ Campaign build order. Check items as completed. Loop works top-down.
 - [x] Production Vercel deploy
 - [x] Visual QA in browser (movement, combat, bosses)
 - [x] Fix ship blockers
-- [ ] Tag release notes in LEARNINGS.md
+- [x] Tag release notes in LEARNINGS.md
 
 ---
 
@@ -87,4 +87,4 @@ Campaign build order. Check items as completed. Loop works top-down.
 4. Prefer playable increments over unfinished mega-features.
 
 ## Current focus
-**Feel** — keep improving gun/asset visibility and combat readability; track real 30m blocks
+**Feel loop** — combat readability + early-game teaching; next: enemy→player tracers, crosshair spread, ground raycast

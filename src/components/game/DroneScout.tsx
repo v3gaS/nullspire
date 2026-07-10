@@ -34,8 +34,12 @@ export function DroneScout({ position, id }: DroneProps) {
     mesh.lookAt(cam);
 
     cooldown.current = Math.max(0, cooldown.current - dt);
-    // Nerf: shorter range, less damage, longer CD
-    if (dist < 14 && cooldown.current <= 0) {
+    // Nerf: shorter range, less damage, longer CD; respect drop shield
+    if (
+      dist < 14 &&
+      cooldown.current <= 0 &&
+      performance.now() >= useGameStore.getState().invulnerableUntil
+    ) {
       cooldown.current = 2.6;
       useGameStore.getState().damagePlayer(3);
       playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.2);

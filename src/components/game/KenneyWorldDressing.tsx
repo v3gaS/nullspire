@@ -26,6 +26,7 @@ function GlbProp({
       if (m.isMesh) {
         m.castShadow = true;
         m.receiveShadow = true;
+        m.userData.skipHit = true;
         if (m.material) {
           const mat = Array.isArray(m.material)
             ? m.material[0]
@@ -45,6 +46,7 @@ function GlbProp({
       position={position}
       scale={scale}
       rotation={rotation}
+      userData={{ skipHit: true }}
     />
   );
 }
@@ -70,6 +72,7 @@ function ObjProp({
       if (m.isMesh) {
         m.castShadow = true;
         m.receiveShadow = true;
+        m.userData.skipHit = true;
         m.material = new THREE.MeshStandardMaterial({
           color,
           roughness: 0.55,
@@ -86,6 +89,7 @@ function ObjProp({
       position={position}
       scale={scale}
       rotation={rotation}
+      userData={{ skipHit: true }}
     />
   );
 }

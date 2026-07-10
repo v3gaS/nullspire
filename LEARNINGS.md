@@ -2,6 +2,13 @@
 
 Build diary. Newest entries at the top.
 
+## 2026-07-10 — Release notes (ship polish)
+- Quality presets (low/med/high), credits screen, ambient drones, hit markers
+- Hitscan prefers destructibles; Kenney dressing marked `skipHit` so props no longer eat shots
+- Arid dusk lighting (warm key / cool fill / teal accent) replaces purple sky
+- Damage flash vignette + floating damage numbers; longer fading beams
+- Drop-shield HUD hint; spawn turret moved off drop zone; drones idle during invuln
+
 ## 2026-07-10 — Why assets were invisible
 - Kenney GLBs reference `Textures/colormap.png` next to the models — we never copied it (404) so meshes looked broken/empty
 - Viewmodel used `camera.add()` which R3F can detach — switched to world-space camera follow

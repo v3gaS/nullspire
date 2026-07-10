@@ -96,7 +96,7 @@ export function CombatVfx() {
     }
 
     // Beams
-    combatFx.beams = combatFx.beams.filter((b) => now - b.born < 220);
+    combatFx.beams = combatFx.beams.filter((b) => now - b.born < 360);
     const bg = beamsGroup.current;
     if (bg) {
       while (bg.children.length) {
@@ -111,10 +111,11 @@ export function CombatVfx() {
         const mid = b.origin.clone().add(b.end).multiplyScalar(0.5);
         const len = b.origin.distanceTo(b.end);
         const geo = new THREE.CylinderGeometry(b.width, b.width * 0.4, len, 6, 1, true);
+        const age = (now - b.born) / 360;
         const mat = new THREE.MeshBasicMaterial({
           color: b.color,
           transparent: true,
-          opacity: 0.95,
+          opacity: 0.95 * (1 - age * 0.85),
           depthWrite: false,
         });
         const cyl = new THREE.Mesh(geo, mat);
@@ -131,7 +132,7 @@ export function CombatVfx() {
           new THREE.MeshBasicMaterial({
             color: "#ffffff",
             transparent: true,
-            opacity: 0.85,
+            opacity: 0.85 * (1 - age),
             depthWrite: false,
           }),
         );

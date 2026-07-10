@@ -16,6 +16,7 @@ import { KenneyWorldDressing } from "./KenneyWorldDressing";
 import { DamageVignette } from "./DamageVignette";
 import { MuzzleFlashOverlay } from "./MuzzleFlashOverlay";
 import { HitMarker } from "./HitMarker";
+import { DamageNumbers } from "./DamageNumbers";
 import { BossHUD } from "./BossHUD";
 import { AmbientAudio } from "./AmbientAudio";
 import { TargetDummies } from "./TargetDummies";
@@ -92,17 +93,17 @@ export function GameApp() {
           }}
           className="absolute inset-0"
         >
-          <color attach="background" args={["#0c0820"]} />
-          <fog attach="fog" args={["#0c0820", 40, cfg.fogFar]} />
-          <ambientLight intensity={0.45} />
+          <color attach="background" args={["#1a2433"]} />
+          <fog attach="fog" args={["#2a3548", 45, cfg.fogFar]} />
+          <ambientLight intensity={0.38} />
           <directionalLight
             castShadow={cfg.shadows}
-            intensity={1.2}
-            position={[25, 40, 12]}
-            color="#ddd6fe"
+            intensity={1.35}
+            position={[30, 42, 8]}
+            color="#f0d9a8"
             shadow-mapSize={cfg.shadows ? [2048, 2048] : [512, 512]}
           />
-          <hemisphereLight args={["#7c3aed", "#1a1028", 0.65]} />
+          <hemisphereLight args={["#c9a66b", "#1e2d3d", 0.55]} />
           <pointLight
             position={[16, 12, -20]}
             intensity={2.5}
@@ -111,9 +112,9 @@ export function GameApp() {
           />
           <pointLight
             position={[0, 6, 8]}
-            intensity={1.2}
-            color="#a78bfa"
-            distance={25}
+            intensity={1.05}
+            color="#f4a261"
+            distance={28}
           />
           <Stars
             radius={140}
@@ -135,6 +136,7 @@ export function GameApp() {
           <DamageVignette />
           <MuzzleFlashOverlay />
           <HitMarker />
+          <DamageNumbers />
           <GameHUD />
           {boss.active && (
             <BossHUD

@@ -1,21 +1,33 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useGameStore } from "@/stores/gameStore";
 
-/** Low-HP / hit feedback vignette. */
+/** Low-HP edge + brief flash when the player takes damage. */
 export function DamageVignette() {
   const health = useGameStore((s) => s.health);
   const screen = useGameStore((s) => s.screen);
+  const lastDamagedAt = useGameStore((s) => s.lastDamagedAt);
+  const [hitFlash, setHitFlash] = useState(0);
+
+  useEffect(() => {
+    if (!lastDamagedAt) return;
+    setHitFlash(0.55);
+    const id = window.setTimeout(() => setHitFlash(0), 220);
+    return () => window.clearTimeout(id);
+  }, [lastDamagedAt]);
+
   if (screen !== "playing" && screen !== "paused") return null;
 
-  const intensity = health < 35 ? 0.55 : health < 60 ? 0.28 : 0.08;
+  const lowHp = health < 35 ? 0.55 : health < 60 ? 0.28 : 0.08;
+  const intensity = Math.max(lowHp, hitFlash);
 
   return (
     <div
       className="pointer-events-none absolute inset-0 z-[5]"
       style={{
-        background: `radial-gradient(ellipse at center, transparent 45%, rgba(120, 10, 30, ${intensity}) 100%)`,
-        transition: "background 200ms ease",
+        background: `radial-gradient(ellipse at center, transparent 42%, rgba(140, 18, 28, ${intensity}) 100%)`,
+        transition: hitFlash > 0 ? "none" : "background 200ms ease",
       }}
     />
   );

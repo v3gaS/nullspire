@@ -42,6 +42,7 @@ export interface GameState {
   weapons: Record<WeaponId, WeaponState>;
   objective: string;
   invulnerableUntil: number;
+  lastDamagedAt: number;
   checkpoint: Checkpoint;
   boss: BossHudState;
   setScreen: (screen: GameScreen) => void;
@@ -111,6 +112,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   weapons: defaultWeapons,
   objective: "Reach the Crash Rim beacon",
   invulnerableUntil: 0,
+  lastDamagedAt: 0,
   checkpoint: startCheckpoint,
   boss: defaultBoss,
   setScreen: (screen) => set({ screen }),
@@ -140,7 +142,11 @@ export const useGameStore = create<GameState>((set, get) => ({
       remaining -= absorbed;
     }
     const nextHealth = Math.max(0, health - remaining);
-    set({ armor: nextArmor, health: nextHealth });
+    set({
+      armor: nextArmor,
+      health: nextHealth,
+      lastDamagedAt: performance.now(),
+    });
     if (nextHealth <= 0) set({ screen: "dead" });
   },
   healPlayer: (amount) =>

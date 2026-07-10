@@ -49,6 +49,7 @@ export function applyHit(obj: THREE.Object3D, damage: number) {
   if (!mesh.userData?.destructible || !mesh.visible) return false;
   mesh.userData.hp = (mesh.userData.hp ?? 30) - damage;
   useFxStore.getState().pulseHit();
+  useFxStore.getState().pushDamage(Math.round(damage));
   const mat = mesh.material;
   if (mat && !Array.isArray(mat) && "emissive" in mat) {
     (mat as THREE.MeshStandardMaterial).emissive = new THREE.Color("#ff4466");
@@ -284,11 +285,18 @@ export function WeaponSystem() {
         for (const shot of shots) {
           raycaster.current.set(origin, shot.dir);
           const hits = raycaster.current.intersectObjects(scene.children, true);
-          const valid = hits.find(
-            (h) =>
-              h.distance > 1.2 &&
-              !(h.object as THREE.Object3D).userData?.skipHit,
-          );
+          // Prefer destructibles; skip decorative dressing that would eat shots.
+          const valid =
+            hits.find(
+              (h) =>
+                h.distance > 1.2 &&
+                (h.object as THREE.Object3D).userData?.destructible,
+            ) ??
+            hits.find(
+              (h) =>
+                h.distance > 1.2 &&
+                !(h.object as THREE.Object3D).userData?.skipHit,
+            );
           const impact = valid
             ? valid.point.clone()
             : origin.clone().add(shot.dir.clone().multiplyScalar(80));
