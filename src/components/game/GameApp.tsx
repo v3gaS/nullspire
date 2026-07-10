@@ -167,7 +167,7 @@ export function GameApp() {
           </p>
           <button
             type="button"
-            className="mt-8 rounded border border-cyan-400/40 bg-cyan-500/20 px-6 py-3 text-sm uppercase tracking-[0.2em] text-cyan-100 hover:bg-cyan-400/30"
+            className="mt-8 rounded border border-teal-400/40 bg-teal-500/20 px-6 py-3 text-sm uppercase tracking-[0.2em] text-teal-100 hover:bg-teal-400/30"
             onClick={() => useGameStore.getState().resetRun()}
           >
             Run Again

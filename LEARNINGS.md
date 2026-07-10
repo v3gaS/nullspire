@@ -2,6 +2,12 @@
 
 Build diary. Newest entries at the top.
 
+## 2026-07-10 — Realtime 30m block COMPLETE (wall-clock)
+- Start `1783711253` → end `1783713053` (14:20:53–14:50:53 CDT) — tracked via `/tmp/nullspire_realtime_block_start.txt`
+- Shipped across the hour: hitscan fix, damage numbers/flash, arid lighting, drop shield, enemy/boss beams, gun bob, muzzle fade, SFX volume, footsteps/land/pads, Kenney pickups, distance cull, loot/gate lights, de-purple UI
+- Live: https://nullspire-amber.vercel.app · commits on `main` through this block
+- Next loop: re-arm another 30m wall-clock block; Phase 9 mostly done — pick new feel/balance targets
+
 ## 2026-07-10 — Realtime 30m block (wall-clock)
 - Block start unix `1783711253` → end `1783713053` (14:20:53–14:50:53 CDT)
 - Hitscan prefers destructibles; dressing `skipHit`; spawn walls off center lane
