@@ -7,6 +7,8 @@ Build diary. Newest entries at the top.
 - Console: `useRapier must be used within <Physics />!`
 - Cause: `KenneyWorldDressing` (has barrel `RigidBody`) rendered outside `<Physics>`
 - Fix: move dressing under Physics; keep viewmodel/VFX outside; add GameErrorBoundary
+- Follow-up: safe `intersectScene` raycasts (Rapier-detached meshes → matrixWorld null spam)
+- Jump buffer + release-to-cut + debris shoulder bumps shipped in same loop
 
 ## 2026-07-10 — Physics feel pass
 - Shared `playerPhysics` impulse/knock/camera-punch layer (survives wishdir overwrites)
