@@ -1,0 +1,112 @@
+"use client";
+
+import { useFrame } from "@react-three/fiber";
+import { useRef } from "react";
+import * as THREE from "three";
+import { useGameStore } from "@/stores/gameStore";
+import { playSfx } from "@/lib/game/audio";
+
+/** Sector 2 boss — Bloom Matriarch in the vault shaft. */
+export function BloomMatriarch() {
+  const bodyRef = useRef<THREE.Mesh>(null);
+  const sacRefs = useRef<THREE.Mesh[]>([]);
+  const hp = useRef(650);
+  const dead = useRef(false);
+  const phase = useRef(1);
+  const cooldown = useRef(0);
+
+  useFrame((state, dt) => {
+    const mesh = bodyRef.current;
+    if (!mesh || dead.current) return;
+    if (useGameStore.getState().screen !== "playing") return;
+
+    if (typeof mesh.userData.hp === "number") hp.current = mesh.userData.hp;
+    mesh.userData.destructible = true;
+    mesh.userData.hp = hp.current;
+
+    if (hp.current <= 0) {
+      dead.current = true;
+      mesh.visible = false;
+      for (const sac of sacRefs.current) if (sac) sac.visible = false;
+      useGameStore
+        .getState()
+        .setObjective("Bloom Matriarch slain — approach the Null Core");
+      playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.7);
+      return;
+    }
+
+    const next = hp.current > 420 ? 1 : hp.current > 200 ? 2 : 3;
+    if (next !== phase.current) {
+      phase.current = next;
+      useGameStore
+        .getState()
+        .setObjective(`Bloom Matriarch — Phase ${phase.current}`);
+      playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.45);
+    }
+
+    const t = state.clock.elapsedTime;
+    mesh.position.y = 16 + Math.sin(t) * 0.6;
+    mesh.rotation.y += dt * 0.5;
+
+    sacRefs.current.forEach((sac, i) => {
+      if (!sac || !sac.visible) return;
+      const a = t + i * 2.1;
+      sac.position.set(Math.cos(a) * 5, 14 + Math.sin(a * 1.3), Math.sin(a) * 5);
+      sac.userData.destructible = true;
+      if (typeof sac.userData.hp !== "number") sac.userData.hp = 35;
+      if (sac.userData.hp <= 0) {
+        sac.visible = false;
+        hp.current -= 40;
+        mesh.userData.hp = hp.current;
+      }
+    });
+
+    const cam = state.camera.position;
+    const dist = cam.distanceTo(mesh.position);
+    cooldown.current = Math.max(0, cooldown.current - dt);
+    if (dist < 40 && cooldown.current <= 0) {
+      cooldown.current = phase.current === 3 ? 0.7 : 1.2;
+      useGameStore.getState().damagePlayer(7 + phase.current * 3);
+      // Vine grab / acid rain feel: extra damage when below boss
+      if (cam.y < mesh.position.y - 2 && phase.current >= 2) {
+        useGameStore.getState().damagePlayer(5);
+      }
+      playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.28);
+    }
+  });
+
+  return (
+    <group position={[0, 0, -95]}>
+      <mesh
+        ref={bodyRef}
+        position={[0, 16, 0]}
+        castShadow
+        userData={{ destructible: true, hp: 650, kind: "boss_bloom" }}
+      >
+        <sphereGeometry args={[2.4, 20, 20]} />
+        <meshStandardMaterial
+          color="#86efac"
+          emissive="#166534"
+          emissiveIntensity={1.1}
+          roughness={0.45}
+        />
+      </mesh>
+      {[0, 1, 2].map((i) => (
+        <mesh
+          key={i}
+          ref={(el) => {
+            if (el) sacRefs.current[i] = el;
+          }}
+          userData={{ destructible: true, hp: 35, kind: "bloom_sac" }}
+        >
+          <sphereGeometry args={[0.7, 12, 12]} />
+          <meshStandardMaterial
+            color="#bbf7d0"
+            emissive="#4ade80"
+            emissiveIntensity={1.4}
+          />
+        </mesh>
+      ))}
+    </group>
+  );
+}

@@ -15,6 +15,8 @@ import { DroneSquad } from "./DroneScout";
 import { EnemyPack } from "./EnemyPack";
 import { EliteAndLoot } from "./EliteAndLoot";
 import { AegisWarden } from "./AegisWarden";
+import { BiolumeVaults } from "./BiolumeVaults";
+import { BloomMatriarch } from "./BloomMatriarch";
 import { WeaponPickup } from "./WeaponPickup";
 import { useGameStore } from "@/stores/gameStore";
 import { useCombatInput } from "@/lib/game/useCombatInput";
@@ -24,11 +26,13 @@ function World() {
     <Physics gravity={[0, -18, 0]}>
       <PlayerController />
       <CrashRimSector />
+      <BiolumeVaults />
       <TargetDummies />
       <DroneSquad />
       <EnemyPack />
       <EliteAndLoot />
       <AegisWarden />
+      <BloomMatriarch />
       <WeaponPickup id="scatter_carbine" position={[-4, 1.8, -6]} />
       <WeaponPickup id="arc_caster" position={[-7, 3.2, -10]} />
       <WeaponPickup id="rail_lance" position={[2, 5.8, -16]} />

@@ -53,14 +53,14 @@ Campaign build order. Check items as completed. Loop works top-down.
 - [x] Modular kitbash sector geometry
 - [x] Crash Rim sector layout
 - [x] Rust Canyons + jump pads / gaps
-- [ ] Biolume Vaults interiors
+- [x] Biolume Vaults interiors
 - [x] Hazards (acid / energy grids)
 - [x] Objectives (beacons, terminals, nests)
 - [ ] Checkpoints + sector gates
 
 ## Phase 6 — Bosses
 - [x] Aegis Warden (phases + arena)
-- [ ] Bloom Matriarch (vertical arena)
+- [x] Bloom Matriarch (vertical arena)
 - [ ] Nullspire Primarch (final)
 - [ ] Boss HUD + stingers / telegraphs
 
@@ -87,4 +87,4 @@ Campaign build order. Check items as completed. Loop works top-down.
 4. Prefer playable increments over unfinished mega-features.
 
 ## Current focus
-**Phase 4–6** — Bastion + Stalker, loot, Biolume Vaults, first boss (Aegis Warden)
+**Phase 6–7** — Nullspire Primarch, boss HUD, checkpoints, localStorage save, polish
