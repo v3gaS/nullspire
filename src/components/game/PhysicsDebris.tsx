@@ -21,6 +21,9 @@ const DEBRIS: {
   { position: [1.2, 0.4, -1.5], size: [0.5, 0.5, 0.5], color: "#64748b", mass: 1.2 },
   { position: [-4.5, 0.55, -3], size: [0.9, 0.8, 0.6], color: "#57534e", mass: 3.2 },
   { position: [7, 0.5, -6], size: [0.6, 0.7, 0.6], color: "#9ca3af", mass: 1.8 },
+  { position: [-1, 0.5, -26], size: [0.7, 0.7, 0.7], color: "#78716c", mass: 2.0 },
+  { position: [3, 0.55, -47], size: [0.8, 0.9, 0.6], color: "#94a3b8", mass: 2.5 },
+  { position: [9, 0.5, -49], size: [0.5, 0.5, 0.5], color: "#a8a29e", mass: 1.3 },
 ];
 
 function DebrisChunk({

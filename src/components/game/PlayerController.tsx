@@ -132,6 +132,8 @@ export function PlayerController() {
         } else if (impact > 4) {
           playSfx("/assets/audio/kenney-fps/land.ogg", 0.22);
           playerPhysics.punch(0.025);
+        } else if (impact > 1.5) {
+          playerPhysics.punch(0.01);
         }
         wasAirborne.current = false;
         peakFallSpeed.current = 0;
