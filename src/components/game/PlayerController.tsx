@@ -22,7 +22,9 @@ export function PlayerController() {
   const wasAirborne = useRef(false);
   const peakFallSpeed = useRef(0);
   const spawn = useRef({ x: 0, y: 2, z: 8 });
-  const { camera, gl } = useThree();
+  const groundedRay = useRef(new THREE.Raycaster());
+  const downDir = useRef(new THREE.Vector3(0, -1, 0));
+  const { camera, gl, scene } = useThree();
   const screen = useGameStore((s) => s.screen);
   const sensitivity = useGameStore((s) => s.mouseSensitivity);
   const checkpoint = useGameStore((s) => s.checkpoint);
@@ -80,7 +82,18 @@ export function PlayerController() {
 
     const vel = body.linvel();
     const pos = body.translation();
-    const nearGround = Math.abs(vel.y) < 0.2 && pos.y < 3.5;
+    groundedRay.current.set(
+      new THREE.Vector3(pos.x, pos.y, pos.z),
+      downDir.current,
+    );
+    const hits = groundedRay.current.intersectObjects(scene.children, true);
+    const groundHit = hits.find(
+      (h) =>
+        h.distance < 1.35 &&
+        !(h.object as THREE.Object3D).userData?.destructible,
+    );
+    const nearGround =
+      !!groundHit || (Math.abs(vel.y) < 0.25 && pos.y < 3.5);
 
     if (vel.y < -0.5) {
       wasAirborne.current = true;
