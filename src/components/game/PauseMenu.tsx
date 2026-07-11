@@ -27,12 +27,12 @@ export function PauseMenu() {
   }
 
   return (
-    <div className="absolute inset-0 z-20 flex items-center justify-center bg-[radial-gradient(ellipse_at_center,rgba(40,28,18,0.5)_0%,rgba(0,0,0,0.8)_70%)] backdrop-blur-sm">
-      <div className="w-full max-w-sm rounded border border-orange-400/30 bg-[#141820]/95 p-6 shadow-[0_0_48px_rgba(255,122,24,0.16)]">
-        <p className="text-[10px] uppercase tracking-[0.35em] text-orange-300/75">
+    <div className="absolute inset-0 z-20 flex items-center justify-center bg-[radial-gradient(ellipse_at_center,rgba(40,28,18,0.58)_0%,rgba(0,0,0,0.86)_70%)] backdrop-blur-sm">
+      <div className="w-full max-w-sm rounded border border-orange-400/40 bg-[#141820]/95 p-6 shadow-[0_0_56px_rgba(255,122,24,0.22)]">
+        <p className="text-[10px] uppercase tracking-[0.35em] text-orange-300/85">
           Nullspire
         </p>
-        <h2 className="font-[family-name:var(--font-display)] text-3xl tracking-[0.2em] text-orange-50">
+        <h2 className="font-[family-name:var(--font-display)] text-4xl tracking-[0.2em] text-orange-50 drop-shadow-[0_0_24px_rgba(255,122,24,0.35)]">
           PAUSED
         </h2>
         <p className="mt-2 text-sm text-zinc-300">
@@ -92,7 +92,7 @@ export function PauseMenu() {
         <div className="mt-6 flex flex-col gap-2">
           <button
             type="button"
-            className="rounded border border-cyan-400/40 bg-cyan-500/20 px-4 py-2 text-sm uppercase tracking-[0.2em] text-cyan-50 hover:bg-cyan-400/30"
+            className="rounded border border-orange-300/60 bg-orange-500/25 px-4 py-2.5 text-sm uppercase tracking-[0.2em] text-orange-50 shadow-[0_0_22px_rgba(255,122,24,0.28)] hover:bg-orange-400/35"
             onClick={() => setScreen("playing")}
           >
             Resume
