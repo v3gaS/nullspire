@@ -14,7 +14,7 @@ const SECRETS: {
   radius: number;
 }[] = [
   {
-    position: [-14, 1.2, 3],
+    position: [-16, 1.2, -8],
     kind: "ammo",
     hint: "Secret cache — Crash Rim alcove",
     radius: 4.5,

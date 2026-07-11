@@ -21,9 +21,10 @@ Ship a **complete single-player browser FPS** (Nullspire) on Vercel: large sci-f
 7. Keep shipping playable increments; only pause if the user says stop/pause.
 
 ## Loop protocol
-- Mode: **continuous**, wake every **30 minutes**.
+- Mode: **continuous**, wake every **2 hours**.
 - On each wake: self-evaluate play + visuals (browser if needed), implement next TODO + feel/art fixes, update docs, push/deploy.
-- Re-arm is handled by the fixed 30m sleeper until the user says stop.
+- Track wall-clock via `/tmp/nullspire_realtime_block_start.txt` and `/tmp/nullspire_realtime_block_hours.txt` (hours=2).
+- Re-arm the sleeper until the user says stop.
 
 ## Code conventions
 - Imports at top of files (no inline imports).

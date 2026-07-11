@@ -197,9 +197,11 @@ export function CrashRimSector() {
         </mesh>
       ))}
 
-      <Box position={[0, 0.15, 10]} size={[12, 0.3, 12]} color="#3d4a55" />
-      <Box position={[-8, 1.5, 0]} size={[1.5, 3, 10]} color="#5a4a3a" />
-      <Box position={[10, 1.5, -4]} size={[1.5, 3, 14]} color="#4a5560" />
+      {/* Open Drop Zone pad — keep the look-ahead lane empty */}
+      <Box position={[0, 0.12, 8]} size={[14, 0.24, 14]} color="#3d4a55" />
+      {/* Flanking berms — wide of the center lane */}
+      <Box position={[-12, 1.5, -2]} size={[1.5, 3, 12]} color="#5a4a3a" />
+      <Box position={[12, 1.5, -6]} size={[1.5, 3, 14]} color="#4a5560" />
       <Box position={[0, 1.2, -18]} size={[20, 2.4, 1.5]} color="#6a5a48" />
 
       <Box position={[-4, 1.2, -6]} size={[3, 0.4, 3]} color="#3ecfbf" />
@@ -235,17 +237,17 @@ export function CrashRimSector() {
       <Suspense fallback={null}>
         <Prop
           url="/assets/models/kenney-fps/wall-high.glb"
-          position={[22, 0, 4]}
+          position={[20, 0, -8]}
           scale={2}
         />
         <Prop
           url="/assets/models/kenney-fps/wall-low.glb"
-          position={[4, 0, -2]}
+          position={[-18, 0, -12]}
           scale={2}
         />
         <Prop
           url="/assets/models/kenney-fps/platform.glb"
-          position={[-14, 0.1, 4]}
+          position={[-14, 0.1, -4]}
           scale={2}
         />
         <Prop
@@ -255,7 +257,7 @@ export function CrashRimSector() {
         />
         <Prop
           url="/assets/models/kenney-fps/enemy-flying.glb"
-          position={[8, 3, -12]}
+          position={[10, 4, -18]}
           scale={1.5}
           rotation={[0, Math.PI, 0]}
         />

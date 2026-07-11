@@ -95,80 +95,84 @@ function ObjProp({
   );
 }
 
+/**
+ * Drop Zone must read as an open plaza: clear |x|<9, z in [0..14].
+ * Dressing frames the lane toward the beacon (-Z), not the player's face.
+ */
 function GlbDressing() {
   return (
     <group>
-      {/* Flanking cover — keep center lane clear for shots toward drones */}
+      {/* Far flanking ruins — outside spawn FOV */}
       <GlbProp
         url="/assets/models/kenney-fps/wall-high.glb"
-        position={[6.5, 0, 4]}
-        scale={3.5}
-        rotation={[0, -0.5, 0]}
+        position={[14, 0, -6]}
+        scale={3.2}
+        rotation={[0, -0.35, 0]}
       />
       <GlbProp
         url="/assets/models/kenney-fps/wall-high.glb"
-        position={[-6.5, 0, 3]}
-        scale={3.5}
-        rotation={[0, 0.7, 0]}
-      />
-      <GlbProp
-        url="/assets/models/kenney-fps/wall-low.glb"
-        position={[-4, 0, 5]}
-        scale={3}
+        position={[-14, 0, -8]}
+        scale={3.2}
         rotation={[0, 0.4, 0]}
       />
       <GlbProp
+        url="/assets/models/kenney-fps/wall-low.glb"
+        position={[12, 0, -16]}
+        scale={2.8}
+        rotation={[0, 0.2, 0]}
+      />
+      <GlbProp
+        url="/assets/models/kenney-fps/wall-low.glb"
+        position={[-12, 0, -14]}
+        scale={2.8}
+        rotation={[0, -0.25, 0]}
+      />
+
+      {/* Mid-lane platforms — ahead, not underfoot */}
+      <GlbProp
         url="/assets/models/kenney-fps/platform.glb"
-        position={[-3, 0.02, 6]}
-        scale={3}
+        position={[-10, 0.02, -12]}
+        scale={2.6}
       />
       <GlbProp
         url="/assets/models/kenney-fps/platform.glb"
-        position={[5, 0.02, -2]}
-        scale={3}
+        position={[11, 0.02, -18]}
+        scale={2.6}
       />
       <GlbProp
         url="/assets/models/kenney-fps/platform-large-grass.glb"
-        position={[-12, 0.02, -4]}
-        scale={3.2}
+        position={[-16, 0.02, -22]}
+        scale={2.8}
       />
+
+      {/* Scenic props — high / far */}
       <GlbProp
-        url="/assets/models/kenney-fps/blaster.glb"
-        position={[-2, 1.2, 5]}
-        scale={5}
-        rotation={[0.2, 1.2, 0.3]}
-      />
-      <GlbProp
-        url="/assets/models/kenney-fps/blaster-repeater.glb"
-        position={[2.5, 1.2, 4.5]}
-        scale={5}
-        rotation={[0, -0.8, 0]}
+        url="/assets/models/kenney-fps/enemy-flying.glb"
+        position={[10, 4.5, -14]}
+        scale={2}
+        rotation={[0, Math.PI * 0.7, 0]}
       />
       <GlbProp
         url="/assets/models/kenney-fps/enemy-flying.glb"
-        position={[3, 2.8, 0]}
-        scale={2.5}
-        rotation={[0, Math.PI, 0]}
-      />
-      <GlbProp
-        url="/assets/models/kenney-fps/enemy-flying.glb"
-        position={[-8, 3.2, -8]}
-        scale={2.5}
+        position={[-11, 5, -20]}
+        scale={2}
       />
       <GlbProp
         url="/assets/models/kenney-fps/cloud.glb"
-        position={[8, 12, -20]}
-        scale={5}
+        position={[6, 14, -28]}
+        scale={4.5}
       />
+
+      {/* Tiny ground accents at plaza edge only */}
       <GlbProp
-        url="/assets/models/kenney-fps/grass.glb"
-        position={[1, 0, 7]}
-        scale={2.5}
+        url="/assets/models/kenney-fps/grass-small.glb"
+        position={[7.5, 0, 2]}
+        scale={1.8}
       />
       <GlbProp
         url="/assets/models/kenney-fps/grass-small.glb"
-        position={[-1.5, 0, 7.5]}
-        scale={2.5}
+        position={[-7.5, 0, 1]}
+        scale={1.8}
       />
     </group>
   );
@@ -177,82 +181,83 @@ function GlbDressing() {
 function ObjDressing() {
   return (
     <group>
+      {/* Crash debris ring — outside the open pad */}
       <ObjProp
         url="/assets/models/kenney-space/barrelLarge.obj"
-        position={[3.5, 0, 6.5]}
-        scale={2}
+        position={[9, 0, -4]}
+        scale={1.8}
         color="#94a3b8"
       />
       <ObjProp
         url="/assets/models/kenney-space/barrel.obj"
-        position={[5, 0, 6.8]}
-        scale={2}
+        position={[10.2, 0, -5.5]}
+        scale={1.8}
         color="#a8a29e"
       />
       <ObjProp
         url="/assets/models/kenney-space/console.obj"
-        position={[-5, 0, 5]}
-        scale={2}
+        position={[-10, 0, -6]}
+        scale={1.8}
         rotation={[0, 0.9, 0]}
         color="#64748b"
       />
       <ObjProp
         url="/assets/models/kenney-space/metalFence.obj"
-        position={[1, 0, 3.5]}
-        scale={2}
+        position={[11, 0, -10]}
+        scale={1.8}
         color="#cbd5e1"
       />
       <ObjProp
         url="/assets/models/kenney-space/robot.obj"
-        position={[-3, 0, 3]}
-        scale={2.2}
+        position={[-11, 0, -16]}
+        scale={2}
         color="#38bdf8"
       />
       <ObjProp
         url="/assets/models/kenney-space/alien.obj"
-        position={[6, 0, -2]}
-        scale={2.5}
+        position={[13, 0, -22]}
+        scale={2.2}
         rotation={[0, -1, 0]}
         color="#86efac"
       />
       <ObjProp
         url="/assets/models/kenney-space/satelliteDish.obj"
-        position={[12, 0, -10]}
-        scale={1.8}
+        position={[18, 0, -28]}
+        scale={1.6}
         color="#e2e8f0"
       />
       <ObjProp
         url="/assets/models/kenney-space/spaceCraft1.obj"
-        position={[-18, 1, 4]}
-        scale={1.2}
-        rotation={[0, 0.5, 0]}
+        position={[-22, 2, -12]}
+        scale={1.1}
+        rotation={[0, 0.6, 0]}
         color="#94a3b8"
       />
       <ObjProp
         url="/assets/models/kenney-space/rocksTall.obj"
-        position={[-10, 0, -6]}
-        scale={2}
+        position={[-16, 0, -18]}
+        scale={1.8}
         color="#78716c"
       />
       <ObjProp
         url="/assets/models/kenney-space/stairs.obj"
-        position={[8, 0, -8]}
-        scale={2}
+        position={[14, 0, -20]}
+        scale={1.8}
         color="#a8a29e"
       />
-      <RigidBody type="fixed" colliders="cuboid" position={[3.5, 0.8, 6.5]}>
+      <RigidBody type="fixed" colliders="cuboid" position={[9, 0.7, -4]}>
         <mesh visible={false}>
-          <boxGeometry args={[1.4, 1.6, 1.4]} />
+          <boxGeometry args={[1.2, 1.4, 1.2]} />
         </mesh>
       </RigidBody>
     </group>
   );
 }
 
-/** Dense Kenney kitbash — GLBs and OBJs in separate Suspense so one failure cannot blank both. */
+/** Readable Drop Zone plaza — props frame the push toward the beacon. */
 export function KenneyWorldDressing() {
   return (
-    <DistanceCull anchor={[0, 0, 4]} maxDist={55}>
+    <DistanceCull anchor={[0, 0, -8]} maxDist={70}>
       <group>
         <Suspense fallback={null}>
           <GlbDressing />
@@ -269,9 +274,6 @@ useGLTF.preload("/assets/models/kenney-fps/wall-high.glb");
 useGLTF.preload("/assets/models/kenney-fps/wall-low.glb");
 useGLTF.preload("/assets/models/kenney-fps/platform.glb");
 useGLTF.preload("/assets/models/kenney-fps/platform-large-grass.glb");
-useGLTF.preload("/assets/models/kenney-fps/blaster.glb");
-useGLTF.preload("/assets/models/kenney-fps/blaster-repeater.glb");
 useGLTF.preload("/assets/models/kenney-fps/enemy-flying.glb");
 useGLTF.preload("/assets/models/kenney-fps/cloud.glb");
-useGLTF.preload("/assets/models/kenney-fps/grass.glb");
 useGLTF.preload("/assets/models/kenney-fps/grass-small.glb");

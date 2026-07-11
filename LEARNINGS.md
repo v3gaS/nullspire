@@ -2,6 +2,12 @@
 
 Build diary. Newest entries at the top.
 
+## 2026-07-10 — Open Drop Zone + 2h loop
+- Spawn was a kitbash wall soup in the player's face (Kenney walls/props at z≈3–8)
+- Cleared plaza: dressing/debris/barrels pushed to flanks and forward lane toward beacon
+- Loop protocol moved from 30m → **2 hours** (`AGENTS.md` + `/tmp/nullspire_realtime_block_hours.txt`)
+- Live: https://nullspire-amber.vercel.app
+
 ## 2026-07-10 — DOOM/QUAKE fun pass
 - Quake speeds (8.5/14), screen shake, fat boom spheres, gibbier kills
 - Explosive barrels (chain), secret caches with objective hints
