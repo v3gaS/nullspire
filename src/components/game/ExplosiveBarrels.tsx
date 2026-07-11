@@ -75,9 +75,11 @@ function ExplosiveBarrel({ position }: { position: [number, number, number] }) {
     dead.current = true;
     mesh.visible = false;
     const origin = worldPos(mesh).clone();
-    combatFx.pushBoom(origin, "#ff6b2e", 4.8);
+    combatFx.pushBoom(origin, "#ff7a18", 5.4);
+    combatFx.pushBoom(origin.clone().add(new THREE.Vector3(0, 0.5, 0)), "#ffb347", 2.6);
     combatFx.pushImpact(origin, "#ffb347");
-    combatFx.pushImpact(origin.clone().add(new THREE.Vector3(0.4, 0.6, -0.2)), "#ff4466");
+    combatFx.pushImpact(origin.clone().add(new THREE.Vector3(0.4, 0.6, -0.2)), "#f8fafc");
+    combatFx.pushImpact(origin.clone().add(new THREE.Vector3(-0.3, 0.4, 0.3)), "#ff4466");
     useFxStore.getState().pulseShake(0.28, 380);
     playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.78);
 
