@@ -445,7 +445,8 @@ export function CrashRimSector() {
       <EnergyGrid position={[0, 0.06, -64]} size={[10, 3]} />
       <EnergyGrid position={[0, 0.06, -108]} size={[8, 2.5]} />
       <EnergyGrid position={[0, 0.06, -122]} size={[7, 2]} />
-      <EnergyGrid position={[5, 0.06, -95]} size={[5, 2]} />      {/* Mid-canyon combat pocket cover — Quake lane readable */}
+      <EnergyGrid position={[5, 0.06, -95]} size={[5, 2]} />
+      {/* Mid-canyon combat pocket cover — Quake lane readable */}
       <Box position={[-5, 1.2, -40]} size={[2.2, 2.4, 1.2]} color="#5a4030" />
       <Box position={[5, 1.2, -41]} size={[2.2, 2.4, 1.2]} color="#5a4030" />
       <Box position={[0, 0.9, -43]} size={[3.5, 1.8, 1]} color="#4a3528" />
@@ -454,7 +455,12 @@ export function CrashRimSector() {
       {/* Core approach cover */}
       <Box position={[-6, 1.1, -114]} size={[2.4, 2.2, 1.4]} color="#2e1065" />
       <Box position={[6, 1.1, -115]} size={[2.4, 2.2, 1.4]} color="#2e1065" />
-      <Box position={[0, 0.95, -120]} size={[3.2, 1.9, 1.2]} color="#312e81" />      <Suspense fallback={null}>
+      <Box position={[0, 0.95, -120]} size={[3.2, 1.9, 1.2]} color="#312e81" />
+      <Box position={[-9, 1.0, -124]} size={[2.2, 2.0, 1.3]} color="#2e1065" />
+      <Box position={[9, 1.0, -125]} size={[2.2, 2.0, 1.3]} color="#2e1065" />
+      <Box position={[-4, 0.9, -130]} size={[2.8, 1.8, 1.2]} color="#312e81" />
+      <Box position={[4, 0.9, -131]} size={[2.8, 1.8, 1.2]} color="#312e81" />
+      <Suspense fallback={null}>
         <Prop
           url="/assets/models/kenney-fps/wall-high.glb"
           position={[20, 0, -8]}
