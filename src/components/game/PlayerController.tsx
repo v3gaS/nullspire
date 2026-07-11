@@ -215,15 +215,24 @@ export function PlayerController() {
           useGameStore.getState().damagePlayer(dmg);
           playerPhysics.punch(0.08);
         } else if (!grace && impact > 4) {
-          playSfx("/assets/audio/kenney-fps/land.ogg", 0.22);
-          playerPhysics.punch(0.035);
-          useFxStore.getState().pulseShake(0.035, 90);
+          playSfx("/assets/audio/kenney-fps/land.ogg", 0.28);
+          playerPhysics.punch(0.045);
+          useFxStore.getState().pulseShake(0.05, 110);
           combatFx.pushImpact(
             new THREE.Vector3(pos.x, 0.15, pos.z),
             "#94a3b8",
           );
+          combatFx.pushImpact(
+            new THREE.Vector3(pos.x + 0.3, 0.2, pos.z - 0.2),
+            "#cbd5e1",
+          );
+          combatFx.pushBoom(
+            new THREE.Vector3(pos.x, 0.1, pos.z),
+            "#64748b",
+            1.2,
+          );
         } else if (impact > 1.5) {
-          playerPhysics.punch(0.01);
+          playerPhysics.punch(0.015);
         }
         wasAirborne.current = false;
         peakFallSpeed.current = 0;
@@ -381,7 +390,7 @@ export function PlayerController() {
     // Quake sprint FOV punch
     const persp = camera as THREE.PerspectiveCamera;
     if (persp.isPerspectiveCamera) {
-      const targetFov = playerLocomotion.sprinting ? 82 : 75;
+      const targetFov = playerLocomotion.sprinting ? 86 : 75;
       persp.fov += (targetFov - persp.fov) * Math.min(1, dt * 8);
       persp.updateProjectionMatrix();
     }

@@ -79,9 +79,10 @@ export function WeaponPickup({
           activeWeapon: id,
           objective: `Acquired ${WEAPON_META[id].name}`,
         });
-        playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.5);
-        combatFx.pushBoom(g.position.clone(), color, 2);
-        useFxStore.getState().pulseShake(0.08, 140);
+        playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.55);
+        combatFx.pushBoom(g.position.clone(), color, 2.6);
+        combatFx.pushImpact(g.position.clone(), color);
+        useFxStore.getState().pulseShake(0.1, 160);
       }
       taken.current = true;
       g.visible = false;
@@ -106,15 +107,25 @@ export function WeaponPickup({
       >
         <PickupModel id={id} />
       </Suspense>
-      <pointLight color={color} intensity={2.0} distance={8} />
+      <pointLight color={color} intensity={2.6} distance={9} />
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.35, 0]}>
-        <ringGeometry args={[0.4, 0.55, 16]} />
+        <ringGeometry args={[0.45, 0.7, 20]} />
         <meshStandardMaterial
           color={color}
           emissive={color}
-          emissiveIntensity={1.1}
+          emissiveIntensity={1.4}
           transparent
-          opacity={0.7}
+          opacity={0.8}
+        />
+      </mesh>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.32, 0]}>
+        <ringGeometry args={[0.85, 0.95, 24]} />
+        <meshStandardMaterial
+          color="#ffffff"
+          emissive={color}
+          emissiveIntensity={0.9}
+          transparent
+          opacity={0.45}
         />
       </mesh>
     </group>

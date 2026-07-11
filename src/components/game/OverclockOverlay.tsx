@@ -26,8 +26,9 @@ export function OverclockOverlay() {
       className="pointer-events-none absolute inset-0 z-[4]"
       style={{
         background:
-          "radial-gradient(ellipse at center, transparent 55%, rgba(125, 255, 239, 0.18) 100%)",
-        boxShadow: "inset 0 0 80px rgba(255, 224, 102, 0.25)",
+          "radial-gradient(ellipse at center, transparent 48%, rgba(255, 224, 102, 0.14) 78%, rgba(125, 255, 239, 0.28) 100%)",
+        boxShadow:
+          "inset 0 0 100px rgba(255, 224, 102, 0.35), inset 0 0 40px rgba(125, 255, 239, 0.2)",
       }}
     />
   );

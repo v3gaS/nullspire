@@ -177,41 +177,43 @@ export function WeaponSystem() {
       switch (state.activeWeapon) {
         case "pulse_smg": {
           if (!state.spendNullEnergy(35)) return;
-          overclockUntil.current = performance.now() + 3000;
-          useFxStore.getState().pulseOverclock(3000);
-          useFxStore.getState().pulseShake(0.1, 180);
+          overclockUntil.current = performance.now() + 3200;
+          useFxStore.getState().pulseOverclock(3200);
+          useFxStore.getState().pulseShake(0.14, 220);
           combatFx.pushBoom(
             origin.clone().add(forward.clone().multiplyScalar(1.2)),
             "#ffe066",
-            1.8,
+            2.6,
           );
-          playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.45);
+          combatFx.pushBoom(origin.clone(), "#7dffef", 1.6);
+          playerPhysics.punch(0.05);
+          playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.55);
           break;
         }
         case "scatter_carbine": {
           if (!state.spendNullEnergy(40)) return;
           for (const obj of collectDestructibles(scene)) {
             const op = worldPos(obj);
-            if (op.distanceTo(origin) < 8) {
-              applyHit(obj, 40, origin);
-              impulseRigid(obj, op.clone().sub(origin), 14);
+            if (op.distanceTo(origin) < 9) {
+              applyHit(obj, 45, origin);
+              impulseRigid(obj, op.clone().sub(origin), 16);
             }
           }
           // Self knockback — shockwave kick
           playerPhysics.pushKnock(
-            -forward.x * 6,
-            2.5,
-            -forward.z * 6,
+            -forward.x * 7.5,
+            3.0,
+            -forward.z * 7.5,
           );
-          playerPhysics.punch(0.07);
+          playerPhysics.punch(0.09);
           combatFx.pushBoom(
             origin.clone().add(forward.clone().multiplyScalar(2.5)),
             "#ffb347",
-            3.2,
+            4.0,
           );
           combatFx.pushImpact(origin.clone().add(forward.clone().multiplyScalar(2)), "#ffb347");
-          useFxStore.getState().pulseShake(0.16, 260);
-          playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.5);
+          useFxStore.getState().pulseShake(0.2, 300);
+          playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.58);
           break;
         }
         case "arc_caster": {
