@@ -67,23 +67,25 @@ export function BastionUnit({
     const muzzle = wp.clone().add(new THREE.Vector3(0, 0.8, 0));
     if (windup.current > 0) {
       windup.current = Math.max(0, windup.current - dt);
-      if (Math.random() < dt * 9) {
-        combatFx.pushBeam(muzzle, cam.clone(), "#fef08a", 0.05);
+      if (Math.random() < dt * 12) {
+        combatFx.pushBeam(muzzle, cam.clone(), "#fef08a", 0.07);
       }
       if (windup.current <= 0) {
         cooldown.current = 1.8;
         useGameStore.getState().damagePlayer(7);
-        playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.36);
-        combatFx.pushBeam(muzzle, cam.clone(), "#94a3b8", 0.12);
+        playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.4);
+        combatFx.pushBeam(muzzle, cam.clone(), "#94a3b8", 0.14);
         combatFx.pushImpact(cam.clone(), "#94a3b8");
+        useFxStore.getState().pulseShake(0.06, 100);
       }
     } else if (
       dist < 24 &&
       cooldown.current <= 0 &&
       performance.now() >= useGameStore.getState().invulnerableUntil
     ) {
-      windup.current = 0.45;
-      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.18);
+      windup.current = 0.5;
+      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.2);
+      combatFx.pushImpact(muzzle, "#fef08a");
     }
   });
 
