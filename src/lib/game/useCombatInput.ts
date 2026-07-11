@@ -59,8 +59,9 @@ export function useCombatInput() {
         const mag = MAG_SIZE[state.activeWeapon];
         if (weapon.ammo >= mag || weapon.reserve <= 0) return;
         reloading.current = true;
-        useFxStore.getState().pulseReload(750);
-        playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.35);
+        useFxStore.getState().pulseReload(650);
+        useFxStore.getState().pulseShake(0.05, 90);
+        playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.48);
         window.setTimeout(() => {
           const s = useGameStore.getState();
           const w = s.weapons[s.activeWeapon];
@@ -77,7 +78,9 @@ export function useCombatInput() {
             },
           });
           reloading.current = false;
-        }, 750);
+          playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.4);
+          useFxStore.getState().pulseMuzzle(switchFlash(s.activeWeapon), 80);
+        }, 650);
       }
 
       if (e.code === "KeyQ") {
