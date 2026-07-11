@@ -10,7 +10,7 @@ const MAG_SIZE: Record<WeaponId, number> = {
   pulse_smg: 35,
   scatter_carbine: 9,
   arc_caster: 14,
-  rail_lance: 5,
+  rail_lance: 6,
   void_launcher: 5,
 };
 

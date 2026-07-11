@@ -80,7 +80,7 @@ const defaultWeapons: Record<WeaponId, WeaponState> = {
     reserve: 36,
   },
   arc_caster: { id: "arc_caster", unlocked: false, ammo: 14, reserve: 42 },
-  rail_lance: { id: "rail_lance", unlocked: false, ammo: 5, reserve: 15 },
+      rail_lance: { id: "rail_lance", unlocked: false, ammo: 6, reserve: 18 },
   void_launcher: {
     id: "void_launcher",
     unlocked: false,
