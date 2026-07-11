@@ -163,31 +163,53 @@ export function BloomMatriarch() {
           />
         </mesh>
       ))}
-      {/* Climb assist pads in vault shaft */}
+      {/* Climb assist pads in vault shaft — hangar-grey + orange chevrons */}
       <RigidBody type="fixed" colliders="cuboid" position={[-3, 5, -2]}>
         <mesh castShadow>
           <boxGeometry args={[2.5, 0.3, 2.5]} />
-          <meshStandardMaterial color="#4ade80" emissive="#166534" emissiveIntensity={0.9} />
+          <meshStandardMaterial color="#6a7580" emissive="#3a4550" emissiveIntensity={0.4} />
         </mesh>
       </RigidBody>
       <RigidBody type="fixed" colliders="cuboid" position={[3, 8, 1]}>
         <mesh castShadow>
           <boxGeometry args={[2.5, 0.3, 2.5]} />
-          <meshStandardMaterial color="#4ade80" emissive="#166534" emissiveIntensity={0.9} />
+          <meshStandardMaterial color="#7a8590" emissive="#3a4550" emissiveIntensity={0.4} />
         </mesh>
       </RigidBody>
       <RigidBody type="fixed" colliders="cuboid" position={[-2, 11, 2]}>
         <mesh castShadow>
           <boxGeometry args={[2.5, 0.3, 2.5]} />
-          <meshStandardMaterial color="#86efac" emissive="#166534" emissiveIntensity={1.0} />
+          <meshStandardMaterial color="#6a7580" emissive="#3a4550" emissiveIntensity={0.4} />
         </mesh>
       </RigidBody>
       <RigidBody type="fixed" colliders="cuboid" position={[2, 13.5, -1]}>
         <mesh castShadow>
           <boxGeometry args={[2.8, 0.3, 2.8]} />
-          <meshStandardMaterial color="#bbf7d0" emissive="#15803d" emissiveIntensity={1.1} />
+          <meshStandardMaterial color="#8a9098" emissive="#4ade80" emissiveIntensity={0.55} />
         </mesh>
       </RigidBody>
+      {[
+        [-3, 5.2, -2],
+        [3, 8.2, 1],
+        [-2, 11.2, 2],
+        [2, 13.7, -1],
+      ].map((p, i) => (
+        <mesh
+          key={`bm-chev-${i}`}
+          position={p as [number, number, number]}
+          rotation={[-Math.PI / 2, 0, 0]}
+        >
+          <ringGeometry args={[0.45, 0.7, 3, 1, 0, (Math.PI * 2) / 3]} />
+          <meshStandardMaterial
+            color="#ffb347"
+            emissive="#ff7a18"
+            emissiveIntensity={1.2}
+            transparent
+            opacity={0.8}
+            toneMapped={false}
+          />
+        </mesh>
+      ))}
       <pointLight position={[0, 12, 0]} intensity={2.6} color="#86efac" distance={30} />
       <pointLight position={[0, 24, 0]} intensity={4.0} color="#fff4e0" distance={44} />
       <pointLight position={[0, 8, 4]} intensity={1.8} color="#ff7a18" distance={20} />
