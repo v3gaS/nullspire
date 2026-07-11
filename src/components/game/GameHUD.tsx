@@ -123,7 +123,7 @@ export function GameHUD() {
         </p>
         <p className="text-lg text-cyan-100">{meta.name}</p>
         <p className="text-xs text-zinc-400">
-          Ability: {meta.ability} (Null)
+          Ability: <span className="text-teal-200">{meta.ability}</span> (F · Null)
         </p>
         <p
           className={`mt-1 font-mono text-sm ${

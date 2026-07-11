@@ -326,7 +326,10 @@ export function WeaponSystem() {
       if (mat && !Array.isArray(mat) && "emissive" in mat) {
         const std = mat as THREE.MeshStandardMaterial;
         std.emissive = new THREE.Color("#e879f9");
-        std.emissiveIntensity = 0.9 + Math.sin(now * 0.012) * 0.6;
+        std.emissiveIntensity = 1.2 + Math.sin(now * 0.016) * 0.8;
+      }
+      if (Math.random() < dt * 4) {
+        combatFx.pushImpact(worldPos(marked.current), "#f0abfc");
       }
     }
 
