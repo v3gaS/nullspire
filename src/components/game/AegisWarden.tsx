@@ -147,6 +147,24 @@ export function AegisWarden() {
           emissiveIntensity={0.8}
         />
       </mesh>
+      {/* Warden plaza cover — shootable sightlines */}
+      {[
+        [-7, 1.2, -4],
+        [7, 1.2, -4],
+        [-9, 1.2, 5],
+        [9, 1.2, 5],
+      ].map((p, i) => (
+        <mesh key={`ac-${i}`} position={p as [number, number, number]} castShadow>
+          <boxGeometry args={[2.4, 2.4, 1.4]} />
+          <meshStandardMaterial
+            color="#475569"
+            metalness={0.65}
+            roughness={0.35}
+            emissive="#1e293b"
+            emissiveIntensity={0.35}
+          />
+        </mesh>
+      ))}
     </group>
   );
 }

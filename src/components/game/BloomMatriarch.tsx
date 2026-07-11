@@ -91,6 +91,9 @@ export function BloomMatriarch() {
         sac.visible = false;
         hp.current -= 40;
         mesh.userData.hp = hp.current;
+        combatFx.pushBoom(worldPos(sac), "#86efac", 2.6);
+        useFxStore.getState().pulseShake(0.08, 140);
+        playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.4);
       }
     });
 
