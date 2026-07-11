@@ -94,9 +94,10 @@ function ExplosiveBarrel({ position }: { position: [number, number, number] }) {
     dead.current = true;
     mesh.visible = false;
     const origin = worldPos(mesh).clone();
-    combatFx.pushBoom(origin, "#ff7a18", 6.2);
-    combatFx.pushBoom(origin.clone().add(new THREE.Vector3(0, 0.5, 0)), "#ffb347", 3.0);
-    combatFx.pushBoom(origin.clone().add(new THREE.Vector3(0, 0.2, 0)), "#ffffff", 1.5);
+    combatFx.pushBoom(origin, "#ff7a18", 7.2);
+    combatFx.pushBoom(origin.clone().add(new THREE.Vector3(0, 0.5, 0)), "#ffb347", 3.6);
+    combatFx.pushBoom(origin.clone().add(new THREE.Vector3(0, 0.2, 0)), "#ffffff", 1.8);
+    combatFx.pushBoom(origin.clone().add(new THREE.Vector3(0, 0.8, 0)), "#ff9f43", 2.2);
     combatFx.pushImpact(origin, "#ffb347");
     combatFx.pushImpact(origin.clone().add(new THREE.Vector3(0.4, 0.6, -0.2)), "#f8fafc");
     combatFx.pushImpact(origin.clone().add(new THREE.Vector3(-0.3, 0.4, 0.3)), "#ff4466");
