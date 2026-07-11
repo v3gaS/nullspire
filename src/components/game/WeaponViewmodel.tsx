@@ -19,15 +19,15 @@ const ACCENT: Record<WeaponId, string> = {
 function viewKick(id: WeaponId): number {
   switch (id) {
     case "pulse_smg":
-      return 0.24;
+      return 0.28;
     case "scatter_carbine":
-      return 0.38;
+      return 0.44;
     case "arc_caster":
-      return 0.26;
+      return 0.3;
     case "rail_lance":
-      return 0.36;
+      return 0.42;
     case "void_launcher":
-      return 0.55;
+      return 0.62;
     default: {
       const _exhaustive: never = id;
       return _exhaustive;
@@ -280,7 +280,7 @@ export function WeaponViewmodel() {
       .addScaledVector(forward, z);
     g.quaternion.copy(camera.quaternion);
     const kickPitch =
-      active === "void_launcher" ? 0.28 : active === "scatter_carbine" ? 0.22 : 0.18;
+      active === "void_launcher" ? 0.34 : active === "scatter_carbine" ? 0.26 : 0.2;
     g.rotateX(0.06 - fx.kick * kickPitch);
     g.rotateY(0.1);
 
@@ -291,12 +291,14 @@ export function WeaponViewmodel() {
       );
       const glowScale =
         active === "void_launcher"
-          ? 1.55
+          ? 1.85
           : active === "scatter_carbine"
-            ? 1.25
+            ? 1.45
             : active === "pulse_smg"
-              ? 1.15
-              : 1;
+              ? 1.3
+              : active === "rail_lance"
+                ? 1.4
+                : 1.15;
       glowRef.current.scale.setScalar(glowScale);
     }
   });

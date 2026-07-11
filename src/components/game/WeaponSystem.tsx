@@ -143,29 +143,29 @@ export function applyHit(
     } else {
       // Quake-ish gib spray — orange/white chunk debris
       const wp = worldPos(mesh);
-      for (let i = 0; i < 18; i++) {
+      for (let i = 0; i < 26; i++) {
         const gib = wp
           .clone()
           .add(
             new THREE.Vector3(
-              (Math.random() - 0.5) * 4.0,
-              Math.random() * 2.8,
-              (Math.random() - 0.5) * 4.0,
+              (Math.random() - 0.5) * 4.8,
+              Math.random() * 3.2,
+              (Math.random() - 0.5) * 4.8,
             ),
           );
         const gibColor =
           i % 3 === 0 ? "#ff7a18" : i % 3 === 1 ? "#f8fafc" : "#ff4466";
         combatFx.pushImpact(gib, gibColor);
       }
-      combatFx.pushBoom(wp, "#ff6644", 4.0);
-      combatFx.pushBoom(wp.clone().add(new THREE.Vector3(0, 0.45, 0)), "#ff9f43", 2.0);
-      combatFx.pushBoom(wp.clone().add(new THREE.Vector3(0, 0.15, 0)), "#ffffff", 1.0);
+      combatFx.pushBoom(wp, "#ff6644", 4.8);
+      combatFx.pushBoom(wp.clone().add(new THREE.Vector3(0, 0.45, 0)), "#ff9f43", 2.5);
+      combatFx.pushBoom(wp.clone().add(new THREE.Vector3(0, 0.15, 0)), "#ffffff", 1.3);
       mesh.visible = false;
       mesh.userData.dead = true;
       playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.55);
       useFxStore.getState().pulseKill(fragName(mesh.userData.kind));
       useGameStore.getState().addFrag();
-      useFxStore.getState().pulseShake(0.17, 210);
+      useFxStore.getState().pulseShake(0.22, 260);
     }
   } else {
     playSfx("/assets/audio/kenney-fps/enemy_hurt.ogg", 0.3);
