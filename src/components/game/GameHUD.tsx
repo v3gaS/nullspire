@@ -43,20 +43,44 @@ export function GameHUD() {
       {/* Crosshair — spreads on fire kick */}
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
         <div
-          className="absolute left-1/2 w-px bg-cyan-200/90"
-          style={{ height: 6, top: -arm, transform: "translateX(-50%)" }}
+          className="absolute left-1/2 bg-cyan-100"
+          style={{
+            width: 2,
+            height: 7,
+            top: -arm,
+            transform: "translateX(-50%)",
+            boxShadow: "0 0 6px rgba(125,255,239,0.8)",
+          }}
         />
         <div
-          className="absolute left-1/2 w-px bg-cyan-200/90"
-          style={{ height: 6, bottom: -arm, transform: "translateX(-50%)" }}
+          className="absolute left-1/2 bg-cyan-100"
+          style={{
+            width: 2,
+            height: 7,
+            bottom: -arm,
+            transform: "translateX(-50%)",
+            boxShadow: "0 0 6px rgba(125,255,239,0.8)",
+          }}
         />
         <div
-          className="absolute top-1/2 h-px bg-cyan-200/90"
-          style={{ width: 6, left: -arm, transform: "translateY(-50%)" }}
+          className="absolute top-1/2 bg-cyan-100"
+          style={{
+            height: 2,
+            width: 7,
+            left: -arm,
+            transform: "translateY(-50%)",
+            boxShadow: "0 0 6px rgba(125,255,239,0.8)",
+          }}
         />
         <div
-          className="absolute top-1/2 h-px bg-cyan-200/90"
-          style={{ width: 6, right: -arm, transform: "translateY(-50%)" }}
+          className="absolute top-1/2 bg-cyan-100"
+          style={{
+            height: 2,
+            width: 7,
+            right: -arm,
+            transform: "translateY(-50%)",
+            boxShadow: "0 0 6px rgba(125,255,239,0.8)",
+          }}
         />
       </div>
 

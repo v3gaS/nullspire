@@ -25,9 +25,12 @@ export function PauseMenu() {
   }
 
   return (
-    <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/65 backdrop-blur-sm">
-      <div className="w-full max-w-sm rounded border border-white/15 bg-[#121820]/95 p-6 shadow-2xl">
-        <h2 className="font-[family-name:var(--font-display)] text-2xl tracking-[0.2em] text-teal-100">
+    <div className="absolute inset-0 z-20 flex items-center justify-center bg-[radial-gradient(ellipse_at_center,rgba(20,40,50,0.55)_0%,rgba(0,0,0,0.78)_70%)] backdrop-blur-sm">
+      <div className="w-full max-w-sm rounded border border-teal-400/25 bg-[#121820]/95 p-6 shadow-[0_0_40px_rgba(46,230,200,0.12)]">
+        <p className="text-[10px] uppercase tracking-[0.35em] text-teal-300/70">
+          Nullspire
+        </p>
+        <h2 className="font-[family-name:var(--font-display)] text-3xl tracking-[0.2em] text-teal-50">
           PAUSED
         </h2>
         <label className="mt-6 block text-xs uppercase tracking-[0.2em] text-zinc-400">
