@@ -92,10 +92,10 @@ function World({ showDressing }: { showDressing: boolean }) {
         <AegisWarden />
         <BloomMatriarch />
         <NullspirePrimarch />
-        <WeaponPickup id="scatter_carbine" position={[-4, 1.8, -6]} />
-        <WeaponPickup id="arc_caster" position={[-7, 3.2, -10]} />
-        <WeaponPickup id="rail_lance" position={[2, 5.8, -16]} />
-        <WeaponPickup id="void_launcher" position={[0, 1.2, -70]} />
+          <WeaponPickup id="scatter_carbine" position={[-4, 1.6, -6]} />
+          <WeaponPickup id="arc_caster" position={[-7, 3.0, -10]} />
+          <WeaponPickup id="rail_lance" position={[2, 5.6, -16]} />
+          <WeaponPickup id="void_launcher" position={[0, 1.2, -70]} />
         <PhysicsDebris />
         <ExplosiveBarrels />
         <SecretCaches />

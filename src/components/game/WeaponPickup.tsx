@@ -44,7 +44,7 @@ function PickupModel({ id }: { id: WeaponId }) {
     return c;
   }, [scene, color]);
   return (
-    <primitive object={cloned} scale={4} rotation={[0.3, 0, 0.2]} />
+    <primitive object={cloned} scale={1.15} rotation={[0.25, 0, 0.15]} />
   );
 }
 
