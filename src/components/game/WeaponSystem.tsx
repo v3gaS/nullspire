@@ -265,6 +265,16 @@ export function WeaponSystem() {
     }
     nests.current = nests.current.filter((n) => now < n.until);
 
+    // Marked target pulse — Rail Lance Mark readability
+    if (marked.current && marked.current.visible) {
+      const mat = (marked.current as THREE.Mesh).material;
+      if (mat && !Array.isArray(mat) && "emissive" in mat) {
+        const std = mat as THREE.MeshStandardMaterial;
+        std.emissive = new THREE.Color("#e879f9");
+        std.emissiveIntensity = 0.9 + Math.sin(now * 0.012) * 0.6;
+      }
+    }
+
     // Singularity pull then boom — physics pull on debris, stagger on meshes
     for (const s of singularities.current) {
       if (!s.detonated && now < s.until) {

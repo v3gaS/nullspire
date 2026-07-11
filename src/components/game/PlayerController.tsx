@@ -15,6 +15,7 @@ import { playerPhysics } from "@/lib/game/playerPhysics";
 import { playSfx } from "@/lib/game/audio";
 import { intersectScene } from "@/lib/game/raycast";
 import { useFxStore } from "@/stores/fxStore";
+import { combatFx } from "@/components/game/CombatVfx";
 
 type Keys = Record<string, boolean>;
 
@@ -215,7 +216,12 @@ export function PlayerController() {
           playerPhysics.punch(0.08);
         } else if (!grace && impact > 4) {
           playSfx("/assets/audio/kenney-fps/land.ogg", 0.22);
-          playerPhysics.punch(0.025);
+          playerPhysics.punch(0.035);
+          useFxStore.getState().pulseShake(0.035, 90);
+          combatFx.pushImpact(
+            new THREE.Vector3(pos.x, 0.15, pos.z),
+            "#94a3b8",
+          );
         } else if (impact > 1.5) {
           playerPhysics.punch(0.01);
         }
@@ -361,6 +367,13 @@ export function PlayerController() {
     camera.rotation.order = "YXZ";
     camera.rotation.y = yaw.current + playerPhysics.punchYaw;
     camera.rotation.x = pitch.current + playerPhysics.punchPitch;
+    // Quake sprint FOV punch
+    const persp = camera as THREE.PerspectiveCamera;
+    if (persp.isPerspectiveCamera) {
+      const targetFov = playerLocomotion.sprinting ? 82 : 75;
+      persp.fov += (targetFov - persp.fov) * Math.min(1, dt * 8);
+      persp.updateProjectionMatrix();
+    }
   });
 
   return (

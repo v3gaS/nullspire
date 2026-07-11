@@ -15,6 +15,8 @@ interface FxState {
   kick: number;
   hitUntil: number;
   killUntil: number;
+  multiKillUntil: number;
+  multiKillCount: number;
   overclockUntil: number;
   reloadUntil: number;
   shakeUntil: number;
@@ -37,6 +39,8 @@ export const useFxStore = create<FxState>((set, get) => ({
   kick: 0,
   hitUntil: 0,
   killUntil: 0,
+  multiKillUntil: 0,
+  multiKillCount: 0,
   overclockUntil: 0,
   reloadUntil: 0,
   shakeUntil: 0,
@@ -49,7 +53,18 @@ export const useFxStore = create<FxState>((set, get) => ({
       kick: 1,
     }),
   pulseHit: () => set({ hitUntil: performance.now() + 90 }),
-  pulseKill: () => set({ killUntil: performance.now() + 160 }),
+  pulseKill: () => {
+    const now = performance.now();
+    const prev = get();
+    const chain = now < prev.multiKillUntil ? prev.multiKillCount + 1 : 1;
+    set({
+      killUntil: now + 160,
+      multiKillCount: chain,
+      multiKillUntil: now + 2200,
+      shakeUntil: now + (chain >= 3 ? 220 : 120),
+      shakeAmp: Math.max(prev.shakeAmp, chain >= 3 ? 0.12 : 0.06),
+    });
+  },
   pulseOverclock: (ms = 3000) =>
     set({ overclockUntil: performance.now() + ms }),
   pulseReload: (ms = 900) => set({ reloadUntil: performance.now() + ms }),

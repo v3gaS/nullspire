@@ -16,6 +16,7 @@ import { KenneyWorldDressing } from "./KenneyWorldDressing";
 import { DamageVignette } from "./DamageVignette";
 import { MuzzleFlashOverlay } from "./MuzzleFlashOverlay";
 import { OverclockOverlay } from "./OverclockOverlay";
+import { MultiKillBanner } from "./MultiKillBanner";
 import { HitMarker } from "./HitMarker";
 import { DamageNumbers } from "./DamageNumbers";
 import { BossHUD } from "./BossHUD";
@@ -196,6 +197,7 @@ export function GameApp() {
         <>
           <DamageVignette />
           <OverclockOverlay />
+          <MultiKillBanner />
           <MuzzleFlashOverlay />
           <HitMarker />
           <DamageNumbers />
