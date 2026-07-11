@@ -92,11 +92,12 @@ export function GameHUD() {
       </div>
 
       {/* Kill feed — top left */}
-      <div className="absolute left-5 top-5 space-y-1">
+      <div className="absolute left-5 top-5 space-y-1.5">
         {feed.map((e) => (
           <p
             key={e.id}
-            className="text-[14px] font-semibold tracking-wide text-orange-100/95 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]"
+            className="text-[15px] font-bold tracking-wide text-orange-50 drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]"
+            style={{ textShadow: "0 0 12px rgba(255,122,24,0.45)" }}
           >
             {e.text}
           </p>
@@ -108,8 +109,8 @@ export function GameHUD() {
         <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/45">
           Frags
         </p>
-        <p className="text-3xl font-black leading-none text-white">{frags}</p>
-        <p className="mt-1.5 text-[11px] uppercase tracking-[0.16em] text-amber-300/80">
+        <p className="text-4xl font-black leading-none text-white">{frags}</p>
+        <p className="mt-1.5 text-[12px] uppercase tracking-[0.16em] text-amber-300/90">
           Secrets {secretsFound}
         </p>
       </div>

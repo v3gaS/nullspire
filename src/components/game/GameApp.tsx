@@ -247,7 +247,7 @@ export function GameApp() {
           <p className="mb-2 text-xs uppercase tracking-[0.4em] text-orange-300/85">
             Campaign Complete
           </p>
-          <h2 className="font-[family-name:var(--font-display)] text-6xl tracking-[0.12em] text-[#ffb347] drop-shadow-[0_0_40px_rgba(255,122,24,0.6)]">
+          <h2 className="font-[family-name:var(--font-display)] text-7xl tracking-[0.12em] text-[#ffb347] drop-shadow-[0_0_48px_rgba(255,122,24,0.7)]">
             Nullspire Cleared
           </h2>
           <p className="mt-4 max-w-md px-6 text-center text-sm text-zinc-200">
@@ -274,7 +274,7 @@ export function GameApp() {
           <p className="mb-2 text-xs uppercase tracking-[0.4em] text-red-400/90">
             Fragged
           </p>
-          <h2 className="font-[family-name:var(--font-display)] text-6xl tracking-[0.12em] text-[#ff4d5e] drop-shadow-[0_0_40px_rgba(255,60,70,0.7)]">
+          <h2 className="font-[family-name:var(--font-display)] text-7xl tracking-[0.12em] text-[#ff4d5e] drop-shadow-[0_0_48px_rgba(255,60,70,0.8)]">
             Signal Lost
           </h2>
           <p className="mt-4 text-sm text-zinc-200">
