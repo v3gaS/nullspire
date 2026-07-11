@@ -22,8 +22,6 @@ function useDestructibleSync(
   if (hpRef.current <= 0) {
     deadRef.current = true;
     mesh.visible = false;
-    combatFx.pushBoom(worldPos(mesh), "#ff6644", 1.8);
-    useFxStore.getState().pulseKill();
   }
 }
 
