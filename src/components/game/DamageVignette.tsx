@@ -19,19 +19,19 @@ export function DamageVignette() {
 
   if (screen !== "playing" && screen !== "paused") return null;
 
-  const lowHp = health < 25 ? 0.72 : health < 40 ? 0.5 : health < 60 ? 0.28 : 0.08;
+  const lowHp = health < 25 ? 0.82 : health < 40 ? 0.58 : health < 60 ? 0.34 : 0.1;
   const intensity = Math.max(lowHp, hitFlash);
 
   return (
     <div
       className="pointer-events-none absolute inset-0 z-[5]"
       style={{
-        background: `radial-gradient(ellipse at center, transparent 38%, rgba(160, 12, 24, ${intensity}) 100%)`,
+        background: `radial-gradient(ellipse at center, transparent 36%, rgba(180, 8, 18, ${intensity}) 100%)`,
         boxShadow:
           hitFlash > 0.4
-            ? "inset 0 0 80px rgba(255, 40, 50, 0.35)"
+            ? "inset 0 0 100px rgba(255, 40, 50, 0.45)"
             : health < 30
-              ? "inset 0 0 60px rgba(180, 20, 30, 0.25)"
+              ? "inset 0 0 70px rgba(200, 20, 30, 0.32)"
               : undefined,
         transition: hitFlash > 0 ? "none" : "background 200ms ease",
       }}
