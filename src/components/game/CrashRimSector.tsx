@@ -452,7 +452,10 @@ export function CrashRimSector() {
       <pointLight position={[16, 10, -20]} intensity={2.2} color="#ff7a18" distance={22} />
 
       {[-30, -20, -10, 0, 10, 20].map((z) => (
-        <Box key={z} position={[-22, 2, z]} size={[2, 4, 2]} color="#554838" />
+        <Box key={z} position={[-22, 2, z]} size={[2, 4, 2]} color="#7a6a58" />
+      ))}
+      {[-30, -20, -10, 0, 10, 20].map((z) => (
+        <Box key={`r-${z}`} position={[22, 2, z]} size={[2, 4, 2]} color="#6a7580" />
       ))}
 
       <Beacon position={[16, 10, -20]} />
