@@ -19,14 +19,18 @@ const BARRELS: [number, number, number][] = [
   // Drop Zone flank nest — immediate boom juice
   [7.5, 0.7, -4],
   [8.8, 0.7, -5.2],
+  [9.6, 0.7, -3.8],
   [-8, 0.7, -5],
   [-9.2, 0.7, -6.1],
+  [-9.8, 0.7, -4.2],
   // Approach cluster — Quake chain setpiece (off spawn pad)
   [9, 0.7, -14],
   [10.5, 0.7, -15.2],
   [8.2, 0.7, -15.8],
+  [11.2, 0.7, -14.4],
   [-11, 0.7, -16],
   [-12.4, 0.7, -17],
+  [-10.2, 0.7, -17.4],
   // Mid canyon
   [12, 0.7, -28],
   [-10, 0.7, -30],
@@ -80,13 +84,14 @@ function ExplosiveBarrel({ position }: { position: [number, number, number] }) {
     dead.current = true;
     mesh.visible = false;
     const origin = worldPos(mesh).clone();
-    combatFx.pushBoom(origin, "#ff7a18", 5.4);
-    combatFx.pushBoom(origin.clone().add(new THREE.Vector3(0, 0.5, 0)), "#ffb347", 2.6);
+    combatFx.pushBoom(origin, "#ff7a18", 6.2);
+    combatFx.pushBoom(origin.clone().add(new THREE.Vector3(0, 0.5, 0)), "#ffb347", 3.0);
+    combatFx.pushBoom(origin.clone().add(new THREE.Vector3(0, 0.2, 0)), "#ffffff", 1.5);
     combatFx.pushImpact(origin, "#ffb347");
     combatFx.pushImpact(origin.clone().add(new THREE.Vector3(0.4, 0.6, -0.2)), "#f8fafc");
     combatFx.pushImpact(origin.clone().add(new THREE.Vector3(-0.3, 0.4, 0.3)), "#ff4466");
-    useFxStore.getState().pulseShake(0.28, 380);
-    playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.78);
+    useFxStore.getState().pulseShake(0.32, 420);
+    playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.82);
 
     // Chain damage + physics blast
     scene.traverse((obj) => {
@@ -133,21 +138,31 @@ function ExplosiveBarrel({ position }: { position: [number, number, number] }) {
         castShadow
         userData={{ destructible: true, hp: 28, kind: "barrel" }}
       >
-        <cylinderGeometry args={[0.45, 0.5, 1.15, 10]} />
+        <cylinderGeometry args={[0.48, 0.52, 1.2, 10]} />
         <meshStandardMaterial
           color="#c2410c"
           emissive="#7c2d12"
-          emissiveIntensity={0.55}
+          emissiveIntensity={0.65}
           metalness={0.55}
           roughness={0.4}
         />
       </mesh>
-      <mesh position={[0, 0.55, 0]}>
-        <cylinderGeometry args={[0.2, 0.2, 0.12, 8]} />
+      <mesh position={[0, 0.15, 0]}>
+        <cylinderGeometry args={[0.5, 0.5, 0.22, 10]} />
         <meshStandardMaterial
           color="#fbbf24"
           emissive="#f59e0b"
-          emissiveIntensity={1.4}
+          emissiveIntensity={1.1}
+          metalness={0.3}
+          roughness={0.45}
+        />
+      </mesh>
+      <mesh position={[0, 0.58, 0]}>
+        <cylinderGeometry args={[0.22, 0.22, 0.14, 8]} />
+        <meshStandardMaterial
+          color="#fbbf24"
+          emissive="#f59e0b"
+          emissiveIntensity={1.6}
         />
       </mesh>
     </RigidBody>

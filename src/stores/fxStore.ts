@@ -68,7 +68,7 @@ export const useFxStore = create<FxState>((set, get) => ({
       muzzleColor: color,
       kick: 1,
     }),
-  pulseHit: () => set({ hitUntil: performance.now() + 90 }),
+  pulseHit: () => set({ hitUntil: performance.now() + 120 }),
   pulseKill: (targetName) => {
     const now = performance.now();
     const prev = get();
@@ -88,11 +88,11 @@ export const useFxStore = create<FxState>((set, get) => ({
           })
           .slice(-6);
     set({
-      killUntil: now + 200,
+      killUntil: now + 280,
       multiKillCount: chain,
-      multiKillUntil: now + 2600,
-      shakeUntil: now + (chain >= 3 ? 280 : 140),
-      shakeAmp: Math.max(prev.shakeAmp, chain >= 3 ? 0.16 : 0.08),
+      multiKillUntil: now + 2800,
+      shakeUntil: now + (chain >= 3 ? 320 : 160),
+      shakeAmp: Math.max(prev.shakeAmp, chain >= 3 ? 0.18 : 0.1),
       killFeed: feed,
     });
   },

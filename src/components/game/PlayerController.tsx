@@ -215,21 +215,30 @@ export function PlayerController() {
           useGameStore.getState().damagePlayer(dmg);
           playerPhysics.punch(0.08);
         } else if (!grace && impact > 4) {
-          playSfx("/assets/audio/kenney-fps/land.ogg", 0.28);
-          playerPhysics.punch(0.045);
-          useFxStore.getState().pulseShake(0.05, 110);
+          playSfx("/assets/audio/kenney-fps/land.ogg", 0.34);
+          playerPhysics.punch(0.055);
+          useFxStore.getState().pulseShake(0.07, 130);
           combatFx.pushImpact(
             new THREE.Vector3(pos.x, 0.15, pos.z),
             "#e2e8f0",
           );
           combatFx.pushImpact(
-            new THREE.Vector3(pos.x + 0.3, 0.2, pos.z - 0.2),
+            new THREE.Vector3(pos.x + 0.35, 0.22, pos.z - 0.25),
             "#ffb347",
+          );
+          combatFx.pushImpact(
+            new THREE.Vector3(pos.x - 0.3, 0.18, pos.z + 0.2),
+            "#94a3b8",
           );
           combatFx.pushBoom(
             new THREE.Vector3(pos.x, 0.1, pos.z),
             "#94a3b8",
-            1.6,
+            2.2,
+          );
+          combatFx.pushBoom(
+            new THREE.Vector3(pos.x, 0.05, pos.z),
+            "#cbd5e1",
+            1.1,
           );
         } else if (impact > 1.5) {
           playerPhysics.punch(0.015);
