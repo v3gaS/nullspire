@@ -141,21 +141,24 @@ export function applyHit(
       // Barrel death handled by ExplosiveBarrels tick
       mesh.userData.hp = 0;
     } else {
-      // Quake-ish gib spray
+      // Quake-ish gib spray — orange/white chunk debris
       const wp = worldPos(mesh);
-      for (let i = 0; i < 12; i++) {
+      for (let i = 0; i < 14; i++) {
         const gib = wp
           .clone()
           .add(
             new THREE.Vector3(
-              (Math.random() - 0.5) * 3.0,
-              Math.random() * 2.2,
-              (Math.random() - 0.5) * 3.0,
+              (Math.random() - 0.5) * 3.4,
+              Math.random() * 2.4,
+              (Math.random() - 0.5) * 3.4,
             ),
           );
-        combatFx.pushImpact(gib, i % 2 === 0 ? "#ff4466" : "#ffaa44");
+        const gibColor =
+          i % 3 === 0 ? "#ff7a18" : i % 3 === 1 ? "#f8fafc" : "#ff4466";
+        combatFx.pushImpact(gib, gibColor);
       }
-      combatFx.pushBoom(wp, "#ff6644", 2.9);
+      combatFx.pushBoom(wp, "#ff6644", 3.2);
+      combatFx.pushBoom(wp.clone().add(new THREE.Vector3(0, 0.4, 0)), "#ff9f43", 1.6);
       mesh.visible = false;
       mesh.userData.dead = true;
       playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.48);

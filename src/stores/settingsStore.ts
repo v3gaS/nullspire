@@ -38,7 +38,7 @@ export function qualityConfig(q: QualityPreset) {
         starCount: 1200,
         dpr: 1,
         antialias: false,
-        fogFar: 80,
+        fogFar: 110,
       };
     case "medium":
       return {
@@ -46,7 +46,7 @@ export function qualityConfig(q: QualityPreset) {
         starCount: 3500,
         dpr: 1.25,
         antialias: true,
-        fogFar: 110,
+        fogFar: 150,
       };
     case "high":
       return {
@@ -54,7 +54,7 @@ export function qualityConfig(q: QualityPreset) {
         starCount: 5500,
         dpr: 1.75,
         antialias: true,
-        fogFar: 130,
+        fogFar: 180,
       };
     default: {
       const _exhaustive: never = q;
