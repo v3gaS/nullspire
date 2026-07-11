@@ -25,7 +25,7 @@ function Box({
     <RigidBody type="fixed" colliders="cuboid" position={position}>
       <mesh castShadow receiveShadow>
         <boxGeometry args={size} />
-        <meshStandardMaterial color={color} roughness={0.85} metalness={0.2} />
+        <meshStandardMaterial color={color} roughness={0.78} metalness={0.18} />
       </mesh>
     </RigidBody>
   );
@@ -291,20 +291,31 @@ export function CrashRimSector() {
       ))}
 
       {/* Open Drop Zone pad — keep the look-ahead lane empty */}
-      <Box position={[0, 0.12, 8]} size={[14, 0.24, 14]} color="#3d4a55" />
-      {/* Spawn plaza fill lights — Quake readability */}
-      <pointLight position={[0, 6, 6]} intensity={2.2} color="#ffe8c8" distance={22} />
-      <pointLight position={[-8, 4, 2]} intensity={1.2} color="#7dffef" distance={16} />
-      <pointLight position={[8, 4, 0]} intensity={1.2} color="#7dffef" distance={16} />
-      {/* Runway stripe toward the beacon so the push direction reads instantly */}
-      <mesh position={[0, 0.06, -10]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[2.4, 52]} />
+      <Box position={[0, 0.12, 8]} size={[14, 0.24, 14]} color="#6a7580" />
+      {/* Spawn plaza fill lights — hangar wash */}
+      <pointLight position={[0, 10, 6]} intensity={3.4} color="#fff4e0" distance={28} />
+      <pointLight position={[-8, 5, 2]} intensity={1.6} color="#7dffef" distance={18} />
+      <pointLight position={[8, 5, 0]} intensity={1.6} color="#ff9f43" distance={18} />
+      {/* Orange runway stripe — Quake/UT lane read */}
+      <mesh position={[0, 0.07, -10]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[1.6, 56]} />
         <meshStandardMaterial
-          color="#2ee6c8"
-          emissive="#2ee6c8"
-          emissiveIntensity={0.65}
+          color="#ff7a18"
+          emissive="#ff7a18"
+          emissiveIntensity={1.15}
           transparent
-          opacity={0.5}
+          opacity={0.72}
+          toneMapped={false}
+        />
+      </mesh>
+      <mesh position={[0, 0.065, -10]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[2.8, 56]} />
+        <meshStandardMaterial
+          color="#ffb347"
+          emissive="#ff7a18"
+          emissiveIntensity={0.35}
+          transparent
+          opacity={0.28}
         />
       </mesh>
       {/* Direction chevrons — Quake-readable push lane */}

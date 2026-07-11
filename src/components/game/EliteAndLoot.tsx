@@ -323,6 +323,10 @@ export function EliteAndLoot() {
       <LootDrop position={[8, 0.6, -14]} kind="health" />
       <LootDrop position={[-9, 1.6, -12]} kind="ammo" />
       <LootDrop position={[14, 0.6, -22]} kind="shards" />
+      {/* Drop Zone plaza cubes — early readability */}
+      <LootDrop position={[-3.5, 0.7, 5.5]} kind="health" />
+      <LootDrop position={[4.2, 0.7, 4.8]} kind="ammo" />
+      <LootDrop position={[0, 0.7, 2.2]} kind="shards" />
       <LootDrop position={[0, 0.8, -68]} kind="health" />
       <LootDrop position={[-7, 0.8, -46]} kind="ammo" />
       <LootDrop position={[11, 1.2, -52]} kind="shards" />

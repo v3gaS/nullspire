@@ -91,6 +91,18 @@ export function WeaponPickup({
 
   return (
     <group ref={groupRef} position={position}>
+      {/* Floating accent cube — Quake-style pickup readability */}
+      <mesh position={[0, 0.55, 0]} castShadow>
+        <boxGeometry args={[0.42, 0.42, 0.42]} />
+        <meshStandardMaterial
+          color={color}
+          emissive={color}
+          emissiveIntensity={2.0}
+          metalness={0.2}
+          roughness={0.25}
+          toneMapped={false}
+        />
+      </mesh>
       <Suspense
         fallback={
           <mesh castShadow>
@@ -107,7 +119,7 @@ export function WeaponPickup({
       >
         <PickupModel id={id} />
       </Suspense>
-      <pointLight color={color} intensity={2.6} distance={9} />
+      <pointLight color={color} intensity={3.2} distance={11} />
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.35, 0]}>
         <ringGeometry args={[0.45, 0.7, 20]} />
         <meshStandardMaterial
