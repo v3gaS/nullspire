@@ -53,9 +53,12 @@ export function TitleScreen() {
       >
         NULLSPIRE
       </h1>
-      <p className="relative z-10 mt-4 max-w-md px-6 text-center text-sm leading-relaxed text-zinc-300/90">
+      <p className="relative z-10 mt-4 max-w-md px-6 text-center text-sm leading-relaxed text-zinc-200/95">
         Fast guns. Fat explosions. Secret caches off the main line. Chain the
         barrels, rocket-jump the pads, and melt the Primarch.
+      </p>
+      <p className="relative z-10 mt-2 text-[11px] uppercase tracking-[0.3em] text-teal-300/70">
+        Quake juice · DOOM pace · exoplanet scrap
       </p>
 
       <div className="relative z-10 mt-10 flex flex-col items-center gap-3">
