@@ -151,12 +151,8 @@ export function NullspirePrimarch() {
           roughness={0.2}
         />
       </mesh>
-      <pointLight position={[0, 8, 0]} intensity={4.6} color="#a78bfa" distance={52} />
-      <pointLight position={[0, 28, 0]} intensity={5.6} color="#fff4e0" distance={68} />
-      <pointLight position={[-8, 4, -4]} intensity={2.3} color="#c4b5fd" distance={26} />
-      <pointLight position={[8, 4, 4]} intensity={2.3} color="#c4b5fd" distance={26} />
-      <pointLight position={[0, 12, 0]} intensity={3.2} color="#ff7a18" distance={34} />
-      <pointLight position={[0, 5, 8]} intensity={2.2} color="#ffb347" distance={24} />
+      <pointLight position={[0, 16, 0]} intensity={2.4} color="#a78bfa" distance={44} />
+      <pointLight position={[0, 10, 0]} intensity={1.5} color="#ff7a18" distance={26} />
       {/* Arena cover pillars — Quake duel geometry */}
       {[
         [-8, 1.5, -6],

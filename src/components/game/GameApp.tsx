@@ -152,52 +152,28 @@ export function GameApp() {
           className="absolute inset-0"
         >
           <color attach="background" args={["#627284"]} />
-          <fog attach="fog" args={["#8494a4", 100, Math.max(cfg.fogFar, 150)]} />
-          <ambientLight intensity={1.28} />
+          <fog attach="fog" args={["#8494a4", 40, cfg.fogFar]} />
+          <ambientLight intensity={1.35} />
           <directionalLight
             castShadow={cfg.shadows}
-            intensity={2.55}
+            intensity={2.2}
             position={[18, 55, 12]}
             color="#fff4e0"
-            shadow-mapSize={cfg.shadows ? [2048, 2048] : [512, 512]}
+            shadow-mapSize={cfg.shadows ? [1024, 1024] : [512, 512]}
           />
-          <hemisphereLight args={["#efe4d0", "#2a3544", 1.15]} />
-          {/* Skylight wash — hangar bloom feel */}
+          <hemisphereLight args={["#efe4d0", "#2a3544", 1.1]} />
+          {/* One soft skylight — avoid stacking many point lights */}
           <pointLight
-            position={[0, 48, -20]}
-            intensity={4.8}
+            position={[0, 40, -40]}
+            intensity={2.4}
             color="#fff8ee"
-            distance={130}
+            distance={90}
           />
           <pointLight
-            position={[16, 12, -20]}
-            intensity={2.6}
-            color="#2ee6c8"
-            distance={50}
-          />
-          <pointLight
-            position={[0, 8, 8]}
-            intensity={3.6}
+            position={[0, 8, 6]}
+            intensity={1.6}
             color="#f4a261"
-            distance={48}
-          />
-          <pointLight
-            position={[0, 10, -70]}
-            intensity={2.2}
-            color="#7dffef"
-            distance={38}
-          />
-          <pointLight
-            position={[0, 12, -130]}
-            intensity={2.6}
-            color="#a78bfa"
-            distance={42}
-          />
-          <pointLight
-            position={[0, 16, -46]}
-            intensity={2.8}
-            color="#fff4e0"
-            distance={40}
+            distance={36}
           />
           <Stars
             radius={140}

@@ -227,62 +227,27 @@ export function Spitter({ position }: { position: [number, number, number] }) {
 export function EnemyPack() {
   return (
     <group>
-      {/* Drop Zone welcome committee — immediate Quake action */}
+      {/* Drop Zone — thinned for performance */}
       <Skitter position={[5, 0.5, -2]} />
       <Skitter position={[-6, 0.5, -4]} />
-      <Skitter position={[3, 0.5, -10]} />
-      <Skitter position={[-4, 0.5, -12]} />
       <Skitter position={[8, 0.5, -8]} />
       <Skitter position={[-9, 0.5, -9]} />
-      <Skitter position={[10, 0.5, -3]} />
-      <Skitter position={[-11, 0.5, -5]} />
-      <Skitter position={[7, 0.5, 1]} />
-      <Skitter position={[-8, 0.5, 0]} />
-      <Skitter position={[2.5, 0.5, 3]} />
-      <Skitter position={[-3.5, 0.5, 2.5]} />
-      <Skitter position={[9.5, 0.5, 2]} />
-      <Skitter position={[-10, 0.5, 1.5]} />
       <SentryTurret position={[10, 0.7, -14]} />
       <SentryTurret position={[-11, 0.7, -16]} />
-      <SentryTurret position={[14, 0.7, -6]} />
-      <SentryTurret position={[-15, 0.7, -8]} />
       <Spitter position={[12, 2.0, -12]} />
       <Spitter position={[-13, 2.0, -14]} />
-      <Spitter position={[16, 2.0, -18]} />
-      <Spitter position={[-16, 2.0, -20]} />
-      <SentryTurret position={[20, 0.7, -28]} />
-      <SentryTurret position={[-18, 0.7, -24]} />
       <SentryTurret position={[14, 0.7, -48]} />
       <SentryTurret position={[-12, 0.7, -62]} />
-      <SentryTurret position={[8, 0.7, -82]} />
-      <SentryTurret position={[-10, 0.7, -100]} />
       <Skitter position={[6, 0.5, -26]} />
       <Skitter position={[-7, 0.5, -28]} />
-      <Skitter position={[12, 0.5, -36]} />
-      <Skitter position={[-4, 0.5, -38]} />
       <Skitter position={[3, 0.5, -42]} />
-      <Skitter position={[-8, 0.5, -46]} />
-      <Skitter position={[5, 0.5, -50]} />
       <Skitter position={[0, 0.5, -66]} />
       <Skitter position={[-5, 0.5, -84]} />
-      <Skitter position={[7, 0.5, -102]} />
-      <Skitter position={[-3, 0.5, -114]} />
       <Skitter position={[4, 0.5, -122]} />
-      <Skitter position={[2, 0.5, -56]} />
-      <Skitter position={[-6, 0.5, -76]} />
-      <Skitter position={[9, 0.5, -96]} />
-      <Spitter position={[18, 2.5, -30]} />
-      <Spitter position={[-12, 1.5, -34]} />
       <Spitter position={[8, 1.8, -44]} />
-      <Spitter position={[-14, 2.2, -52]} />
       <Spitter position={[10, 2.0, -68]} />
       <Spitter position={[-8, 2.5, -90]} />
-      <Spitter position={[12, 2.2, -112]} />
       <Spitter position={[-6, 2.0, -124]} />
-      <Spitter position={[4, 2.4, -80]} />
-      <Spitter position={[-10, 2.0, -106]} />
-      <SentryTurret position={[16, 0.7, -108]} />
-      <SentryTurret position={[-14, 0.7, -116]} />
       <SentryTurret position={[0, 0.7, -132]} />
     </group>
   );

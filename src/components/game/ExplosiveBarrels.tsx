@@ -16,63 +16,19 @@ import {
 import { worldPos } from "@/lib/game/math";
 
 const BARRELS: [number, number, number][] = [
-  // Drop Zone flank nest — immediate boom juice
   [7.5, 0.7, -4],
-  [8.8, 0.7, -5.2],
-  [9.6, 0.7, -3.8],
   [-8, 0.7, -5],
-  [-9.2, 0.7, -6.1],
-  [-9.8, 0.7, -4.2],
-  // Approach cluster — Quake chain setpiece (off spawn pad)
   [9, 0.7, -14],
-  [10.5, 0.7, -15.2],
-  [8.2, 0.7, -15.8],
-  [11.2, 0.7, -14.4],
   [-11, 0.7, -16],
-  [-12.4, 0.7, -17],
-  [-10.2, 0.7, -17.4],
-  // Mid canyon
   [12, 0.7, -28],
-  [13.2, 0.7, -29],
-  [14.0, 0.7, -27.6],
   [-10, 0.7, -30],
-  [-11.2, 0.7, -31],
-  [-12.0, 0.7, -29.4],
   [2, 0.7, -36],
-  [3.4, 0.7, -37.2],
-  [-3, 0.7, -39],
-  [6.5, 0.7, -41],
-  [-6.5, 0.7, -42],
-  // Plaza pad flank — early chain boom
-  [5.5, 0.7, -8.5],
-  [6.6, 0.7, -9.4],
-  [-5.8, 0.7, -9.0],
-  [-6.9, 0.7, -9.8],
-  // Deep canyon chain nest
   [0, 0.7, -44],
-  [1.4, 0.7, -45.2],
-  [-1.2, 0.7, -45.5],
-  [4, 0.7, -47],
-  [-4.5, 0.7, -48],
-  // Deep approach + Primarch approach nest
-  [14, 0.7, -52],
-  [15.2, 0.7, -53],
   [-5, 0.7, -58],
-  // Vault mouth chain — readable boom setpiece
   [-8, 0.7, -72],
-  [-6.6, 0.7, -73.2],
-  [-7.4, 0.7, -74.5],
   [9, 0.7, -78],
-  [10.4, 0.7, -79],
-  // Core antechamber nest
   [-4, 0.7, -126],
-  [-2.6, 0.7, -127.2],
   [3, 0.7, -128],
-  [4.4, 0.7, -129],
-  [6, 0.7, -118],
-  [7.4, 0.7, -119.2],
-  [-6, 0.7, -120],
-  [-7.2, 0.7, -121],
 ];
 
 function ExplosiveBarrel({ position }: { position: [number, number, number] }) {
@@ -94,10 +50,8 @@ function ExplosiveBarrel({ position }: { position: [number, number, number] }) {
     dead.current = true;
     mesh.visible = false;
     const origin = worldPos(mesh).clone();
-    combatFx.pushBoom(origin, "#ff7a18", 7.2);
-    combatFx.pushBoom(origin.clone().add(new THREE.Vector3(0, 0.5, 0)), "#ffb347", 3.6);
-    combatFx.pushBoom(origin.clone().add(new THREE.Vector3(0, 0.2, 0)), "#ffffff", 1.8);
-    combatFx.pushBoom(origin.clone().add(new THREE.Vector3(0, 0.8, 0)), "#ff9f43", 2.2);
+    combatFx.pushBoom(origin, "#ff7a18", 3.5);
+    useFxStore.getState().pulseShake(0.14, 180);
     combatFx.pushImpact(origin, "#ffb347");
     combatFx.pushImpact(origin.clone().add(new THREE.Vector3(0.4, 0.6, -0.2)), "#f8fafc");
     combatFx.pushImpact(origin.clone().add(new THREE.Vector3(-0.3, 0.4, 0.3)), "#ff4466");

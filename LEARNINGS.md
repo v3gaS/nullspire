@@ -2,6 +2,13 @@
 
 Build diary. Newest entries at the top.
 
+## 2026-07-11 — Emergency perf tone-down (system freezes)
+- Root cause: CombatVfx rebuilt meshes + PointLights every frame; stacked booms/gibs/beams; too many world lights/enemies/RigidBodies; heavy bloom/DPR
+- Fix: capped FX queues, no per-impact lights, simpler booms, fewer gibs/pellets/booms
+- Default quality → **low**; stored `high` migrates to low; bloom high-only & weak; shadows off on low/medium; DPR capped
+- Thinned enemies/drones/barrels/pads/loot; cut global + boss point lights
+- Live: https://nullspire-amber.vercel.app — hard-refresh; Quality should read Low
+
 ## 2026-07-10 — Phase 11 visual north star (2h block COMPLETE)
 - Wall-clock start `1783739050` · `block_hours=2` — coded continuously ≥2.0h
 - Protocol: Quake juice → build → commit → push → `vercel --prod` → amber alias; pause only for deploy/QA

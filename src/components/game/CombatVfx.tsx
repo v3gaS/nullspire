@@ -34,6 +34,10 @@ let impactId = 0;
 let beamId = 0;
 let boomId = 0;
 
+const MAX_IMPACTS = 12;
+const MAX_BEAMS = 8;
+const MAX_BOOMS = 4;
+
 /** Shared mutable FX queues — WeaponSystem pushes, this renders. */
 export const combatFx = {
   impacts: [] as ImpactSpec[],
@@ -46,6 +50,9 @@ export const combatFx = {
       color,
       born: performance.now(),
     });
+    if (this.impacts.length > MAX_IMPACTS) {
+      this.impacts.splice(0, this.impacts.length - MAX_IMPACTS);
+    }
   },
   pushBeam(
     origin: THREE.Vector3,
@@ -59,8 +66,11 @@ export const combatFx = {
       end: end.clone(),
       color,
       born: performance.now(),
-      width,
+      width: Math.min(width, 0.22),
     });
+    if (this.beams.length > MAX_BEAMS) {
+      this.beams.splice(0, this.beams.length - MAX_BEAMS);
+    }
   },
   pushBoom(pos: THREE.Vector3, color: string, radius = 3.5) {
     this.booms.push({
@@ -68,12 +78,22 @@ export const combatFx = {
       pos: pos.clone(),
       color,
       born: performance.now(),
-      radius,
+      radius: Math.min(radius, 4.5),
     });
+    if (this.booms.length > MAX_BOOMS) {
+      this.booms.splice(0, this.booms.length - MAX_BOOMS);
+    }
   },
 };
 
-/** Visible muzzle flash, fat beams, impact bursts. */
+const _dir = new THREE.Vector3();
+const _pos = new THREE.Vector3();
+const _offset = new THREE.Vector3();
+const _mid = new THREE.Vector3();
+const _axis = new THREE.Vector3(0, 1, 0);
+const _beamDir = new THREE.Vector3();
+
+/** Light muzzle flash + capped beams/impacts/booms (no per-FX lights). */
 export function CombatVfx() {
   const { camera } = useThree();
   const flashRef = useRef<THREE.PointLight>(null);
@@ -84,7 +104,8 @@ export function CombatVfx() {
   const hitMap = useTexture("/assets/sprites/kenney-fps/hit.png");
   const burstMap = useTexture("/assets/sprites/kenney-fps/burst.png");
 
-  const flashGeo = useMemo(() => new THREE.SphereGeometry(0.1, 8, 8), []);
+  const flashGeo = useMemo(() => new THREE.SphereGeometry(0.08, 6, 6), []);
+  const boomGeo = useMemo(() => new THREE.SphereGeometry(1, 8, 6), []);
 
   useFrame(() => {
     const now = performance.now();
@@ -94,39 +115,34 @@ export function CombatVfx() {
     const light = flashRef.current;
     const mesh = flashMesh.current;
     if (light && mesh) {
-      // Place flash just ahead of camera / gun
-      const dir = new THREE.Vector3();
-      camera.getWorldDirection(dir);
-      const pos = camera.position
-        .clone()
-        .add(dir.multiplyScalar(0.7))
-        .add(new THREE.Vector3(0.22, -0.12, 0).applyQuaternion(camera.quaternion));
-      light.position.copy(pos);
-      mesh.position.copy(pos);
-      light.intensity = flashing ? 42 : 0;
+      camera.getWorldDirection(_dir);
+      _pos.copy(camera.position).addScaledVector(_dir, 0.7);
+      _offset.set(0.22, -0.12, 0).applyQuaternion(camera.quaternion);
+      _pos.add(_offset);
+      light.position.copy(_pos);
+      mesh.position.copy(_pos);
+      light.intensity = flashing ? 12 : 0;
       light.color.set(fx.muzzleColor);
       mesh.visible = flashing;
       const mat = mesh.material as THREE.MeshBasicMaterial;
       mat.color.set(fx.muzzleColor);
       if (flashing) {
         const ageLeft = Math.max(0, fx.muzzleUntil - now);
-        const punch = 0.16 + Math.min(0.14, ageLeft / 700);
-        mesh.scale.setScalar(punch / 0.1);
+        mesh.scale.setScalar((0.1 + Math.min(0.06, ageLeft / 900)) / 0.08);
       }
     }
 
-    // Decay kick
     if (fx.kick > 0) {
       useFxStore.setState({ kick: Math.max(0, fx.kick - 0.1) });
     }
 
-    // Beams — longer Quake tracers
-    const beamLife = 280;
+    // Beams — short life, single cylinder, no halo/core
+    const beamLife = 120;
     combatFx.beams = combatFx.beams.filter((b) => now - b.born < beamLife);
     const bg = beamsGroup.current;
     if (bg) {
       while (bg.children.length) {
-        const c = bg.children[0];
+        const c = bg.children[0]!;
         bg.remove(c);
         if (c instanceof THREE.Mesh) {
           c.geometry.dispose();
@@ -134,69 +150,48 @@ export function CombatVfx() {
         }
       }
       for (const b of combatFx.beams) {
-        const mid = b.origin.clone().add(b.end).multiplyScalar(0.5);
+        _mid.copy(b.origin).add(b.end).multiplyScalar(0.5);
         const len = b.origin.distanceTo(b.end);
-        const geo = new THREE.CylinderGeometry(b.width, b.width * 0.45, len, 6, 1, true);
+        if (len < 0.05) continue;
+        const geo = new THREE.CylinderGeometry(
+          b.width * 0.7,
+          b.width * 0.25,
+          len,
+          4,
+          1,
+          true,
+        );
         const age = (now - b.born) / beamLife;
         const mat = new THREE.MeshBasicMaterial({
           color: b.color,
           transparent: true,
-          opacity: 0.98 * (1 - age * 0.8),
+          opacity: 0.85 * (1 - age),
           depthWrite: false,
         });
         const cyl = new THREE.Mesh(geo, mat);
-        cyl.position.copy(mid);
-        cyl.quaternion.setFromUnitVectors(
-          new THREE.Vector3(0, 1, 0),
-          b.end.clone().sub(b.origin).normalize(),
-        );
+        cyl.position.copy(_mid);
+        _beamDir.copy(b.end).sub(b.origin).normalize();
+        cyl.quaternion.setFromUnitVectors(_axis, _beamDir);
         bg.add(cyl);
-
-        // Core bright line
-        const core = new THREE.Mesh(
-          new THREE.CylinderGeometry(b.width * 0.4, b.width * 0.18, len, 5, 1, true),
-          new THREE.MeshBasicMaterial({
-            color: "#ffffff",
-            transparent: true,
-            opacity: 0.92 * (1 - age),
-            depthWrite: false,
-          }),
-        );
-        core.position.copy(mid);
-        core.quaternion.copy(cyl.quaternion);
-        bg.add(core);
-
-        // Soft outer halo for rail/void readability
-        if (b.width >= 0.2) {
-          const halo = new THREE.Mesh(
-            new THREE.CylinderGeometry(b.width * 1.55, b.width * 0.7, len, 6, 1, true),
-            new THREE.MeshBasicMaterial({
-              color: b.color,
-              transparent: true,
-              opacity: 0.28 * (1 - age),
-              depthWrite: false,
-            }),
-          );
-          halo.position.copy(mid);
-          halo.quaternion.copy(cyl.quaternion);
-          bg.add(halo);
-        }
       }
     }
 
-    // Impacts — chunkier Quake sparks
-    combatFx.impacts = combatFx.impacts.filter((i) => now - i.born < 360);
+    // Impacts — sprites only, no PointLights
+    combatFx.impacts = combatFx.impacts.filter((i) => now - i.born < 180);
     const ig = impactsGroup.current;
     if (ig) {
       while (ig.children.length) {
-        const c = ig.children[0];
+        const c = ig.children[0]!;
         ig.remove(c);
+        if (c instanceof THREE.Sprite) {
+          (c.material as THREE.Material).dispose();
+        }
       }
       for (const imp of combatFx.impacts) {
-        const age = (now - imp.born) / 360;
+        const age = (now - imp.born) / 180;
         const sprite = new THREE.Sprite(
           new THREE.SpriteMaterial({
-            map: age < 0.45 ? burstMap : hitMap,
+            map: age < 0.4 ? burstMap : hitMap,
             color: imp.color,
             transparent: true,
             opacity: 1 - age,
@@ -204,105 +199,47 @@ export function CombatVfx() {
           }),
         );
         sprite.position.copy(imp.pos);
-        const s = 1.35 + age * 3.2;
+        const s = 0.9 + age * 1.6;
         sprite.scale.set(s, s, s);
         ig.add(sprite);
-
-        const spark = new THREE.PointLight(imp.color, 11 * (1 - age), 16);
-        spark.position.copy(imp.pos);
-        ig.add(spark);
       }
     }
 
-    // DOOM-style explosion spheres + debris ring
-    combatFx.booms = combatFx.booms.filter((b) => now - b.born < 720);
+    // Booms — one sphere + optional faint ring, no spark swarm / lights
+    combatFx.booms = combatFx.booms.filter((b) => now - b.born < 320);
     const bgBoom = boomsGroup.current;
     if (bgBoom) {
       while (bgBoom.children.length) {
-        const c = bgBoom.children[0];
+        const c = bgBoom.children[0]!;
         bgBoom.remove(c);
         if (c instanceof THREE.Mesh) {
-          c.geometry.dispose();
+          if (c.geometry !== boomGeo) c.geometry.dispose();
           (c.material as THREE.Material).dispose();
         }
       }
       for (const boom of combatFx.booms) {
-        const age = (now - boom.born) / 720;
-        const scale = boom.radius * (0.45 + age * 1.85);
+        const age = (now - boom.born) / 320;
+        const scale = boom.radius * (0.4 + age * 1.2);
         const shell = new THREE.Mesh(
-          new THREE.SphereGeometry(1, 14, 12),
-          new THREE.MeshBasicMaterial({
-            color: boom.color,
-            transparent: true,
-            opacity: 0.85 * (1 - age),
-            depthWrite: false,
-            wireframe: age > 0.32,
-          }),
-        );
-        shell.position.copy(boom.pos);
-        shell.scale.setScalar(scale);
-        bgBoom.add(shell);
-
-        const core = new THREE.Mesh(
-          new THREE.SphereGeometry(1, 10, 8),
-          new THREE.MeshBasicMaterial({
-            color: "#ffffff",
-            transparent: true,
-            opacity: 0.98 * (1 - age * 1.15),
-            depthWrite: false,
-          }),
-        );
-        core.position.copy(boom.pos);
-        core.scale.setScalar(scale * 0.42);
-        bgBoom.add(core);
-
-        // Quake debris ring — reads as chunky blast
-        const ring = new THREE.Mesh(
-          new THREE.TorusGeometry(scale * 0.55, scale * 0.06, 6, 20),
+          boomGeo,
           new THREE.MeshBasicMaterial({
             color: boom.color,
             transparent: true,
             opacity: 0.7 * (1 - age),
             depthWrite: false,
+            wireframe: age > 0.4,
           }),
         );
-        ring.position.copy(boom.pos);
-        ring.rotation.x = Math.PI / 2;
-        bgBoom.add(ring);
-
-        for (let i = 0; i < 5; i++) {
-          const ang = (i / 5) * Math.PI * 2 + age * 2;
-          const spark = new THREE.Mesh(
-            new THREE.SphereGeometry(0.12, 5, 4),
-            new THREE.MeshBasicMaterial({
-              color: i % 2 === 0 ? "#ffb347" : "#ffffff",
-              transparent: true,
-              opacity: 0.9 * (1 - age),
-              depthWrite: false,
-            }),
-          );
-          spark.position.set(
-            boom.pos.x + Math.cos(ang) * scale * 0.7,
-            boom.pos.y + 0.3 + age * 1.2,
-            boom.pos.z + Math.sin(ang) * scale * 0.7,
-          );
-          bgBoom.add(spark);
-        }
-
-        const light = new THREE.PointLight(
-          boom.color,
-          28 * (1 - age),
-          boom.radius * 6.5,
-        );
-        light.position.copy(boom.pos);
-        bgBoom.add(light);
+        shell.position.copy(boom.pos);
+        shell.scale.setScalar(scale);
+        bgBoom.add(shell);
       }
     }
   });
 
   return (
     <group>
-      <pointLight ref={flashRef} intensity={0} distance={16} decay={2} />
+      <pointLight ref={flashRef} intensity={0} distance={8} decay={2} />
       <mesh ref={flashMesh} geometry={flashGeo} visible={false}>
         <meshBasicMaterial color="#fff" toneMapped={false} />
       </mesh>

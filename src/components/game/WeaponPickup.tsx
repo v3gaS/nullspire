@@ -135,7 +135,7 @@ export function WeaponPickup({
       >
         <PickupModel id={id} />
       </Suspense>
-      <pointLight color={color} intensity={4.0} distance={13} />
+      <pointLight color={color} intensity={1.2} distance={7} />
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.35, 0]}>
         <ringGeometry args={[0.45, 0.7, 20]} />
         <meshStandardMaterial

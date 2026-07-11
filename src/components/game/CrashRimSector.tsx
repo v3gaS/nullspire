@@ -53,29 +53,15 @@ function JumpPad({ position }: { position: [number, number, number] }) {
         if (performance.now() < playerPhysics.spawnGraceUntil) return;
         const p = body.translation();
         if (Math.hypot(p.x - position[0], p.z - position[2]) > 2.4) return;
-        playerPhysics.applyImpulse(0, 24, 0, { pad: true });
-        playerPhysics.punch(-0.18);
-        playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.55);
+        playerPhysics.applyImpulse(0, 22, 0, { pad: true });
+        playerPhysics.punch(-0.12);
+        playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.45);
         combatFx.pushBoom(
           new THREE.Vector3(position[0], position[1] + 0.4, position[2]),
           "#ff7a18",
-          4.6,
-        );
-        combatFx.pushBoom(
-          new THREE.Vector3(position[0], position[1] + 0.6, position[2]),
-          "#ffe066",
           2.4,
         );
-        combatFx.pushBoom(
-          new THREE.Vector3(position[0], position[1] + 0.9, position[2]),
-          "#ffffff",
-          1.2,
-        );
-        combatFx.pushImpact(
-          new THREE.Vector3(position[0], position[1] + 0.5, position[2]),
-          "#ffb347",
-        );
-        useFxStore.getState().pulseShake(0.16, 220);
+        useFxStore.getState().pulseShake(0.08, 120);
       }}
     >
       <mesh
@@ -115,7 +101,7 @@ function JumpPad({ position }: { position: [number, number, number] }) {
           toneMapped={false}
         />
       </mesh>
-      <pointLight position={[0, 1.2, 0]} color="#ff7a18" intensity={2.8} distance={12} />
+      <pointLight position={[0, 1.2, 0]} color="#ff7a18" intensity={1.2} distance={8} />
     </RigidBody>
   );
 }
@@ -329,11 +315,8 @@ export function CrashRimSector() {
         />
       </mesh>
       {/* Spawn plaza fill lights — hangar wash */}
-      <pointLight position={[0, 10, 6]} intensity={4.4} color="#fff4e0" distance={34} />
-      <pointLight position={[-8, 5, 2]} intensity={2.3} color="#7dffef" distance={22} />
-      <pointLight position={[8, 5, 0]} intensity={2.3} color="#ff9f43" distance={22} />
-      <pointLight position={[0, 6, 10]} intensity={2.8} color="#ff7a18" distance={22} />
-      <pointLight position={[0, 8, -4]} intensity={2.0} color="#ffe066" distance={18} />
+      <pointLight position={[0, 10, 6]} intensity={2.2} color="#fff4e0" distance={28} />
+      <pointLight position={[0, 6, 10]} intensity={1.4} color="#ff7a18" distance={18} />
       {/* Orange runway stripe — Quake/UT lane read */}
       <mesh position={[0, 0.07, -10]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[1.9, 56]} />
@@ -755,19 +738,10 @@ export function CrashRimSector() {
       <JumpPad position={[0, 0.2, -72]} />
       <JumpPad position={[-4, 0.2, -88]} />
       <JumpPad position={[6, 0.2, -105]} />
-      <JumpPad position={[-6, 0.2, -112]} />
       <JumpPad position={[0, 0.2, -126]} />
-      <JumpPad position={[5, 0.2, -120]} />
-      <JumpPad position={[-5, 0.2, -18]} />
-      <JumpPad position={[6, 0.2, -22]} />
       <JumpPad position={[-7, 0.2, -8]} />
       <JumpPad position={[7.5, 0.2, -10]} />
       <JumpPad position={[0, 0.2, -38]} />
-      <JumpPad position={[4.5, 0.2, -6]} />
-      <JumpPad position={[-4.5, 0.2, -6]} />
-      <JumpPad position={[0, 0.2, -14]} />
-      <JumpPad position={[9, 0.2, -64]} />
-      <JumpPad position={[-9, 0.2, -80]} />
       <AcidHazard position={[-4, 0.08, -38]} size={[8, 0.1, 6]} />
       <AcidHazard position={[6, 0.08, -60]} size={[6, 0.1, 5]} />
       <AcidHazard position={[-8, 0.08, -86]} size={[5, 0.1, 4]} />

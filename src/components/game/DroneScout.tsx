@@ -106,26 +106,12 @@ export function DroneSquad() {
     <group>
       <DroneScout id="d0a" position={[7, 3.2, -8]} />
       <DroneScout id="d0b" position={[-8, 3.4, -10]} />
-      <DroneScout id="d0c" position={[11, 3.0, -5]} />
-      <DroneScout id="d0d" position={[-12, 3.2, -6]} />
       <DroneScout id="d1" position={[12, 3.5, -26]} />
-      <DroneScout id="d2" position={[18, 4, -34]} />
       <DroneScout id="d3" position={[-14, 3.8, -44]} />
-      <DroneScout id="d4" position={[8, 4.2, -54]} />
       <DroneScout id="d5" position={[-6, 4.5, -72]} />
       <DroneScout id="d6" position={[14, 5, -100]} />
       <DroneScout id="d7" position={[-12, 5.5, -120]} />
-      <DroneScout id="d8" position={[4, 4.0, -40]} />
-      <DroneScout id="d9" position={[-10, 4.8, -88]} />
-      <DroneScout id="d10" position={[10, 5.2, -114]} />
-      <DroneScout id="d11" position={[-4, 4.5, -58]} />
-      <DroneScout id="d12" position={[6, 5.0, -130]} />
       <DroneScout id="d13" position={[9, 3.8, -18]} />
-      <DroneScout id="d14" position={[-9, 4.0, -20]} />
-      <DroneScout id="d15" position={[5, 3.5, 2]} />
-      <DroneScout id="d16" position={[-5, 3.6, 1]} />
-      <DroneScout id="d17" position={[13, 4.2, -70]} />
-      <DroneScout id="d18" position={[-13, 4.4, -92]} />
     </group>
   );
 }

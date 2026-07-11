@@ -10,10 +10,15 @@ interface SettingsState {
 }
 
 function loadQuality(): QualityPreset {
-  if (typeof window === "undefined") return "medium";
+  if (typeof window === "undefined") return "low";
   const v = window.localStorage.getItem("nullspire_quality");
-  if (v === "low" || v === "medium" || v === "high") return v;
-  return "medium";
+  // Force a safe default after perf incident — high was freezing systems
+  if (v === "high") {
+    window.localStorage.setItem("nullspire_quality", "low");
+    return "low";
+  }
+  if (v === "low" || v === "medium") return v;
+  return "low";
 }
 
 export const useSettingsStore = create<SettingsState>((set) => ({
@@ -35,26 +40,26 @@ export function qualityConfig(q: QualityPreset) {
     case "low":
       return {
         shadows: false,
-        starCount: 1200,
+        starCount: 400,
         dpr: 1,
         antialias: false,
-        fogFar: 140,
+        fogFar: 90,
       };
     case "medium":
       return {
-        shadows: true,
-        starCount: 3500,
-        dpr: 1.25,
-        antialias: true,
-        fogFar: 185,
+        shadows: false,
+        starCount: 1200,
+        dpr: 1,
+        antialias: false,
+        fogFar: 120,
       };
     case "high":
       return {
         shadows: true,
-        starCount: 5500,
-        dpr: 1.75,
+        starCount: 2500,
+        dpr: 1.25,
         antialias: true,
-        fogFar: 230,
+        fogFar: 150,
       };
     default: {
       const _exhaustive: never = q;

@@ -327,8 +327,8 @@ export function LootDrop({
       <pointLight
         position={position}
         color={color}
-        intensity={3.6}
-        distance={12}
+        intensity={0.9}
+        distance={6}
       />
     </group>
   );
@@ -339,60 +339,22 @@ export function EliteAndLoot() {
     <group>
       <BastionUnit position={[20, 1.1, -50]} />
       <BastionUnit position={[-16, 1.1, -66]} />
-      <BastionUnit position={[14, 1.1, -95]} />
-      <BastionUnit position={[-12, 1.1, -118]} />
       <BastionUnit position={[8, 1.1, -128]} />
-      <BastionUnit position={[11, 1.1, -35]} />
-      <BastionUnit position={[-9, 1.1, -38]} />
       <NullStalker position={[-8, 1, -42]} />
       <NullStalker position={[6, 1, -62]} />
-      <NullStalker position={[12, 1, -78]} />
-      <NullStalker position={[-10, 1, -110]} />
       <NullStalker position={[8, 1, -126]} />
-      <NullStalker position={[-5, 1, -90]} />
-      <NullStalker position={[4, 1, -30]} />
-      <NullStalker position={[-7, 1, -33]} />
       <LootDrop position={[8, 0.6, -14]} kind="health" />
       <LootDrop position={[-9, 1.6, -12]} kind="ammo" />
-      <LootDrop position={[14, 0.6, -22]} kind="shards" />
-      {/* Drop Zone plaza cubes — early readability */}
       <LootDrop position={[-3.5, 0.7, 5.5]} kind="health" />
       <LootDrop position={[4.2, 0.7, 4.8]} kind="ammo" />
       <LootDrop position={[-5.5, 0.7, 3.2]} kind="armor" />
-      <LootDrop position={[6.5, 0.7, 6]} kind="shards" />
-      <LootDrop position={[-6, 0.7, 6.5]} kind="armor" />
       <LootDrop position={[0, 0.8, -68]} kind="health" />
       <LootDrop position={[-7, 0.8, -46]} kind="ammo" />
-      <LootDrop position={[11, 1.2, -52]} kind="shards" />
       <LootDrop position={[4, 0.8, -78]} kind="health" />
-      <LootDrop position={[-5, 0.8, -122]} kind="ammo" />
-      <LootDrop position={[5, 0.8, -124]} kind="shards" />
-      <LootDrop position={[0, 15.2, -95]} kind="health" />
-      <LootDrop position={[-3, 9.8, -93]} kind="ammo" />
-      <LootDrop position={[9, 0.8, -40]} kind="ammo" />
-      <LootDrop position={[-8, 0.8, -74]} kind="shards" />
       <LootDrop position={[0, 0.8, -116]} kind="health" />
-      <LootDrop position={[12, 0.8, -60]} kind="ammo" />
-      <LootDrop position={[-11, 0.8, -98]} kind="health" />
-      <LootDrop position={[3, 0.8, -130]} kind="shards" />
-      <LootDrop position={[-2, 0.8, -34]} kind="ammo" />
-      <LootDrop position={[7, 0.8, -88]} kind="shards" />
-      <LootDrop position={[-6, 0.8, -28]} kind="armor" />
-      <LootDrop position={[8, 0.8, -70]} kind="armor" />
+      <LootDrop position={[-5, 0.8, -122]} kind="ammo" />
       <LootDrop position={[0, 0.8, -50]} kind="health" />
-      <LootDrop position={[4, 0.8, -100]} kind="armor" />
-      <LootDrop position={[-8, 0.8, -55]} kind="health" />
-      <LootDrop position={[9, 0.8, -75]} kind="ammo" />
-      <LootDrop position={[0, 0.8, -85]} kind="armor" />
-      <LootDrop position={[-4, 0.8, -105]} kind="shards" />
-      <LootDrop position={[11, 0.8, -25]} kind="health" />
-      <LootDrop position={[-10, 0.8, -20]} kind="ammo" />
       <LootDrop position={[2, 0.8, -15]} kind="armor" />
-      <LootDrop position={[5.5, 0.75, 7]} kind="health" />
-      <LootDrop position={[-4.5, 0.75, 7.5]} kind="ammo" />
-      <LootDrop position={[8, 0.75, -2]} kind="shards" />
-      <LootDrop position={[-8.5, 0.75, -1]} kind="armor" />
-      <LootDrop position={[0, 0.85, 2]} kind="health" />
     </group>
   );
 }
