@@ -121,7 +121,7 @@ export function CombatVfx() {
     }
 
     // Beams
-    combatFx.beams = combatFx.beams.filter((b) => now - b.born < 160);
+    combatFx.beams = combatFx.beams.filter((b) => now - b.born < 190);
     const bg = beamsGroup.current;
     if (bg) {
       while (bg.children.length) {
@@ -136,7 +136,7 @@ export function CombatVfx() {
         const mid = b.origin.clone().add(b.end).multiplyScalar(0.5);
         const len = b.origin.distanceTo(b.end);
         const geo = new THREE.CylinderGeometry(b.width, b.width * 0.4, len, 6, 1, true);
-        const age = (now - b.born) / 160;
+        const age = (now - b.born) / 190;
         const mat = new THREE.MeshBasicMaterial({
           color: b.color,
           transparent: true,
@@ -168,7 +168,7 @@ export function CombatVfx() {
     }
 
     // Impacts — chunkier Quake sparks
-    combatFx.impacts = combatFx.impacts.filter((i) => now - i.born < 220);
+    combatFx.impacts = combatFx.impacts.filter((i) => now - i.born < 260);
     const ig = impactsGroup.current;
     if (ig) {
       while (ig.children.length) {
@@ -176,7 +176,7 @@ export function CombatVfx() {
         ig.remove(c);
       }
       for (const imp of combatFx.impacts) {
-        const age = (now - imp.born) / 220;
+        const age = (now - imp.born) / 260;
         const sprite = new THREE.Sprite(
           new THREE.SpriteMaterial({
             map: age < 0.45 ? burstMap : hitMap,
@@ -187,11 +187,11 @@ export function CombatVfx() {
           }),
         );
         sprite.position.copy(imp.pos);
-        const s = 0.65 + age * 1.8;
+        const s = 0.75 + age * 2.0;
         sprite.scale.set(s, s, s);
         ig.add(sprite);
 
-        const spark = new THREE.PointLight(imp.color, 4 * (1 - age), 8);
+        const spark = new THREE.PointLight(imp.color, 5 * (1 - age), 9);
         spark.position.copy(imp.pos);
         ig.add(spark);
       }
