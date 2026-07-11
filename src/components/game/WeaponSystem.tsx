@@ -160,6 +160,7 @@ export function applyHit(
       mesh.userData.dead = true;
       playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.48);
       useFxStore.getState().pulseKill(fragName(mesh.userData.kind));
+      useGameStore.getState().addFrag();
       useFxStore.getState().pulseShake(0.14, 180);
     }
   } else {

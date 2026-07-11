@@ -271,7 +271,7 @@ export function WeaponViewmodel() {
   });
 
   return (
-    <group ref={group} userData={{ skipHit: true }} scale={1.15}>
+    <group ref={group} userData={{ skipHit: true }} scale={1.28}>
       <ChunkyGun id={active} />
       <mesh
         ref={glowRef}

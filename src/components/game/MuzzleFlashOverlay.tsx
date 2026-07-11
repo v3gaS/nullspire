@@ -26,10 +26,10 @@ export function MuzzleFlashOverlay() {
 
   if (screen !== "playing" || alpha <= 0.02) return null;
 
-  const a1 = Math.round(alpha * 0x88)
+  const a1 = Math.round(alpha * 0xaa)
     .toString(16)
     .padStart(2, "0");
-  const a2 = Math.round(alpha * 0x33)
+  const a2 = Math.round(alpha * 0x44)
     .toString(16)
     .padStart(2, "0");
 
@@ -37,7 +37,8 @@ export function MuzzleFlashOverlay() {
     <div
       className="pointer-events-none absolute inset-0 z-[6]"
       style={{
-        background: `radial-gradient(circle at 58% 62%, ${color}${a1} 0%, ${color}${a2} 16%, transparent 42%)`,
+        background: `radial-gradient(circle at 62% 68%, ${color}${a1} 0%, ${color}${a2} 22%, transparent 48%)`,
+        mixBlendMode: "screen",
       }}
     />
   );

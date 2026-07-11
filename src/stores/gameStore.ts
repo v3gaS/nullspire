@@ -49,6 +49,7 @@ export interface GameState {
   lastDamagedAt: number;
   checkpoint: Checkpoint;
   boss: BossHudState;
+  frags: number;
   setScreen: (screen: GameScreen) => void;
   setHealth: (health: number) => void;
   setArmor: (armor: number) => void;
@@ -61,6 +62,7 @@ export interface GameState {
   setCheckpoint: (cp: Checkpoint) => void;
   setBoss: (boss: Partial<BossHudState>) => void;
   clearBoss: () => void;
+  addFrag: () => void;
   damagePlayer: (amount: number) => void;
   healPlayer: (amount: number) => void;
   spendNullEnergy: (amount: number) => boolean;
@@ -128,6 +130,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   lastDamagedAt: 0,
   checkpoint: startCheckpoint,
   boss: defaultBoss,
+  frags: 0,
   setScreen: (screen) => set({ screen }),
   setHealth: (health) => set({ health }),
   setArmor: (armor) => set({ armor }),
@@ -151,6 +154,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   setCheckpoint: (checkpoint) => set({ checkpoint }),
   setBoss: (partial) => set({ boss: { ...get().boss, ...partial, active: true } }),
   clearBoss: () => set({ boss: { ...defaultBoss } }),
+  addFrag: () => set({ frags: get().frags + 1 }),
   damagePlayer: (amount) => {
     if (performance.now() < get().invulnerableUntil) return;
     const { armor, health } = get();
@@ -196,6 +200,7 @@ export const useGameStore = create<GameState>((set, get) => ({
       invulnerableUntil: performance.now() + 14000,
       checkpoint: startCheckpoint,
       boss: defaultBoss,
+      frags: 0,
       mouseSensitivity: loadSens(),
     }),
 }));

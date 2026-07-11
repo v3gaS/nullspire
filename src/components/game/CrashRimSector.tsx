@@ -338,6 +338,13 @@ export function CrashRimSector() {
       {/* Flanking berms — wide of the center lane */}
       <Box position={[-12, 1.5, -2]} size={[1.5, 3, 12]} color="#5a4a3a" />
       <Box position={[12, 1.5, -6]} size={[1.5, 3, 14]} color="#4a5560" />
+      {/* Low hangar cover crates — Quake arena clutter off the lane */}
+      <Box position={[-5.5, 0.55, 3]} size={[2.2, 1.1, 1.4]} color="#8a7a68" />
+      <Box position={[6.2, 0.45, 1.5]} size={[1.8, 0.9, 1.8]} color="#6a7580" />
+      <Box position={[-7, 0.7, -4]} size={[1.5, 1.4, 1.5]} color="#7a6a58" />
+      <Box position={[7.5, 0.5, -8]} size={[2.4, 1.0, 1.2]} color="#5a6570" />
+      <Box position={[-4, 0.4, -12]} size={[1.6, 0.8, 2.0]} color="#8a8070" />
+      <Box position={[5, 0.6, -15]} size={[1.4, 1.2, 1.4]} color="#6a5a48" />
       {/* Approach gate with a center gap — not a solid wall in the FOV */}
       <Box position={[-8, 1.4, -18]} size={[8, 2.8, 1.4]} color="#6a5a48" />
       <Box position={[8, 1.4, -18]} size={[8, 2.8, 1.4]} color="#6a5a48" />

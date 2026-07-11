@@ -13,6 +13,7 @@ export function GameHUD() {
   const weapons = useGameStore((s) => s.weapons);
   const objective = useGameStore((s) => s.objective);
   const checkpoint = useGameStore((s) => s.checkpoint);
+  const frags = useGameStore((s) => s.frags);
   const invulnerableUntil = useGameStore((s) => s.invulnerableUntil);
   const killFeed = useFxStore((s) => s.killFeed);
   const [shieldActive, setShieldActive] = useState(false);
@@ -99,6 +100,14 @@ export function GameHUD() {
             {e.text}
           </p>
         ))}
+      </div>
+
+      {/* Frags — top right */}
+      <div className="absolute right-5 top-5 rounded bg-black/50 px-3 py-2 text-right backdrop-blur-[2px]">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/45">
+          Frags
+        </p>
+        <p className="text-2xl font-bold leading-none text-white">{frags}</p>
       </div>
 
       {/* Objective — top center, quieter */}
