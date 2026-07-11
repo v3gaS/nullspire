@@ -236,6 +236,8 @@ export function EnemyPack() {
       <Skitter position={[-9, 0.5, -9]} />
       <Skitter position={[10, 0.5, -3]} />
       <Skitter position={[-11, 0.5, -5]} />
+      <Skitter position={[7, 0.5, 1]} />
+      <Skitter position={[-8, 0.5, 0]} />
       <SentryTurret position={[10, 0.7, -14]} />
       <SentryTurret position={[-11, 0.7, -16]} />
       <SentryTurret position={[14, 0.7, -6]} />
