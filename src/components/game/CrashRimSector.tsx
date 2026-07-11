@@ -567,6 +567,8 @@ export function CrashRimSector() {
       <JumpPad position={[-6, 0.2, -112]} />
       <JumpPad position={[0, 0.2, -126]} />
       <JumpPad position={[5, 0.2, -120]} />
+      <JumpPad position={[-5, 0.2, -18]} />
+      <JumpPad position={[6, 0.2, -22]} />
       <AcidHazard position={[-4, 0.08, -38]} size={[8, 0.1, 6]} />
       <AcidHazard position={[6, 0.08, -60]} size={[6, 0.1, 5]} />
       <AcidHazard position={[-8, 0.08, -86]} size={[5, 0.1, 4]} />
