@@ -137,27 +137,56 @@ function Beacon({ position }: { position: [number, number, number] }) {
       useGameStore
         .getState()
         .setObjective("Beacon online — push into Rust Canyons");
-      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.55);
+      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.65);
       combatFx.pushBoom(
         new THREE.Vector3(...position),
         "#7dffef",
-        3.5,
+        4.5,
       );
-      useFxStore.getState().pulseShake(0.1, 200);
-      useGameStore.getState().healPlayer(25);
+      combatFx.pushBoom(
+        new THREE.Vector3(position[0], position[1] - 1, position[2]),
+        "#ffe066",
+        2.5,
+      );
+      useFxStore.getState().pulseShake(0.14, 260);
+      useGameStore.getState().healPlayer(30);
+      useGameStore.getState().setArmor(
+        Math.min(100, useGameStore.getState().armor + 20),
+      );
       useGameStore.getState().setNullEnergy(100);
     }
   });
 
   return (
-    <mesh ref={meshRef} position={position}>
-      <sphereGeometry args={[0.7, 16, 16]} />
-      <meshStandardMaterial
+    <group>
+      <mesh ref={meshRef} position={position}>
+        <sphereGeometry args={[0.85, 18, 18]} />
+        <meshStandardMaterial
+          color="#7dffef"
+          emissive="#2ee6c8"
+          emissiveIntensity={2.8}
+        />
+      </mesh>
+      <mesh
+        position={[position[0], position[1] - 0.9, position[2]]}
+        rotation={[-Math.PI / 2, 0, 0]}
+      >
+        <ringGeometry args={[1.1, 1.5, 28]} />
+        <meshStandardMaterial
+          color="#7dffef"
+          emissive="#2ee6c8"
+          emissiveIntensity={1.4}
+          transparent
+          opacity={0.75}
+        />
+      </mesh>
+      <pointLight
+        position={position}
         color="#7dffef"
-        emissive="#2ee6c8"
-        emissiveIntensity={2.5}
+        intensity={3.2}
+        distance={18}
       />
-    </mesh>
+    </group>
   );
 }
 
