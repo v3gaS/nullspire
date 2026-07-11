@@ -333,6 +333,8 @@ export function EliteAndLoot() {
       <NullStalker position={[-10, 1, -110]} />
       <NullStalker position={[8, 1, -126]} />
       <NullStalker position={[-5, 1, -90]} />
+      <NullStalker position={[4, 1, -30]} />
+      <NullStalker position={[-7, 1, -33]} />
       <LootDrop position={[8, 0.6, -14]} kind="health" />
       <LootDrop position={[-9, 1.6, -12]} kind="ammo" />
       <LootDrop position={[14, 0.6, -22]} kind="shards" />
