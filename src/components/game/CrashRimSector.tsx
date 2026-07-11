@@ -659,19 +659,20 @@ export function CrashRimSector() {
         </mesh>
       ))}
       {/* Core approach chevrons — late-game lane read */}
-      {[-100, -108, -116, -124].map((z) => (
+      {[-100, -104, -108, -112, -116, -120, -124].map((z) => (
         <mesh
           key={`corechev-${z}`}
           position={[0, 0.09, z]}
           rotation={[-Math.PI / 2, 0, 0]}
         >
-          <ringGeometry args={[0.55, 0.85, 3, 1, Math.PI / 6, (Math.PI * 2) / 3]} />
+          <ringGeometry args={[0.6, 0.9, 3, 1, Math.PI / 6, (Math.PI * 2) / 3]} />
           <meshStandardMaterial
             color="#c4b5fd"
             emissive="#a78bfa"
-            emissiveIntensity={1.0}
+            emissiveIntensity={1.15}
             transparent
-            opacity={0.7}
+            opacity={0.75}
+            toneMapped={false}
           />
         </mesh>
       ))}
