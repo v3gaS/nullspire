@@ -114,6 +114,7 @@ const SECRETS: {
 ];
 
 let secretsFound = 0;
+let secretsRunId = -1;
 
 function SecretHint({
   position,
@@ -127,8 +128,14 @@ function SecretHint({
   const shown = useRef(false);
   const light = useRef<THREE.PointLight>(null);
   const ring = useRef<THREE.Mesh>(null);
+  const runId = useGameStore((s) => s.runId);
 
   useFrame((state) => {
+    if (secretsRunId !== runId) {
+      secretsRunId = runId;
+      secretsFound = 0;
+      shown.current = false;
+    }
     if (shown.current) return;
     const dist = state.camera.position.distanceTo(
       new THREE.Vector3(...position),
@@ -146,6 +153,7 @@ function SecretHint({
     if (dist < radius) {
       shown.current = true;
       secretsFound += 1;
+      useGameStore.getState().addSecret();
       useGameStore
         .getState()
         .setObjective(
