@@ -381,7 +381,12 @@ export function CrashRimSector() {
       <Box position={[-5, 1.2, -40]} size={[2.2, 2.4, 1.2]} color="#5a4030" />
       <Box position={[5, 1.2, -41]} size={[2.2, 2.4, 1.2]} color="#5a4030" />
       <Box position={[0, 0.9, -43]} size={[3.5, 1.8, 1]} color="#4a3528" />
-      <Suspense fallback={null}>
+      <Box position={[-8, 1.0, -46]} size={[2, 2, 1.2]} color="#5a4030" />
+      <Box position={[8, 1.0, -47]} size={[2, 2, 1.2]} color="#5a4030" />
+      {/* Core approach cover */}
+      <Box position={[-6, 1.1, -114]} size={[2.4, 2.2, 1.4]} color="#2e1065" />
+      <Box position={[6, 1.1, -115]} size={[2.4, 2.2, 1.4]} color="#2e1065" />
+      <Box position={[0, 0.95, -120]} size={[3.2, 1.9, 1.2]} color="#312e81" />      <Suspense fallback={null}>
         <Prop
           url="/assets/models/kenney-fps/wall-high.glb"
           position={[20, 0, -8]}

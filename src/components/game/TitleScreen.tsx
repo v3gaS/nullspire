@@ -61,7 +61,7 @@ export function TitleScreen() {
       <div className="relative z-10 mt-10 flex flex-col items-center gap-3">
         <button
           type="button"
-          className="min-w-52 rounded border border-teal-300/50 bg-teal-400/15 px-8 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-teal-50 shadow-[0_0_40px_rgba(46,230,200,0.12)] transition hover:bg-teal-300/25"
+          className="min-w-52 rounded border border-teal-200/60 bg-teal-400/20 px-8 py-3.5 text-sm font-semibold uppercase tracking-[0.25em] text-teal-50 shadow-[0_0_48px_rgba(46,230,200,0.22)] transition hover:bg-teal-300/30 hover:shadow-[0_0_60px_rgba(46,230,200,0.35)]"
           onClick={() => {
             resetRun();
             setScreen("playing");
