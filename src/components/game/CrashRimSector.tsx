@@ -402,18 +402,34 @@ export function CrashRimSector() {
       <Box position={[-12, 0.05, -16]} size={[4, 0.1, 4]} color="#1f6b4a" />
 
       {/* Mid-canyon combat pocket — cover flanks, open kill lane */}
-      <Box position={[-7, 1.1, -40]} size={[2.2, 2.2, 2.2]} color="#5a4030" />
-      <Box position={[7, 1.1, -42]} size={[2.2, 2.2, 2.2]} color="#5a4030" />
-      <Box position={[-10, 0.9, -48]} size={[3, 1.8, 1.6]} color="#6b4a32" />
-      <Box position={[10, 0.9, -50]} size={[3, 1.8, 1.6]} color="#6b4a32" />
+      <Box position={[-7, 1.1, -40]} size={[2.2, 2.2, 2.2]} color="#6a5a48" />
+      <Box position={[7, 1.1, -42]} size={[2.2, 2.2, 2.2]} color="#6a5a48" />
+      <Box position={[-10, 0.9, -48]} size={[3, 1.8, 1.6]} color="#7a6a58" />
+      <Box position={[10, 0.9, -50]} size={[3, 1.8, 1.6]} color="#7a6a58" />
+      <Box position={[-5, 0.55, -44]} size={[1.8, 1.1, 1.2]} color="#8a8070" />
+      <Box position={[5.5, 0.5, -46]} size={[2.0, 1.0, 1.4]} color="#5a6570" />
+      <Box position={[-8.5, 0.45, -52]} size={[1.6, 0.9, 1.8]} color="#8a7a68" />
+      <Box position={[8, 0.6, -54]} size={[1.5, 1.2, 1.5]} color="#6a7580" />
+      <pointLight position={[0, 14, -46]} intensity={3.2} color="#fff4e0" distance={36} />
       <mesh position={[0, 0.05, -46]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[8, 14]} />
+        <planeGeometry args={[10, 16]} />
         <meshStandardMaterial
-          color="#3a2a22"
-          emissive="#2a1810"
-          emissiveIntensity={0.25}
+          color="#5a6570"
+          emissive="#3a4550"
+          emissiveIntensity={0.2}
           transparent
-          opacity={0.85}
+          opacity={0.9}
+        />
+      </mesh>
+      <mesh position={[0, 0.07, -46]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[1.2, 18]} />
+        <meshStandardMaterial
+          color="#ff7a18"
+          emissive="#ff7a18"
+          emissiveIntensity={0.85}
+          transparent
+          opacity={0.55}
+          toneMapped={false}
         />
       </mesh>
       {/* Mid-canyon chevrons through the combat pocket */}

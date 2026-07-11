@@ -505,11 +505,11 @@ export function WeaponSystem() {
             shots.push({ dir: forward.clone(), damage: 64, color: "#e879f9" });
             break;
           case "void_launcher":
-            playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.48);
-            useFxStore.getState().pulseMuzzle("#c084fc", 170);
-            useFxStore.getState().pulseShake(0.1, 150);
-            playerPhysics.punch(0.09);
-            shots.push({ dir: forward.clone(), damage: 58, color: "#c084fc" });
+            playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.52);
+            useFxStore.getState().pulseMuzzle("#ff7a18", 200);
+            useFxStore.getState().pulseShake(0.12, 170);
+            playerPhysics.punch(0.11);
+            shots.push({ dir: forward.clone(), damage: 62, color: "#ff7a18" });
             break;
           default: {
             const _exhaustive: never = id;
@@ -544,9 +544,20 @@ export function WeaponSystem() {
             : origin.clone().add(shot.dir.clone().multiplyScalar(80));
 
           const beamWidth =
-            id === "rail_lance" ? 0.24 : id === "scatter_carbine" ? 0.07 : 0.12;
+            id === "rail_lance"
+              ? 0.24
+              : id === "void_launcher"
+                ? 0.2
+                : id === "scatter_carbine"
+                  ? 0.07
+                  : 0.12;
           combatFx.pushBeam(muzzle, impact, shot.color, beamWidth);
           combatFx.pushImpact(impact, shot.color);
+          if (id === "void_launcher") {
+            combatFx.pushBoom(impact, "#ff7a18", 3.6);
+            combatFx.pushBoom(impact.clone().add(new THREE.Vector3(0, 0.3, 0)), "#ffb347", 1.8);
+            useFxStore.getState().pulseShake(0.14, 180);
+          }
 
           if (valid?.object?.userData?.destructible) {
             let dmg = shot.damage;
@@ -602,9 +613,14 @@ export function WeaponSystem() {
                   impulseRigid(obj, op.clone().sub(impact), 16);
                 }
               }
-              combatFx.pushBoom(impact, "#c084fc", 5.2);
-              combatFx.pushImpact(impact, "#c084fc");
-              useFxStore.getState().pulseShake(0.24, 340);
+              combatFx.pushBoom(impact, "#ff7a18", 5.6);
+              combatFx.pushBoom(
+                impact.clone().add(new THREE.Vector3(0, 0.5, 0)),
+                "#ffb347",
+                2.4,
+              );
+              combatFx.pushImpact(impact, "#ff9f43");
+              useFxStore.getState().pulseShake(0.26, 360);
               playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.72);
               playerPhysics.punch(0.08);
               // Soft rocket-jump if close — Quake RJ window
