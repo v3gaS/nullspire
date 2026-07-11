@@ -391,31 +391,48 @@ export function WeaponSystem() {
       if (mat && !Array.isArray(mat) && "emissive" in mat) {
         const std = mat as THREE.MeshStandardMaterial;
         std.emissive = new THREE.Color("#e879f9");
-        std.emissiveIntensity = 1.2 + Math.sin(now * 0.016) * 0.8;
+        std.emissiveIntensity = 1.5 + Math.sin(now * 0.02) * 1.0;
       }
-      if (Math.random() < dt * 4) {
+      if (Math.random() < dt * 6) {
         combatFx.pushImpact(worldPos(marked.current), "#f0abfc");
+      }
+      if (Math.random() < dt * 1.5) {
+        combatFx.pushBoom(worldPos(marked.current), "#e879f9", 0.8);
       }
     }
 
     // Singularity pull then boom — physics pull on debris, stagger on meshes
     for (const s of singularities.current) {
       if (!s.detonated && now < s.until) {
+        if (Math.random() < dt * 10) {
+          combatFx.pushImpact(
+            s.pos
+              .clone()
+              .add(
+                new THREE.Vector3(
+                  (Math.random() - 0.5) * 4,
+                  Math.random() * 2,
+                  (Math.random() - 0.5) * 4,
+                ),
+              ),
+            "#ff7a18",
+          );
+        }
         for (const obj of collectDestructibles(scene)) {
           const op = worldPos(obj);
           const to = new THREE.Vector3().subVectors(s.pos, op);
           const dist = to.length();
-          if (dist < 12 && dist > 0.2) {
+          if (dist < 13 && dist > 0.2) {
             to.normalize();
-            if (!impulseRigid(obj, to, dt * 28)) {
-              obj.position.add(to.multiplyScalar(dt * 6));
+            if (!impulseRigid(obj, to, dt * 32)) {
+              obj.position.add(to.multiplyScalar(dt * 7));
             }
           }
         }
         const cam = camera.position;
-        if (cam.distanceTo(s.pos) < 10) {
+        if (cam.distanceTo(s.pos) < 11) {
           const pull = new THREE.Vector3().subVectors(s.pos, cam).normalize();
-          playerPhysics.pushKnock(pull.x * dt * 8, 0, pull.z * dt * 8);
+          playerPhysics.pushKnock(pull.x * dt * 9, 0, pull.z * dt * 9);
         }
       }
       if (!s.detonated && now >= s.until) {
