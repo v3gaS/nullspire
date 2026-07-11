@@ -184,8 +184,8 @@ function ChunkyGun({ id }: { id: WeaponId }) {
             rotation={[Math.PI / 2, 0, 0]}
             frustumCulled={false}
           >
-            <cylinderGeometry args={[0.14, 0.12, 0.1, 10]} />
-            <Mat color="#e5e7eb" emissive="#9ca3af" emissiveIntensity={0.35} />
+            <cylinderGeometry args={[0.16, 0.14, 0.12, 10]} />
+            <Mat color="#e5e7eb" emissive="#9ca3af" emissiveIntensity={0.4} />
           </mesh>
           <mesh position={[0.02, -0.16, 0.08]} frustumCulled={false}>
             <boxGeometry args={[0.09, 0.2, 0.16]} />
