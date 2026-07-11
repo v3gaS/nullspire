@@ -110,6 +110,7 @@ Campaign build order. Check items as completed. Loop works top-down.
 - [x] Snappier fire rates across arsenal
 - [x] Chunkier kicks/gibs/kill-X + denser drones/elites/loot + Core pads
 - [x] Faster Quake move/air + solid Aegis cover + boss phase/death booms
+- [x] Hotter death/victory + Core chevrons + stronger void RJ
 
 ---
 

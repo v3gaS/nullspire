@@ -127,12 +127,13 @@ function SecretHint({
       shown.current = true;
       useGameStore.getState().setObjective(`SECRET FOUND — ${hint}`);
       playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.55);
-      useFxStore.getState().pulseShake(0.1, 200);
+      useFxStore.getState().pulseShake(0.14, 240);
       combatFx.pushBoom(
         new THREE.Vector3(...position),
         "#fbbf24",
-        2.2,
+        3.0,
       );
+      combatFx.pushImpact(new THREE.Vector3(...position), "#ffe066");
     }
   });
 

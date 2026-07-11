@@ -532,21 +532,21 @@ export function WeaponSystem() {
             if (id === "void_launcher") {
               for (const obj of collectDestructibles(scene)) {
                 const op = worldPos(obj);
-                if (op.distanceTo(impact) < 6.5) {
-                  applyHit(obj, 28, impact);
-                  impulseRigid(obj, op.clone().sub(impact), 14);
+                if (op.distanceTo(impact) < 7.2) {
+                  applyHit(obj, 32, impact);
+                  impulseRigid(obj, op.clone().sub(impact), 16);
                 }
               }
-              combatFx.pushBoom(impact, "#c084fc", 4.5);
+              combatFx.pushBoom(impact, "#c084fc", 5.2);
               combatFx.pushImpact(impact, "#c084fc");
-              useFxStore.getState().pulseShake(0.2, 300);
-              playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.65);
-              playerPhysics.punch(0.06);
+              useFxStore.getState().pulseShake(0.24, 340);
+              playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.72);
+              playerPhysics.punch(0.08);
               // Soft rocket-jump if close — Quake RJ window
-              if (origin.distanceTo(impact) < 6.5) {
+              if (origin.distanceTo(impact) < 7.5) {
                 const up = origin.clone().sub(impact).normalize();
-                playerPhysics.pushKnock(up.x * 7, 8.5, up.z * 7);
-                playerPhysics.punch(-0.08);
+                playerPhysics.pushKnock(up.x * 9, 10.5, up.z * 9);
+                playerPhysics.punch(-0.1);
               }
             }
           }

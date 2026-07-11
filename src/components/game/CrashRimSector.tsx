@@ -337,6 +337,23 @@ export function CrashRimSector() {
           />
         </mesh>
       ))}
+      {/* Core approach chevrons — late-game lane read */}
+      {[-100, -108, -116, -124].map((z) => (
+        <mesh
+          key={`corechev-${z}`}
+          position={[0, 0.09, z]}
+          rotation={[-Math.PI / 2, 0, 0]}
+        >
+          <ringGeometry args={[0.55, 0.85, 3, 1, Math.PI / 6, (Math.PI * 2) / 3]} />
+          <meshStandardMaterial
+            color="#c4b5fd"
+            emissive="#a78bfa"
+            emissiveIntensity={1.0}
+            transparent
+            opacity={0.7}
+          />
+        </mesh>
+      ))}
 
       {/* Rust Canyons trench */}
       <Box position={[0, 1.5, -45]} size={[40, 3, 2]} color="#6b3f2a" />
