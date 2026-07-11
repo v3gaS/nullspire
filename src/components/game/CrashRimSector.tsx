@@ -460,8 +460,30 @@ export function CrashRimSector() {
 
       <Beacon position={[16, 10, -20]} />
 
-      <Box position={[6, 0.05, -8]} size={[5, 0.1, 5]} color="#1f6b4a" />
-      <Box position={[-12, 0.05, -16]} size={[4, 0.1, 4]} color="#1f6b4a" />
+      <Box position={[6, 0.05, -8]} size={[5, 0.1, 5]} color="#5a6570" />
+      <Box position={[-12, 0.05, -16]} size={[4, 0.1, 4]} color="#5a6570" />
+      <mesh position={[6, 0.12, -8]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[1.2, 1.6, 24]} />
+        <meshStandardMaterial
+          color="#4ade80"
+          emissive="#22c55e"
+          emissiveIntensity={1.0}
+          transparent
+          opacity={0.55}
+          toneMapped={false}
+        />
+      </mesh>
+      <mesh position={[-12, 0.12, -16]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[1.0, 1.4, 24]} />
+        <meshStandardMaterial
+          color="#a78bfa"
+          emissive="#7c3aed"
+          emissiveIntensity={1.0}
+          transparent
+          opacity={0.55}
+          toneMapped={false}
+        />
+      </mesh>
 
       {/* Mid-canyon combat pocket — cover flanks, open kill lane */}
       <Box position={[-7, 1.1, -40]} size={[2.2, 2.2, 2.2]} color="#6a5a48" />
