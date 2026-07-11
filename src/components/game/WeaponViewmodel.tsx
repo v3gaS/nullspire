@@ -19,15 +19,15 @@ const ACCENT: Record<WeaponId, string> = {
 function viewKick(id: WeaponId): number {
   switch (id) {
     case "pulse_smg":
-      return 0.16;
+      return 0.2;
     case "scatter_carbine":
-      return 0.28;
-    case "arc_caster":
-      return 0.18;
-    case "rail_lance":
-      return 0.26;
-    case "void_launcher":
       return 0.34;
+    case "arc_caster":
+      return 0.22;
+    case "rail_lance":
+      return 0.32;
+    case "void_launcher":
+      return 0.42;
     default: {
       const _exhaustive: never = id;
       return _exhaustive;

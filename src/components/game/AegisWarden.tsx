@@ -167,6 +167,7 @@ export function AegisWarden() {
         />
       </mesh>
       <pointLight position={[0, 6, 0]} intensity={2.4} color="#7dffef" distance={28} />
+      <pointLight position={[0, 22, 0]} intensity={3.8} color="#fff4e0" distance={48} />
       <pointLight position={[-8, 3, 0]} intensity={1.2} color="#94a3b8" distance={16} />
       <pointLight position={[8, 3, 0]} intensity={1.2} color="#94a3b8" distance={16} />
       {/* Warden plaza cover — solid Quake duel blocks */}
