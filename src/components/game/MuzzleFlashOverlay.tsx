@@ -15,8 +15,8 @@ export function MuzzleFlashOverlay() {
     const tick = () => {
       const fx = useFxStore.getState();
       const remaining = Math.max(0, fx.muzzleUntil - performance.now());
-      const t = remaining > 0 ? Math.min(1, remaining / 110) : 0;
-      setAlpha(t * t * 1.15);
+      const t = remaining > 0 ? Math.min(1, remaining / 140) : 0;
+      setAlpha(t * t * 1.35);
       setColor(fx.muzzleColor);
       raf = requestAnimationFrame(tick);
     };
@@ -37,7 +37,7 @@ export function MuzzleFlashOverlay() {
     <div
       className="pointer-events-none absolute inset-0 z-[6]"
       style={{
-        background: `radial-gradient(circle at 62% 68%, ${color}${a1} 0%, ${color}${a2} 22%, transparent 48%)`,
+        background: `radial-gradient(circle at 64% 70%, ${color}${a1} 0%, ${color}${a2} 26%, transparent 52%)`,
         mixBlendMode: "screen",
       }}
     />

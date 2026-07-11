@@ -149,46 +149,52 @@ export function GameApp() {
           }}
           className="absolute inset-0"
         >
-          <color attach="background" args={["#5a6a7c"]} />
-          <fog attach="fog" args={["#7a8a9a", 95, Math.max(cfg.fogFar, 140)]} />
-          <ambientLight intensity={1.15} />
+          <color attach="background" args={["#627284"]} />
+          <fog attach="fog" args={["#8494a4", 100, Math.max(cfg.fogFar, 150)]} />
+          <ambientLight intensity={1.28} />
           <directionalLight
             castShadow={cfg.shadows}
-            intensity={2.35}
+            intensity={2.55}
             position={[18, 55, 12]}
             color="#fff4e0"
             shadow-mapSize={cfg.shadows ? [2048, 2048] : [512, 512]}
           />
-          <hemisphereLight args={["#e8dcc8", "#2a3544", 1.05]} />
+          <hemisphereLight args={["#efe4d0", "#2a3544", 1.15]} />
           {/* Skylight wash — hangar bloom feel */}
           <pointLight
             position={[0, 48, -20]}
-            intensity={4.2}
+            intensity={4.8}
             color="#fff8ee"
-            distance={120}
+            distance={130}
           />
           <pointLight
             position={[16, 12, -20]}
-            intensity={2.4}
+            intensity={2.6}
             color="#2ee6c8"
-            distance={48}
+            distance={50}
           />
           <pointLight
             position={[0, 8, 8]}
-            intensity={3.2}
+            intensity={3.6}
             color="#f4a261"
-            distance={44}
+            distance={48}
           />
           <pointLight
             position={[0, 10, -70]}
-            intensity={2.0}
+            intensity={2.2}
             color="#7dffef"
-            distance={36}
+            distance={38}
           />
           <pointLight
             position={[0, 12, -130]}
-            intensity={2.4}
+            intensity={2.6}
             color="#a78bfa"
+            distance={42}
+          />
+          <pointLight
+            position={[0, 16, -46]}
+            intensity={2.8}
+            color="#fff4e0"
             distance={40}
           />
           <Stars
