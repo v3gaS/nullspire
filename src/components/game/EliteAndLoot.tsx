@@ -275,10 +275,12 @@ export function EliteAndLoot() {
       <BastionUnit position={[20, 1.1, -50]} />
       <BastionUnit position={[-16, 1.1, -66]} />
       <BastionUnit position={[14, 1.1, -95]} />
+      <BastionUnit position={[-12, 1.1, -118]} />
       <NullStalker position={[-8, 1, -42]} />
       <NullStalker position={[6, 1, -62]} />
       <NullStalker position={[12, 1, -78]} />
       <NullStalker position={[-10, 1, -110]} />
+      <NullStalker position={[8, 1, -126]} />
       <LootDrop position={[8, 0.6, -14]} kind="health" />
       <LootDrop position={[-9, 1.6, -12]} kind="ammo" />
       <LootDrop position={[14, 0.6, -22]} kind="shards" />
@@ -290,6 +292,9 @@ export function EliteAndLoot() {
       <LootDrop position={[5, 0.8, -124]} kind="shards" />
       <LootDrop position={[0, 15.2, -95]} kind="health" />
       <LootDrop position={[-3, 9.8, -93]} kind="ammo" />
+      <LootDrop position={[9, 0.8, -40]} kind="ammo" />
+      <LootDrop position={[-8, 0.8, -74]} kind="shards" />
+      <LootDrop position={[0, 0.8, -116]} kind="health" />
     </group>
   );
 }

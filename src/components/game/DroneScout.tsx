@@ -104,6 +104,9 @@ export function DroneSquad() {
       <DroneScout id="d5" position={[-6, 4.5, -72]} />
       <DroneScout id="d6" position={[14, 5, -100]} />
       <DroneScout id="d7" position={[-12, 5.5, -120]} />
+      <DroneScout id="d8" position={[4, 4.0, -40]} />
+      <DroneScout id="d9" position={[-10, 4.8, -88]} />
+      <DroneScout id="d10" position={[10, 5.2, -114]} />
     </group>
   );
 }

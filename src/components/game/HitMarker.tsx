@@ -26,29 +26,32 @@ export function HitMarker() {
   if (screen !== "playing" || mode === "off") return null;
 
   const kill = mode === "kill";
-  const color = kill ? "#ff6644" : "#ffffff";
-  const size = kill ? "h-11 w-11" : "h-8 w-8";
-  const arm = kill ? "h-3.5 w-0.5" : "h-2.5 w-0.5";
-  const armH = kill ? "h-0.5 w-3.5" : "h-0.5 w-2.5";
+  const color = kill ? "#ff4422" : "#ffffff";
+  const size = kill ? "h-14 w-14" : "h-8 w-8";
+  const arm = kill ? "h-5 w-1" : "h-2.5 w-0.5";
+  const armH = kill ? "h-1 w-5" : "h-0.5 w-2.5";
 
   return (
     <div className="pointer-events-none absolute left-1/2 top-1/2 z-[7] -translate-x-1/2 -translate-y-1/2">
-      <div className={`relative ${size}`}>
+      <div
+        className={`relative ${size}`}
+        style={kill ? { transform: "rotate(45deg)" } : undefined}
+      >
         <div
           className={`absolute left-1/2 top-0 ${arm} -translate-x-1/2`}
-          style={{ background: color, boxShadow: `0 0 10px ${color}` }}
+          style={{ background: color, boxShadow: `0 0 14px ${color}` }}
         />
         <div
           className={`absolute bottom-0 left-1/2 ${arm} -translate-x-1/2`}
-          style={{ background: color, boxShadow: `0 0 10px ${color}` }}
+          style={{ background: color, boxShadow: `0 0 14px ${color}` }}
         />
         <div
           className={`absolute left-0 top-1/2 ${armH} -translate-y-1/2`}
-          style={{ background: color, boxShadow: `0 0 10px ${color}` }}
+          style={{ background: color, boxShadow: `0 0 14px ${color}` }}
         />
         <div
           className={`absolute right-0 top-1/2 ${armH} -translate-y-1/2`}
-          style={{ background: color, boxShadow: `0 0 10px ${color}` }}
+          style={{ background: color, boxShadow: `0 0 14px ${color}` }}
         />
       </div>
     </div>

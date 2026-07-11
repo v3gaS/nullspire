@@ -111,24 +111,24 @@ export function applyHit(
     } else {
       // Quake-ish gib spray
       const wp = worldPos(mesh);
-      for (let i = 0; i < 9; i++) {
+      for (let i = 0; i < 12; i++) {
         const gib = wp
           .clone()
           .add(
             new THREE.Vector3(
-              (Math.random() - 0.5) * 2.4,
-              Math.random() * 1.8,
-              (Math.random() - 0.5) * 2.4,
+              (Math.random() - 0.5) * 3.0,
+              Math.random() * 2.2,
+              (Math.random() - 0.5) * 3.0,
             ),
           );
         combatFx.pushImpact(gib, i % 2 === 0 ? "#ff4466" : "#ffaa44");
       }
-      combatFx.pushBoom(wp, "#ff6644", 2.4);
+      combatFx.pushBoom(wp, "#ff6644", 2.9);
       mesh.visible = false;
       mesh.userData.dead = true;
-      playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.4);
+      playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.48);
       useFxStore.getState().pulseKill();
-      useFxStore.getState().pulseShake(0.1, 160);
+      useFxStore.getState().pulseShake(0.14, 180);
     }
   } else {
     playSfx("/assets/audio/kenney-fps/enemy_hurt.ogg", 0.3);
@@ -402,53 +402,53 @@ export function WeaponSystem() {
               dir.normalize();
               shots.push({
                 dir,
-                damage: overclocked ? 26 : 15,
+                damage: overclocked ? 28 : 16,
                 color: overclocked ? "#ffe066" : "#7dffef",
               });
             }
             break;
           case "scatter_carbine":
-            playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.4);
-            useFxStore.getState().pulseMuzzle("#ffb347", 110);
-            useFxStore.getState().pulseShake(0.07, 110);
-            playerPhysics.punch(0.085);
-            for (let i = 0; i < 10; i++) {
+            playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.42);
+            useFxStore.getState().pulseMuzzle("#ffb347", 120);
+            useFxStore.getState().pulseShake(0.085, 120);
+            playerPhysics.punch(0.1);
+            for (let i = 0; i < 11; i++) {
               const dir = forward.clone();
-              dir.x += (Math.random() - 0.5) * 0.3;
-              dir.y += (Math.random() - 0.5) * 0.22;
-              dir.z += (Math.random() - 0.5) * 0.3;
+              dir.x += (Math.random() - 0.5) * 0.32;
+              dir.y += (Math.random() - 0.5) * 0.24;
+              dir.z += (Math.random() - 0.5) * 0.32;
               dir.normalize();
-              shots.push({ dir, damage: 11, color: "#ffb347" });
+              shots.push({ dir, damage: 12, color: "#ffb347" });
             }
             break;
           case "arc_caster": {
-            playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.32);
-            useFxStore.getState().pulseMuzzle("#60a5fa", 95);
-            useFxStore.getState().pulseShake(0.03, 70);
-            playerPhysics.punch(0.038);
+            playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.34);
+            useFxStore.getState().pulseMuzzle("#60a5fa", 100);
+            useFxStore.getState().pulseShake(0.035, 75);
+            playerPhysics.punch(0.042);
             {
               const dir = forward.clone();
               const kick = useFxStore.getState().kick;
               dir.x += (Math.random() - 0.5) * kick * 0.02;
               dir.y += (Math.random() - 0.5) * kick * 0.016;
               dir.normalize();
-              shots.push({ dir, damage: 16, color: "#60a5fa" });
+              shots.push({ dir, damage: 18, color: "#60a5fa" });
             }
             break;
           }
           case "rail_lance":
-            playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.45);
-            useFxStore.getState().pulseMuzzle("#e879f9", 140);
-            useFxStore.getState().pulseShake(0.055, 120);
-            playerPhysics.punch(0.065);
-            shots.push({ dir: forward.clone(), damage: 58, color: "#e879f9" });
+            playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.48);
+            useFxStore.getState().pulseMuzzle("#e879f9", 150);
+            useFxStore.getState().pulseShake(0.07, 130);
+            playerPhysics.punch(0.08);
+            shots.push({ dir: forward.clone(), damage: 64, color: "#e879f9" });
             break;
           case "void_launcher":
-            playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.45);
-            useFxStore.getState().pulseMuzzle("#c084fc", 160);
-            useFxStore.getState().pulseShake(0.08, 140);
-            playerPhysics.punch(0.075);
-            shots.push({ dir: forward.clone(), damage: 52, color: "#c084fc" });
+            playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.48);
+            useFxStore.getState().pulseMuzzle("#c084fc", 170);
+            useFxStore.getState().pulseShake(0.1, 150);
+            playerPhysics.punch(0.09);
+            shots.push({ dir: forward.clone(), damage: 58, color: "#c084fc" });
             break;
           default: {
             const _exhaustive: never = id;

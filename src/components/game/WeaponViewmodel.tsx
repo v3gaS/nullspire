@@ -27,15 +27,15 @@ const GUN_URL: Record<WeaponId, string> = {
 function viewKick(id: WeaponId): number {
   switch (id) {
     case "pulse_smg":
-      return 0.1;
+      return 0.13;
     case "scatter_carbine":
-      return 0.18;
+      return 0.24;
     case "arc_caster":
-      return 0.12;
+      return 0.15;
     case "rail_lance":
-      return 0.16;
+      return 0.22;
     case "void_launcher":
-      return 0.2;
+      return 0.28;
     default: {
       const _exhaustive: never = id;
       return _exhaustive;
@@ -96,9 +96,9 @@ export function WeaponViewmodel() {
       : 0;
     if (bobRate > 0) bob.current += dt * bobRate;
 
-    const kickZ = kicking ? viewKick(active) : fx.kick * 0.07;
+    const kickZ = kicking ? viewKick(active) : fx.kick * 0.1;
     const reloading = performance.now() < fx.reloadUntil;
-    const reloadDip = reloading ? 0.12 : 0;
+    const reloadDip = reloading ? 0.14 : 0;
     const amp = playerLocomotion.sprinting ? 0.014 : 0.008;
     const right = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion);
     const up = new THREE.Vector3(0, 1, 0).applyQuaternion(camera.quaternion);

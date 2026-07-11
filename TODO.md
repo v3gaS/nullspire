@@ -108,6 +108,7 @@ Campaign build order. Check items as completed. Loop works top-down.
 - [x] Dry-fire auto-reload + stronger void RJ
 - [x] Boom debris rings + hotter muzzle + vault barrel nests + more secrets
 - [x] Snappier fire rates across arsenal
+- [x] Chunkier kicks/gibs/kill-X + denser drones/elites/loot + Core pads
 
 ---
 
@@ -118,4 +119,4 @@ Campaign build order. Check items as completed. Loop works top-down.
 4. Prefer playable increments over unfinished mega-features.
 
 ## Current focus
-**2h continuous block** (~0.85h remaining) — still coding; pause only for build/deploy/QA
+**2h continuous block** (~0.8h remaining) — still coding; pause only for build/deploy/QA
