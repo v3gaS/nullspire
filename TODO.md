@@ -139,4 +139,4 @@ Campaign build order. Check items as completed. Loop works top-down.
 - [x] Continue Quake juice until wall-clock ends
 
 ## Current focus
-**Phase 11 2h block COMPLETE** — next loop: re-arm another continuous block; keep Quake juice + playtest balance
+**Asset fan-out COMPLETE (look over cubes)** — Poly Haven + AmbientCG + Kenney Blaster/Station; HDRI floor + real guns/props; keep Quality Low for perf; next: Quaternius enemy skins if downloadable

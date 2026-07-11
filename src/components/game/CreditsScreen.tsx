@@ -14,8 +14,16 @@ export function CreditsScreen({ onBack }: { onBack: () => void }) {
         </p>
         <ul className="mt-6 space-y-3 text-sm text-zinc-200">
           <li>
-            <span className="text-teal-300">Kenney</span> — Space Kit, Starter
-            Kit FPS (models, SFX, sprites) · CC0 · kenney.nl
+            <span className="text-teal-300">Kenney</span> — Blaster Kit, Space
+            Station Kit, Space Kit · CC0 · kenney.nl
+          </li>
+          <li>
+            <span className="text-teal-300">Poly Haven</span> — Industrial Sunset
+            HDRI, Metal Plate · CC0 · polyhaven.com
+          </li>
+          <li>
+            <span className="text-teal-300">AmbientCG</span> — Concrete & metal
+            PBR textures · CC0 · ambientcg.com
           </li>
           <li>
             <span className="text-teal-300">Google Fonts</span> — Orbitron, Exo

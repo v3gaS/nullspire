@@ -2,13 +2,10 @@
 
 import { Suspense, useMemo } from "react";
 import { useGLTF } from "@react-three/drei";
-import { useLoader } from "@react-three/fiber";
-import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
 import * as THREE from "three";
-import { RigidBody } from "@react-three/rapier";
 import { DistanceCull } from "./DistanceCull";
 
-function GlbProp({
+function StationProp({
   url,
   position,
   scale = 1,
@@ -28,15 +25,6 @@ function GlbProp({
         m.castShadow = true;
         m.receiveShadow = true;
         m.userData.skipHit = true;
-        if (m.material) {
-          const mat = Array.isArray(m.material)
-            ? m.material[0]
-            : m.material;
-          if (mat && "emissiveIntensity" in mat) {
-            const std = mat as THREE.MeshStandardMaterial;
-            std.emissiveIntensity = Math.max(std.emissiveIntensity, 0.15);
-          }
-        }
       }
     });
     return c;
@@ -52,210 +40,169 @@ function GlbProp({
   );
 }
 
-function ObjProp({
-  url,
-  position,
-  scale = 1,
-  rotation = [0, 0, 0] as [number, number, number],
-  color = "#8b9bb4",
-}: {
-  url: string;
-  position: [number, number, number];
-  scale?: number;
-  rotation?: [number, number, number];
-  color?: string;
-}) {
-  const obj = useLoader(OBJLoader, url);
-  const cloned = useMemo(() => {
-    const c = obj.clone(true);
-    c.traverse((o) => {
-      const m = o as THREE.Mesh;
-      if (m.isMesh) {
-        m.castShadow = true;
-        m.receiveShadow = true;
-        m.userData.skipHit = true;
-        m.material = new THREE.MeshStandardMaterial({
-          color,
-          roughness: 0.55,
-          metalness: 0.4,
-          emissive: new THREE.Color(color).multiplyScalar(0.15),
-        });
-      }
-    });
-    return c;
-  }, [obj, color]);
-  return (
-    <primitive
-      object={cloned}
-      position={position}
-      scale={scale}
-      rotation={rotation}
-      userData={{ skipHit: true }}
-    />
-  );
-}
-
 /**
- * Drop Zone must read as an open plaza: clear |x|<9, z in [0..14].
- * Dressing frames the lane toward the beacon (-Z), not the player's face.
+ * Curated Space Station Kit props — fewer pieces, real models, clearer silhouette.
+ * CC0 Kenney Space Station Kit.
  */
-function GlbDressing() {
+export function WorldDressing() {
   return (
     <group>
-      {/* Far flanking ruins — outside spawn FOV */}
-      <GlbProp
-        url="/assets/models/kenney-fps/wall-high.glb"
-        position={[14, 0, -6]}
-        scale={3.2}
-        rotation={[0, -0.35, 0]}
-      />
-      <GlbProp
-        url="/assets/models/kenney-fps/wall-high.glb"
-        position={[-14, 0, -8]}
-        scale={3.2}
-        rotation={[0, 0.4, 0]}
-      />
-      <GlbProp
-        url="/assets/models/kenney-fps/wall-low.glb"
-        position={[12, 0, -16]}
-        scale={2.8}
-        rotation={[0, 0.2, 0]}
-      />
-      <GlbProp
-        url="/assets/models/kenney-fps/wall-low.glb"
-        position={[-12, 0, -14]}
-        scale={2.8}
-        rotation={[0, -0.25, 0]}
-      />
-
-      {/* Mid-lane platforms — ahead, not underfoot */}
-      <GlbProp
-        url="/assets/models/kenney-fps/platform.glb"
-        position={[-10, 0.02, -12]}
-        scale={2.6}
-      />
-      <GlbProp
-        url="/assets/models/kenney-fps/platform.glb"
-        position={[11, 0.02, -18]}
-        scale={2.6}
-      />
-      <GlbProp
-        url="/assets/models/kenney-fps/platform-large-grass.glb"
-        position={[-16, 0.02, -22]}
-        scale={2.8}
-      />
-
-      {/* Scenic blocky props — high / far (no Kenney cartoon enemies) */}
-      <mesh position={[10, 4.5, -14]} castShadow>
-        <boxGeometry args={[1.4, 1.0, 1.4]} />
-        <meshStandardMaterial
-          color="#94a3b8"
-          emissive="#38bdf8"
-          emissiveIntensity={0.55}
-          metalness={0.6}
-          roughness={0.35}
+      {/* Drop Zone — readable set dressing, not clutter */}
+      <DistanceCull anchor={[6, 0, 4]} maxDist={70}>
+        <StationProp
+          url="/assets/models/kenney-station/computer-wide.glb"
+          position={[6, 0, 4]}
+          scale={2.2}
+          rotation={[0, -0.6, 0]}
         />
-      </mesh>
-      <mesh position={[-11, 5, -20]} castShadow>
-        <boxGeometry args={[1.4, 1.0, 1.4]} />
-        <meshStandardMaterial
-          color="#94a3b8"
-          emissive="#38bdf8"
-          emissiveIntensity={0.55}
-          metalness={0.6}
-          roughness={0.35}
+      </DistanceCull>
+      <DistanceCull anchor={[-7, 0, 3]} maxDist={70}>
+        <StationProp
+          url="/assets/models/kenney-station/table-display.glb"
+          position={[-7, 0, 3]}
+          scale={2.0}
+          rotation={[0, 0.8, 0]}
         />
-      </mesh>
-      <GlbProp
-        url="/assets/models/kenney-fps/cloud.glb"
-        position={[6, 14, -28]}
-        scale={4.5}
-      />
+      </DistanceCull>
+      <DistanceCull anchor={[9, 0, -6]} maxDist={80}>
+        <StationProp
+          url="/assets/models/kenney-station/container-wide.glb"
+          position={[9, 0, -6]}
+          scale={2.4}
+          rotation={[0, 0.2, 0]}
+        />
+      </DistanceCull>
+      <DistanceCull anchor={[-10, 0, -5]} maxDist={80}>
+        <StationProp
+          url="/assets/models/kenney-station/container-flat.glb"
+          position={[-10, 0, -5]}
+          scale={2.2}
+        />
+      </DistanceCull>
+      <DistanceCull anchor={[5, 0, -12]} maxDist={80}>
+        <StationProp
+          url="/assets/models/kenney-blaster/crate-wide.glb"
+          position={[5, 0.35, -12]}
+          scale={1.8}
+        />
+      </DistanceCull>
+      <DistanceCull anchor={[-5, 0, -11]} maxDist={80}>
+        <StationProp
+          url="/assets/models/kenney-blaster/crate-medium.glb"
+          position={[-5, 0.35, -11]}
+          scale={1.6}
+          rotation={[0, 0.4, 0]}
+        />
+      </DistanceCull>
+      {/* Poly Haven props — real PBR set dressing */}
+      <DistanceCull anchor={[4, 0, 2]} maxDist={70}>
+        <StationProp
+          url="/assets/models/polyhaven/plastic_crate_01/plastic_crate_01_1k.gltf"
+          position={[4, 0, 2]}
+          scale={1.4}
+          rotation={[0, 0.35, 0]}
+        />
+      </DistanceCull>
+      <DistanceCull anchor={[-4.5, 0, -2]} maxDist={70}>
+        <StationProp
+          url="/assets/models/polyhaven/old_military_crate/old_military_crate_1k.gltf"
+          position={[-4.5, 0, -2]}
+          scale={1.15}
+          rotation={[0, -0.5, 0]}
+        />
+      </DistanceCull>
+      <DistanceCull anchor={[11, 0, -14]} maxDist={85}>
+        <StationProp
+          url="/assets/models/polyhaven/power_box_01/power_box_01_1k.gltf"
+          position={[11, 0, -14]}
+          scale={1.3}
+          rotation={[0, -1.2, 0]}
+        />
+      </DistanceCull>
 
-      {/* Tiny ground accents at plaza edge only */}
-      <GlbProp
-        url="/assets/models/kenney-fps/grass-small.glb"
-        position={[7.5, 0, 2]}
-        scale={1.8}
-      />
-      <GlbProp
-        url="/assets/models/kenney-fps/grass-small.glb"
-        position={[-7.5, 0, 1]}
-        scale={1.8}
-      />
+      {/* Approach corridor props */}
+      <DistanceCull anchor={[12, 0, -24]} maxDist={90}>
+        <StationProp
+          url="/assets/models/kenney-station/structure-barrier.glb"
+          position={[12, 0, -24]}
+          scale={2.5}
+        />
+      </DistanceCull>
+      <DistanceCull anchor={[-12, 0, -26]} maxDist={90}>
+        <StationProp
+          url="/assets/models/kenney-station/structure-panel.glb"
+          position={[-12, 0, -26]}
+          scale={2.4}
+          rotation={[0, Math.PI / 2, 0]}
+        />
+      </DistanceCull>
+      <DistanceCull anchor={[0, 0, -32]} maxDist={90}>
+        <StationProp
+          url="/assets/models/kenney-station/pipe.glb"
+          position={[8, 2.5, -32]}
+          scale={3}
+          rotation={[0, 0, Math.PI / 2]}
+        />
+      </DistanceCull>
+      <DistanceCull anchor={[-8, 0, -40]} maxDist={100}>
+        <StationProp
+          url="/assets/models/kenney-station/wall-window.glb"
+          position={[-14, 0, -40]}
+          scale={3}
+          rotation={[0, Math.PI / 2, 0]}
+        />
+      </DistanceCull>
+      <DistanceCull anchor={[10, 0, -55]} maxDist={110}>
+        <StationProp
+          url="/assets/models/kenney-station/table-large.glb"
+          position={[10, 0, -55]}
+          scale={2.2}
+        />
+      </DistanceCull>
+      <DistanceCull anchor={[-9, 0, -70]} maxDist={120}>
+        <StationProp
+          url="/assets/models/kenney-station/door-double.glb"
+          position={[-9, 0, -70]}
+          scale={2.8}
+        />
+      </DistanceCull>
+      <DistanceCull anchor={[7, 0, -95]} maxDist={130}>
+        <StationProp
+          url="/assets/models/kenney-station/computer-wide.glb"
+          position={[7, 0, -95]}
+          scale={2.4}
+          rotation={[0, -1.1, 0]}
+        />
+      </DistanceCull>
+      <DistanceCull anchor={[0, 0, -118]} maxDist={140}>
+        <StationProp
+          url="/assets/models/kenney-station/structure-barrier.glb"
+          position={[11, 0, -118]}
+          scale={2.6}
+        />
+      </DistanceCull>
     </group>
   );
 }
 
-function ObjDressing() {
-  return (
-    <group>
-      {/* Clean hard-surface props only — soft Kenney blobs stay off the approach cone */}
-      <ObjProp
-        url="/assets/models/kenney-space/barrelLarge.obj"
-        position={[11, 0, -8]}
-        scale={1.6}
-        color="#94a3b8"
-      />
-      <ObjProp
-        url="/assets/models/kenney-space/barrel.obj"
-        position={[12.2, 0, -9.5]}
-        scale={1.6}
-        color="#a8a29e"
-      />
-      <ObjProp
-        url="/assets/models/kenney-space/console.obj"
-        position={[-12, 0, -10]}
-        scale={1.6}
-        rotation={[0, 0.9, 0]}
-        color="#64748b"
-      />
-      <ObjProp
-        url="/assets/models/kenney-space/metalFence.obj"
-        position={[14, 0, -16]}
-        scale={1.6}
-        color="#cbd5e1"
-      />
-      <ObjProp
-        url="/assets/models/kenney-space/satelliteDish.obj"
-        position={[20, 0, -32]}
-        scale={1.5}
-        color="#e2e8f0"
-      />
-      <ObjProp
-        url="/assets/models/kenney-space/stairs.obj"
-        position={[-16, 0, -24]}
-        scale={1.6}
-        color="#a8a29e"
-      />
-      <RigidBody type="fixed" colliders="cuboid" position={[11, 0.65, -8]}>
-        <mesh visible={false}>
-          <boxGeometry args={[1.1, 1.3, 1.1]} />
-        </mesh>
-      </RigidBody>
-    </group>
-  );
-}
+useGLTF.preload("/assets/models/kenney-station/computer-wide.glb");
+useGLTF.preload("/assets/models/kenney-station/table-display.glb");
+useGLTF.preload("/assets/models/kenney-station/container-wide.glb");
+useGLTF.preload("/assets/models/kenney-station/structure-barrier.glb");
+useGLTF.preload("/assets/models/kenney-blaster/crate-wide.glb");
+useGLTF.preload(
+  "/assets/models/polyhaven/plastic_crate_01/plastic_crate_01_1k.gltf",
+);
+useGLTF.preload(
+  "/assets/models/polyhaven/old_military_crate/old_military_crate_1k.gltf",
+);
+useGLTF.preload("/assets/models/polyhaven/power_box_01/power_box_01_1k.gltf");
 
-/** Readable Drop Zone plaza — props frame the push toward the beacon. */
+/** @deprecated alias kept for imports during transition */
 export function KenneyWorldDressing() {
   return (
-    <DistanceCull anchor={[0, 0, -8]} maxDist={70}>
-      <group>
-        <Suspense fallback={null}>
-          <GlbDressing />
-        </Suspense>
-        <Suspense fallback={null}>
-          <ObjDressing />
-        </Suspense>
-      </group>
-    </DistanceCull>
+    <Suspense fallback={null}>
+      <WorldDressing />
+    </Suspense>
   );
 }
-
-useGLTF.preload("/assets/models/kenney-fps/wall-high.glb");
-useGLTF.preload("/assets/models/kenney-fps/wall-low.glb");
-useGLTF.preload("/assets/models/kenney-fps/platform.glb");
-useGLTF.preload("/assets/models/kenney-fps/platform-large-grass.glb");
-useGLTF.preload("/assets/models/kenney-fps/cloud.glb");
-useGLTF.preload("/assets/models/kenney-fps/grass-small.glb");

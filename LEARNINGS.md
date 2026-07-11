@@ -2,6 +2,14 @@
 
 Build diary. Newest entries at the top.
 
+## 2026-07-11 — Asset fan-out (look over cube spam)
+- Goal: simple, highly appealing, fun — real CC0 assets > procedural blocks
+- Sources beyond Kenney: **Poly Haven** (HDRI, asphalt, metal grate, plastic crate, power box, military crate) + **AmbientCG** (tiles, concrete, rust)
+- Wired: `ArenaAtmosphere` (industrial sunset HDRI), `ArenaFloor` (asphalt + tile pad + grate lane), Blaster Kit viewmodels, curated Station Kit dressing + Poly Haven props
+- Thinned chevron / lane / light spam in CrashRimSector; dressing off on low quality
+- Credits updated in CREDITS.md + CreditsScreen
+- Live: hard-refresh amber; Quality Low still recommended for perf
+
 ## 2026-07-11 — Emergency perf tone-down (system freezes)
 - Root cause: CombatVfx rebuilt meshes + PointLights every frame; stacked booms/gibs/beams; too many world lights/enemies/RigidBodies; heavy bloom/DPR
 - Fix: capped FX queues, no per-impact lights, simpler booms, fewer gibs/pellets/booms

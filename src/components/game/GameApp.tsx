@@ -36,6 +36,8 @@ import { ExplosiveBarrels } from "./ExplosiveBarrels";
 import { SecretCaches } from "./SecretCaches";
 import { GameErrorBoundary } from "./GameErrorBoundary";
 import { HangarBloom } from "./HangarBloom";
+import { ArenaAtmosphere } from "./ArenaAtmosphere";
+import { ArenaFloor } from "./ArenaFloor";
 import { useGameStore } from "@/stores/gameStore";
 import { useCombatInput } from "@/lib/game/useCombatInput";
 import {
@@ -59,29 +61,10 @@ function World({ showDressing }: { showDressing: boolean }) {
     <Physics gravity={[0, -18, 0]}>
       <RigidBody type="fixed" colliders={false} position={[0, 0, 0]}>
         <CuboidCollider args={[90, 1.2, 90]} position={[0, -1.2, 0]} />
-        <mesh position={[0, -0.5, 0]} receiveShadow>
-          <boxGeometry args={[180, 1, 180]} />
-          <meshStandardMaterial
-            color="#6a7580"
-            roughness={0.85}
-            metalness={0.14}
-            emissive="#3a4550"
-            emissiveIntensity={0.18}
-          />
-        </mesh>
-      </RigidBody>
-      <RigidBody type="fixed" colliders={false} position={[0, 0, 8]}>
-        <CuboidCollider args={[8, 0.5, 8]} position={[0, -0.15, 0]} />
-        <mesh position={[0, 0.05, 0]} receiveShadow>
-          <boxGeometry args={[16, 0.4, 16]} />
-          <meshStandardMaterial
-            color="#7a8896"
-            roughness={0.72}
-            metalness={0.24}
-            emissive="#2ee6c8"
-            emissiveIntensity={0.35}
-          />
-        </mesh>
+        <CuboidCollider args={[8, 0.35, 8]} position={[0, 0.05, 8]} />
+        <Suspense fallback={null}>
+          <ArenaFloor />
+        </Suspense>
       </RigidBody>
       <PlayerController key={runId} />
 
@@ -151,37 +134,27 @@ export function GameApp() {
           }}
           className="absolute inset-0"
         >
-          <color attach="background" args={["#627284"]} />
-          <fog attach="fog" args={["#8494a4", 40, cfg.fogFar]} />
-          <ambientLight intensity={1.35} />
+          <color attach="background" args={["#4a5564"]} />
+          <fog attach="fog" args={["#6a7888", 55, cfg.fogFar]} />
+          <ambientLight intensity={0.55} />
           <directionalLight
             castShadow={cfg.shadows}
-            intensity={2.2}
+            intensity={1.4}
             position={[18, 55, 12]}
             color="#fff4e0"
             shadow-mapSize={cfg.shadows ? [1024, 1024] : [512, 512]}
           />
-          <hemisphereLight args={["#efe4d0", "#2a3544", 1.1]} />
-          {/* One soft skylight — avoid stacking many point lights */}
-          <pointLight
-            position={[0, 40, -40]}
-            intensity={2.4}
-            color="#fff8ee"
-            distance={90}
-          />
-          <pointLight
-            position={[0, 8, 6]}
-            intensity={1.6}
-            color="#f4a261"
-            distance={36}
-          />
+          <hemisphereLight args={["#efe4d0", "#2a3544", 0.55]} />
+          <Suspense fallback={null}>
+            <ArenaAtmosphere />
+          </Suspense>
           <Stars
             radius={140}
             depth={50}
-            count={cfg.starCount}
+            count={Math.min(cfg.starCount, 800)}
             factor={3.5}
             fade
-            speed={0.35}
+            speed={0.25}
           />
           <Suspense fallback={null}>
             <CombatVfx />

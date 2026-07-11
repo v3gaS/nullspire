@@ -1,75 +1,49 @@
 "use client";
 
+import { Suspense, useMemo } from "react";
+import { useGLTF } from "@react-three/drei";
+import * as THREE from "three";
+
+/** Fewer practice targets — Kenney Blaster Kit target meshes. */
 const TARGETS: [number, number, number][] = [
-  // Drop Zone practice — immediate frag feed
-  [4, 1.1, 0],
-  [-5, 1.1, -1],
-  [2, 1.1, -6],
-  [6.5, 1.1, 2],
-  [-7, 1.1, 1.5],
-  // Approach flanks — rail-pierce practice line
-  [9, 1.2, -14],
-  [9, 1.2, -18],
-  [9, 1.2, -22],
-  [-10, 1.2, -16],
-  [14, 1.5, -26],
-  [0, 5.8, -16],
-  [-14, 1.2, -22],
-  [6, 1.2, -32],
-  [-6, 1.2, -34],
-  [11, 1.2, -36],
-  [-11, 1.2, -38],
+  [4, 0.2, 0],
+  [-5, 0.2, -1],
+  [9, 0.2, -14],
+  [-10, 0.2, -16],
+  [6, 0.2, -32],
+  [-6, 0.2, -34],
 ];
 
-function BlockyDummy({ position }: { position: [number, number, number] }) {
+function KitTarget({ position }: { position: [number, number, number] }) {
+  const { scene } = useGLTF("/assets/models/kenney-blaster/target-large.glb");
+  const cloned = useMemo(() => {
+    const c = scene.clone(true);
+    c.traverse((o) => {
+      const m = o as THREE.Mesh;
+      if (m.isMesh) {
+        m.castShadow = true;
+        m.userData.destructible = true;
+        m.userData.hp = 40;
+        m.userData.kind = "dummy";
+      }
+    });
+    return c;
+  }, [scene]);
   return (
-    <group position={position}>
-      {/* Torso */}
-      <mesh
-        castShadow
-        userData={{ destructible: true, hp: 40, kind: "dummy" }}
-        position={[0, 0, 0]}
-      >
-        <boxGeometry args={[1.0, 1.35, 0.75]} />
-        <meshStandardMaterial
-          color="#e8e0d4"
-          emissive="#ff7a18"
-          emissiveIntensity={0.4}
-          roughness={0.55}
-          metalness={0.25}
-        />
-      </mesh>
-      {/* Head */}
-      <mesh position={[0, 0.95, 0]} castShadow userData={{ skipHit: true }}>
-        <boxGeometry args={[0.55, 0.5, 0.55]} />
-        <meshStandardMaterial
-          color="#f5f0e8"
-          emissive="#ff9f43"
-          emissiveIntensity={0.3}
-          roughness={0.5}
-          metalness={0.2}
-        />
-      </mesh>
-      {/* Shoulder pads */}
-      <mesh position={[-0.6, 0.35, 0]} castShadow userData={{ skipHit: true }}>
-        <boxGeometry args={[0.28, 0.35, 0.5]} />
-        <meshStandardMaterial color="#9ca3af" roughness={0.6} metalness={0.35} />
-      </mesh>
-      <mesh position={[0.6, 0.35, 0]} castShadow userData={{ skipHit: true }}>
-        <boxGeometry args={[0.28, 0.35, 0.5]} />
-        <meshStandardMaterial color="#9ca3af" roughness={0.6} metalness={0.35} />
-      </mesh>
-    </group>
+    <primitive object={cloned} position={position} scale={2.4} />
   );
 }
 
-/** Blocky practice targets — Quake dummy silhouettes. */
 export function TargetDummies() {
   return (
-    <group>
-      {TARGETS.map((pos, i) => (
-        <BlockyDummy key={i} position={pos} />
-      ))}
-    </group>
+    <Suspense fallback={null}>
+      <group>
+        {TARGETS.map((pos, i) => (
+          <KitTarget key={i} position={pos} />
+        ))}
+      </group>
+    </Suspense>
   );
 }
+
+useGLTF.preload("/assets/models/kenney-blaster/target-large.glb");

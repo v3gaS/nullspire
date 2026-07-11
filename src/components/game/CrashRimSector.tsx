@@ -314,92 +314,34 @@ export function CrashRimSector() {
           toneMapped={false}
         />
       </mesh>
-      {/* Spawn plaza fill lights — hangar wash */}
-      <pointLight position={[0, 10, 6]} intensity={2.2} color="#fff4e0" distance={28} />
-      <pointLight position={[0, 6, 10]} intensity={1.4} color="#ff7a18" distance={18} />
-      {/* Orange runway stripe — Quake/UT lane read */}
+      {/* Spawn plaza fill — HDRI does most mood; keep one soft fill */}
+      <pointLight position={[0, 8, 6]} intensity={1.1} color="#fff4e0" distance={22} />
+      {/* Orange runway stripe — lane read without chevron spam */}
       <mesh position={[0, 0.07, -10]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[1.9, 56]} />
+        <planeGeometry args={[1.6, 56]} />
         <meshStandardMaterial
           color="#ff7a18"
           emissive="#ff7a18"
-          emissiveIntensity={1.3}
+          emissiveIntensity={0.9}
           transparent
-          opacity={0.78}
+          opacity={0.65}
           toneMapped={false}
         />
       </mesh>
-      <mesh position={[0, 0.065, -10]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[3.2, 56]} />
-        <meshStandardMaterial
-          color="#ffb347"
-          emissive="#ff7a18"
-          emissiveIntensity={0.42}
-          transparent
-          opacity={0.32}
-          toneMapped={false}
-        />
-      </mesh>
-      {/* Secondary green lane accent — arena floor read */}
-      <mesh position={[-3.2, 0.055, -8]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[0.45, 42]} />
-        <meshStandardMaterial
-          color="#4ade80"
-          emissive="#22c55e"
-          emissiveIntensity={1.2}
-          transparent
-          opacity={0.68}
-          toneMapped={false}
-        />
-      </mesh>
-      <mesh position={[3.2, 0.055, -8]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[0.45, 42]} />
-        <meshStandardMaterial
-          color="#4ade80"
-          emissive="#22c55e"
-          emissiveIntensity={1.2}
-          transparent
-          opacity={0.68}
-          toneMapped={false}
-        />
-      </mesh>
-      {/* Mid-canyon green lane continuation */}
-      <mesh position={[-3.2, 0.055, -48]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[0.4, 28]} />
-        <meshStandardMaterial
-          color="#4ade80"
-          emissive="#22c55e"
-          emissiveIntensity={1.05}
-          transparent
-          opacity={0.55}
-          toneMapped={false}
-        />
-      </mesh>
-      <mesh position={[3.2, 0.055, -48]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[0.4, 28]} />
-        <meshStandardMaterial
-          color="#4ade80"
-          emissive="#22c55e"
-          emissiveIntensity={1.05}
-          transparent
-          opacity={0.55}
-          toneMapped={false}
-        />
-      </mesh>
-      {/* Direction chevrons — Quake-readable push lane */}
-      {[2, -2, -6, -10, -14, -18, -22, -26, -30, -34, -36].map((z) => (
+      {/* Sparse lane markers — less geometry spam, still readable */}
+      {[-6, -18, -30].map((z) => (
         <mesh
           key={`chev-${z}`}
           position={[0, 0.08, z]}
           rotation={[-Math.PI / 2, 0, 0]}
         >
-          <ringGeometry args={[0.6, 0.9, 3, 1, Math.PI / 6, (Math.PI * 2) / 3]} />
+          <ringGeometry args={[0.55, 0.85, 3, 1, Math.PI / 6, (Math.PI * 2) / 3]} />
           <meshStandardMaterial
             color="#ffb347"
             emissive="#ff7a18"
-            emissiveIntensity={1.25}
+            emissiveIntensity={0.85}
             transparent
-            opacity={0.8}
+            opacity={0.62}
             toneMapped={false}
           />
         </mesh>
@@ -414,7 +356,7 @@ export function CrashRimSector() {
         <meshStandardMaterial
           color="#fff4e0"
           emissive="#fff4e0"
-          emissiveIntensity={1.4}
+          emissiveIntensity={1.0}
           toneMapped={false}
         />
       </mesh>
@@ -423,7 +365,7 @@ export function CrashRimSector() {
         <meshStandardMaterial
           color="#fff4e0"
           emissive="#fff4e0"
-          emissiveIntensity={1.4}
+          emissiveIntensity={1.0}
           toneMapped={false}
         />
       </mesh>
@@ -656,60 +598,52 @@ export function CrashRimSector() {
           toneMapped={false}
         />
       </mesh>
-      {/* Mid-canyon chevrons through the combat pocket */}
-      {[-38, -42, -46, -50, -54, -58].map((z) => (
+      {/* Sparse mid / core lane markers */}
+      {[-42, -54].map((z) => (
         <mesh
           key={`midchev-${z}`}
           position={[0, 0.09, z]}
           rotation={[-Math.PI / 2, 0, 0]}
         >
-          <ringGeometry args={[0.55, 0.82, 3, 1, Math.PI / 6, (Math.PI * 2) / 3]} />
+          <ringGeometry args={[0.5, 0.78, 3, 1, Math.PI / 6, (Math.PI * 2) / 3]} />
           <meshStandardMaterial
             color="#fbbf24"
             emissive="#f59e0b"
-            emissiveIntensity={1.15}
+            emissiveIntensity={0.8}
             transparent
-            opacity={0.78}
+            opacity={0.6}
             toneMapped={false}
           />
         </mesh>
       ))}
-      {/* Core approach chevrons — late-game lane read */}
-      {[-100, -104, -108, -112, -116, -120, -124].map((z) => (
+      {[-108, -120].map((z) => (
         <mesh
           key={`corechev-${z}`}
           position={[0, 0.09, z]}
           rotation={[-Math.PI / 2, 0, 0]}
         >
-          <ringGeometry args={[0.6, 0.9, 3, 1, Math.PI / 6, (Math.PI * 2) / 3]} />
+          <ringGeometry args={[0.55, 0.85, 3, 1, Math.PI / 6, (Math.PI * 2) / 3]} />
           <meshStandardMaterial
             color="#c4b5fd"
             emissive="#a78bfa"
-            emissiveIntensity={1.15}
+            emissiveIntensity={0.8}
             transparent
-            opacity={0.75}
+            opacity={0.58}
             toneMapped={false}
           />
         </mesh>
       ))}
-      {/* Vault exit chevrons toward Core */}
-      {[-88, -92, -96, -100].map((z) => (
-        <mesh
-          key={`vexit-${z}`}
-          position={[0, 0.09, z]}
-          rotation={[-Math.PI / 2, 0, 0]}
-        >
-          <ringGeometry args={[0.55, 0.82, 3, 1, Math.PI / 6, (Math.PI * 2) / 3]} />
-          <meshStandardMaterial
-            color="#86efac"
-            emissive="#4ade80"
-            emissiveIntensity={1.1}
-            transparent
-            opacity={0.72}
-            toneMapped={false}
-          />
-        </mesh>
-      ))}
+      <mesh position={[0, 0.09, -92]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[0.55, 0.85, 3, 1, Math.PI / 6, (Math.PI * 2) / 3]} />
+        <meshStandardMaterial
+          color="#86efac"
+          emissive="#4ade80"
+          emissiveIntensity={0.75}
+          transparent
+          opacity={0.55}
+          toneMapped={false}
+        />
+      </mesh>
 
       {/* Rust Canyons trench */}
       <Box position={[0, 1.5, -45]} size={[40, 3, 2]} color="#6b3f2a" />
@@ -719,7 +653,7 @@ export function CrashRimSector() {
       <Box position={[2, 3.2, -58]} size={[4, 0.4, 4]} color="#7a8590" />
       <Box position={[10, 4.8, -64]} size={[4, 0.4, 4]} color="#8a9098" />
       <Box position={[0, 0.2, -70]} size={[16, 0.4, 16]} color="#5a6570" />
-      <pointLight position={[0, 16, -70]} intensity={3.0} color="#fff4e0" distance={32} />
+      <pointLight position={[0, 16, -70]} intensity={1.6} color="#fff4e0" distance={28} />
       <mesh position={[0, 0.42, -70]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[1.4, 18]} />
         <meshStandardMaterial

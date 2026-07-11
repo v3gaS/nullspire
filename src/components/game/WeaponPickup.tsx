@@ -19,11 +19,11 @@ const PICKUP_COLOR: Record<WeaponId, string> = {
 };
 
 const PICKUP_URL: Record<WeaponId, string> = {
-  pulse_smg: "/assets/models/kenney-fps/blaster-repeater.glb",
-  scatter_carbine: "/assets/models/kenney-fps/blaster.glb",
-  arc_caster: "/assets/models/kenney-fps/blaster.glb",
-  rail_lance: "/assets/models/kenney-fps/blaster-repeater.glb",
-  void_launcher: "/assets/models/kenney-fps/blaster.glb",
+  pulse_smg: "/assets/models/kenney-blaster/blaster-a.glb",
+  scatter_carbine: "/assets/models/kenney-blaster/blaster-f.glb",
+  arc_caster: "/assets/models/kenney-blaster/blaster-c.glb",
+  rail_lance: "/assets/models/kenney-blaster/blaster-p.glb",
+  void_launcher: "/assets/models/kenney-blaster/blaster-r.glb",
 };
 
 function PickupModel({ id }: { id: WeaponId }) {
@@ -160,5 +160,8 @@ export function WeaponPickup({
   );
 }
 
-useGLTF.preload("/assets/models/kenney-fps/blaster.glb");
-useGLTF.preload("/assets/models/kenney-fps/blaster-repeater.glb");
+useGLTF.preload("/assets/models/kenney-blaster/blaster-a.glb");
+useGLTF.preload("/assets/models/kenney-blaster/blaster-f.glb");
+useGLTF.preload("/assets/models/kenney-blaster/blaster-c.glb");
+useGLTF.preload("/assets/models/kenney-blaster/blaster-p.glb");
+useGLTF.preload("/assets/models/kenney-blaster/blaster-r.glb");
