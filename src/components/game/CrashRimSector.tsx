@@ -329,10 +329,11 @@ export function CrashRimSector() {
         />
       </mesh>
       {/* Spawn plaza fill lights — hangar wash */}
-      <pointLight position={[0, 10, 6]} intensity={3.8} color="#fff4e0" distance={30} />
-      <pointLight position={[-8, 5, 2]} intensity={1.9} color="#7dffef" distance={20} />
-      <pointLight position={[8, 5, 0]} intensity={1.9} color="#ff9f43" distance={20} />
-      <pointLight position={[0, 6, 10]} intensity={2.2} color="#ff7a18" distance={18} />
+      <pointLight position={[0, 10, 6]} intensity={4.4} color="#fff4e0" distance={34} />
+      <pointLight position={[-8, 5, 2]} intensity={2.3} color="#7dffef" distance={22} />
+      <pointLight position={[8, 5, 0]} intensity={2.3} color="#ff9f43" distance={22} />
+      <pointLight position={[0, 6, 10]} intensity={2.8} color="#ff7a18" distance={22} />
+      <pointLight position={[0, 8, -4]} intensity={2.0} color="#ffe066" distance={18} />
       {/* Orange runway stripe — Quake/UT lane read */}
       <mesh position={[0, 0.07, -10]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[1.9, 56]} />

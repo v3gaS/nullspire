@@ -210,9 +210,10 @@ export function BloomMatriarch() {
           />
         </mesh>
       ))}
-      <pointLight position={[0, 12, 0]} intensity={2.6} color="#86efac" distance={30} />
-      <pointLight position={[0, 24, 0]} intensity={4.0} color="#fff4e0" distance={44} />
-      <pointLight position={[0, 8, 4]} intensity={1.8} color="#ff7a18" distance={20} />
+      <pointLight position={[0, 12, 0]} intensity={3.2} color="#86efac" distance={34} />
+      <pointLight position={[0, 24, 0]} intensity={4.8} color="#fff4e0" distance={50} />
+      <pointLight position={[0, 8, 4]} intensity={2.4} color="#ff7a18" distance={24} />
+      <pointLight position={[0, 6, -4]} intensity={1.8} color="#ffb347" distance={20} />
     </group>
   );
 }
