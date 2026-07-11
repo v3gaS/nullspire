@@ -27,9 +27,9 @@ export function HitMarker() {
 
   const kill = mode === "kill";
   const color = kill ? "#ff4422" : "#ffffff";
-  const size = kill ? "h-14 w-14" : "h-8 w-8";
-  const arm = kill ? "h-5 w-1" : "h-2.5 w-0.5";
-  const armH = kill ? "h-1 w-5" : "h-0.5 w-2.5";
+  const size = kill ? "h-16 w-16" : "h-9 w-9";
+  const arm = kill ? "h-6 w-1.5" : "h-3 w-0.5";
+  const armH = kill ? "h-1.5 w-6" : "h-0.5 w-3";
 
   return (
     <div className="pointer-events-none absolute left-1/2 top-1/2 z-[7] -translate-x-1/2 -translate-y-1/2">
