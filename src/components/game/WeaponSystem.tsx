@@ -327,14 +327,24 @@ export function WeaponSystem() {
             until: performance.now() + 2200,
             detonated: false,
           });
-          combatFx.pushBoom(pos.clone(), "#ff7a18", 3.4);
+          combatFx.pushBoom(pos.clone(), "#ff7a18", 4.2);
           combatFx.pushBoom(
             pos.clone().add(new THREE.Vector3(0, 0.4, 0)),
+            "#ffb347",
+            2.2,
+          );
+          combatFx.pushBoom(
+            pos.clone().add(new THREE.Vector3(0, 0.15, 0)),
             "#c084fc",
-            1.8,
+            1.4,
           );
           combatFx.pushImpact(pos.clone(), "#ffb347");
-          useFxStore.getState().pulseShake(0.12, 180);
+          combatFx.pushImpact(
+            pos.clone().add(new THREE.Vector3(0, 0.5, 0)),
+            "#ff7a18",
+          );
+          useFxStore.getState().pulseMuzzle("#ff7a18", 150);
+          useFxStore.getState().pulseShake(0.16, 220);
           playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.55);
           break;
         }
