@@ -67,7 +67,7 @@ function ChunkyGun({ id }: { id: WeaponId }) {
       return (
         <group>
           <mesh position={[0.02, -0.02, 0.02]} frustumCulled={false}>
-            <boxGeometry args={[0.14, 0.16, 0.52]} />
+            <boxGeometry args={[0.16, 0.18, 0.56]} />
             <Mat color="#4a5563" emissive="#1e293b" emissiveIntensity={0.15} />
           </mesh>
           <mesh position={[0.02, 0.04, -0.22]} frustumCulled={false}>
