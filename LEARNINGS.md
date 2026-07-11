@@ -2,6 +2,18 @@
 
 Build diary. Newest entries at the top.
 
+## 2026-07-10 — Phase 11 visual north star (2h block COMPLETE)
+- Wall-clock start `1783739050` · `block_hours=2` — coded continuously ≥2.0h
+- Protocol: Quake juice → build → commit → push → `vercel --prod` → amber alias; pause only for deploy/QA
+- Late-block ships: fatter combat tracers/halos, SMG secondary tracers, hotter abilities/Overclock
+- Bigger hit markers / multi-kill / damage numbers; denser canyon+vault chevrons
+- Harder viewmodel kick + denser gib spray; hotter secret/barrel/jump-pad FX
+- Louder corner HUD + kill feed; denser Drop Zone skitters/drones; longer green lanes
+- Hotter Singularity/weapon cubes; fog pushed out; boss arena wash + Primarch duel ring
+- Bigger loot cubes; harder damage vignette; fatter barrel booms; hotter land dust
+- Visual QA (amber `?__ns=p11qa*`): Deploy loads Drop Zone, corner HUD, orange slot, cubes/pads/bloom — no instant Signal Lost
+- Live: https://nullspire-amber.vercel.app
+
 ## 2026-07-10 — Phase 11 visual north star (2h block ACTIVE · ~1.36h in)
 - Armed wall-clock start `1783739050` · `block_hours=2` — code continuously
 - Chunky procedural industrial viewmodels (all 5 guns bulked Quake/UT scale · 1.42)

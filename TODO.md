@@ -123,7 +123,7 @@ Campaign build order. Check items as completed. Loop works top-down.
 3. **Continuous every 2 hours (wall-clock)** — code through the block; self-evaluate play + visuals as you go; stop only if user says stop.
 4. Prefer playable increments over unfinished mega-features.
 
-## Phase 11 — Visual north star (user ref) — 2h ACTIVE
+## Phase 11 — Visual north star (user ref) — 2h COMPLETE
 - [x] Chunky industrial viewmodels (bigger, orange/grey blocky — Quake/UT scale)
 - [x] Hangar light drama: brighter skylight bloom/haze, less muddy fog
 - [x] Floating cube-style pickups that pop (health/armor/ammo readability)
@@ -136,7 +136,7 @@ Campaign build order. Check items as completed. Loop works top-down.
 - [x] Blocky enemy silhouettes + scroll weapon cycle
 - [x] Keep polishing toward reference until clock ends
 - [x] Drop Zone secrets/barrels; denser cubes; Boss HUD restyle
-- [ ] Continue Quake juice until wall-clock ends
+- [x] Continue Quake juice until wall-clock ends
 
 ## Current focus
-**2h continuous Phase 11** (~0.55h remaining) — code until wall-clock ends; pause only for build/deploy/QA
+**Phase 11 2h block COMPLETE** — next loop: re-arm another continuous block; keep Quake juice + playtest balance
