@@ -24,6 +24,7 @@ export function DroneScout({ position, id }: DroneProps) {
     const mesh = meshRef.current;
     if (!mesh || dead.current) return;
     if (useGameStore.getState().screen !== "playing") return;
+    if (performance.now() < (mesh.userData.staggerUntil ?? 0)) return;
 
     const t = state.clock.elapsedTime;
     const cam = state.camera.position;

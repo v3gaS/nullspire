@@ -55,17 +55,21 @@ function ExplosiveBarrel({ position }: { position: [number, number, number] }) {
       if (obj === mesh) return;
       const op = worldPos(obj);
       const dist = op.distanceTo(origin);
-      if (dist < 7) {
-        applyHit(obj, Math.round(55 * (1 - dist / 7)), origin);
+      if (dist < 8.5) {
+        if (obj.userData.kind === "barrel") {
+          obj.userData.hp = 0;
+        } else {
+          applyHit(obj, Math.round(55 * (1 - dist / 8.5)), origin);
+        }
         impulseRigid(obj, op.clone().sub(origin), 18);
         staggerObject(obj, origin, 0.9);
       }
     });
 
     const cam = camera.position;
-    if (cam.distanceTo(origin) < 11) {
+    if (cam.distanceTo(origin) < 13) {
       const blast = cam.clone().sub(origin).normalize();
-      playerPhysics.pushKnock(blast.x * 9, 4.5, blast.z * 9);
+      playerPhysics.pushKnock(blast.x * 11, 5.5, blast.z * 11);
       playerPhysics.punch(0.1);
     }
 

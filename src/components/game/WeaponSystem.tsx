@@ -328,17 +328,26 @@ export function WeaponSystem() {
         switch (id) {
           case "pulse_smg":
             playSfx("/assets/audio/kenney-fps/blaster_repeater.ogg", 0.28);
-            useFxStore.getState().pulseMuzzle(overclocked ? "#ffe066" : "#7dffef", 70);
+            useFxStore.getState().pulseMuzzle(overclocked ? "#ffe066" : "#7dffef", 45);
             useFxStore.getState().pulseShake(overclocked ? 0.04 : 0.02, 60);
-            shots.push({
-              dir: forward.clone(),
-              damage: overclocked ? 22 : 15,
-              color: overclocked ? "#ffe066" : "#7dffef",
-            });
+            playerPhysics.punch(0.018);
+            {
+              const dir = forward.clone();
+              const kick = useFxStore.getState().kick;
+              dir.x += (Math.random() - 0.5) * kick * 0.035;
+              dir.y += (Math.random() - 0.5) * kick * 0.028;
+              dir.normalize();
+              shots.push({
+                dir,
+                damage: overclocked ? 22 : 15,
+                color: overclocked ? "#ffe066" : "#7dffef",
+              });
+            }
             break;
           case "scatter_carbine":
             playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.35);
             useFxStore.getState().pulseMuzzle("#ffb347", 90);
+            playerPhysics.punch(0.055);
             for (let i = 0; i < 8; i++) {
               const dir = forward.clone();
               dir.x += (Math.random() - 0.5) * 0.25;
@@ -351,17 +360,27 @@ export function WeaponSystem() {
           case "arc_caster": {
             playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.28);
             useFxStore.getState().pulseMuzzle("#60a5fa", 80);
-            shots.push({ dir: forward.clone(), damage: 14, color: "#60a5fa" });
+            playerPhysics.punch(0.03);
+            {
+              const dir = forward.clone();
+              const kick = useFxStore.getState().kick;
+              dir.x += (Math.random() - 0.5) * kick * 0.02;
+              dir.y += (Math.random() - 0.5) * kick * 0.016;
+              dir.normalize();
+              shots.push({ dir, damage: 14, color: "#60a5fa" });
+            }
             break;
           }
           case "rail_lance":
             playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.4);
             useFxStore.getState().pulseMuzzle("#e879f9", 120);
+            playerPhysics.punch(0.045);
             shots.push({ dir: forward.clone(), damage: 45, color: "#e879f9" });
             break;
           case "void_launcher":
             playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.4);
             useFxStore.getState().pulseMuzzle("#c084fc", 140);
+            playerPhysics.punch(0.05);
             shots.push({ dir: forward.clone(), damage: 42, color: "#c084fc" });
             break;
           default: {

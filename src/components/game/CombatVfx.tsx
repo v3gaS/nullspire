@@ -103,7 +103,7 @@ export function CombatVfx() {
         .add(new THREE.Vector3(0.22, -0.12, 0).applyQuaternion(camera.quaternion));
       light.position.copy(pos);
       mesh.position.copy(pos);
-      light.intensity = flashing ? 8 : 0;
+      light.intensity = flashing ? 12 : 0;
       light.color.set(fx.muzzleColor);
       mesh.visible = flashing;
       const mat = mesh.material as THREE.MeshBasicMaterial;
@@ -116,7 +116,7 @@ export function CombatVfx() {
     }
 
     // Beams
-    combatFx.beams = combatFx.beams.filter((b) => now - b.born < 360);
+    combatFx.beams = combatFx.beams.filter((b) => now - b.born < 120);
     const bg = beamsGroup.current;
     if (bg) {
       while (bg.children.length) {
@@ -131,7 +131,7 @@ export function CombatVfx() {
         const mid = b.origin.clone().add(b.end).multiplyScalar(0.5);
         const len = b.origin.distanceTo(b.end);
         const geo = new THREE.CylinderGeometry(b.width, b.width * 0.4, len, 6, 1, true);
-        const age = (now - b.born) / 360;
+        const age = (now - b.born) / 120;
         const mat = new THREE.MeshBasicMaterial({
           color: b.color,
           transparent: true,
@@ -163,7 +163,7 @@ export function CombatVfx() {
     }
 
     // Impacts
-    combatFx.impacts = combatFx.impacts.filter((i) => now - i.born < 280);
+    combatFx.impacts = combatFx.impacts.filter((i) => now - i.born < 160);
     const ig = impactsGroup.current;
     if (ig) {
       while (ig.children.length) {
@@ -171,7 +171,7 @@ export function CombatVfx() {
         ig.remove(c);
       }
       for (const imp of combatFx.impacts) {
-        const age = (now - imp.born) / 280;
+        const age = (now - imp.born) / 160;
         const sprite = new THREE.Sprite(
           new THREE.SpriteMaterial({
             map: age < 0.45 ? burstMap : hitMap,

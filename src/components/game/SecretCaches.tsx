@@ -6,6 +6,7 @@ import * as THREE from "three";
 import { LootDrop } from "@/components/game/EliteAndLoot";
 import { useGameStore } from "@/stores/gameStore";
 import { playSfx } from "@/lib/game/audio";
+import { useFxStore } from "@/stores/fxStore";
 
 const SECRETS: {
   position: [number, number, number];
@@ -61,8 +62,9 @@ function SecretHint({
     }
     if (dist < radius) {
       shown.current = true;
-      useGameStore.getState().setObjective(hint);
-      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.25);
+      useGameStore.getState().setObjective(`SECRET FOUND — ${hint}`);
+      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.55);
+      useFxStore.getState().pulseShake(0.1, 200);
     }
   });
 
@@ -71,8 +73,8 @@ function SecretHint({
       ref={light}
       position={[position[0], position[1] + 0.8, position[2]]}
       color="#fbbf24"
-      intensity={0.8}
-      distance={6}
+      intensity={1.4}
+      distance={7}
     />
   );
 }
@@ -102,7 +104,7 @@ export function SecretCaches() {
               emissive="#f59e0b"
               emissiveIntensity={0.8}
               transparent
-              opacity={0.55}
+              opacity={0.85}
             />
           </mesh>
         </group>

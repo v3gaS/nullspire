@@ -271,7 +271,7 @@ export function PlayerController() {
     knock.multiplyScalar(Math.exp(-dt * 4.2));
     if (knock.lengthSq() < 0.01) knock.set(0, 0, 0);
 
-    const airControl = nearGround ? 1 : 0.55;
+    const airControl = nearGround ? 1 : 0.72;
     const hx = wish.x * speed * airControl + knock.x;
     const hz = wish.z * speed * airControl + knock.z;
     let hy = vel.y + knock.y;
@@ -371,7 +371,7 @@ export function PlayerController() {
       colliders={false}
       mass={1}
       friction={1.2}
-      linearDamping={0.05}
+      linearDamping={0.02}
       ccd
     >
       <CapsuleCollider args={[PLAYER.height * 0.25, PLAYER.radius]} />
