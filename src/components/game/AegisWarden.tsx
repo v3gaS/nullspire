@@ -180,6 +180,9 @@ export function AegisWarden() {
         [0, 1.0, 8],
         [-5, 1.0, -8],
         [5, 1.0, -8],
+        [-11, 1.1, 0],
+        [11, 1.1, 0],
+        [0, 1.0, -10],
       ].map((p, i) => (
         <RigidBody
           key={`ac-${i}`}
@@ -190,9 +193,9 @@ export function AegisWarden() {
           <mesh castShadow>
             <boxGeometry
               args={[
-                i === 4 ? 3.5 : 2.4,
-                i === 4 ? 2.0 : 2.4,
-                i === 4 ? 1.2 : 1.4,
+                i === 4 || i === 9 ? 3.5 : 2.4,
+                i === 4 || i === 9 ? 2.0 : 2.4,
+                i === 4 || i === 9 ? 1.2 : 1.4,
               ]}
             />
             <meshStandardMaterial
@@ -205,6 +208,17 @@ export function AegisWarden() {
           </mesh>
         </RigidBody>
       ))}
+      <mesh position={[0, 0.08, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[4.5, 5.2, 32]} />
+        <meshStandardMaterial
+          color="#ffb347"
+          emissive="#ff7a18"
+          emissiveIntensity={1.0}
+          transparent
+          opacity={0.45}
+          toneMapped={false}
+        />
+      </mesh>
     </group>
   );
 }
