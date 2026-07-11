@@ -70,10 +70,15 @@ export function DroneScout({ position, id }: DroneProps) {
     if (hp.current <= 0) {
       dead.current = true;
       mesh.visible = false;
-      combatFx.pushBoom(mesh.position.clone(), "#6ecbff", 2.8);
+      combatFx.pushBoom(mesh.position.clone(), "#6ecbff", 3.4);
+      combatFx.pushBoom(
+        mesh.position.clone().add(new THREE.Vector3(0, 0.3, 0)),
+        "#bae6fd",
+        1.6,
+      );
       combatFx.pushImpact(mesh.position.clone(), "#bae6fd");
       useFxStore.getState().pulseKill("Drone");
-      useFxStore.getState().pulseShake(0.08, 140);
+      useFxStore.getState().pulseShake(0.1, 160);
     }
   });
 
@@ -84,11 +89,11 @@ export function DroneScout({ position, id }: DroneProps) {
       castShadow
       userData={{ destructible: true, hp: 50, kind: "drone", id }}
     >
-      <boxGeometry args={[1.1, 0.7, 1.1]} />
+      <boxGeometry args={[1.25, 0.8, 1.25]} />
       <meshStandardMaterial
         color="#94a3b8"
         emissive="#38bdf8"
-        emissiveIntensity={0.75}
+        emissiveIntensity={0.9}
         metalness={0.65}
         roughness={0.3}
       />

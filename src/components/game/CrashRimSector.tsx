@@ -417,6 +417,10 @@ export function CrashRimSector() {
       <Box position={[7.5, 0.5, -8]} size={[2.4, 1.0, 1.2]} color="#5a6570" />
       <Box position={[-4, 0.4, -12]} size={[1.6, 0.8, 2.0]} color="#8a8070" />
       <Box position={[5, 0.6, -15]} size={[1.4, 1.2, 1.4]} color="#6a5a48" />
+      <Box position={[-8.5, 0.5, 5]} size={[1.8, 1.0, 1.6]} color="#7a8590" />
+      <Box position={[8.2, 0.55, 4]} size={[2.0, 1.1, 1.4]} color="#8a7a68" />
+      <Box position={[-3, 0.45, 7]} size={[1.4, 0.9, 1.4]} color="#6a7580" />
+      <Box position={[3.5, 0.5, 6.5]} size={[1.6, 1.0, 1.2]} color="#7a6a58" />
       {/* Approach gate with a center gap — not a solid wall in the FOV */}
       <Box position={[-8, 1.4, -18]} size={[8, 2.8, 1.4]} color="#8a7a68" />
       <Box position={[8, 1.4, -18]} size={[8, 2.8, 1.4]} color="#8a7a68" />
