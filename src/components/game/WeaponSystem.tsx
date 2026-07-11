@@ -498,11 +498,11 @@ export function WeaponSystem() {
             break;
           }
           case "rail_lance":
-            playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.48);
-            useFxStore.getState().pulseMuzzle("#e879f9", 150);
-            useFxStore.getState().pulseShake(0.07, 130);
-            playerPhysics.punch(0.08);
-            shots.push({ dir: forward.clone(), damage: 64, color: "#e879f9" });
+            playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.52);
+            useFxStore.getState().pulseMuzzle("#f0abfc", 170);
+            useFxStore.getState().pulseShake(0.085, 150);
+            playerPhysics.punch(0.1);
+            shots.push({ dir: forward.clone(), damage: 68, color: "#e879f9" });
             break;
           case "void_launcher":
             playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.52);
@@ -545,7 +545,7 @@ export function WeaponSystem() {
 
           const beamWidth =
             id === "rail_lance"
-              ? 0.24
+              ? 0.32
               : id === "void_launcher"
                 ? 0.2
                 : id === "scatter_carbine"
@@ -637,7 +637,7 @@ export function WeaponSystem() {
 
     if (Math.random() < dt * 2.8) {
       const e = useGameStore.getState().nullEnergy;
-      if (e < 100) useGameStore.getState().setNullEnergy(Math.min(100, e + 1.5));
+      if (e < 100) useGameStore.getState().setNullEnergy(Math.min(100, e + 2.2));
     }
 
     const fx = fxRef.current;
