@@ -529,6 +529,10 @@ export function CrashRimSector() {
       <Box position={[5.5, 0.5, -46]} size={[2.0, 1.0, 1.4]} color="#5a6570" />
       <Box position={[-8.5, 0.45, -52]} size={[1.6, 0.9, 1.8]} color="#8a7a68" />
       <Box position={[8, 0.6, -54]} size={[1.5, 1.2, 1.5]} color="#6a7580" />
+      <Box position={[-12, 0.7, -44]} size={[1.8, 1.4, 1.4]} color="#7a8590" />
+      <Box position={[12, 0.65, -46]} size={[1.7, 1.3, 1.5]} color="#8a7a68" />
+      <Box position={[-3, 0.5, -50]} size={[1.4, 1.0, 1.6]} color="#6a5a48" />
+      <Box position={[3.5, 0.55, -52]} size={[1.5, 1.1, 1.3]} color="#5a6570" />
       <pointLight position={[0, 14, -46]} intensity={3.2} color="#fff4e0" distance={36} />
       {/* Mid-canyon hangar light strips — arena wall glow */}
       <mesh position={[-16.5, 7, -46]}>

@@ -270,16 +270,21 @@ export function WeaponSystem() {
           nests.current.push({
             id: nestId++,
             pos,
-            until: performance.now() + 5500,
+            until: performance.now() + 6000,
           });
-          combatFx.pushBoom(pos.clone(), "#60a5fa", 3.4);
+          combatFx.pushBoom(pos.clone(), "#60a5fa", 4.0);
+          combatFx.pushBoom(
+            pos.clone().add(new THREE.Vector3(0, 0.4, 0)),
+            "#93c5fd",
+            1.8,
+          );
           combatFx.pushImpact(pos.clone(), "#93c5fd");
           combatFx.pushImpact(
             pos.clone().add(new THREE.Vector3(0.5, 0.4, 0)),
             "#60a5fa",
           );
-          useFxStore.getState().pulseShake(0.1, 160);
-          playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.55);
+          useFxStore.getState().pulseShake(0.12, 180);
+          playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.6);
           break;
         }
         case "rail_lance": {
@@ -293,10 +298,15 @@ export function WeaponSystem() {
             marked.current = valid.object;
             valid.object.userData.marked = true;
             combatFx.pushImpact(valid.point.clone(), "#e879f9");
-            combatFx.pushBeam(origin, valid.point.clone(), "#f0abfc", 0.08);
-            combatFx.pushBoom(valid.point.clone(), "#e879f9", 1.6);
-            useFxStore.getState().pulseShake(0.07, 120);
-            playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.5);
+            combatFx.pushBeam(origin, valid.point.clone(), "#f0abfc", 0.14);
+            combatFx.pushBoom(valid.point.clone(), "#e879f9", 2.2);
+            combatFx.pushBoom(
+              valid.point.clone().add(new THREE.Vector3(0, 0.3, 0)),
+              "#f0abfc",
+              1.0,
+            );
+            useFxStore.getState().pulseShake(0.09, 150);
+            playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.55);
           }
           break;
         }
@@ -306,13 +316,18 @@ export function WeaponSystem() {
           singularities.current.push({
             id: singId++,
             pos,
-            until: performance.now() + 2000,
+            until: performance.now() + 2200,
             detonated: false,
           });
-          combatFx.pushBoom(pos.clone(), "#c084fc", 2.8);
-          combatFx.pushImpact(pos.clone(), "#e9d5ff");
-          useFxStore.getState().pulseShake(0.09, 140);
-          playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.48);
+          combatFx.pushBoom(pos.clone(), "#ff7a18", 3.4);
+          combatFx.pushBoom(
+            pos.clone().add(new THREE.Vector3(0, 0.4, 0)),
+            "#c084fc",
+            1.8,
+          );
+          combatFx.pushImpact(pos.clone(), "#ffb347");
+          useFxStore.getState().pulseShake(0.12, 180);
+          playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.55);
           break;
         }
         default: {
@@ -415,11 +430,12 @@ export function WeaponSystem() {
           playerPhysics.pushKnock(blast.x * 12, 6.5, blast.z * 12);
           playerPhysics.punch(0.15);
         }
-        playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.78);
-        combatFx.pushBoom(s.pos.clone(), "#c084fc", 6.5);
-        combatFx.pushBoom(s.pos.clone().add(new THREE.Vector3(0, 1, 0)), "#ffffff", 3.2);
-        combatFx.pushImpact(s.pos.clone(), "#c084fc");
-        useFxStore.getState().pulseShake(0.34, 450);
+        playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.85);
+        combatFx.pushBoom(s.pos.clone(), "#ff7a18", 7.2);
+        combatFx.pushBoom(s.pos.clone().add(new THREE.Vector3(0, 1, 0)), "#ffffff", 3.6);
+        combatFx.pushBoom(s.pos.clone().add(new THREE.Vector3(0, 0.4, 0)), "#c084fc", 4.0);
+        combatFx.pushImpact(s.pos.clone(), "#ffb347");
+        useFxStore.getState().pulseShake(0.38, 500);
       }
     }
     singularities.current = singularities.current.filter(
