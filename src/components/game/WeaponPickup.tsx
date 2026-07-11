@@ -79,10 +79,16 @@ export function WeaponPickup({
           activeWeapon: id,
           objective: `Acquired ${WEAPON_META[id].name}`,
         });
-        playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.55);
-        combatFx.pushBoom(g.position.clone(), color, 2.6);
+        playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.62);
+        combatFx.pushBoom(g.position.clone(), color, 3.2);
+        combatFx.pushBoom(
+          g.position.clone().add(new THREE.Vector3(0, 0.3, 0)),
+          "#ffffff",
+          1.2,
+        );
         combatFx.pushImpact(g.position.clone(), color);
-        useFxStore.getState().pulseShake(0.1, 160);
+        useFxStore.getState().pulseShake(0.12, 180);
+        useFxStore.getState().pulseMuzzle(color, 140);
       }
       taken.current = true;
       g.visible = false;
@@ -92,14 +98,24 @@ export function WeaponPickup({
   return (
     <group ref={groupRef} position={position}>
       {/* Floating accent cube — Quake-style pickup readability */}
-      <mesh position={[0, 0.55, 0]} castShadow>
-        <boxGeometry args={[0.42, 0.42, 0.42]} />
+      <mesh position={[0, 0.6, 0]} castShadow>
+        <boxGeometry args={[0.55, 0.55, 0.55]} />
         <meshStandardMaterial
           color={color}
           emissive={color}
-          emissiveIntensity={2.0}
+          emissiveIntensity={2.4}
           metalness={0.2}
-          roughness={0.25}
+          roughness={0.22}
+          toneMapped={false}
+        />
+      </mesh>
+      <mesh position={[0, 0.6, 0]}>
+        <boxGeometry args={[0.72, 0.72, 0.72]} />
+        <meshBasicMaterial
+          color={color}
+          transparent
+          opacity={0.22}
+          depthWrite={false}
           toneMapped={false}
         />
       </mesh>
