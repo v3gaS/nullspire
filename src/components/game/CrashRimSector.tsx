@@ -347,6 +347,27 @@ export function CrashRimSector() {
           />
         </mesh>
       ))}
+      {/* Tall hangar wall strips — vertical volume like the arena ref */}
+      <Box position={[-18, 8, 0]} size={[1.2, 16, 28]} color="#7a8590" />
+      <Box position={[18, 8, -4]} size={[1.2, 16, 30]} color="#6a7580" />
+      <mesh position={[-17.2, 12, 0]}>
+        <boxGeometry args={[0.2, 2.5, 18]} />
+        <meshStandardMaterial
+          color="#fff4e0"
+          emissive="#fff4e0"
+          emissiveIntensity={1.4}
+          toneMapped={false}
+        />
+      </mesh>
+      <mesh position={[17.2, 12, -4]}>
+        <boxGeometry args={[0.2, 2.5, 20]} />
+        <meshStandardMaterial
+          color="#fff4e0"
+          emissive="#fff4e0"
+          emissiveIntensity={1.4}
+          toneMapped={false}
+        />
+      </mesh>
       {/* Flanking berms — wide of the center lane */}
       <Box position={[-12, 1.5, -2]} size={[1.5, 3, 12]} color="#5a4a3a" />
       <Box position={[12, 1.5, -6]} size={[1.5, 3, 14]} color="#4a5560" />

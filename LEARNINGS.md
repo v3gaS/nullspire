@@ -9,6 +9,7 @@ Build diary. Newest entries at the top.
 - Hangar light: brighter skylight wash, lighter fog/floor, orange runway
 - Floating emissive cube loot + weapon pickup cubes; plaza cover crates
 - Orange/white gib spray; hotter muzzle bloom; farther fog presets
+- Soft HangarBloom (medium/high) + tall wall light strips; early Drop Zone skitters
 - Live: https://nullspire-amber.vercel.app
 
 ## 2026-07-10 — Visual north star (user ref screenshot)

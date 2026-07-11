@@ -128,9 +128,11 @@ Campaign build order. Check items as completed. Loop works top-down.
 - [x] Hangar light drama: brighter skylight bloom/haze, less muddy fog
 - [x] Floating cube-style pickups that pop (health/armor/ammo readability)
 - [x] Corner HUD pass: HEALTH/ARMOR BL, weapon+ammo+slot bar BR, kill/frag feed TL
-- [ ] Keep exoplanet identity; polish lanes/cover toward hangar readability
-- [ ] Weapon world pickups + more cube loot density
+- [x] Keep exoplanet identity; polish lanes/cover toward hangar readability
+- [x] Weapon world pickups + more cube loot density
+- [x] Soft postprocessing bloom (medium/high) + tall hangar light strips
 - [ ] Further viewmodel kick / muzzle presence pass
+- [ ] Boss arenas hangar wash pass
 
 ## Current focus
 **2h continuous Phase 11** — code until wall-clock ends; pause only for build/deploy/QA

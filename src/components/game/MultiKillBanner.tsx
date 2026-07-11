@@ -39,12 +39,12 @@ export function MultiKillBanner() {
   return (
     <div className="pointer-events-none absolute left-1/2 top-[36%] z-[8] -translate-x-1/2 text-center">
       <div
-        className="text-3xl font-black tracking-[0.22em]"
+        className="text-4xl font-black tracking-[0.28em]"
         style={{
-          color: hot ? "#ff5533" : "#ffe066",
+          color: hot ? "#ff4422" : "#ffb347",
           textShadow: hot
-            ? "0 0 22px rgba(255, 80, 40, 0.95), 0 0 40px rgba(255, 120, 40, 0.55)"
-            : "0 0 18px rgba(255, 180, 60, 0.85)",
+            ? "0 0 24px rgba(255, 70, 30, 0.95), 0 0 48px rgba(255, 120, 40, 0.55)"
+            : "0 0 20px rgba(255, 160, 40, 0.9)",
           transform: `scale(${scale})`,
           transition: "transform 60ms linear",
         }}

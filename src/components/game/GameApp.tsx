@@ -35,6 +35,7 @@ import { PhysicsDebris } from "./PhysicsDebris";
 import { ExplosiveBarrels } from "./ExplosiveBarrels";
 import { SecretCaches } from "./SecretCaches";
 import { GameErrorBoundary } from "./GameErrorBoundary";
+import { HangarBloom } from "./HangarBloom";
 import { useGameStore } from "@/stores/gameStore";
 import { useCombatInput } from "@/lib/game/useCombatInput";
 import {
@@ -207,6 +208,7 @@ export function GameApp() {
           <Suspense fallback={<LoadingBeacon />}>
             <World showDressing={quality !== "low"} />
           </Suspense>
+          <HangarBloom />
         </Canvas>
         </GameErrorBoundary>
       )}
