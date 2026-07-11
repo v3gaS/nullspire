@@ -167,15 +167,28 @@ export function BloomMatriarch() {
       <RigidBody type="fixed" colliders="cuboid" position={[-3, 5, -2]}>
         <mesh castShadow>
           <boxGeometry args={[2.5, 0.3, 2.5]} />
-          <meshStandardMaterial color="#4ade80" emissive="#166534" emissiveIntensity={0.7} />
+          <meshStandardMaterial color="#4ade80" emissive="#166534" emissiveIntensity={0.9} />
         </mesh>
       </RigidBody>
       <RigidBody type="fixed" colliders="cuboid" position={[3, 8, 1]}>
         <mesh castShadow>
           <boxGeometry args={[2.5, 0.3, 2.5]} />
-          <meshStandardMaterial color="#4ade80" emissive="#166534" emissiveIntensity={0.7} />
+          <meshStandardMaterial color="#4ade80" emissive="#166534" emissiveIntensity={0.9} />
         </mesh>
       </RigidBody>
+      <RigidBody type="fixed" colliders="cuboid" position={[-2, 11, 2]}>
+        <mesh castShadow>
+          <boxGeometry args={[2.5, 0.3, 2.5]} />
+          <meshStandardMaterial color="#86efac" emissive="#166534" emissiveIntensity={1.0} />
+        </mesh>
+      </RigidBody>
+      <RigidBody type="fixed" colliders="cuboid" position={[2, 13.5, -1]}>
+        <mesh castShadow>
+          <boxGeometry args={[2.8, 0.3, 2.8]} />
+          <meshStandardMaterial color="#bbf7d0" emissive="#15803d" emissiveIntensity={1.1} />
+        </mesh>
+      </RigidBody>
+      <pointLight position={[0, 12, 0]} intensity={2.2} color="#86efac" distance={28} />
     </group>
   );
 }
