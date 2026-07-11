@@ -104,8 +104,9 @@ export function AegisWarden() {
         combatFx.pushBeam(muzzle, cam.clone(), color, 0.16);
         combatFx.pushImpact(cam.clone(), color);
         useFxStore.getState().pulseShake(0.08, 140);
-        if (phase.current === 3 && dist < 10) {
+      if (phase.current === 3 && dist < 10) {
           useGameStore.getState().damagePlayer(6);
+          combatFx.pushBoom(cam.clone(), "#f87171", 2.2);
         }
       }
     } else if (dist < 26 && cooldown.current <= 0) {

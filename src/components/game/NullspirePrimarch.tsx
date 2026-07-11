@@ -9,6 +9,7 @@ import { useFxStore } from "@/stores/fxStore";
 import { playSfx } from "@/lib/game/audio";
 import { combatFx } from "@/components/game/CombatVfx";
 import { distToCam, worldPos } from "@/lib/game/math";
+import { playerPhysics } from "@/lib/game/playerPhysics";
 
 /** Final boss — Nullspire Primarch at the Null Core. */
 export function NullspirePrimarch() {
@@ -89,6 +90,12 @@ export function NullspirePrimarch() {
         useGameStore.getState().damagePlayer(6 + phase.current * 2);
         if (phase.current >= 2 && dist < 14) {
           useGameStore.getState().damagePlayer(4);
+          combatFx.pushImpact(cam.clone(), "#c084fc");
+          playerPhysics.pushKnock(
+            (cam.x - muzzle.x) * 0.08,
+            1.2,
+            (cam.z - muzzle.z) * 0.08,
+          );
         }
         playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.4);
         combatFx.pushBeam(muzzle, cam.clone(), "#c084fc", 0.18);
