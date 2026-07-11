@@ -103,7 +103,7 @@ export function CombatVfx() {
         .add(new THREE.Vector3(0.22, -0.12, 0).applyQuaternion(camera.quaternion));
       light.position.copy(pos);
       mesh.position.copy(pos);
-      light.intensity = flashing ? 12 : 0;
+      light.intensity = flashing ? 18 : 0;
       light.color.set(fx.muzzleColor);
       mesh.visible = flashing;
       const mat = mesh.material as THREE.MeshBasicMaterial;

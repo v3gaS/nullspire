@@ -298,6 +298,12 @@ export function PlayerController() {
           "/assets/audio/kenney-fps/walking.ogg",
           playerLocomotion.sprinting ? 0.18 : 0.12,
         );
+        if (playerLocomotion.sprinting) {
+          combatFx.pushImpact(
+            new THREE.Vector3(pos.x, 0.08, pos.z),
+            "#94a3b8",
+          );
+        }
         footstep.current = playerLocomotion.sprinting ? 0.32 : 0.45;
       }
     } else {
