@@ -39,7 +39,7 @@ export function TitleScreen() {
         }}
       />
 
-      <p className="relative z-10 mb-3 text-xs uppercase tracking-[0.45em] text-teal-300/80">
+      <p className="relative z-10 mb-3 text-xs uppercase tracking-[0.45em] text-orange-300/85">
         Exoplanet Strike Protocol
       </p>
       <h1

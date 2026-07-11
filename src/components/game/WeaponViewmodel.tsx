@@ -184,36 +184,40 @@ function ChunkyGun({ id }: { id: WeaponId }) {
         <group>
           {/* Quake-style chunky RL: orange tube + grey body */}
           <mesh position={[0.02, 0.02, 0.02]} frustumCulled={false}>
-            <boxGeometry args={[0.22, 0.24, 0.5]} />
-            <Mat color="#6b7280" emissive="#374151" emissiveIntensity={0.18} />
+            <boxGeometry args={[0.24, 0.26, 0.52]} />
+            <Mat color="#6b7280" emissive="#374151" emissiveIntensity={0.2} />
           </mesh>
           <mesh
-            position={[0.02, 0.04, -0.28]}
+            position={[0.02, 0.05, -0.3]}
             rotation={[Math.PI / 2, 0, 0]}
             frustumCulled={false}
           >
-            <cylinderGeometry args={[0.11, 0.13, 0.42, 10]} />
-            <Mat color="#ff7a18" emissive="#ff7a18" emissiveIntensity={0.85} />
+            <cylinderGeometry args={[0.12, 0.145, 0.44, 10]} />
+            <Mat color="#ff7a18" emissive="#ff7a18" emissiveIntensity={1.0} />
           </mesh>
           <mesh
-            position={[0.02, 0.04, -0.52]}
+            position={[0.02, 0.05, -0.54]}
             rotation={[Math.PI / 2, 0, 0]}
             frustumCulled={false}
           >
-            <cylinderGeometry args={[0.16, 0.14, 0.12, 10]} />
-            <Mat color="#e5e7eb" emissive="#9ca3af" emissiveIntensity={0.4} />
+            <cylinderGeometry args={[0.18, 0.15, 0.14, 10]} />
+            <Mat color="#e5e7eb" emissive="#9ca3af" emissiveIntensity={0.5} />
           </mesh>
-          <mesh position={[0.02, -0.16, 0.08]} frustumCulled={false}>
-            <boxGeometry args={[0.09, 0.2, 0.16]} />
+          <mesh position={[0.02, -0.17, 0.08]} frustumCulled={false}>
+            <boxGeometry args={[0.1, 0.22, 0.17]} />
             <Mat color="#1f2937" emissive="#0f172a" emissiveIntensity={0.1} />
           </mesh>
-          <mesh position={[0.02, 0.18, 0.05]} frustumCulled={false}>
-            <boxGeometry args={[0.08, 0.08, 0.2]} />
-            <Mat color="#9ca3af" emissive="#6b7280" emissiveIntensity={0.25} />
+          <mesh position={[0.02, 0.2, 0.05]} frustumCulled={false}>
+            <boxGeometry args={[0.09, 0.09, 0.22]} />
+            <Mat color="#9ca3af" emissive="#6b7280" emissiveIntensity={0.3} />
           </mesh>
-          <mesh position={[0.14, 0.02, 0.05]} frustumCulled={false}>
-            <boxGeometry args={[0.08, 0.1, 0.18]} />
-            <Mat color="#ff9f43" emissive="#ff7a18" emissiveIntensity={0.7} />
+          <mesh position={[0.15, 0.02, 0.05]} frustumCulled={false}>
+            <boxGeometry args={[0.09, 0.12, 0.2]} />
+            <Mat color="#ff9f43" emissive="#ff7a18" emissiveIntensity={0.85} />
+          </mesh>
+          <mesh position={[-0.1, 0.04, 0]} frustumCulled={false}>
+            <boxGeometry args={[0.07, 0.1, 0.16]} />
+            <Mat color="#9ca3af" emissive="#6b7280" emissiveIntensity={0.25} />
           </mesh>
         </group>
       );
