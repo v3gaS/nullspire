@@ -40,9 +40,9 @@ function cycleWeapon(dir: 1 | -1) {
   const cur = unlocked.indexOf(state.activeWeapon);
   const next = unlocked[(cur + dir + unlocked.length) % unlocked.length]!;
   useGameStore.getState().setActiveWeapon(next);
-  useFxStore.getState().pulseMuzzle(switchFlash(next), 110);
-  useFxStore.getState().pulseShake(0.04, 75);
-  playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.45);
+  useFxStore.getState().pulseMuzzle(switchFlash(next), 140);
+  useFxStore.getState().pulseShake(0.06, 95);
+  playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.5);
 }
 
 /** Keyboard: reload (R), weapon switch 1-5, scroll cycle. */
@@ -60,8 +60,8 @@ export function useCombatInput() {
         if (weapon.ammo >= mag || weapon.reserve <= 0) return;
         reloading.current = true;
         useFxStore.getState().pulseReload(650);
-        useFxStore.getState().pulseShake(0.05, 90);
-        playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.48);
+        useFxStore.getState().pulseShake(0.08, 120);
+        playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.52);
         window.setTimeout(() => {
           const s = useGameStore.getState();
           const w = s.weapons[s.activeWeapon];
@@ -78,8 +78,8 @@ export function useCombatInput() {
             },
           });
           reloading.current = false;
-          playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.4);
-          useFxStore.getState().pulseMuzzle(switchFlash(s.activeWeapon), 80);
+          playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.45);
+          useFxStore.getState().pulseMuzzle(switchFlash(s.activeWeapon), 110);
         }, 650);
       }
 
@@ -96,9 +96,9 @@ export function useCombatInput() {
         const id = WEAPON_ORDER[idx];
         if (state.weapons[id].unlocked) {
           useGameStore.getState().setActiveWeapon(id);
-          useFxStore.getState().pulseMuzzle(switchFlash(id), 110);
-          useFxStore.getState().pulseShake(0.04, 75);
-          playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.45);
+          useFxStore.getState().pulseMuzzle(switchFlash(id), 140);
+          useFxStore.getState().pulseShake(0.06, 95);
+          playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.5);
         }
       }
     };

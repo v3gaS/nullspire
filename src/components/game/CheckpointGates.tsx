@@ -79,14 +79,19 @@ function Gate({
         Math.min(100, useGameStore.getState().armor + 15),
       );
       playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.58);
-      combatFx.pushBoom(new THREE.Vector3(...pos), "#67e8f9", 4.8);
+      combatFx.pushBoom(new THREE.Vector3(...pos), "#67e8f9", 5.6);
       combatFx.pushBoom(
         new THREE.Vector3(pos[0], pos[1] + 0.5, pos[2]),
         "#a5f3fc",
-        2.2,
+        2.8,
+      );
+      combatFx.pushBoom(
+        new THREE.Vector3(pos[0], pos[1] + 0.2, pos[2]),
+        "#ffb347",
+        1.4,
       );
       combatFx.pushImpact(new THREE.Vector3(pos[0], pos[1] + 0.5, pos[2]), "#a5f3fc");
-      useFxStore.getState().pulseShake(0.15, 260);
+      useFxStore.getState().pulseShake(0.2, 300);
       mesh.scale.setScalar(0.5);
       (mesh.material as THREE.MeshStandardMaterial).emissiveIntensity = 0.3;
     }
