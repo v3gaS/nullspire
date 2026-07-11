@@ -53,20 +53,29 @@ function JumpPad({ position }: { position: [number, number, number] }) {
         if (performance.now() < playerPhysics.spawnGraceUntil) return;
         const p = body.translation();
         if (Math.hypot(p.x - position[0], p.z - position[2]) > 2.4) return;
-        playerPhysics.applyImpulse(0, 22, 0, { pad: true });
-        playerPhysics.punch(-0.15);
-        playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.5);
+        playerPhysics.applyImpulse(0, 24, 0, { pad: true });
+        playerPhysics.punch(-0.18);
+        playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.55);
         combatFx.pushBoom(
           new THREE.Vector3(position[0], position[1] + 0.4, position[2]),
           "#ff7a18",
-          3.8,
+          4.6,
         );
         combatFx.pushBoom(
           new THREE.Vector3(position[0], position[1] + 0.6, position[2]),
           "#ffe066",
-          1.8,
+          2.4,
         );
-        useFxStore.getState().pulseShake(0.12, 180);
+        combatFx.pushBoom(
+          new THREE.Vector3(position[0], position[1] + 0.9, position[2]),
+          "#ffffff",
+          1.2,
+        );
+        combatFx.pushImpact(
+          new THREE.Vector3(position[0], position[1] + 0.5, position[2]),
+          "#ffb347",
+        );
+        useFxStore.getState().pulseShake(0.16, 220);
       }}
     >
       <mesh
@@ -106,7 +115,7 @@ function JumpPad({ position }: { position: [number, number, number] }) {
           toneMapped={false}
         />
       </mesh>
-      <pointLight position={[0, 1.2, 0]} color="#ff7a18" intensity={2.0} distance={10} />
+      <pointLight position={[0, 1.2, 0]} color="#ff7a18" intensity={2.8} distance={12} />
     </RigidBody>
   );
 }
@@ -730,6 +739,11 @@ export function CrashRimSector() {
       <JumpPad position={[-7, 0.2, -8]} />
       <JumpPad position={[7.5, 0.2, -10]} />
       <JumpPad position={[0, 0.2, -38]} />
+      <JumpPad position={[4.5, 0.2, -6]} />
+      <JumpPad position={[-4.5, 0.2, -6]} />
+      <JumpPad position={[0, 0.2, -14]} />
+      <JumpPad position={[9, 0.2, -64]} />
+      <JumpPad position={[-9, 0.2, -80]} />
       <AcidHazard position={[-4, 0.08, -38]} size={[8, 0.1, 6]} />
       <AcidHazard position={[6, 0.08, -60]} size={[6, 0.1, 5]} />
       <AcidHazard position={[-8, 0.08, -86]} size={[5, 0.1, 4]} />
