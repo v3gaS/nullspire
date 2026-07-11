@@ -193,7 +193,7 @@ export const useGameStore = create<GameState>((set, get) => ({
       activeWeapon: "pulse_smg",
       weapons: structuredClone(defaultWeapons),
       objective: "Reach the Crash Rim beacon",
-      invulnerableUntil: performance.now() + 12000,
+      invulnerableUntil: performance.now() + 14000,
       checkpoint: startCheckpoint,
       boss: defaultBoss,
       mouseSensitivity: loadSens(),

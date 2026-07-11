@@ -94,11 +94,11 @@ export function GameHUD() {
 
       {shieldActive && (
         <div className="absolute left-1/2 top-24 max-w-md -translate-x-1/2 text-center">
-          <p className="text-xs uppercase tracking-[0.2em] text-teal-300/90">
+          <p className="animate-pulse text-xs font-bold uppercase tracking-[0.25em] text-teal-200">
             Drop shield active
           </p>
-          <p className="mt-1 text-[11px] text-zinc-400">
-            WASD move · click to fire · R reload · F ability
+          <p className="mt-1 text-[11px] text-zinc-300">
+            WASD move · click to fire · R reload · F ability · 1-5 guns
           </p>
         </div>
       )}
