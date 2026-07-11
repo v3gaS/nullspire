@@ -202,7 +202,7 @@ export function GameHUD() {
 
       {/* Controls hint — bottom center */}
       <p className="absolute bottom-3 left-1/2 -translate-x-1/2 text-[10px] tracking-wide text-white/30">
-        1-5 weapons · scroll cycle · R reload · F ability · Esc pause
+        1-5 weapons · scroll cycle · Q last · R reload · F ability · Esc pause
       </p>
     </div>
   );

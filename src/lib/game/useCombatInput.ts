@@ -19,13 +19,13 @@ function switchFlash(id: WeaponId): string {
     case "pulse_smg":
       return "#7dffef";
     case "scatter_carbine":
-      return "#ffb347";
+      return "#ff7a18";
     case "arc_caster":
       return "#60a5fa";
     case "rail_lance":
       return "#e879f9";
     case "void_launcher":
-      return "#c084fc";
+      return "#ff7a18";
     default: {
       const _exhaustive: never = id;
       return _exhaustive;
@@ -33,7 +33,19 @@ function switchFlash(id: WeaponId): string {
   }
 }
 
-/** Keyboard: reload (R), weapon switch 1-5. */
+function cycleWeapon(dir: 1 | -1) {
+  const state = useGameStore.getState();
+  const unlocked = WEAPON_ORDER.filter((id) => state.weapons[id].unlocked);
+  if (unlocked.length < 2) return;
+  const cur = unlocked.indexOf(state.activeWeapon);
+  const next = unlocked[(cur + dir + unlocked.length) % unlocked.length]!;
+  useGameStore.getState().setActiveWeapon(next);
+  useFxStore.getState().pulseMuzzle(switchFlash(next), 70);
+  useFxStore.getState().pulseShake(0.03, 60);
+  playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.4);
+}
+
+/** Keyboard: reload (R), weapon switch 1-5, scroll cycle. */
 export function useCombatInput() {
   const reloading = useRef(false);
 
@@ -68,6 +80,12 @@ export function useCombatInput() {
         }, 750);
       }
 
+      if (e.code === "KeyQ") {
+        // Last weapon — cycle backward
+        cycleWeapon(-1);
+        return;
+      }
+
       const idx = ["Digit1", "Digit2", "Digit3", "Digit4", "Digit5"].indexOf(
         e.code,
       );
@@ -82,7 +100,17 @@ export function useCombatInput() {
       }
     };
 
+    const onWheel = (e: WheelEvent) => {
+      if (useGameStore.getState().screen !== "playing") return;
+      if (Math.abs(e.deltaY) < 2) return;
+      cycleWeapon(e.deltaY > 0 ? 1 : -1);
+    };
+
     window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    window.addEventListener("wheel", onWheel, { passive: true });
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("wheel", onWheel);
+    };
   }, []);
 }
