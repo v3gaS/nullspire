@@ -62,9 +62,11 @@ function World({ showDressing }: { showDressing: boolean }) {
         <mesh position={[0, -0.5, 0]} receiveShadow>
           <boxGeometry args={[180, 1, 180]} />
           <meshStandardMaterial
-            color="#5a6570"
-            roughness={0.88}
-            metalness={0.12}
+            color="#6a7580"
+            roughness={0.85}
+            metalness={0.14}
+            emissive="#3a4550"
+            emissiveIntensity={0.18}
           />
         </mesh>
       </RigidBody>
@@ -73,11 +75,11 @@ function World({ showDressing }: { showDressing: boolean }) {
         <mesh position={[0, 0.05, 0]} receiveShadow>
           <boxGeometry args={[16, 0.4, 16]} />
           <meshStandardMaterial
-            color="#6a7886"
-            roughness={0.75}
-            metalness={0.22}
+            color="#7a8896"
+            roughness={0.72}
+            metalness={0.24}
             emissive="#2ee6c8"
-            emissiveIntensity={0.28}
+            emissiveIntensity={0.35}
           />
         </mesh>
       </RigidBody>

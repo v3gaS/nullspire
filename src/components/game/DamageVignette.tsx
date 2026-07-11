@@ -12,26 +12,26 @@ export function DamageVignette() {
 
   useEffect(() => {
     if (!lastDamagedAt) return;
-    setHitFlash(0.85);
-    const id = window.setTimeout(() => setHitFlash(0), 320);
+    setHitFlash(0.95);
+    const id = window.setTimeout(() => setHitFlash(0), 380);
     return () => window.clearTimeout(id);
   }, [lastDamagedAt]);
 
   if (screen !== "playing" && screen !== "paused") return null;
 
-  const lowHp = health < 25 ? 0.82 : health < 40 ? 0.58 : health < 60 ? 0.34 : 0.1;
+  const lowHp = health < 25 ? 0.9 : health < 40 ? 0.65 : health < 60 ? 0.4 : 0.12;
   const intensity = Math.max(lowHp, hitFlash);
 
   return (
     <div
       className="pointer-events-none absolute inset-0 z-[5]"
       style={{
-        background: `radial-gradient(ellipse at center, transparent 36%, rgba(180, 8, 18, ${intensity}) 100%)`,
+        background: `radial-gradient(ellipse at center, transparent 32%, rgba(190, 10, 20, ${intensity}) 100%)`,
         boxShadow:
           hitFlash > 0.4
-            ? "inset 0 0 100px rgba(255, 40, 50, 0.45)"
+            ? "inset 0 0 120px rgba(255, 40, 50, 0.55)"
             : health < 30
-              ? "inset 0 0 70px rgba(200, 20, 30, 0.32)"
+              ? "inset 0 0 80px rgba(200, 20, 30, 0.38)"
               : undefined,
         transition: hitFlash > 0 ? "none" : "background 200ms ease",
       }}

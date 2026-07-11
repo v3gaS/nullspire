@@ -499,11 +499,11 @@ export function WeaponSystem() {
             break;
           }
           case "rail_lance":
-            playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.52);
-            useFxStore.getState().pulseMuzzle("#f0abfc", 170);
-            useFxStore.getState().pulseShake(0.085, 150);
-            playerPhysics.punch(0.1);
-            shots.push({ dir: forward.clone(), damage: 68, color: "#e879f9" });
+            playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.58);
+            useFxStore.getState().pulseMuzzle("#f0abfc", 200);
+            useFxStore.getState().pulseShake(0.1, 170);
+            playerPhysics.punch(0.12);
+            shots.push({ dir: forward.clone(), damage: 74, color: "#e879f9" });
             break;
           case "void_launcher":
             playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.58);
@@ -546,12 +546,12 @@ export function WeaponSystem() {
 
           const beamWidth =
             id === "rail_lance"
-              ? 0.32
+              ? 0.4
               : id === "void_launcher"
-                ? 0.2
+                ? 0.24
                 : id === "scatter_carbine"
-                  ? 0.07
-                  : 0.12;
+                  ? 0.085
+                  : 0.14;
           combatFx.pushBeam(muzzle, impact, shot.color, beamWidth);
           combatFx.pushImpact(impact, shot.color);
           if (id === "void_launcher") {
