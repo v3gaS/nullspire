@@ -31,11 +31,12 @@ export function DamageNumbers() {
         return (
           <div
             key={p.id}
-            className="absolute left-1/2 font-mono text-sm font-semibold text-amber-200"
+            className="absolute left-1/2 font-mono text-lg font-black text-amber-200"
             style={{
-              transform: `translate(-50%, ${-age * 36 - i * 4}px)`,
+              transform: `translate(-50%, ${-age * 48 - i * 6}px) scale(${1 + (p.damage > 30 ? 0.35 : 0)})`,
               opacity: 1 - age,
-              textShadow: "0 0 6px rgba(0,0,0,0.8)",
+              color: p.damage >= 40 ? "#ff6644" : p.damage >= 20 ? "#ffe066" : "#fde68a",
+              textShadow: "0 0 10px rgba(0,0,0,0.9)",
             }}
           >
             {p.damage}

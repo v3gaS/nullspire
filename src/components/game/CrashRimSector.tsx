@@ -127,6 +127,12 @@ function Beacon({ position }: { position: [number, number, number] }) {
         .getState()
         .setObjective("Beacon online — push into Rust Canyons");
       playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.55);
+      combatFx.pushBoom(
+        new THREE.Vector3(...position),
+        "#7dffef",
+        3.5,
+      );
+      useFxStore.getState().pulseShake(0.1, 200);
       useGameStore.getState().healPlayer(25);
       useGameStore.getState().setNullEnergy(100);
     }
@@ -177,16 +183,29 @@ function AcidHazard({
   });
 
   return (
-    <mesh ref={meshRef} position={position} rotation={[-Math.PI / 2, 0, 0]}>
-      <planeGeometry args={[size[0], size[2]]} />
-      <meshStandardMaterial
-        color="#7cff3a"
-        emissive="#3a8a10"
-        emissiveIntensity={0.8}
-        transparent
-        opacity={0.65}
-      />
-    </mesh>
+    <group>
+      <mesh ref={meshRef} position={position} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[size[0], size[2]]} />
+        <meshStandardMaterial
+          color="#7cff3a"
+          emissive="#3a8a10"
+          emissiveIntensity={0.8}
+          transparent
+          opacity={0.65}
+        />
+      </mesh>
+      {/* Warning rim so acid reads before you step in */}
+      <mesh position={[position[0], position[1] + 0.02, position[2]]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[Math.max(size[0], size[2]) * 0.42, Math.max(size[0], size[2]) * 0.52, 24]} />
+        <meshStandardMaterial
+          color="#bbf76a"
+          emissive="#84cc16"
+          emissiveIntensity={1.2}
+          transparent
+          opacity={0.7}
+        />
+      </mesh>
+    </group>
   );
 }
 
@@ -302,7 +321,9 @@ export function CrashRimSector() {
 
       <JumpPad position={[0, 0.2, -28]} />
       <JumpPad position={[8, 0.2, -48]} />
+      <JumpPad position={[-8, 0.2, -56]} />
       <AcidHazard position={[-4, 0.08, -38]} size={[8, 0.1, 6]} />
+      <AcidHazard position={[6, 0.08, -60]} size={[6, 0.1, 5]} />
 
       <Suspense fallback={null}>
         <Prop
