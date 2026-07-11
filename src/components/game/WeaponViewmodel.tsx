@@ -96,24 +96,28 @@ function ChunkyGun({ id }: { id: WeaponId }) {
       return (
         <group>
           <mesh position={[0.02, -0.01, 0]} frustumCulled={false}>
-            <boxGeometry args={[0.2, 0.2, 0.52]} />
+            <boxGeometry args={[0.23, 0.22, 0.54]} />
             <Mat color="#5a6472" emissive="#1f2937" emissiveIntensity={0.12} />
           </mesh>
-          <mesh position={[0.02, 0.02, -0.32]} frustumCulled={false}>
-            <boxGeometry args={[0.22, 0.14, 0.2]} />
+          <mesh position={[0.02, 0.02, -0.34]} frustumCulled={false}>
+            <boxGeometry args={[0.24, 0.16, 0.22]} />
             <Mat color="#9ca3af" emissive="#4b5563" emissiveIntensity={0.2} />
           </mesh>
-          <mesh position={[0.02, 0.02, -0.48]} frustumCulled={false}>
-            <cylinderGeometry args={[0.07, 0.09, 0.16, 8]} />
-            <Mat color={accent} emissive={accent} emissiveIntensity={1.2} />
+          <mesh position={[0.02, 0.02, -0.5]} frustumCulled={false}>
+            <cylinderGeometry args={[0.085, 0.11, 0.18, 8]} />
+            <Mat color={accent} emissive={accent} emissiveIntensity={1.45} />
           </mesh>
-          <mesh position={[0.02, -0.16, 0.06]} frustumCulled={false}>
-            <boxGeometry args={[0.08, 0.18, 0.14]} />
+          <mesh position={[0.02, -0.17, 0.06]} frustumCulled={false}>
+            <boxGeometry args={[0.09, 0.2, 0.15]} />
             <Mat color="#1f2937" emissive="#0f172a" emissiveIntensity={0.1} />
           </mesh>
-          <mesh position={[0.02, 0.14, -0.05]} frustumCulled={false}>
-            <boxGeometry args={[0.06, 0.08, 0.22]} />
+          <mesh position={[0.02, 0.15, -0.05]} frustumCulled={false}>
+            <boxGeometry args={[0.07, 0.09, 0.24]} />
             <Mat color="#d1d5db" emissive="#6b7280" emissiveIntensity={0.25} />
+          </mesh>
+          <mesh position={[0.14, 0.02, 0]} frustumCulled={false}>
+            <boxGeometry args={[0.07, 0.1, 0.2]} />
+            <Mat color="#ff9f43" emissive="#ff7a18" emissiveIntensity={0.75} />
           </mesh>
         </group>
       );

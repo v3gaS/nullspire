@@ -35,13 +35,13 @@ export function DamageNumbers() {
             key={p.id}
             className="absolute left-1/2 font-black tracking-tight"
             style={{
-              fontSize: big ? "2rem" : mid ? "1.55rem" : "1.25rem",
-              transform: `translate(-50%, ${-age * 64 - i * 10}px) scale(${1 + (big ? 0.55 : mid ? 0.28 : 0.08)})`,
+              fontSize: big ? "2.35rem" : mid ? "1.75rem" : "1.4rem",
+              transform: `translate(-50%, ${-age * 72 - i * 12}px) scale(${1 + (big ? 0.65 : mid ? 0.35 : 0.12)})`,
               opacity: 1 - age,
               color: big ? "#ff4422" : mid ? "#ff9f43" : "#f8fafc",
               textShadow: big
-                ? "0 0 18px rgba(255,70,30,0.9), 0 2px 0 rgba(0,0,0,0.95)"
-                : "0 0 12px rgba(0,0,0,0.95), 0 1px 0 #000",
+                ? "0 0 22px rgba(255,70,30,0.95), 0 2px 0 rgba(0,0,0,0.95)"
+                : "0 0 14px rgba(0,0,0,0.95), 0 1px 0 #000",
             }}
           >
             {p.damage}

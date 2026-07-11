@@ -38,7 +38,7 @@ function JumpPad({ position }: { position: [number, number, number] }) {
     const mesh = meshRef.current;
     if (!mesh) return;
     const mat = mesh.material as THREE.MeshStandardMaterial;
-    mat.emissiveIntensity = 1.2 + Math.sin(state.clock.elapsedTime * 5) * 0.5;
+    mat.emissiveIntensity = 1.35 + Math.sin(state.clock.elapsedTime * 5.5) * 0.55;
   });
 
   return (
@@ -53,15 +53,20 @@ function JumpPad({ position }: { position: [number, number, number] }) {
         if (performance.now() < playerPhysics.spawnGraceUntil) return;
         const p = body.translation();
         if (Math.hypot(p.x - position[0], p.z - position[2]) > 2.4) return;
-        playerPhysics.applyImpulse(0, 21, 0, { pad: true });
-        playerPhysics.punch(-0.13);
-        playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.45);
+        playerPhysics.applyImpulse(0, 22, 0, { pad: true });
+        playerPhysics.punch(-0.15);
+        playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.5);
         combatFx.pushBoom(
           new THREE.Vector3(position[0], position[1] + 0.4, position[2]),
-          "#ff6bcb",
-          3.4,
+          "#ff7a18",
+          3.8,
         );
-        useFxStore.getState().pulseShake(0.1, 160);
+        combatFx.pushBoom(
+          new THREE.Vector3(position[0], position[1] + 0.6, position[2]),
+          "#ffe066",
+          1.8,
+        );
+        useFxStore.getState().pulseShake(0.12, 180);
       }}
     >
       <mesh
@@ -70,37 +75,38 @@ function JumpPad({ position }: { position: [number, number, number] }) {
         receiveShadow
         userData={{ jumpPad: true, boost: 16 }}
       >
-        <cylinderGeometry args={[1.4, 1.4, 0.25, 16]} />
+        <cylinderGeometry args={[1.5, 1.5, 0.28, 16]} />
         <meshStandardMaterial
-          color="#ff6bcb"
-          emissive="#ff2ea6"
-          emissiveIntensity={1.4}
-          metalness={0.4}
-          roughness={0.3}
+          color="#6a7580"
+          emissive="#ff7a18"
+          emissiveIntensity={1.5}
+          metalness={0.45}
+          roughness={0.28}
         />
       </mesh>
       <mesh position={[0, 0.2, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[0.9, 1.15, 3, 1, 0, (Math.PI * 2) / 3]} />
+        <ringGeometry args={[0.85, 1.2, 3, 1, 0, (Math.PI * 2) / 3]} />
         <meshStandardMaterial
           color="#ffe066"
           emissive="#fbbf24"
-          emissiveIntensity={1.8}
+          emissiveIntensity={2.0}
           transparent
-          opacity={0.9}
+          opacity={0.92}
           toneMapped={false}
         />
       </mesh>
       <mesh position={[0, 0.28, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[1.35, 1.55, 24]} />
+        <ringGeometry args={[1.4, 1.65, 24]} />
         <meshStandardMaterial
-          color="#ff6bcb"
-          emissive="#ff2ea6"
-          emissiveIntensity={1.2}
+          color="#ffb347"
+          emissive="#ff7a18"
+          emissiveIntensity={1.35}
           transparent
-          opacity={0.55}
+          opacity={0.6}
+          toneMapped={false}
         />
       </mesh>
-      <pointLight position={[0, 1.2, 0]} color="#ff6bcb" intensity={1.6} distance={8} />
+      <pointLight position={[0, 1.2, 0]} color="#ff7a18" intensity={2.0} distance={10} />
     </RigidBody>
   );
 }
@@ -639,6 +645,9 @@ export function CrashRimSector() {
       <JumpPad position={[5, 0.2, -120]} />
       <JumpPad position={[-5, 0.2, -18]} />
       <JumpPad position={[6, 0.2, -22]} />
+      <JumpPad position={[-7, 0.2, -8]} />
+      <JumpPad position={[7.5, 0.2, -10]} />
+      <JumpPad position={[0, 0.2, -38]} />
       <AcidHazard position={[-4, 0.08, -38]} size={[8, 0.1, 6]} />
       <AcidHazard position={[6, 0.08, -60]} size={[6, 0.1, 5]} />
       <AcidHazard position={[-8, 0.08, -86]} size={[5, 0.1, 4]} />

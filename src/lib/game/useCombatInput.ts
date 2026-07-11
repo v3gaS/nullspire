@@ -40,9 +40,9 @@ function cycleWeapon(dir: 1 | -1) {
   const cur = unlocked.indexOf(state.activeWeapon);
   const next = unlocked[(cur + dir + unlocked.length) % unlocked.length]!;
   useGameStore.getState().setActiveWeapon(next);
-  useFxStore.getState().pulseMuzzle(switchFlash(next), 70);
-  useFxStore.getState().pulseShake(0.03, 60);
-  playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.4);
+  useFxStore.getState().pulseMuzzle(switchFlash(next), 110);
+  useFxStore.getState().pulseShake(0.04, 75);
+  playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.45);
 }
 
 /** Keyboard: reload (R), weapon switch 1-5, scroll cycle. */
@@ -93,9 +93,9 @@ export function useCombatInput() {
         const id = WEAPON_ORDER[idx];
         if (state.weapons[id].unlocked) {
           useGameStore.getState().setActiveWeapon(id);
-          useFxStore.getState().pulseMuzzle(switchFlash(id), 70);
-          useFxStore.getState().pulseShake(0.03, 60);
-          playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.4);
+          useFxStore.getState().pulseMuzzle(switchFlash(id), 110);
+          useFxStore.getState().pulseShake(0.04, 75);
+          playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.45);
         }
       }
     };
