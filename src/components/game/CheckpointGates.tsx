@@ -99,9 +99,10 @@ function Gate({
         <meshStandardMaterial
           color="#67e8f9"
           emissive="#22d3ee"
-          emissiveIntensity={1.4}
+          emissiveIntensity={1.7}
           metalness={0.5}
           roughness={0.3}
+          toneMapped={false}
         />
       </mesh>
       <mesh position={[pos[0], 0.05, pos[2]]} rotation={[-Math.PI / 2, 0, 0]}>
@@ -109,9 +110,21 @@ function Gate({
         <meshStandardMaterial
           color="#67e8f9"
           emissive="#22d3ee"
-          emissiveIntensity={1.1}
+          emissiveIntensity={1.35}
           transparent
-          opacity={0.65}
+          opacity={0.75}
+          toneMapped={false}
+        />
+      </mesh>
+      <mesh position={[pos[0], 0.06, pos[2]]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[0.7, 0.95, 3, 1, Math.PI / 6, (Math.PI * 2) / 3]} />
+        <meshStandardMaterial
+          color="#ffb347"
+          emissive="#ff7a18"
+          emissiveIntensity={1.2}
+          transparent
+          opacity={0.7}
+          toneMapped={false}
         />
       </mesh>
       <pointLight position={pos} color="#67e8f9" intensity={1.8} distance={10} />
