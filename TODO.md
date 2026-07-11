@@ -90,7 +90,7 @@ Campaign build order. Check items as completed. Loop works top-down.
 - [x] Weapon pickup world models polish
 - [x] Physics feel (knockback, debris, pad sensors, camera punch)
 
-## Phase 10 — DOOM / Quake juice (active 2h block)
+## Phase 10 — DOOM / Quake juice (2h block COMPLETE)
 - [x] Faster move / air control / camera punch
 - [x] Enemy stagger honored + gib spray
 - [x] Barrel chain clusters + bigger blast knock
@@ -124,4 +124,4 @@ Campaign build order. Check items as completed. Loop works top-down.
 4. Prefer playable increments over unfinished mega-features.
 
 ## Current focus
-**2h continuous block** (~0.1h remaining) — still coding; pause only for build/deploy/QA
+**2h continuous Quake juice block COMPLETE** — next wake: pick Phase 11 feel targets or continue Quake juice

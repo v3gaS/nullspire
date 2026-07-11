@@ -2,8 +2,9 @@
 
 Build diary. Newest entries at the top.
 
-## 2026-07-10 — Continuous 2h Quake juice block (in progress)
-- Protocol: **code for ~2h**, pause only for build/deploy/QA — not stop-early
+## 2026-07-10 — Continuous 2h Quake juice block COMPLETE
+- Protocol held: **code for ~2h**, pause only for build/deploy/QA — not stop-early
+- Wall-clock: start `1783729836` → elapsed ≥2.0h (`/tmp/nullspire_realtime_block_*.txt`)
 - Shipped wave: rail pierce, kill X, chunkier FX, runway chevrons, barrel nests
 - Mid-canyon cover, boss/drone/bastion yellow windups, ambience duck under fire
 - Secrets/pads/overclock tint, reload dip, multi-kill banner, sprint FOV
@@ -17,7 +18,7 @@ Build diary. Newest entries at the top.
 - Spitter/turret/bastion windups; vault climb pads; denser barrel nests
 - Secret found counter; start armor 50; vault-exit chevrons; multi-kill shake
 - Closing ships: Core sentry/pad, muzzle kick hold, denser late loot
-- Live: https://nullspire-amber.vercel.app · finishing 2h continuous coding block
+- Live: https://nullspire-amber.vercel.app · tip `a91d22b`
 
 ## 2026-07-10 — Quake juice: pierce, kill X, chunkier FX
 - Rail Lance pierces up to 2 extra lined-up targets; Scatter/Void kick harder
