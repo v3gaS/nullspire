@@ -168,7 +168,7 @@ function ChunkyGun({ id }: { id: WeaponId }) {
         <group>
           {/* Quake-style chunky RL: orange tube + grey body */}
           <mesh position={[0.02, 0.02, 0.02]} frustumCulled={false}>
-            <boxGeometry args={[0.2, 0.22, 0.46]} />
+            <boxGeometry args={[0.22, 0.24, 0.5]} />
             <Mat color="#6b7280" emissive="#374151" emissiveIntensity={0.18} />
           </mesh>
           <mesh
