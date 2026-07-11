@@ -358,24 +358,47 @@ export function CrashRimSector() {
       </mesh>
       {/* Secondary green lane accent — arena floor read */}
       <mesh position={[-3.2, 0.055, -8]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[0.4, 36]} />
+        <planeGeometry args={[0.45, 42]} />
         <meshStandardMaterial
           color="#4ade80"
           emissive="#22c55e"
-          emissiveIntensity={1.05}
+          emissiveIntensity={1.2}
           transparent
-          opacity={0.6}
+          opacity={0.68}
           toneMapped={false}
         />
       </mesh>
       <mesh position={[3.2, 0.055, -8]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[0.4, 36]} />
+        <planeGeometry args={[0.45, 42]} />
+        <meshStandardMaterial
+          color="#4ade80"
+          emissive="#22c55e"
+          emissiveIntensity={1.2}
+          transparent
+          opacity={0.68}
+          toneMapped={false}
+        />
+      </mesh>
+      {/* Mid-canyon green lane continuation */}
+      <mesh position={[-3.2, 0.055, -48]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[0.4, 28]} />
         <meshStandardMaterial
           color="#4ade80"
           emissive="#22c55e"
           emissiveIntensity={1.05}
           transparent
-          opacity={0.6}
+          opacity={0.55}
+          toneMapped={false}
+        />
+      </mesh>
+      <mesh position={[3.2, 0.055, -48]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[0.4, 28]} />
+        <meshStandardMaterial
+          color="#4ade80"
+          emissive="#22c55e"
+          emissiveIntensity={1.05}
+          transparent
+          opacity={0.55}
           toneMapped={false}
         />
       </mesh>
