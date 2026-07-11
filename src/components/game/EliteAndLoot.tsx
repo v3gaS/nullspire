@@ -290,22 +290,22 @@ export function LootDrop({
   return (
     <group>
       <mesh ref={meshRef} position={position} castShadow>
-        <boxGeometry args={[0.68, 0.68, 0.68]} />
+        <boxGeometry args={[0.74, 0.74, 0.74]} />
         <meshStandardMaterial
           color={color}
           emissive={color}
-          emissiveIntensity={2.5}
+          emissiveIntensity={2.9}
           metalness={0.15}
           roughness={0.22}
           toneMapped={false}
         />
       </mesh>
       <mesh position={position}>
-        <boxGeometry args={[0.9, 0.9, 0.9]} />
+        <boxGeometry args={[0.98, 0.98, 0.98]} />
         <meshBasicMaterial
           color={color}
           transparent
-          opacity={0.26}
+          opacity={0.3}
           depthWrite={false}
           toneMapped={false}
         />
@@ -314,21 +314,21 @@ export function LootDrop({
         position={[position[0], 0.05, position[2]]}
         rotation={[-Math.PI / 2, 0, 0]}
       >
-        <ringGeometry args={[0.5, 0.78, 20]} />
+        <ringGeometry args={[0.55, 0.85, 20]} />
         <meshStandardMaterial
           color={color}
           emissive={color}
-          emissiveIntensity={1.6}
+          emissiveIntensity={1.85}
           transparent
-          opacity={0.8}
+          opacity={0.85}
           toneMapped={false}
         />
       </mesh>
       <pointLight
         position={position}
         color={color}
-        intensity={3.0}
-        distance={10}
+        intensity={3.6}
+        distance={12}
       />
     </group>
   );
