@@ -436,7 +436,8 @@ export function CrashRimSector() {
           opacity={0.75}
         />
       </mesh>
-      <pointLight position={[0, 3, -18]} intensity={1.6} color="#7dffef" distance={14} />
+      <pointLight position={[0, 3, -18]} intensity={2.2} color="#ff7a18" distance={16} />
+      <pointLight position={[0, 8, -18]} intensity={2.0} color="#fff4e0" distance={20} />
 
       <Box position={[-4, 1.2, -6]} size={[3, 0.4, 3]} color="#3ecfbf" />
       <Box position={[-7, 2.6, -10]} size={[3, 0.4, 3]} color="#3ecfbf" />
