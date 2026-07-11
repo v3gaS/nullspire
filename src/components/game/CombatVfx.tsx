@@ -103,25 +103,25 @@ export function CombatVfx() {
         .add(new THREE.Vector3(0.22, -0.12, 0).applyQuaternion(camera.quaternion));
       light.position.copy(pos);
       mesh.position.copy(pos);
-      light.intensity = flashing ? 26 : 0;
+      light.intensity = flashing ? 32 : 0;
       light.color.set(fx.muzzleColor);
       mesh.visible = flashing;
       const mat = mesh.material as THREE.MeshBasicMaterial;
       mat.color.set(fx.muzzleColor);
       if (flashing) {
         const ageLeft = Math.max(0, fx.muzzleUntil - now);
-        const punch = 0.1 + Math.min(0.08, ageLeft / 900);
+        const punch = 0.12 + Math.min(0.1, ageLeft / 900);
         mesh.scale.setScalar(punch / 0.08);
       }
     }
 
     // Decay kick
     if (fx.kick > 0) {
-      useFxStore.setState({ kick: Math.max(0, fx.kick - 0.12) });
+      useFxStore.setState({ kick: Math.max(0, fx.kick - 0.1) });
     }
 
     // Beams
-    combatFx.beams = combatFx.beams.filter((b) => now - b.born < 190);
+    combatFx.beams = combatFx.beams.filter((b) => now - b.born < 230);
     const bg = beamsGroup.current;
     if (bg) {
       while (bg.children.length) {
@@ -136,7 +136,7 @@ export function CombatVfx() {
         const mid = b.origin.clone().add(b.end).multiplyScalar(0.5);
         const len = b.origin.distanceTo(b.end);
         const geo = new THREE.CylinderGeometry(b.width, b.width * 0.4, len, 6, 1, true);
-        const age = (now - b.born) / 190;
+        const age = (now - b.born) / 230;
         const mat = new THREE.MeshBasicMaterial({
           color: b.color,
           transparent: true,
@@ -168,7 +168,7 @@ export function CombatVfx() {
     }
 
     // Impacts — chunkier Quake sparks
-    combatFx.impacts = combatFx.impacts.filter((i) => now - i.born < 260);
+    combatFx.impacts = combatFx.impacts.filter((i) => now - i.born < 300);
     const ig = impactsGroup.current;
     if (ig) {
       while (ig.children.length) {
@@ -176,7 +176,7 @@ export function CombatVfx() {
         ig.remove(c);
       }
       for (const imp of combatFx.impacts) {
-        const age = (now - imp.born) / 260;
+        const age = (now - imp.born) / 300;
         const sprite = new THREE.Sprite(
           new THREE.SpriteMaterial({
             map: age < 0.45 ? burstMap : hitMap,
@@ -187,11 +187,11 @@ export function CombatVfx() {
           }),
         );
         sprite.position.copy(imp.pos);
-        const s = 0.95 + age * 2.4;
+        const s = 1.15 + age * 2.8;
         sprite.scale.set(s, s, s);
         ig.add(sprite);
 
-        const spark = new THREE.PointLight(imp.color, 6.5 * (1 - age), 11);
+        const spark = new THREE.PointLight(imp.color, 8 * (1 - age), 13);
         spark.position.copy(imp.pos);
         ig.add(spark);
       }
