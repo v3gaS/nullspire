@@ -332,11 +332,15 @@ export function PlayerController() {
         },
         true,
       );
-      playSfx("/assets/audio/kenney-fps/jump_a.ogg", 0.28);
-      playerPhysics.punch(-0.045);
+      playSfx("/assets/audio/kenney-fps/jump_a.ogg", 0.32);
+      playerPhysics.punch(-0.055);
       combatFx.pushImpact(
         new THREE.Vector3(pos.x, 0.1, pos.z),
         "#94a3b8",
+      );
+      combatFx.pushImpact(
+        new THREE.Vector3(pos.x + 0.25, 0.12, pos.z - 0.15),
+        "#cbd5e1",
       );
       coyote.current = 0;
       jumpBuffer.current = 0;
