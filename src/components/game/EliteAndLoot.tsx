@@ -46,11 +46,16 @@ export function BastionUnit({
       dead.current = true;
       mesh.visible = false;
       if (shieldRef.current) shieldRef.current.visible = false;
-      combatFx.pushBoom(worldPos(mesh), "#94a3b8", 3.8);
+      combatFx.pushBoom(worldPos(mesh), "#94a3b8", 4.6);
+      combatFx.pushBoom(
+        worldPos(mesh).clone().add(new THREE.Vector3(0, 0.5, 0)),
+        "#ffb347",
+        2.0,
+      );
       combatFx.pushImpact(worldPos(mesh), "#cbd5e1");
       useFxStore.getState().pulseKill("Bastion");
-      useFxStore.getState().pulseShake(0.12, 180);
-      playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.58);
+      useFxStore.getState().pulseShake(0.15, 220);
+      playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.68);
       return;
     }
 
@@ -141,11 +146,16 @@ export function NullStalker({
     if (hp.current <= 0) {
       dead.current = true;
       mesh.visible = false;
-      combatFx.pushBoom(worldPos(mesh), "#a78bfa", 3.0);
+      combatFx.pushBoom(worldPos(mesh), "#a78bfa", 3.8);
+      combatFx.pushBoom(
+        worldPos(mesh).clone().add(new THREE.Vector3(0, 0.4, 0)),
+        "#ff7a18",
+        1.6,
+      );
       combatFx.pushImpact(worldPos(mesh), "#c4b5fd");
       useFxStore.getState().pulseKill("Stalker");
-      useFxStore.getState().pulseShake(0.1, 160);
-      playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.45);
+      useFxStore.getState().pulseShake(0.13, 190);
+      playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.55);
       return;
     }
 
@@ -171,10 +181,11 @@ export function NullStalker({
       mesh.position.add(dir.multiplyScalar(6));
       combatFx.pushImpact(from, "#c4b5fd");
       combatFx.pushImpact(worldPos(mesh), "#a78bfa");
-      combatFx.pushBeam(from, worldPos(mesh), "#fef08a", 0.06);
-      combatFx.pushBoom(from, "#a78bfa", 1.4);
-      playSfx("/assets/audio/kenney-fps/jump_a.ogg", 0.28);
-      useFxStore.getState().pulseShake(0.04, 80);
+      combatFx.pushBeam(from, worldPos(mesh), "#fef08a", 0.1);
+      combatFx.pushBoom(from, "#a78bfa", 1.8);
+      combatFx.pushBoom(worldPos(mesh), "#ff7a18", 1.0);
+      playSfx("/assets/audio/kenney-fps/jump_a.ogg", 0.34);
+      useFxStore.getState().pulseShake(0.055, 100);
       mat.emissiveIntensity = 0.9;
     }
 
