@@ -10,6 +10,8 @@ import { CreditsScreen } from "./CreditsScreen";
 
 export function PauseMenu() {
   const setScreen = useGameStore((s) => s.setScreen);
+  const frags = useGameStore((s) => s.frags);
+  const secretsFound = useGameStore((s) => s.secretsFound);
   const sensitivity = useGameStore((s) => s.mouseSensitivity);
   const setMouseSensitivity = useGameStore((s) => s.setMouseSensitivity);
   const muted = useGameStore((s) => s.muted);
@@ -33,6 +35,11 @@ export function PauseMenu() {
         <h2 className="font-[family-name:var(--font-display)] text-3xl tracking-[0.2em] text-teal-50">
           PAUSED
         </h2>
+        <p className="mt-2 text-sm text-zinc-300">
+          Frags <span className="font-bold text-white">{frags}</span>
+          <span className="mx-2 text-zinc-600">·</span>
+          Secrets <span className="font-bold text-amber-300">{secretsFound}</span>
+        </p>
         <label className="mt-6 block text-xs uppercase tracking-[0.2em] text-zinc-400">
           Mouse sensitivity
           <input

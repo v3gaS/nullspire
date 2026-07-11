@@ -198,13 +198,15 @@ export function NullStalker({
       castShadow
       userData={{ destructible: true, hp: 55, kind: "stalker" }}
     >
-      <octahedronGeometry args={[0.7, 0]} />
+      <boxGeometry args={[0.9, 1.5, 0.7]} />
       <meshStandardMaterial
-        color="#a78bfa"
-        emissive="#4c1d95"
-        emissiveIntensity={0.9}
+        color="#c4b5fd"
+        emissive="#7c3aed"
+        emissiveIntensity={1.0}
         transparent
-        opacity={0.7}
+        opacity={0.82}
+        metalness={0.35}
+        roughness={0.35}
       />
     </mesh>
   );

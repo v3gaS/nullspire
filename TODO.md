@@ -131,8 +131,10 @@ Campaign build order. Check items as completed. Loop works top-down.
 - [x] Keep exoplanet identity; polish lanes/cover toward hangar readability
 - [x] Weapon world pickups + more cube loot density
 - [x] Soft postprocessing bloom (medium/high) + tall hangar light strips
-- [ ] Further viewmodel kick / muzzle presence pass
-- [ ] Boss arenas hangar wash pass
+- [x] Further viewmodel kick / muzzle presence pass
+- [x] Boss arenas hangar wash pass
+- [x] Blocky enemy silhouettes + scroll weapon cycle
+- [ ] Keep polishing toward reference until clock ends
 
 ## Current focus
 **2h continuous Phase 11** — code until wall-clock ends; pause only for build/deploy/QA
