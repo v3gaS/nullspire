@@ -204,6 +204,7 @@ export function EnemyPack() {
       <SentryTurret position={[14, 0.7, -48]} />
       <SentryTurret position={[-12, 0.7, -62]} />
       <SentryTurret position={[8, 0.7, -82]} />
+      <SentryTurret position={[-10, 0.7, -100]} />
       <Skitter position={[6, 0.5, -26]} />
       <Skitter position={[-7, 0.5, -28]} />
       <Skitter position={[12, 0.5, -36]} />
@@ -211,11 +212,13 @@ export function EnemyPack() {
       <Skitter position={[5, 0.5, -50]} />
       <Skitter position={[0, 0.5, -66]} />
       <Skitter position={[-5, 0.5, -84]} />
+      <Skitter position={[7, 0.5, -102]} />
       <Spitter position={[18, 2.5, -30]} />
       <Spitter position={[-12, 1.5, -34]} />
       <Spitter position={[-14, 2.2, -52]} />
       <Spitter position={[10, 2.0, -68]} />
       <Spitter position={[-8, 2.5, -90]} />
+      <Spitter position={[12, 2.2, -112]} />
     </group>
   );
 }
