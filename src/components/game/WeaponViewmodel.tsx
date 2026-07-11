@@ -125,23 +125,27 @@ function ChunkyGun({ id }: { id: WeaponId }) {
       return (
         <group>
           <mesh position={[0.02, 0, 0]} frustumCulled={false}>
-            <boxGeometry args={[0.17, 0.22, 0.46]} />
+            <boxGeometry args={[0.19, 0.24, 0.48]} />
             <Mat color="#3d4a5c" emissive="#1e293b" emissiveIntensity={0.15} />
           </mesh>
-          <mesh position={[0.02, 0.06, -0.28]} frustumCulled={false}>
-            <boxGeometry args={[0.12, 0.12, 0.32]} />
+          <mesh position={[0.02, 0.07, -0.3]} frustumCulled={false}>
+            <boxGeometry args={[0.14, 0.14, 0.34]} />
             <Mat color="#64748b" emissive="#334155" emissiveIntensity={0.2} />
           </mesh>
-          <mesh position={[0.02, 0.06, -0.5]} frustumCulled={false}>
-            <boxGeometry args={[0.05, 0.05, 0.18]} />
-            <Mat color={accent} emissive={accent} emissiveIntensity={1.6} />
+          <mesh position={[0.02, 0.07, -0.52]} frustumCulled={false}>
+            <boxGeometry args={[0.065, 0.065, 0.2]} />
+            <Mat color={accent} emissive={accent} emissiveIntensity={1.85} />
           </mesh>
-          <mesh position={[0.12, 0.08, -0.1]} frustumCulled={false}>
-            <boxGeometry args={[0.08, 0.08, 0.2]} />
-            <Mat color={accent} emissive={accent} emissiveIntensity={1.1} />
+          <mesh position={[0.14, 0.09, -0.1]} frustumCulled={false}>
+            <boxGeometry args={[0.1, 0.1, 0.22]} />
+            <Mat color={accent} emissive={accent} emissiveIntensity={1.3} />
           </mesh>
-          <mesh position={[0.02, -0.15, 0.05]} frustumCulled={false}>
-            <boxGeometry args={[0.07, 0.16, 0.12]} />
+          <mesh position={[-0.08, 0.08, -0.05]} frustumCulled={false}>
+            <boxGeometry args={[0.07, 0.07, 0.16]} />
+            <Mat color={accent} emissive={accent} emissiveIntensity={1.0} />
+          </mesh>
+          <mesh position={[0.02, -0.16, 0.05]} frustumCulled={false}>
+            <boxGeometry args={[0.08, 0.18, 0.13]} />
             <Mat color="#1e293b" emissive="#0f172a" emissiveIntensity={0.1} />
           </mesh>
         </group>

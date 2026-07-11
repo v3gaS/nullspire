@@ -407,7 +407,7 @@ export function PlayerController() {
     // Quake sprint FOV punch
     const persp = camera as THREE.PerspectiveCamera;
     if (persp.isPerspectiveCamera) {
-      const targetFov = playerLocomotion.sprinting ? 90 : 78;
+      const targetFov = playerLocomotion.sprinting ? 92 : 80;
       persp.fov += (targetFov - persp.fov) * Math.min(1, dt * 8);
       persp.updateProjectionMatrix();
     }

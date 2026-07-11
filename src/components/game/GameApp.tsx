@@ -140,7 +140,7 @@ export function GameApp() {
         <Canvas
           shadows={cfg.shadows}
           dpr={[1, cfg.dpr]}
-          camera={{ fov: 78, near: 0.08, far: 320, position: [0, 2, 8] }}
+          camera={{ fov: 80, near: 0.08, far: 320, position: [0, 2, 8] }}
           gl={{
             antialias: cfg.antialias,
             powerPreference: "high-performance",

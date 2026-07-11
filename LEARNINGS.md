@@ -2,7 +2,7 @@
 
 Build diary. Newest entries at the top.
 
-## 2026-07-10 — Phase 11 visual north star (2h block ACTIVE · ~0.95h in)
+## 2026-07-10 — Phase 11 visual north star (2h block ACTIVE · ~1.05h in)
 - Armed wall-clock start `1783739050` · `block_hours=2` — code continuously
 - Chunky procedural industrial viewmodels (all 5 guns bulked Quake/UT scale)
 - Corner HUD: HEALTH/ARMOR numbers, weapon+ammo+1-5 slots, kill feed + FRAGS + secrets
@@ -14,6 +14,8 @@ Build diary. Newest entries at the top.
 - Drop Zone barrel nests + flank secrets; denser cubes; fatter mags; early pads
 - Orange chevrons/gate; hangar-grey climb pads; beacon tower wash; flank pillars
 - Boss HUD restyle; hotter vignette/land dust; snappier look; ambience duck
+- Mid-block: harder Void kick/booms, fatter SMG/Scatter/Rail, orange jump pads
+- Bigger hit markers + land dust; denser barrels; thicker crosshair; multi-kill XL
 - Visual QA: Deploy shows chunky SMG + corner HUD + orange lane + cube loot
 - Live: https://nullspire-amber.vercel.app
 

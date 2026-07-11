@@ -123,6 +123,24 @@ const SECRETS: {
     hint: "Drop Zone berm ammo stash",
     radius: 4,
   },
+  {
+    position: [-17, 1.0, -22],
+    kind: "armor",
+    hint: "approach wall armor niche",
+    radius: 4.5,
+  },
+  {
+    position: [17, 1.0, -26],
+    kind: "shards",
+    hint: "approach pillar Null stash",
+    radius: 4.5,
+  },
+  {
+    position: [0, 1.0, -54],
+    kind: "health",
+    hint: "mid-lane under-pad medkit",
+    radius: 4,
+  },
 ];
 
 let secretsFound = 0;
@@ -171,12 +189,17 @@ function SecretHint({
         .setObjective(
           `SECRET FOUND (${secretsFound}/${SECRETS.length}) — ${hint}`,
         );
-      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.55);
-      useFxStore.getState().pulseShake(0.14, 240);
+      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.62);
+      useFxStore.getState().pulseShake(0.18, 280);
       combatFx.pushBoom(
         new THREE.Vector3(...position),
         "#fbbf24",
-        3.0,
+        3.8,
+      );
+      combatFx.pushBoom(
+        new THREE.Vector3(position[0], position[1] + 0.4, position[2]),
+        "#ffe066",
+        1.8,
       );
       combatFx.pushImpact(new THREE.Vector3(...position), "#ffe066");
     }
@@ -188,21 +211,22 @@ function SecretHint({
         ref={light}
         position={[position[0], position[1] + 0.8, position[2]]}
         color="#fbbf24"
-        intensity={1.4}
-        distance={7}
+        intensity={1.8}
+        distance={9}
       />
       <mesh
         ref={ring}
         position={[position[0], 0.04, position[2]]}
         rotation={[-Math.PI / 2, 0, 0]}
       >
-        <ringGeometry args={[0.35, 0.55, 16]} />
+        <ringGeometry args={[0.45, 0.7, 16]} />
         <meshStandardMaterial
           color="#fbbf24"
           emissive="#f59e0b"
-          emissiveIntensity={0.8}
+          emissiveIntensity={1.15}
           transparent
-          opacity={0.85}
+          opacity={0.9}
+          toneMapped={false}
         />
       </mesh>
     </>
