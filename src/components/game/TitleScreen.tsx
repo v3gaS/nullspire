@@ -57,8 +57,8 @@ export function TitleScreen() {
         Chunky guns. Fat explosions. Floating loot cubes. Chain the barrels,
         rocket-jump the pads, and melt the Primarch.
       </p>
-      <p className="relative z-10 mt-2 text-[11px] uppercase tracking-[0.3em] text-teal-300/70">
-        Quake juice · DOOM pace · exoplanet scrap
+      <p className="relative z-10 mt-2 text-[11px] uppercase tracking-[0.3em] text-orange-300/80">
+        Quake juice · hangar bloom · exoplanet scrap
       </p>
 
       <div className="relative z-10 mt-10 flex flex-col items-center gap-3">
