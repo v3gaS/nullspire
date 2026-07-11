@@ -98,9 +98,10 @@ export function BiolumeVaults() {
         [10, 3, 8],
         [-8, 3, -8],
         [8, 3, -8],
+        [0, 4, 10],
       ].map((p, i) => (
         <mesh key={i} position={p as [number, number, number]}>
-          <cylinderGeometry args={[0.4, 0.55, 6, 8]} />
+          <cylinderGeometry args={[0.4, 0.55, i === 4 ? 8 : 6, 8]} />
           <meshStandardMaterial
             color="#5eead4"
             emissive="#14b8a6"
