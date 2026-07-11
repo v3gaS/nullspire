@@ -87,13 +87,13 @@ export function SentryTurret({
       castShadow
       userData={{ destructible: true, hp: 80, kind: "turret" }}
     >
-      <cylinderGeometry args={[0.55, 0.8, 1.4, 8]} />
+      <boxGeometry args={[1.1, 1.4, 1.1]} />
       <meshStandardMaterial
-        color="#8a93a0"
-        metalness={0.75}
-        roughness={0.3}
-        emissive="#223"
-        emissiveIntensity={0.3}
+        color="#9ca3af"
+        metalness={0.7}
+        roughness={0.32}
+        emissive="#64748b"
+        emissiveIntensity={0.35}
       />
     </mesh>
   );
@@ -145,12 +145,13 @@ export function Skitter({ position }: { position: [number, number, number] }) {
       castShadow
       userData={{ destructible: true, hp: 28, kind: "skitter" }}
     >
-      <coneGeometry args={[0.45, 0.9, 5]} />
+      <boxGeometry args={[0.7, 0.55, 0.9]} />
       <meshStandardMaterial
-        color="#7dff6a"
-        emissive="#1a5a12"
-        emissiveIntensity={0.5}
-        roughness={0.55}
+        color="#86efac"
+        emissive="#22c55e"
+        emissiveIntensity={0.65}
+        roughness={0.5}
+        metalness={0.2}
       />
     </mesh>
   );
@@ -211,12 +212,13 @@ export function Spitter({ position }: { position: [number, number, number] }) {
       castShadow
       userData={{ destructible: true, hp: 40, kind: "spitter" }}
     >
-      <sphereGeometry args={[0.65, 12, 12]} />
+      <boxGeometry args={[1.0, 1.0, 1.0]} />
       <meshStandardMaterial
-        color="#c4ff4a"
-        emissive="#5a7a10"
-        emissiveIntensity={0.7}
+        color="#a3e635"
+        emissive="#65a30d"
+        emissiveIntensity={0.8}
         roughness={0.4}
+        metalness={0.15}
       />
     </mesh>
   );

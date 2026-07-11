@@ -84,13 +84,13 @@ export function DroneScout({ position, id }: DroneProps) {
       castShadow
       userData={{ destructible: true, hp: 50, kind: "drone", id }}
     >
-      <icosahedronGeometry args={[0.7, 0]} />
+      <boxGeometry args={[1.1, 0.7, 1.1]} />
       <meshStandardMaterial
-        color="#6ecbff"
-        emissive="#123a55"
-        emissiveIntensity={0.6}
-        metalness={0.7}
-        roughness={0.25}
+        color="#94a3b8"
+        emissive="#38bdf8"
+        emissiveIntensity={0.75}
+        metalness={0.65}
+        roughness={0.3}
       />
     </mesh>
   );
