@@ -35,6 +35,12 @@ const BARRELS: [number, number, number][] = [
   [14, 0.7, -52],
   [15.2, 0.7, -53],
   [-5, 0.7, -58],
+  // Vault mouth chain — readable boom setpiece
+  [-8, 0.7, -72],
+  [-6.6, 0.7, -73.2],
+  [-7.4, 0.7, -74.5],
+  [9, 0.7, -78],
+  [10.4, 0.7, -79],
   [6, 0.7, -118],
   [7.4, 0.7, -119.2],
   [-6, 0.7, -120],
@@ -60,10 +66,11 @@ function ExplosiveBarrel({ position }: { position: [number, number, number] }) {
     dead.current = true;
     mesh.visible = false;
     const origin = worldPos(mesh).clone();
-    combatFx.pushBoom(origin, "#ff6b2e", 4.2);
+    combatFx.pushBoom(origin, "#ff6b2e", 4.8);
     combatFx.pushImpact(origin, "#ffb347");
-    useFxStore.getState().pulseShake(0.22, 340);
-    playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.72);
+    combatFx.pushImpact(origin.clone().add(new THREE.Vector3(0.4, 0.6, -0.2)), "#ff4466");
+    useFxStore.getState().pulseShake(0.28, 380);
+    playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.78);
 
     // Chain damage + physics blast
     scene.traverse((obj) => {
@@ -71,22 +78,22 @@ function ExplosiveBarrel({ position }: { position: [number, number, number] }) {
       if (obj === mesh) return;
       const op = worldPos(obj);
       const dist = op.distanceTo(origin);
-      if (dist < 8.5) {
+      if (dist < 9.2) {
         if (obj.userData.kind === "barrel") {
           obj.userData.hp = 0;
         } else {
-          applyHit(obj, Math.round(55 * (1 - dist / 8.5)), origin);
+          applyHit(obj, Math.round(62 * (1 - dist / 9.2)), origin);
         }
-        impulseRigid(obj, op.clone().sub(origin), 18);
-        staggerObject(obj, origin, 0.9);
+        impulseRigid(obj, op.clone().sub(origin), 22);
+        staggerObject(obj, origin, 1.05);
       }
     });
 
     const cam = camera.position;
-    if (cam.distanceTo(origin) < 13) {
+    if (cam.distanceTo(origin) < 14) {
       const blast = cam.clone().sub(origin).normalize();
-      playerPhysics.pushKnock(blast.x * 11, 5.5, blast.z * 11);
-      playerPhysics.punch(0.1);
+      playerPhysics.pushKnock(blast.x * 13, 6.2, blast.z * 13);
+      playerPhysics.punch(0.14);
     }
 
     if (body) {

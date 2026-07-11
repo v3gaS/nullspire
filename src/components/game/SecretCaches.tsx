@@ -75,6 +75,24 @@ const SECRETS: {
     hint: "Core ring medkit",
     radius: 4.5,
   },
+  {
+    position: [13, 1.0, -42],
+    kind: "ammo",
+    hint: "canyon pocket ammo crate",
+    radius: 4.5,
+  },
+  {
+    position: [-13, 3.2, -76],
+    kind: "shards",
+    hint: "vault mouth overlook stash",
+    radius: 5,
+  },
+  {
+    position: [0, 1.2, -110],
+    kind: "health",
+    hint: "Core approach med niche",
+    radius: 4.5,
+  },
 ];
 
 function SecretHint({

@@ -53,15 +53,15 @@ function JumpPad({ position }: { position: [number, number, number] }) {
         if (performance.now() < playerPhysics.spawnGraceUntil) return;
         const p = body.translation();
         if (Math.hypot(p.x - position[0], p.z - position[2]) > 2.4) return;
-        playerPhysics.applyImpulse(0, 18, 0, { pad: true });
-        playerPhysics.punch(-0.09);
-        playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.35);
+        playerPhysics.applyImpulse(0, 19.5, 0, { pad: true });
+        playerPhysics.punch(-0.11);
+        playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.4);
         combatFx.pushBoom(
           new THREE.Vector3(position[0], position[1] + 0.4, position[2]),
           "#ff6bcb",
-          2.4,
+          3.0,
         );
-        useFxStore.getState().pulseShake(0.06, 120);
+        useFxStore.getState().pulseShake(0.08, 140);
       }}
     >
       <mesh
@@ -353,12 +353,17 @@ export function CrashRimSector() {
       <JumpPad position={[0, 0.2, -72]} />
       <JumpPad position={[-4, 0.2, -88]} />
       <JumpPad position={[6, 0.2, -105]} />
+      <JumpPad position={[-6, 0.2, -112]} />
+      <JumpPad position={[0, 0.2, -126]} />
       <AcidHazard position={[-4, 0.08, -38]} size={[8, 0.1, 6]} />
       <AcidHazard position={[6, 0.08, -60]} size={[6, 0.1, 5]} />
       <EnergyGrid position={[0, 0.06, -64]} size={[10, 3]} />
       <EnergyGrid position={[0, 0.06, -108]} size={[8, 2.5]} />
       <EnergyGrid position={[0, 0.06, -122]} size={[7, 2]} />
-
+      {/* Mid-canyon combat pocket cover — Quake lane readable */}
+      <Box position={[-5, 1.2, -40]} size={[2.2, 2.4, 1.2]} color="#5a4030" />
+      <Box position={[5, 1.2, -41]} size={[2.2, 2.4, 1.2]} color="#5a4030" />
+      <Box position={[0, 0.9, -43]} size={[3.5, 1.8, 1]} color="#4a3528" />
       <Suspense fallback={null}>
         <Prop
           url="/assets/models/kenney-fps/wall-high.glb"

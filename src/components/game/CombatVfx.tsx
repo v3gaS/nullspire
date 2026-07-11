@@ -103,11 +103,16 @@ export function CombatVfx() {
         .add(new THREE.Vector3(0.22, -0.12, 0).applyQuaternion(camera.quaternion));
       light.position.copy(pos);
       mesh.position.copy(pos);
-      light.intensity = flashing ? 18 : 0;
+      light.intensity = flashing ? 26 : 0;
       light.color.set(fx.muzzleColor);
       mesh.visible = flashing;
       const mat = mesh.material as THREE.MeshBasicMaterial;
       mat.color.set(fx.muzzleColor);
+      if (flashing) {
+        const ageLeft = Math.max(0, fx.muzzleUntil - now);
+        const punch = 0.1 + Math.min(0.08, ageLeft / 900);
+        mesh.scale.setScalar(punch / 0.08);
+      }
     }
 
     // Decay kick
@@ -192,8 +197,8 @@ export function CombatVfx() {
       }
     }
 
-    // DOOM-style explosion spheres
-    combatFx.booms = combatFx.booms.filter((b) => now - b.born < 520);
+    // DOOM-style explosion spheres + debris ring
+    combatFx.booms = combatFx.booms.filter((b) => now - b.born < 580);
     const bgBoom = boomsGroup.current;
     if (bgBoom) {
       while (bgBoom.children.length) {
@@ -205,16 +210,16 @@ export function CombatVfx() {
         }
       }
       for (const boom of combatFx.booms) {
-        const age = (now - boom.born) / 520;
-        const scale = boom.radius * (0.4 + age * 1.55);
+        const age = (now - boom.born) / 580;
+        const scale = boom.radius * (0.4 + age * 1.7);
         const shell = new THREE.Mesh(
           new THREE.SphereGeometry(1, 14, 12),
           new THREE.MeshBasicMaterial({
             color: boom.color,
             transparent: true,
-            opacity: 0.8 * (1 - age),
+            opacity: 0.85 * (1 - age),
             depthWrite: false,
-            wireframe: age > 0.35,
+            wireframe: age > 0.32,
           }),
         );
         shell.position.copy(boom.pos);
@@ -226,18 +231,51 @@ export function CombatVfx() {
           new THREE.MeshBasicMaterial({
             color: "#ffffff",
             transparent: true,
-            opacity: 0.95 * (1 - age * 1.15),
+            opacity: 0.98 * (1 - age * 1.15),
             depthWrite: false,
           }),
         );
         core.position.copy(boom.pos);
-        core.scale.setScalar(scale * 0.4);
+        core.scale.setScalar(scale * 0.42);
         bgBoom.add(core);
+
+        // Quake debris ring — reads as chunky blast
+        const ring = new THREE.Mesh(
+          new THREE.TorusGeometry(scale * 0.55, scale * 0.06, 6, 20),
+          new THREE.MeshBasicMaterial({
+            color: boom.color,
+            transparent: true,
+            opacity: 0.7 * (1 - age),
+            depthWrite: false,
+          }),
+        );
+        ring.position.copy(boom.pos);
+        ring.rotation.x = Math.PI / 2;
+        bgBoom.add(ring);
+
+        for (let i = 0; i < 5; i++) {
+          const ang = (i / 5) * Math.PI * 2 + age * 2;
+          const spark = new THREE.Mesh(
+            new THREE.SphereGeometry(0.12, 5, 4),
+            new THREE.MeshBasicMaterial({
+              color: i % 2 === 0 ? "#ffb347" : "#ffffff",
+              transparent: true,
+              opacity: 0.9 * (1 - age),
+              depthWrite: false,
+            }),
+          );
+          spark.position.set(
+            boom.pos.x + Math.cos(ang) * scale * 0.7,
+            boom.pos.y + 0.3 + age * 1.2,
+            boom.pos.z + Math.sin(ang) * scale * 0.7,
+          );
+          bgBoom.add(spark);
+        }
 
         const light = new THREE.PointLight(
           boom.color,
-          16 * (1 - age),
-          boom.radius * 5,
+          22 * (1 - age),
+          boom.radius * 5.5,
         );
         light.position.copy(boom.pos);
         bgBoom.add(light);
