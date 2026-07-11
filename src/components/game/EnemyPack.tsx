@@ -22,6 +22,8 @@ function useDestructibleSync(
   if (hpRef.current <= 0) {
     deadRef.current = true;
     mesh.visible = false;
+    combatFx.pushBoom(worldPos(mesh), "#ff6644", 1.8);
+    useFxStore.getState().pulseKill();
   }
 }
 
@@ -104,7 +106,7 @@ export function Skitter({ position }: { position: [number, number, number] }) {
     if (dist < 22 && dist > 1.4) {
       to.y = 0;
       to.normalize();
-      mesh.position.add(to.multiplyScalar(dt * 8.5));
+      mesh.position.add(to.multiplyScalar(dt * 9.2));
       mesh.position.y = origin.current.y + Math.abs(Math.sin(state.clock.elapsedTime * 10)) * 0.25;
       mesh.lookAt(cam.x, mesh.position.y, cam.z);
     }
