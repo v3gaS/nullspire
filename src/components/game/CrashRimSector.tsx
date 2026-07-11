@@ -331,6 +331,28 @@ export function CrashRimSector() {
       <Box position={[-8, 1.4, -18]} size={[8, 2.8, 1.4]} color="#6a5a48" />
       <Box position={[8, 1.4, -18]} size={[8, 2.8, 1.4]} color="#6a5a48" />
       <Box position={[0, 3.2, -18]} size={[6, 0.5, 1.2]} color="#4a5560" />
+      {/* Gate gap markers — Quake doorway read */}
+      <mesh position={[-3.2, 0.15, -18]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[0.35, 0.55, 3, 1, Math.PI / 6, (Math.PI * 2) / 3]} />
+        <meshStandardMaterial
+          color="#7dffef"
+          emissive="#2ee6c8"
+          emissiveIntensity={1.1}
+          transparent
+          opacity={0.75}
+        />
+      </mesh>
+      <mesh position={[3.2, 0.15, -18]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[0.35, 0.55, 3, 1, Math.PI / 6, (Math.PI * 2) / 3]} />
+        <meshStandardMaterial
+          color="#7dffef"
+          emissive="#2ee6c8"
+          emissiveIntensity={1.1}
+          transparent
+          opacity={0.75}
+        />
+      </mesh>
+      <pointLight position={[0, 3, -18]} intensity={1.6} color="#7dffef" distance={14} />
 
       <Box position={[-4, 1.2, -6]} size={[3, 0.4, 3]} color="#3ecfbf" />
       <Box position={[-7, 2.6, -10]} size={[3, 0.4, 3]} color="#3ecfbf" />
