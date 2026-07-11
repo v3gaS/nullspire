@@ -10,6 +10,7 @@ import { useFxStore } from "@/stores/fxStore";
 import { playSfx } from "@/lib/game/audio";
 import { combatFx } from "@/components/game/CombatVfx";
 import { playerPhysics } from "@/lib/game/playerPhysics";
+import { EnergyGrid } from "@/components/game/EnergyGrid";
 
 function Box({
   position,
@@ -322,8 +323,10 @@ export function CrashRimSector() {
       <JumpPad position={[0, 0.2, -28]} />
       <JumpPad position={[8, 0.2, -48]} />
       <JumpPad position={[-8, 0.2, -56]} />
+      <JumpPad position={[0, 0.2, -72]} />
       <AcidHazard position={[-4, 0.08, -38]} size={[8, 0.1, 6]} />
       <AcidHazard position={[6, 0.08, -60]} size={[6, 0.1, 5]} />
+      <EnergyGrid position={[0, 0.06, -64]} size={[10, 3]} />
 
       <Suspense fallback={null}>
         <Prop

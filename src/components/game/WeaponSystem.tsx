@@ -230,6 +230,9 @@ export function WeaponSystem() {
             until: performance.now() + 1800,
             detonated: false,
           });
+          combatFx.pushBoom(pos.clone(), "#c084fc", 2.2);
+          combatFx.pushImpact(pos.clone(), "#e9d5ff");
+          useFxStore.getState().pulseShake(0.07, 120);
           playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.4);
           break;
         }
