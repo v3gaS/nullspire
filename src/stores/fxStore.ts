@@ -58,11 +58,11 @@ export const useFxStore = create<FxState>((set, get) => ({
     const prev = get();
     const chain = now < prev.multiKillUntil ? prev.multiKillCount + 1 : 1;
     set({
-      killUntil: now + 160,
+      killUntil: now + 200,
       multiKillCount: chain,
-      multiKillUntil: now + 2200,
-      shakeUntil: now + (chain >= 3 ? 220 : 120),
-      shakeAmp: Math.max(prev.shakeAmp, chain >= 3 ? 0.12 : 0.06),
+      multiKillUntil: now + 2600,
+      shakeUntil: now + (chain >= 3 ? 280 : 140),
+      shakeAmp: Math.max(prev.shakeAmp, chain >= 3 ? 0.16 : 0.08),
     });
   },
   pulseOverclock: (ms = 3000) =>
