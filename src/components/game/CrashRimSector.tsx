@@ -441,10 +441,10 @@ export function CrashRimSector() {
       <pointLight position={[0, 3, -18]} intensity={2.2} color="#ff7a18" distance={16} />
       <pointLight position={[0, 8, -18]} intensity={2.0} color="#fff4e0" distance={20} />
 
-      <Box position={[-4, 1.2, -6]} size={[3, 0.4, 3]} color="#3ecfbf" />
-      <Box position={[-7, 2.6, -10]} size={[3, 0.4, 3]} color="#3ecfbf" />
-      <Box position={[-3, 4, -14]} size={[3, 0.4, 3]} color="#3ecfbf" />
-      <Box position={[2, 5.2, -16]} size={[4, 0.4, 3]} color="#48d4c4" />
+      <Box position={[-4, 1.2, -6]} size={[3, 0.4, 3]} color="#6a7580" />
+      <Box position={[-7, 2.6, -10]} size={[3, 0.4, 3]} color="#7a8590" />
+      <Box position={[-3, 4, -14]} size={[3, 0.4, 3]} color="#6a7580" />
+      <Box position={[2, 5.2, -16]} size={[4, 0.4, 3]} color="#8a9098" />
 
       <Box position={[16, 4, -20]} size={[6, 8, 6]} color="#3a4550" />
       <Box position={[16, 8.5, -20]} size={[4, 1, 4]} color="#2ee6c8" />
@@ -545,9 +545,9 @@ export function CrashRimSector() {
       <Box position={[0, 1.5, -45]} size={[40, 3, 2]} color="#6b3f2a" />
       <Box position={[-18, 3, -55]} size={[4, 6, 4]} color="#5a4030" />
       <Box position={[18, 3, -55]} size={[4, 6, 4]} color="#5a4030" />
-      <Box position={[-6, 1.5, -52]} size={[4, 0.4, 4]} color="#3ecfbf" />
-      <Box position={[2, 3.2, -58]} size={[4, 0.4, 4]} color="#3ecfbf" />
-      <Box position={[10, 4.8, -64]} size={[4, 0.4, 4]} color="#48d4c4" />
+      <Box position={[-6, 1.5, -52]} size={[4, 0.4, 4]} color="#6a7580" />
+      <Box position={[2, 3.2, -58]} size={[4, 0.4, 4]} color="#7a8590" />
+      <Box position={[10, 4.8, -64]} size={[4, 0.4, 4]} color="#8a9098" />
       <Box position={[0, 0.2, -70]} size={[16, 0.4, 16]} color="#5a6570" />
       <pointLight position={[0, 16, -70]} intensity={3.0} color="#fff4e0" distance={32} />
       <mesh position={[0, 0.42, -70]} rotation={[-Math.PI / 2, 0, 0]}>
