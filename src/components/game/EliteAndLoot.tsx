@@ -325,6 +325,8 @@ export function EliteAndLoot() {
       <BastionUnit position={[14, 1.1, -95]} />
       <BastionUnit position={[-12, 1.1, -118]} />
       <BastionUnit position={[8, 1.1, -128]} />
+      <BastionUnit position={[11, 1.1, -35]} />
+      <BastionUnit position={[-9, 1.1, -38]} />
       <NullStalker position={[-8, 1, -42]} />
       <NullStalker position={[6, 1, -62]} />
       <NullStalker position={[12, 1, -78]} />
