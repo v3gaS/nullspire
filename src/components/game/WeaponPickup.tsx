@@ -5,7 +5,9 @@ import { useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { useGameStore, type WeaponId } from "@/stores/gameStore";
+import { useFxStore } from "@/stores/fxStore";
 import { playSfx } from "@/lib/game/audio";
+import { combatFx } from "@/components/game/CombatVfx";
 import { WEAPON_META } from "@/lib/game/constants";
 
 const PICKUP_COLOR: Record<WeaponId, string> = {
@@ -78,6 +80,8 @@ export function WeaponPickup({
           objective: `Acquired ${WEAPON_META[id].name}`,
         });
         playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.5);
+        combatFx.pushBoom(g.position.clone(), color, 2);
+        useFxStore.getState().pulseShake(0.08, 140);
       }
       taken.current = true;
       g.visible = false;

@@ -17,6 +17,7 @@ export function DroneScout({ position, id }: DroneProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   const hp = useRef(50);
   const cooldown = useRef(0);
+  const windup = useRef(0);
   const origin = useRef(new THREE.Vector3(...position));
   const dead = useRef(false);
 
@@ -35,19 +36,31 @@ export function DroneScout({ position, id }: DroneProps) {
     mesh.position.z = origin.current.z + Math.cos(t * 0.7 + id.length) * 2.5;
     mesh.lookAt(cam);
 
+    const mat = mesh.material as THREE.MeshStandardMaterial;
     cooldown.current = Math.max(0, cooldown.current - dt);
-    if (
+    if (windup.current > 0) {
+      windup.current = Math.max(0, windup.current - dt);
+      mat.emissiveIntensity = 1.6 + Math.sin(t * 22) * 0.5;
+      if (Math.random() < dt * 8) {
+        combatFx.pushBeam(mesh.position.clone(), cam.clone(), "#fde68a", 0.04);
+      }
+      if (windup.current <= 0) {
+        cooldown.current = 2.4;
+        useGameStore.getState().damagePlayer(4);
+        playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.28);
+        combatFx.pushBeam(mesh.position.clone(), cam.clone(), "#ff8866", 0.08);
+        combatFx.pushImpact(cam.clone(), "#ff8866");
+        mat.emissive = new THREE.Color("#ff3344");
+      }
+    } else if (
       dist < 14 &&
       cooldown.current <= 0 &&
       performance.now() >= useGameStore.getState().invulnerableUntil
     ) {
-      cooldown.current = 2.6;
-      useGameStore.getState().damagePlayer(3);
-      playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.22);
-      combatFx.pushBeam(mesh.position.clone(), cam.clone(), "#ff8866", 0.05);
-      combatFx.pushImpact(cam.clone(), "#ff8866");
-      const mat = mesh.material as THREE.MeshStandardMaterial;
-      mat.emissive = new THREE.Color("#ff3344");
+      windup.current = 0.4;
+      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.15);
+    } else {
+      mat.emissiveIntensity = 0.6;
     }
 
     mesh.userData.destructible = true;
@@ -83,6 +96,8 @@ export function DroneSquad() {
     <group>
       <DroneScout id="d1" position={[12, 3.5, -26]} />
       <DroneScout id="d2" position={[18, 4, -34]} />
+      <DroneScout id="d3" position={[-14, 3.8, -44]} />
+      <DroneScout id="d4" position={[8, 4.2, -54]} />
     </group>
   );
 }

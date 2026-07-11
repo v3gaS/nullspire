@@ -4,6 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import * as THREE from "three";
 import { useGameStore } from "@/stores/gameStore";
+import { useFxStore } from "@/stores/fxStore";
 import { playSfx } from "@/lib/game/audio";
 import { combatFx } from "@/components/game/CombatVfx";
 import { distToCam, worldPos } from "@/lib/game/math";
@@ -19,6 +20,7 @@ export function BastionUnit({
   const shield = useRef(60);
   const dead = useRef(false);
   const cooldown = useRef(0);
+  const windup = useRef(0);
 
   useFrame((state, dt) => {
     const mesh = meshRef.current;
@@ -57,21 +59,26 @@ export function BastionUnit({
     mesh.lookAt(cam.x, wp.y, cam.z);
     cooldown.current = Math.max(0, cooldown.current - dt);
     const dist = distToCam(mesh, cam);
-    if (
+    const muzzle = wp.clone().add(new THREE.Vector3(0, 0.8, 0));
+    if (windup.current > 0) {
+      windup.current = Math.max(0, windup.current - dt);
+      if (Math.random() < dt * 9) {
+        combatFx.pushBeam(muzzle, cam.clone(), "#fef08a", 0.05);
+      }
+      if (windup.current <= 0) {
+        cooldown.current = 1.8;
+        useGameStore.getState().damagePlayer(7);
+        playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.36);
+        combatFx.pushBeam(muzzle, cam.clone(), "#94a3b8", 0.12);
+        combatFx.pushImpact(cam.clone(), "#94a3b8");
+      }
+    } else if (
       dist < 24 &&
       cooldown.current <= 0 &&
       performance.now() >= useGameStore.getState().invulnerableUntil
     ) {
-      cooldown.current = 1.8;
-      useGameStore.getState().damagePlayer(7);
-      playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.32);
-      combatFx.pushBeam(
-        wp.clone().add(new THREE.Vector3(0, 0.8, 0)),
-        cam.clone(),
-        "#94a3b8",
-        0.09,
-      );
-      combatFx.pushImpact(cam.clone(), "#94a3b8");
+      windup.current = 0.45;
+      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.18);
     }
   });
 
@@ -187,6 +194,8 @@ export function LootDrop({
 }) {
   const meshRef = useRef<THREE.Mesh>(null);
   const taken = useRef(false);
+  const color =
+    kind === "health" ? "#ff6b7a" : kind === "ammo" ? "#fbbf24" : "#5dffd7";
 
   useFrame((state) => {
     const mesh = meshRef.current;
@@ -220,11 +229,10 @@ export function LootDrop({
         }
       }
       playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.35);
+      combatFx.pushImpact(mesh.position.clone(), color);
+      useFxStore.getState().pulseShake(0.04, 80);
     }
   });
-
-  const color =
-    kind === "health" ? "#ff6b7a" : kind === "ammo" ? "#fbbf24" : "#5dffd7";
 
   return (
     <group>
