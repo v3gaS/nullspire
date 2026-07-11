@@ -85,11 +85,11 @@ export function GameHUD() {
       </div>
 
       {/* Objective */}
-      <div className="absolute left-1/2 top-6 max-w-lg -translate-x-1/2 rounded border border-white/10 bg-black/40 px-4 py-2 text-center backdrop-blur-sm">
-        <p className="text-[10px] uppercase tracking-[0.25em] text-cyan-300/70">
+      <div className="absolute left-1/2 top-6 max-w-lg -translate-x-1/2 rounded border border-teal-400/25 bg-black/50 px-4 py-2.5 text-center shadow-[0_0_24px_rgba(46,230,200,0.12)] backdrop-blur-sm">
+        <p className="text-[10px] uppercase tracking-[0.25em] text-cyan-300/80">
           Objective · CP {checkpoint.label}
         </p>
-        <p className="text-sm text-zinc-100">{objective}</p>
+        <p className="text-sm font-medium text-zinc-50">{objective}</p>
       </div>
 
       {shieldActive && (

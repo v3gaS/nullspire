@@ -580,9 +580,9 @@ export function WeaponSystem() {
       }
     }
 
-    if (Math.random() < dt * 2) {
+    if (Math.random() < dt * 2.8) {
       const e = useGameStore.getState().nullEnergy;
-      if (e < 100) useGameStore.getState().setNullEnergy(Math.min(100, e + 1));
+      if (e < 100) useGameStore.getState().setNullEnergy(Math.min(100, e + 1.5));
     }
 
     const fx = fxRef.current;
