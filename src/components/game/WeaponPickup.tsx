@@ -106,7 +106,17 @@ export function WeaponPickup({
       >
         <PickupModel id={id} />
       </Suspense>
-      <pointLight color={color} intensity={1.4} distance={6} />
+      <pointLight color={color} intensity={2.0} distance={8} />
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.35, 0]}>
+        <ringGeometry args={[0.4, 0.55, 16]} />
+        <meshStandardMaterial
+          color={color}
+          emissive={color}
+          emissiveIntensity={1.1}
+          transparent
+          opacity={0.7}
+        />
+      </mesh>
     </group>
   );
 }
