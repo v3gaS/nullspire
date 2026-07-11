@@ -305,24 +305,25 @@ export function CrashRimSector() {
       <pointLight position={[8, 5, 0]} intensity={1.6} color="#ff9f43" distance={18} />
       {/* Orange runway stripe — Quake/UT lane read */}
       <mesh position={[0, 0.07, -10]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[1.6, 56]} />
+        <planeGeometry args={[1.9, 56]} />
         <meshStandardMaterial
           color="#ff7a18"
           emissive="#ff7a18"
-          emissiveIntensity={1.15}
+          emissiveIntensity={1.3}
           transparent
-          opacity={0.72}
+          opacity={0.78}
           toneMapped={false}
         />
       </mesh>
       <mesh position={[0, 0.065, -10]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[2.8, 56]} />
+        <planeGeometry args={[3.2, 56]} />
         <meshStandardMaterial
           color="#ffb347"
           emissive="#ff7a18"
-          emissiveIntensity={0.35}
+          emissiveIntensity={0.42}
           transparent
-          opacity={0.28}
+          opacity={0.32}
+          toneMapped={false}
         />
       </mesh>
       {/* Secondary green lane accent — arena floor read */}
