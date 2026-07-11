@@ -350,6 +350,8 @@ export function CrashRimSector() {
       {/* Tall hangar wall strips — vertical volume like the arena ref */}
       <Box position={[-18, 8, 0]} size={[1.2, 16, 28]} color="#7a8590" />
       <Box position={[18, 8, -4]} size={[1.2, 16, 30]} color="#6a7580" />
+      <Box position={[-20, 10, -40]} size={[1.4, 20, 36]} color="#6a7580" />
+      <Box position={[20, 10, -44]} size={[1.4, 20, 40]} color="#7a8590" />
       <mesh position={[-17.2, 12, 0]}>
         <boxGeometry args={[0.2, 2.5, 18]} />
         <meshStandardMaterial
@@ -365,6 +367,24 @@ export function CrashRimSector() {
           color="#fff4e0"
           emissive="#fff4e0"
           emissiveIntensity={1.4}
+          toneMapped={false}
+        />
+      </mesh>
+      <mesh position={[-19.2, 14, -40]}>
+        <boxGeometry args={[0.2, 2.2, 22]} />
+        <meshStandardMaterial
+          color="#fff4e0"
+          emissive="#fff4e0"
+          emissiveIntensity={1.2}
+          toneMapped={false}
+        />
+      </mesh>
+      <mesh position={[19.2, 14, -44]}>
+        <boxGeometry args={[0.2, 2.2, 24]} />
+        <meshStandardMaterial
+          color="#fff4e0"
+          emissive="#fff4e0"
+          emissiveIntensity={1.2}
           toneMapped={false}
         />
       </mesh>
