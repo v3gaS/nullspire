@@ -66,15 +66,15 @@ function fragName(kind: unknown): string {
 function fireInterval(id: WeaponId, overclocked: boolean): number {
   switch (id) {
     case "pulse_smg":
-      return overclocked ? 0.035 : 0.078;
+      return overclocked ? 0.032 : 0.07;
     case "scatter_carbine":
-      return 0.46;
+      return 0.42;
     case "arc_caster":
-      return 0.22;
+      return 0.2;
     case "rail_lance":
-      return 0.76;
+      return 0.7;
     case "void_launcher":
-      return 0.72;
+      return 0.66;
     default: {
       const _exhaustive: never = id;
       return _exhaustive;
@@ -87,13 +87,13 @@ function magSize(id: WeaponId): number {
     case "pulse_smg":
       return 35;
     case "scatter_carbine":
-      return 7;
+      return 9;
     case "arc_caster":
       return 14;
     case "rail_lance":
-      return 5;
+      return 6;
     case "void_launcher":
-      return 4;
+      return 5;
     default: {
       const _exhaustive: never = id;
       return _exhaustive;
