@@ -9,7 +9,8 @@ Build diary. Newest entries at the top.
 - Secrets/pads/overclock tint, reload dip, multi-kill banner, sprint FOV
 - Biolume climb markers + vault secrets; energy grids; Primarch/Aegis cover
 - Stalker blink telegraph; boss death booms; dry-fire auto-reload; stronger void RJ
-- Live: https://nullspire-amber.vercel.app · ~1.3h remaining in block
+- Live: https://nullspire-amber.vercel.app · ~1.0h remaining in block
+- Recent ships: weapon rings, jump-pad chevrons, denser late pack, solid Bloom ledges, boss phase knock
 
 ## 2026-07-10 — Quake juice: pierce, kill X, chunkier FX
 - Rail Lance pierces up to 2 extra lined-up targets; Scatter/Void kick harder

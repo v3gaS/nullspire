@@ -254,7 +254,7 @@ export function CrashRimSector() {
       <Box position={[0, 0.12, 8]} size={[14, 0.24, 14]} color="#3d4a55" />
       {/* Runway stripe toward the beacon so the push direction reads instantly */}
       <mesh position={[0, 0.06, -6]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[2.2, 28]} />
+        <planeGeometry args={[2.2, 40]} />
         <meshStandardMaterial
           color="#2ee6c8"
           emissive="#2ee6c8"
