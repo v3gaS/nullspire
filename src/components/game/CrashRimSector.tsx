@@ -320,6 +320,23 @@ export function CrashRimSector() {
           opacity={0.85}
         />
       </mesh>
+      {/* Mid-canyon chevrons through the combat pocket */}
+      {[-40, -44, -48, -52].map((z) => (
+        <mesh
+          key={`midchev-${z}`}
+          position={[0, 0.09, z]}
+          rotation={[-Math.PI / 2, 0, 0]}
+        >
+          <ringGeometry args={[0.5, 0.75, 3, 1, Math.PI / 6, (Math.PI * 2) / 3]} />
+          <meshStandardMaterial
+            color="#fbbf24"
+            emissive="#f59e0b"
+            emissiveIntensity={0.85}
+            transparent
+            opacity={0.65}
+          />
+        </mesh>
+      ))}
 
       {/* Rust Canyons trench */}
       <Box position={[0, 1.5, -45]} size={[40, 3, 2]} color="#6b3f2a" />
