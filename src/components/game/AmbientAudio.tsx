@@ -69,9 +69,10 @@ export function AmbientAudio() {
         const hot =
           now < fx.muzzleUntil ||
           now < fx.shakeUntil ||
-          now < fx.killUntil;
-        const target = hot ? 0.012 : 0.035;
-        g.gain.value += (target - g.gain.value) * 0.18;
+          now < fx.killUntil ||
+          now < fx.overclockUntil;
+        const target = hot ? 0.006 : 0.035;
+        g.gain.value += (target - g.gain.value) * 0.22;
       }
       rafRef.current = requestAnimationFrame(tick);
     };

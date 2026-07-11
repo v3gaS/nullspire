@@ -85,9 +85,9 @@ export function NullspirePrimarch() {
     const muzzle = worldPos(mesh).clone().add(new THREE.Vector3(0, 1.5, 0));
     if (windup.current > 0) {
       windup.current = Math.max(0, windup.current - dt);
-      mat.emissiveIntensity = 2.2 + Math.sin(t * 20) * 0.6;
-      if (Math.random() < dt * 12) {
-        combatFx.pushBeam(muzzle, cam.clone(), "#fde68a", 0.06);
+      mat.emissiveIntensity = 2.6 + Math.sin(t * 24) * 0.7;
+      if (Math.random() < dt * 16) {
+        combatFx.pushBeam(muzzle, cam.clone(), "#fde68a", 0.08);
       }
       if (windup.current <= 0) {
         cooldown.current = phase.current === 3 ? 0.9 : 1.4;
@@ -96,19 +96,20 @@ export function NullspirePrimarch() {
           useGameStore.getState().damagePlayer(4);
           combatFx.pushImpact(cam.clone(), "#c084fc");
           playerPhysics.pushKnock(
-            (cam.x - muzzle.x) * 0.08,
-            1.2,
-            (cam.z - muzzle.z) * 0.08,
+            (cam.x - muzzle.x) * 0.1,
+            1.5,
+            (cam.z - muzzle.z) * 0.1,
           );
         }
-        playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.4);
-        combatFx.pushBeam(muzzle, cam.clone(), "#c084fc", 0.18);
+        playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.45);
+        combatFx.pushBeam(muzzle, cam.clone(), "#c084fc", 0.22);
         combatFx.pushImpact(cam.clone(), "#c084fc");
-        useFxStore.getState().pulseShake(0.1, 160);
+        useFxStore.getState().pulseShake(0.12, 180);
       }
     } else if (dist < 30 && cooldown.current <= 0) {
-      windup.current = 0.55;
-      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.24);
+      windup.current = 0.58;
+      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.28);
+      combatFx.pushImpact(muzzle, "#fde68a");
     } else {
       mat.emissiveIntensity = 0.8 + phase.current * 0.5;
     }

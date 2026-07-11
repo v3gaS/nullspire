@@ -95,27 +95,28 @@ export function AegisWarden() {
 
     if (windup.current > 0) {
       windup.current = Math.max(0, windup.current - dt);
-      if (Math.random() < dt * 10) {
-        combatFx.pushBeam(muzzle, cam.clone(), "#ffe066", 0.05);
+      if (Math.random() < dt * 14) {
+        combatFx.pushBeam(muzzle, cam.clone(), "#ffe066", 0.07);
       }
-      mat.emissiveIntensity = 1.4 + Math.sin(t * 18) * 0.5;
+      mat.emissiveIntensity = 1.8 + Math.sin(t * 22) * 0.6;
       if (windup.current <= 0) {
         const interval =
           phase.current === 1 ? 2.0 : phase.current === 2 ? 1.5 : 1.1;
         cooldown.current = interval;
         useGameStore.getState().damagePlayer(5 + phase.current * 2);
-        playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.38);
-        combatFx.pushBeam(muzzle, cam.clone(), color, 0.16);
+        playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.42);
+        combatFx.pushBeam(muzzle, cam.clone(), color, 0.2);
         combatFx.pushImpact(cam.clone(), color);
-        useFxStore.getState().pulseShake(0.08, 140);
+        useFxStore.getState().pulseShake(0.1, 160);
       if (phase.current === 3 && dist < 10) {
           useGameStore.getState().damagePlayer(6);
-          combatFx.pushBoom(cam.clone(), "#f87171", 2.2);
+          combatFx.pushBoom(cam.clone(), "#f87171", 2.6);
         }
       }
     } else if (dist < 26 && cooldown.current <= 0) {
-      windup.current = 0.48;
-      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.22);
+      windup.current = 0.52;
+      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.26);
+      combatFx.pushImpact(muzzle, "#ffe066");
     }
 
     if (windup.current <= 0) {
