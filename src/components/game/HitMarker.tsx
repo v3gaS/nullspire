@@ -4,30 +4,52 @@ import { useEffect, useState } from "react";
 import { useFxStore } from "@/stores/fxStore";
 import { useGameStore } from "@/stores/gameStore";
 
-/** Center hit confirmation when a destructible is damaged. */
+/** Center hit confirmation — white on hit, hot kill X on gib. */
 export function HitMarker() {
-  const [on, setOn] = useState(false);
+  const [mode, setMode] = useState<"off" | "hit" | "kill">("off");
   const screen = useGameStore((s) => s.screen);
 
   useEffect(() => {
     let raf = 0;
     const tick = () => {
-      setOn(performance.now() < useFxStore.getState().hitUntil);
+      const fx = useFxStore.getState();
+      const now = performance.now();
+      if (now < fx.killUntil) setMode("kill");
+      else if (now < fx.hitUntil) setMode("hit");
+      else setMode("off");
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, []);
 
-  if (screen !== "playing" || !on) return null;
+  if (screen !== "playing" || mode === "off") return null;
+
+  const kill = mode === "kill";
+  const color = kill ? "#ff6644" : "#ffffff";
+  const size = kill ? "h-11 w-11" : "h-8 w-8";
+  const arm = kill ? "h-3.5 w-0.5" : "h-2.5 w-0.5";
+  const armH = kill ? "h-0.5 w-3.5" : "h-0.5 w-2.5";
 
   return (
     <div className="pointer-events-none absolute left-1/2 top-1/2 z-[7] -translate-x-1/2 -translate-y-1/2">
-      <div className="relative h-8 w-8">
-        <div className="absolute left-1/2 top-0 h-2.5 w-0.5 -translate-x-1/2 bg-white shadow-[0_0_8px_#fff]" />
-        <div className="absolute bottom-0 left-1/2 h-2.5 w-0.5 -translate-x-1/2 bg-white shadow-[0_0_8px_#fff]" />
-        <div className="absolute left-0 top-1/2 h-0.5 w-2.5 -translate-y-1/2 bg-white shadow-[0_0_8px_#fff]" />
-        <div className="absolute right-0 top-1/2 h-0.5 w-2.5 -translate-y-1/2 bg-white shadow-[0_0_8px_#fff]" />
+      <div className={`relative ${size}`}>
+        <div
+          className={`absolute left-1/2 top-0 ${arm} -translate-x-1/2`}
+          style={{ background: color, boxShadow: `0 0 10px ${color}` }}
+        />
+        <div
+          className={`absolute bottom-0 left-1/2 ${arm} -translate-x-1/2`}
+          style={{ background: color, boxShadow: `0 0 10px ${color}` }}
+        />
+        <div
+          className={`absolute left-0 top-1/2 ${armH} -translate-y-1/2`}
+          style={{ background: color, boxShadow: `0 0 10px ${color}` }}
+        />
+        <div
+          className={`absolute right-0 top-1/2 ${armH} -translate-y-1/2`}
+          style={{ background: color, boxShadow: `0 0 10px ${color}` }}
+        />
       </div>
     </div>
   );

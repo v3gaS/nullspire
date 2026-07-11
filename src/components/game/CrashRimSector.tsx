@@ -210,6 +210,23 @@ export function CrashRimSector() {
           opacity={0.45}
         />
       </mesh>
+      {/* Direction chevrons — Quake-readable push lane */}
+      {[2, -2, -6, -10, -14].map((z) => (
+        <mesh
+          key={`chev-${z}`}
+          position={[0, 0.08, z]}
+          rotation={[-Math.PI / 2, 0, 0]}
+        >
+          <ringGeometry args={[0.55, 0.85, 3, 1, Math.PI / 6, (Math.PI * 2) / 3]} />
+          <meshStandardMaterial
+            color="#7dffef"
+            emissive="#2ee6c8"
+            emissiveIntensity={0.9}
+            transparent
+            opacity={0.7}
+          />
+        </mesh>
+      ))}
       {/* Flanking berms — wide of the center lane */}
       <Box position={[-12, 1.5, -2]} size={[1.5, 3, 12]} color="#5a4a3a" />
       <Box position={[12, 1.5, -6]} size={[1.5, 3, 14]} color="#4a5560" />

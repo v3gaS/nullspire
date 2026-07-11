@@ -24,6 +24,25 @@ const GUN_URL: Record<WeaponId, string> = {
   void_launcher: "/assets/models/kenney-fps/blaster.glb",
 };
 
+function viewKick(id: WeaponId): number {
+  switch (id) {
+    case "pulse_smg":
+      return 0.1;
+    case "scatter_carbine":
+      return 0.18;
+    case "arc_caster":
+      return 0.12;
+    case "rail_lance":
+      return 0.16;
+    case "void_launcher":
+      return 0.2;
+    default: {
+      const _exhaustive: never = id;
+      return _exhaustive;
+    }
+  }
+}
+
 function GunModel({ url, color }: { url: string; color: string }) {
   const { scene } = useGLTF(url);
   const cloned = useMemo(() => {
@@ -77,7 +96,7 @@ export function WeaponViewmodel() {
       : 0;
     if (bobRate > 0) bob.current += dt * bobRate;
 
-    const kickZ = kicking ? 0.12 : fx.kick * 0.07;
+    const kickZ = kicking ? viewKick(active) : fx.kick * 0.07;
     const amp = playerLocomotion.sprinting ? 0.014 : 0.008;
     const right = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion);
     const up = new THREE.Vector3(0, 1, 0).applyQuaternion(camera.quaternion);

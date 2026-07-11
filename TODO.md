@@ -4,7 +4,7 @@ Campaign build order. Check items as completed. Loop works top-down.
 
 **Title:** Nullspire  
 **Stack:** Next.js + R3F + Rapier + Zustand → Vercel  
-**Loop mode:** continuous — wake every **30 minutes**; self-evaluate play + visuals each tick
+**Loop mode:** continuous — wake every **2 hours**; self-evaluate play + visuals each tick
 
 ---
 
@@ -90,13 +90,24 @@ Campaign build order. Check items as completed. Loop works top-down.
 - [x] Weapon pickup world models polish
 - [x] Physics feel (knockback, debris, pad sensors, camera punch)
 
+## Phase 10 — DOOM / Quake juice (active 2h block)
+- [x] Faster move / air control / camera punch
+- [x] Enemy stagger honored + gib spray
+- [x] Barrel chain clusters + bigger blast knock
+- [x] Secret caches + SECRET FOUND juice
+- [x] Open Drop Zone plaza / gate gap / shrunk pickups
+- [x] Rail pierce + kill marker + chunkier impacts/booms
+- [ ] More readable mid-canyon combat arenas
+- [ ] Boss telegraph readability pass
+- [ ] Audio mix: louder booms, quieter ambience under fire
+
 ---
 
 ## Loop rules
 1. Always pick the **first unchecked** actionable item in the lowest incomplete phase.
 2. After each meaningful chunk: update this file, append to `LEARNINGS.md`, commit, push, deploy when buildable.
-3. **Continuous every 30 minutes (wall-clock)** — self-evaluate play + visuals each tick; stop only if user says stop.
+3. **Continuous every 2 hours (wall-clock)** — code through the block; self-evaluate play + visuals as you go; stop only if user says stop.
 4. Prefer playable increments over unfinished mega-features.
 
 ## Current focus
-**Next 30m block armed** — continue feel/balance; Phase 9 feel items largely shipped
+**2h continuous block armed** — DOOM/Quake feel: weapons, explosions, secrets, readable Drop Zone

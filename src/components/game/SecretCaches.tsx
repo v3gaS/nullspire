@@ -17,25 +17,37 @@ const SECRETS: {
   {
     position: [-16, 1.2, -8],
     kind: "ammo",
-    hint: "Secret cache — Crash Rim alcove",
+    hint: "Crash Rim alcove",
     radius: 4.5,
   },
   {
     position: [11, 5.5, -15],
     kind: "shards",
-    hint: "Secret — high ledge Null stash",
+    hint: "high ledge Null stash",
     radius: 5,
+  },
+  {
+    position: [15, 0.8, -12],
+    kind: "ammo",
+    hint: "barrel yard side cache",
+    radius: 4,
   },
   {
     position: [-9, 0.8, -40],
     kind: "health",
-    hint: "Secret — canyon undercroft medkit",
+    hint: "canyon undercroft medkit",
     radius: 4,
+  },
+  {
+    position: [-14, 2.2, -48],
+    kind: "shards",
+    hint: "rust trench overlook",
+    radius: 4.5,
   },
   {
     position: [16, 1.2, -66],
     kind: "ammo",
-    hint: "Secret — vault approach ammo dump",
+    hint: "vault approach ammo dump",
     radius: 5,
   },
 ];

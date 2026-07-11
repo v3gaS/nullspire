@@ -162,8 +162,8 @@ export function CombatVfx() {
       }
     }
 
-    // Impacts
-    combatFx.impacts = combatFx.impacts.filter((i) => now - i.born < 160);
+    // Impacts — chunkier Quake sparks
+    combatFx.impacts = combatFx.impacts.filter((i) => now - i.born < 220);
     const ig = impactsGroup.current;
     if (ig) {
       while (ig.children.length) {
@@ -171,7 +171,7 @@ export function CombatVfx() {
         ig.remove(c);
       }
       for (const imp of combatFx.impacts) {
-        const age = (now - imp.born) / 160;
+        const age = (now - imp.born) / 220;
         const sprite = new THREE.Sprite(
           new THREE.SpriteMaterial({
             map: age < 0.45 ? burstMap : hitMap,
@@ -182,18 +182,18 @@ export function CombatVfx() {
           }),
         );
         sprite.position.copy(imp.pos);
-        const s = 0.4 + age * 1.2;
+        const s = 0.65 + age * 1.8;
         sprite.scale.set(s, s, s);
         ig.add(sprite);
 
-        const spark = new THREE.PointLight(imp.color, 2.5 * (1 - age), 6);
+        const spark = new THREE.PointLight(imp.color, 4 * (1 - age), 8);
         spark.position.copy(imp.pos);
         ig.add(spark);
       }
     }
 
     // DOOM-style explosion spheres
-    combatFx.booms = combatFx.booms.filter((b) => now - b.born < 420);
+    combatFx.booms = combatFx.booms.filter((b) => now - b.born < 520);
     const bgBoom = boomsGroup.current;
     if (bgBoom) {
       while (bgBoom.children.length) {
@@ -205,14 +205,14 @@ export function CombatVfx() {
         }
       }
       for (const boom of combatFx.booms) {
-        const age = (now - boom.born) / 420;
-        const scale = boom.radius * (0.35 + age * 1.4);
+        const age = (now - boom.born) / 520;
+        const scale = boom.radius * (0.4 + age * 1.55);
         const shell = new THREE.Mesh(
           new THREE.SphereGeometry(1, 14, 12),
           new THREE.MeshBasicMaterial({
             color: boom.color,
             transparent: true,
-            opacity: 0.75 * (1 - age),
+            opacity: 0.8 * (1 - age),
             depthWrite: false,
             wireframe: age > 0.35,
           }),
@@ -226,18 +226,18 @@ export function CombatVfx() {
           new THREE.MeshBasicMaterial({
             color: "#ffffff",
             transparent: true,
-            opacity: 0.9 * (1 - age * 1.2),
+            opacity: 0.95 * (1 - age * 1.15),
             depthWrite: false,
           }),
         );
         core.position.copy(boom.pos);
-        core.scale.setScalar(scale * 0.35);
+        core.scale.setScalar(scale * 0.4);
         bgBoom.add(core);
 
         const light = new THREE.PointLight(
           boom.color,
-          12 * (1 - age),
-          boom.radius * 4,
+          16 * (1 - age),
+          boom.radius * 5,
         );
         light.position.copy(boom.pos);
         bgBoom.add(light);

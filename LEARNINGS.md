@@ -2,6 +2,12 @@
 
 Build diary. Newest entries at the top.
 
+## 2026-07-10 — Quake juice: pierce, kill X, chunkier FX
+- Rail Lance pierces up to 2 extra lined-up targets; Scatter/Void kick harder
+- Kill hit-marker (hot X) + bigger gib spray / impact sprites / boom spheres
+- Drop Zone runway chevrons; denser barrel chain nests; Phase 10 tracked in TODO
+- Loop: **code continuously for 2h**, pause only for build/deploy/QA — not the reverse
+
 ## 2026-07-10 — Open Drop Zone + 2h loop
 - Spawn was a kitbash wall soup in the player's face (Kenney walls/props at z≈3–8)
 - Cleared plaza: dressing/debris/barrels pushed to flanks and forward lane toward beacon

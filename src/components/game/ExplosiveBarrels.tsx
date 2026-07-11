@@ -16,12 +16,24 @@ import {
 import { worldPos } from "@/lib/game/math";
 
 const BARRELS: [number, number, number][] = [
-  [10, 0.7, -8],
-  [-11, 0.7, -10],
-  [12, 0.7, -18],
-  [-10, 0.7, -24],
+  // Approach cluster — Quake chain setpiece (off spawn pad)
+  [9, 0.7, -14],
+  [10.5, 0.7, -15.2],
+  [8.2, 0.7, -15.8],
+  [-11, 0.7, -16],
+  [-12.4, 0.7, -17],
+  // Mid canyon
+  [12, 0.7, -28],
+  [-10, 0.7, -30],
   [2, 0.7, -36],
+  [3.4, 0.7, -37.2],
+  // Deep canyon chain nest
+  [0, 0.7, -44],
+  [1.4, 0.7, -45.2],
+  [-1.2, 0.7, -45.5],
+  // Deep approach
   [14, 0.7, -52],
+  [15.2, 0.7, -53],
   [-5, 0.7, -58],
 ];
 

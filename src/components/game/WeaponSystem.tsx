@@ -63,8 +63,8 @@ export function applyHit(
 
   if (from) {
     const dir = worldPos(mesh).clone().sub(from);
-    if (!impulseRigid(mesh, dir, 4 + damage * 0.15)) {
-      staggerObject(mesh, from, 0.35 + Math.min(0.8, damage * 0.02));
+    if (!impulseRigid(mesh, dir, 6 + damage * 0.22)) {
+      staggerObject(mesh, from, 0.45 + Math.min(1.1, damage * 0.025));
     }
   }
 
@@ -92,23 +92,24 @@ export function applyHit(
     } else {
       // Quake-ish gib spray
       const wp = worldPos(mesh);
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 9; i++) {
         const gib = wp
           .clone()
           .add(
             new THREE.Vector3(
-              (Math.random() - 0.5) * 1.2,
-              Math.random() * 0.8,
-              (Math.random() - 0.5) * 1.2,
+              (Math.random() - 0.5) * 2.4,
+              Math.random() * 1.8,
+              (Math.random() - 0.5) * 2.4,
             ),
           );
-        combatFx.pushImpact(gib, "#ff4466");
+        combatFx.pushImpact(gib, i % 2 === 0 ? "#ff4466" : "#ffaa44");
       }
-      combatFx.pushBoom(wp, "#ff6644", 1.6);
+      combatFx.pushBoom(wp, "#ff6644", 2.4);
       mesh.visible = false;
       mesh.userData.dead = true;
       playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.4);
-      useFxStore.getState().pulseShake(0.06, 120);
+      useFxStore.getState().pulseKill();
+      useFxStore.getState().pulseShake(0.1, 160);
     }
   } else {
     playSfx("/assets/audio/kenney-fps/enemy_hurt.ogg", 0.3);
@@ -347,14 +348,15 @@ export function WeaponSystem() {
           case "scatter_carbine":
             playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.35);
             useFxStore.getState().pulseMuzzle("#ffb347", 90);
-            playerPhysics.punch(0.055);
-            for (let i = 0; i < 8; i++) {
+            useFxStore.getState().pulseShake(0.05, 90);
+            playerPhysics.punch(0.07);
+            for (let i = 0; i < 9; i++) {
               const dir = forward.clone();
-              dir.x += (Math.random() - 0.5) * 0.25;
-              dir.y += (Math.random() - 0.5) * 0.18;
-              dir.z += (Math.random() - 0.5) * 0.25;
+              dir.x += (Math.random() - 0.5) * 0.28;
+              dir.y += (Math.random() - 0.5) * 0.2;
+              dir.z += (Math.random() - 0.5) * 0.28;
               dir.normalize();
-              shots.push({ dir, damage: 9, color: "#ffb347" });
+              shots.push({ dir, damage: 10, color: "#ffb347" });
             }
             break;
           case "arc_caster": {
@@ -374,14 +376,16 @@ export function WeaponSystem() {
           case "rail_lance":
             playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.4);
             useFxStore.getState().pulseMuzzle("#e879f9", 120);
-            playerPhysics.punch(0.045);
-            shots.push({ dir: forward.clone(), damage: 45, color: "#e879f9" });
+            useFxStore.getState().pulseShake(0.04, 100);
+            playerPhysics.punch(0.055);
+            shots.push({ dir: forward.clone(), damage: 52, color: "#e879f9" });
             break;
           case "void_launcher":
             playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.4);
             useFxStore.getState().pulseMuzzle("#c084fc", 140);
-            playerPhysics.punch(0.05);
-            shots.push({ dir: forward.clone(), damage: 42, color: "#c084fc" });
+            useFxStore.getState().pulseShake(0.06, 120);
+            playerPhysics.punch(0.06);
+            shots.push({ dir: forward.clone(), damage: 48, color: "#c084fc" });
             break;
           default: {
             const _exhaustive: never = id;
@@ -445,6 +449,23 @@ export function WeaponSystem() {
               }
             }
 
+            if (id === "rail_lance") {
+              playerPhysics.punch(0.035);
+              // Quake rail pierce — keep punching through lined-up targets
+              let pierced = 0;
+              for (const h of hits) {
+                if (h.distance <= 1.2) continue;
+                const obj = h.object as THREE.Object3D;
+                if (!obj.userData?.destructible || obj === valid.object) continue;
+                if (pierced >= 2) break;
+                let pierceDmg = Math.round(shot.damage * (0.7 - pierced * 0.2));
+                if (obj.userData.marked) pierceDmg = Math.round(pierceDmg * 1.5);
+                applyHit(obj, pierceDmg, origin);
+                combatFx.pushImpact(h.point.clone(), "#f0abfc");
+                pierced++;
+              }
+            }
+
             if (id === "void_launcher") {
               for (const obj of collectDestructibles(scene)) {
                 const op = worldPos(obj);
@@ -462,10 +483,6 @@ export function WeaponSystem() {
                 const up = origin.clone().sub(impact).normalize();
                 playerPhysics.pushKnock(up.x * 5, 6, up.z * 5);
               }
-            }
-
-            if (id === "rail_lance") {
-              playerPhysics.punch(0.035);
             }
           }
         }
