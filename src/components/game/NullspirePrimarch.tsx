@@ -165,6 +165,8 @@ export function NullspirePrimarch() {
         [0, 1.2, -10],
         [-6, 1.2, 9],
         [6, 1.2, 9],
+        [-12, 1.3, -2],
+        [12, 1.3, -2],
       ].map((p, i) => (
         <RigidBody key={`pc-${i}`} type="fixed" colliders="cuboid" position={p as [number, number, number]}>
           <mesh castShadow>
@@ -184,7 +186,8 @@ export function NullspirePrimarch() {
         <meshStandardMaterial
           color="#7c3aed"
           emissive="#7c3aed"
-          emissiveIntensity={1}
+          emissiveIntensity={1.15}
+          toneMapped={false}
         />
       </mesh>
       {/* Inner duel ring */}
@@ -193,9 +196,21 @@ export function NullspirePrimarch() {
         <meshStandardMaterial
           color="#c4b5fd"
           emissive="#a78bfa"
-          emissiveIntensity={1.2}
+          emissiveIntensity={1.35}
           transparent
-          opacity={0.75}
+          opacity={0.8}
+          toneMapped={false}
+        />
+      </mesh>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.07, 0]}>
+        <ringGeometry args={[3.2, 3.6, 40]} />
+        <meshStandardMaterial
+          color="#ffb347"
+          emissive="#ff7a18"
+          emissiveIntensity={1.1}
+          transparent
+          opacity={0.55}
+          toneMapped={false}
         />
       </mesh>
     </group>
