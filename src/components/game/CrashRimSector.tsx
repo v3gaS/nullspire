@@ -327,6 +327,7 @@ export function CrashRimSector() {
       <AcidHazard position={[-4, 0.08, -38]} size={[8, 0.1, 6]} />
       <AcidHazard position={[6, 0.08, -60]} size={[6, 0.1, 5]} />
       <EnergyGrid position={[0, 0.06, -64]} size={[10, 3]} />
+      <EnergyGrid position={[0, 0.06, -108]} size={[8, 2.5]} />
 
       <Suspense fallback={null}>
         <Prop

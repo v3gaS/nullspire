@@ -59,6 +59,9 @@ export function BloomMatriarch() {
         .getState()
         .setObjective("Bloom Matriarch slain — approach the Null Core");
       playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.7);
+      combatFx.pushBoom(worldPos(mesh), "#86efac", 5);
+      useFxStore.getState().pulseShake(0.2, 300);
+      useFxStore.getState().pulseKill();
       return;
     }
 

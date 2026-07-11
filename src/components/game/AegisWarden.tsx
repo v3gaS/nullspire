@@ -58,6 +58,9 @@ export function AegisWarden() {
         .getState()
         .setObjective("Aegis Warden down — enter Biolume Vaults");
       playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.7);
+      combatFx.pushBoom(worldPos(mesh), "#94a3b8", 4.5);
+      useFxStore.getState().pulseShake(0.18, 280);
+      useFxStore.getState().pulseKill();
       return;
     }
 

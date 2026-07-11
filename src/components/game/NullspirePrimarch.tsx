@@ -53,6 +53,9 @@ export function NullspirePrimarch() {
         .getState()
         .setObjective("Primarch destroyed — Nullspire is quiet");
       playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.8);
+      combatFx.pushBoom(worldPos(mesh), "#c084fc", 7);
+      useFxStore.getState().pulseShake(0.32, 500);
+      useFxStore.getState().pulseKill();
       return;
     }
 
