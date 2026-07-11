@@ -134,7 +134,9 @@ Campaign build order. Check items as completed. Loop works top-down.
 - [x] Further viewmodel kick / muzzle presence pass
 - [x] Boss arenas hangar wash pass
 - [x] Blocky enemy silhouettes + scroll weapon cycle
-- [ ] Keep polishing toward reference until clock ends
+- [x] Keep polishing toward reference until clock ends
+- [x] Drop Zone secrets/barrels; denser cubes; Boss HUD restyle
+- [ ] Continue Quake juice until wall-clock ends
 
 ## Current focus
-**2h continuous Phase 11** — code until wall-clock ends; pause only for build/deploy/QA
+**2h continuous Phase 11** (~1.3h remaining) — code until wall-clock ends; pause only for build/deploy/QA
