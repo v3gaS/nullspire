@@ -343,7 +343,7 @@ export function CrashRimSector() {
         />
       </mesh>
       {/* Direction chevrons — Quake-readable push lane */}
-      {[2, -2, -6, -10, -14, -22, -30, -36].map((z) => (
+      {[2, -2, -6, -10, -14, -18, -22, -26, -30, -36].map((z) => (
         <mesh
           key={`chev-${z}`}
           position={[0, 0.08, z]}
@@ -351,11 +351,12 @@ export function CrashRimSector() {
         >
           <ringGeometry args={[0.55, 0.85, 3, 1, Math.PI / 6, (Math.PI * 2) / 3]} />
           <meshStandardMaterial
-            color="#7dffef"
-            emissive="#2ee6c8"
-            emissiveIntensity={0.9}
+            color="#ffb347"
+            emissive="#ff7a18"
+            emissiveIntensity={1.1}
             transparent
-            opacity={0.7}
+            opacity={0.75}
+            toneMapped={false}
           />
         </mesh>
       ))}
