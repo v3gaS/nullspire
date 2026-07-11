@@ -84,8 +84,8 @@ const defaultWeapons: Record<WeaponId, WeaponState> = {
   void_launcher: {
     id: "void_launcher",
     unlocked: false,
-    ammo: 4,
-    reserve: 12,
+    ammo: 5,
+    reserve: 20,
   },
 };
 

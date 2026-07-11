@@ -11,7 +11,7 @@ const MAG_SIZE: Record<WeaponId, number> = {
   scatter_carbine: 9,
   arc_caster: 14,
   rail_lance: 5,
-  void_launcher: 4,
+  void_launcher: 5,
 };
 
 function switchFlash(id: WeaponId): string {
