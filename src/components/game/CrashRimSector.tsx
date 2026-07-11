@@ -468,6 +468,31 @@ export function CrashRimSector() {
       {[-30, -20, -10, 0, 10, 20].map((z) => (
         <Box key={`r-${z}`} position={[22, 2, z]} size={[2, 4, 2]} color="#6a7580" />
       ))}
+      {/* Mid-canyon hangar pillars — mirrored arena volume */}
+      {[-55, -45, -35].map((z) => (
+        <Box key={`mp-l-${z}`} position={[-18, 6, z]} size={[1.6, 12, 1.6]} color="#7a8590" />
+      ))}
+      {[-55, -45, -35].map((z) => (
+        <Box key={`mp-r-${z}`} position={[18, 6, z]} size={[1.6, 12, 1.6]} color="#6a7580" />
+      ))}
+      <mesh position={[-17.1, 9, -45]}>
+        <boxGeometry args={[0.18, 1.6, 28]} />
+        <meshStandardMaterial
+          color="#fff4e0"
+          emissive="#fff4e0"
+          emissiveIntensity={1.35}
+          toneMapped={false}
+        />
+      </mesh>
+      <mesh position={[17.1, 9, -45]}>
+        <boxGeometry args={[0.18, 1.6, 28]} />
+        <meshStandardMaterial
+          color="#fff4e0"
+          emissive="#fff4e0"
+          emissiveIntensity={1.35}
+          toneMapped={false}
+        />
+      </mesh>
 
       <Beacon position={[16, 10, -20]} />
 
