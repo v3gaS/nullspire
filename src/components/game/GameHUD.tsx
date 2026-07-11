@@ -81,7 +81,13 @@ export function GameHUD() {
 
       {/* Vitals */}
       <div className="absolute bottom-6 left-6 w-56 space-y-2">
-        <Bar label="Hull" value={health} max={100} color="#ff6b7a" />
+        <Bar
+          label="Hull"
+          value={health}
+          max={100}
+          color={health <= 30 ? "#ff3344" : "#ff6b7a"}
+          pulse={health <= 30}
+        />
         <Bar label="Armor" value={armor} max={100} color="#8ec5ff" />
         <Bar label="Null" value={nullEnergy} max={100} color="#5dffd7" />
       </div>
@@ -117,23 +123,29 @@ function Bar({
   value,
   max,
   color,
+  pulse = false,
 }: {
   label: string;
   value: number;
   max: number;
   color: string;
+  pulse?: boolean;
 }) {
   const pct = Math.max(0, Math.min(100, (value / max) * 100));
   return (
-    <div>
+    <div className={pulse ? "animate-pulse" : undefined}>
       <div className="mb-1 flex justify-between text-[10px] uppercase tracking-[0.2em] text-zinc-400">
         <span>{label}</span>
         <span>{Math.round(value)}</span>
       </div>
-      <div className="h-2 overflow-hidden rounded-sm bg-white/10">
+      <div className="h-2.5 overflow-hidden rounded-sm bg-white/10">
         <div
           className="h-full transition-[width] duration-150"
-          style={{ width: `${pct}%`, backgroundColor: color }}
+          style={{
+            width: `${pct}%`,
+            backgroundColor: color,
+            boxShadow: pulse ? `0 0 12px ${color}` : undefined,
+          }}
         />
       </div>
     </div>

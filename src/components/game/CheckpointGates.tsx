@@ -78,9 +78,10 @@ function Gate({
       useGameStore.getState().setArmor(
         Math.min(100, useGameStore.getState().armor + 15),
       );
-      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.4);
-      combatFx.pushBoom(new THREE.Vector3(...pos), "#67e8f9", 3.2);
-      useFxStore.getState().pulseShake(0.09, 180);
+      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.5);
+      combatFx.pushBoom(new THREE.Vector3(...pos), "#67e8f9", 4.0);
+      combatFx.pushImpact(new THREE.Vector3(pos[0], pos[1] + 0.5, pos[2]), "#a5f3fc");
+      useFxStore.getState().pulseShake(0.12, 220);
       mesh.scale.setScalar(0.5);
       (mesh.material as THREE.MeshStandardMaterial).emissiveIntensity = 0.3;
     }
@@ -98,7 +99,17 @@ function Gate({
           roughness={0.3}
         />
       </mesh>
-      <pointLight position={pos} color="#67e8f9" intensity={1.2} distance={8} />
+      <mesh position={[pos[0], 0.05, pos[2]]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[1.4, 1.9, 28]} />
+        <meshStandardMaterial
+          color="#67e8f9"
+          emissive="#22d3ee"
+          emissiveIntensity={1.1}
+          transparent
+          opacity={0.65}
+        />
+      </mesh>
+      <pointLight position={pos} color="#67e8f9" intensity={1.8} distance={10} />
     </group>
   );
 }
