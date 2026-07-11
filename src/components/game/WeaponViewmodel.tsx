@@ -1,41 +1,33 @@
 "use client";
 
-import { Suspense, useMemo, useRef } from "react";
+import { useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
-import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { useGameStore, type WeaponId } from "@/stores/gameStore";
 import { useFxStore } from "@/stores/fxStore";
 import { playerLocomotion } from "@/lib/game/playerLocomotion";
 
-const COLORS: Record<WeaponId, string> = {
+/** Industrial Quake/UT palette — orange/grey body + weapon accent. */
+const ACCENT: Record<WeaponId, string> = {
   pulse_smg: "#7dffef",
-  scatter_carbine: "#ffb347",
+  scatter_carbine: "#ff9f43",
   arc_caster: "#60a5fa",
   rail_lance: "#e879f9",
-  void_launcher: "#c084fc",
-};
-
-const GUN_URL: Record<WeaponId, string> = {
-  pulse_smg: "/assets/models/kenney-fps/blaster-repeater.glb",
-  scatter_carbine: "/assets/models/kenney-fps/blaster.glb",
-  arc_caster: "/assets/models/kenney-fps/blaster.glb",
-  rail_lance: "/assets/models/kenney-fps/blaster-repeater.glb",
-  void_launcher: "/assets/models/kenney-fps/blaster.glb",
+  void_launcher: "#ff7a18",
 };
 
 function viewKick(id: WeaponId): number {
   switch (id) {
     case "pulse_smg":
-      return 0.13;
+      return 0.16;
     case "scatter_carbine":
-      return 0.24;
-    case "arc_caster":
-      return 0.15;
-    case "rail_lance":
-      return 0.22;
-    case "void_launcher":
       return 0.28;
+    case "arc_caster":
+      return 0.18;
+    case "rail_lance":
+      return 0.26;
+    case "void_launcher":
+      return 0.34;
     default: {
       const _exhaustive: never = id;
       return _exhaustive;
@@ -43,38 +35,182 @@ function viewKick(id: WeaponId): number {
   }
 }
 
-function GunModel({ url, color }: { url: string; color: string }) {
-  const { scene } = useGLTF(url);
-  const cloned = useMemo(() => {
-    const c = scene.clone(true);
-    c.traverse((o) => {
-      const m = o as THREE.Mesh;
-      if (m.isMesh && m.material) {
-        const base = Array.isArray(m.material) ? m.material[0] : m.material;
-        const mat = (base as THREE.MeshStandardMaterial).clone();
-        mat.emissive = new THREE.Color(color);
-        mat.emissiveIntensity = 0.7;
-        mat.metalness = 0.55;
-        mat.roughness = 0.35;
-        m.material = mat;
-        m.frustumCulled = false;
-      }
-    });
-    return c;
-  }, [scene, color]);
+function Mat({
+  color,
+  emissive,
+  emissiveIntensity = 0.35,
+  metalness = 0.65,
+  roughness = 0.38,
+}: {
+  color: string;
+  emissive?: string;
+  emissiveIntensity?: number;
+  metalness?: number;
+  roughness?: number;
+}) {
   return (
-    <primitive
-      object={cloned}
-      scale={0.15}
-      position={[0, -0.01, 0.04]}
-      rotation={[0.15, Math.PI, 0]}
+    <meshStandardMaterial
+      color={color}
+      emissive={emissive ?? color}
+      emissiveIntensity={emissiveIntensity}
+      metalness={metalness}
+      roughness={roughness}
     />
   );
 }
 
+/** Chunky low-poly industrial silhouettes — fill lower-right like classic FPS. */
+function ChunkyGun({ id }: { id: WeaponId }) {
+  const accent = ACCENT[id];
+  switch (id) {
+    case "pulse_smg":
+      return (
+        <group>
+          <mesh position={[0.02, -0.02, 0.02]} frustumCulled={false}>
+            <boxGeometry args={[0.14, 0.16, 0.52]} />
+            <Mat color="#4a5563" emissive="#1e293b" emissiveIntensity={0.15} />
+          </mesh>
+          <mesh position={[0.02, 0.04, -0.22]} frustumCulled={false}>
+            <boxGeometry args={[0.1, 0.1, 0.28]} />
+            <Mat color="#6b7280" emissive="#374151" emissiveIntensity={0.2} />
+          </mesh>
+          <mesh position={[0.02, 0.02, -0.42]} frustumCulled={false}>
+            <boxGeometry args={[0.06, 0.06, 0.22]} />
+            <Mat color={accent} emissive={accent} emissiveIntensity={1.4} />
+          </mesh>
+          <mesh position={[0.02, -0.14, 0.08]} frustumCulled={false}>
+            <boxGeometry args={[0.07, 0.16, 0.12]} />
+            <Mat color="#2d3748" emissive="#111827" emissiveIntensity={0.1} />
+          </mesh>
+          <mesh position={[0.02, 0.12, 0.05]} frustumCulled={false}>
+            <boxGeometry args={[0.05, 0.06, 0.18]} />
+            <Mat color={accent} emissive={accent} emissiveIntensity={0.9} />
+          </mesh>
+        </group>
+      );
+    case "scatter_carbine":
+      return (
+        <group>
+          <mesh position={[0.02, -0.01, 0]} frustumCulled={false}>
+            <boxGeometry args={[0.18, 0.18, 0.48]} />
+            <Mat color="#5a6472" emissive="#1f2937" emissiveIntensity={0.12} />
+          </mesh>
+          <mesh position={[0.02, 0.02, -0.32]} frustumCulled={false}>
+            <boxGeometry args={[0.22, 0.14, 0.2]} />
+            <Mat color="#9ca3af" emissive="#4b5563" emissiveIntensity={0.2} />
+          </mesh>
+          <mesh position={[0.02, 0.02, -0.48]} frustumCulled={false}>
+            <cylinderGeometry args={[0.07, 0.09, 0.16, 8]} />
+            <Mat color={accent} emissive={accent} emissiveIntensity={1.2} />
+          </mesh>
+          <mesh position={[0.02, -0.16, 0.06]} frustumCulled={false}>
+            <boxGeometry args={[0.08, 0.18, 0.14]} />
+            <Mat color="#1f2937" emissive="#0f172a" emissiveIntensity={0.1} />
+          </mesh>
+          <mesh position={[0.02, 0.14, -0.05]} frustumCulled={false}>
+            <boxGeometry args={[0.06, 0.08, 0.22]} />
+            <Mat color="#d1d5db" emissive="#6b7280" emissiveIntensity={0.25} />
+          </mesh>
+        </group>
+      );
+    case "arc_caster":
+      return (
+        <group>
+          <mesh position={[0.02, 0, 0]} frustumCulled={false}>
+            <boxGeometry args={[0.15, 0.2, 0.42]} />
+            <Mat color="#3d4a5c" emissive="#1e293b" emissiveIntensity={0.15} />
+          </mesh>
+          <mesh position={[0.02, 0.06, -0.28]} frustumCulled={false}>
+            <boxGeometry args={[0.12, 0.12, 0.32]} />
+            <Mat color="#64748b" emissive="#334155" emissiveIntensity={0.2} />
+          </mesh>
+          <mesh position={[0.02, 0.06, -0.5]} frustumCulled={false}>
+            <boxGeometry args={[0.05, 0.05, 0.18]} />
+            <Mat color={accent} emissive={accent} emissiveIntensity={1.6} />
+          </mesh>
+          <mesh position={[0.12, 0.08, -0.1]} frustumCulled={false}>
+            <boxGeometry args={[0.08, 0.08, 0.2]} />
+            <Mat color={accent} emissive={accent} emissiveIntensity={1.1} />
+          </mesh>
+          <mesh position={[0.02, -0.15, 0.05]} frustumCulled={false}>
+            <boxGeometry args={[0.07, 0.16, 0.12]} />
+            <Mat color="#1e293b" emissive="#0f172a" emissiveIntensity={0.1} />
+          </mesh>
+        </group>
+      );
+    case "rail_lance":
+      return (
+        <group>
+          <mesh position={[0.02, 0.02, -0.05]} frustumCulled={false}>
+            <boxGeometry args={[0.12, 0.14, 0.7]} />
+            <Mat color="#4b5563" emissive="#1f2937" emissiveIntensity={0.12} />
+          </mesh>
+          <mesh position={[0.02, 0.02, -0.48]} frustumCulled={false}>
+            <boxGeometry args={[0.07, 0.07, 0.36]} />
+            <Mat color={accent} emissive={accent} emissiveIntensity={1.5} />
+          </mesh>
+          <mesh position={[0.02, 0.12, 0.1]} frustumCulled={false}>
+            <boxGeometry args={[0.1, 0.1, 0.22]} />
+            <Mat color="#9ca3af" emissive="#6b7280" emissiveIntensity={0.3} />
+          </mesh>
+          <mesh position={[0.02, -0.14, 0.12]} frustumCulled={false}>
+            <boxGeometry args={[0.07, 0.16, 0.14]} />
+            <Mat color="#111827" emissive="#020617" emissiveIntensity={0.08} />
+          </mesh>
+          <mesh position={[0.02, 0.02, 0.28]} frustumCulled={false}>
+            <boxGeometry args={[0.14, 0.16, 0.16]} />
+            <Mat color="#374151" emissive="#1f2937" emissiveIntensity={0.15} />
+          </mesh>
+        </group>
+      );
+    case "void_launcher":
+      return (
+        <group>
+          {/* Quake-style chunky RL: orange tube + grey body */}
+          <mesh position={[0.02, 0.02, 0.02]} frustumCulled={false}>
+            <boxGeometry args={[0.2, 0.22, 0.46]} />
+            <Mat color="#6b7280" emissive="#374151" emissiveIntensity={0.18} />
+          </mesh>
+          <mesh
+            position={[0.02, 0.04, -0.28]}
+            rotation={[Math.PI / 2, 0, 0]}
+            frustumCulled={false}
+          >
+            <cylinderGeometry args={[0.11, 0.13, 0.42, 10]} />
+            <Mat color="#ff7a18" emissive="#ff7a18" emissiveIntensity={0.85} />
+          </mesh>
+          <mesh
+            position={[0.02, 0.04, -0.52]}
+            rotation={[Math.PI / 2, 0, 0]}
+            frustumCulled={false}
+          >
+            <cylinderGeometry args={[0.14, 0.12, 0.1, 10]} />
+            <Mat color="#e5e7eb" emissive="#9ca3af" emissiveIntensity={0.35} />
+          </mesh>
+          <mesh position={[0.02, -0.16, 0.08]} frustumCulled={false}>
+            <boxGeometry args={[0.09, 0.2, 0.16]} />
+            <Mat color="#1f2937" emissive="#0f172a" emissiveIntensity={0.1} />
+          </mesh>
+          <mesh position={[0.02, 0.18, 0.05]} frustumCulled={false}>
+            <boxGeometry args={[0.08, 0.08, 0.2]} />
+            <Mat color="#9ca3af" emissive="#6b7280" emissiveIntensity={0.25} />
+          </mesh>
+          <mesh position={[0.14, 0.02, 0.05]} frustumCulled={false}>
+            <boxGeometry args={[0.08, 0.1, 0.18]} />
+            <Mat color="#ff9f43" emissive="#ff7a18" emissiveIntensity={0.7} />
+          </mesh>
+        </group>
+      );
+    default: {
+      const _exhaustive: never = id;
+      return _exhaustive;
+    }
+  }
+}
+
 /**
- * Kenney blaster viewmodel.
- * World-space follow (not camera.add) so R3F cannot detach the mesh.
+ * Chunky industrial viewmodel — world-space follow (not camera.add)
+ * so R3F cannot detach the mesh. Sized to fill lower-right like Quake/UT.
  */
 export function WeaponViewmodel() {
   const group = useRef<THREE.Group>(null);
@@ -96,25 +232,26 @@ export function WeaponViewmodel() {
       : 0;
     if (bobRate > 0) bob.current += dt * bobRate;
 
-    const kickZ = kicking ? viewKick(active) : fx.kick * 0.1;
+    const kickZ = kicking ? viewKick(active) : fx.kick * 0.12;
     const reloading = performance.now() < fx.reloadUntil;
-    const reloadDip = reloading ? 0.14 : 0;
-    const amp = playerLocomotion.sprinting ? 0.014 : 0.008;
+    const reloadDip = reloading ? 0.18 : 0;
+    const amp = playerLocomotion.sprinting ? 0.016 : 0.009;
     const right = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion);
     const up = new THREE.Vector3(0, 1, 0).applyQuaternion(camera.quaternion);
     const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(
       camera.quaternion,
     );
 
+    // Bigger, closer, more lower-right presence
     const x =
-      0.26 +
+      0.32 +
       (playerLocomotion.moving ? Math.cos(bob.current * 0.5) * amp : 0) +
-      (reloading ? Math.sin(performance.now() * 0.02) * 0.04 : 0);
+      (reloading ? Math.sin(performance.now() * 0.02) * 0.045 : 0);
     const y =
-      -0.24 +
+      -0.28 +
       (playerLocomotion.moving ? Math.sin(bob.current) * amp * 0.6 : 0) -
       reloadDip;
-    const z = 0.55 - kickZ;
+    const z = 0.62 - kickZ;
 
     g.position
       .copy(camera.position)
@@ -122,8 +259,8 @@ export function WeaponViewmodel() {
       .addScaledVector(up, y)
       .addScaledVector(forward, z);
     g.quaternion.copy(camera.quaternion);
-    g.rotateX(0.05 - fx.kick * 0.15);
-    g.rotateY(0.08);
+    g.rotateX(0.06 - fx.kick * 0.18);
+    g.rotateY(0.1);
 
     if (glowRef.current) {
       glowRef.current.visible = kicking;
@@ -134,43 +271,17 @@ export function WeaponViewmodel() {
   });
 
   return (
-    <group ref={group} userData={{ skipHit: true }}>
-      {/* Always-on silhouette so a gun is visible even while GLB streams */}
-      <mesh position={[0.03, -0.03, -0.04]} frustumCulled={false}>
-        <boxGeometry args={[0.1, 0.11, 0.38]} />
-        <meshStandardMaterial
-          color="#1e293b"
-          emissive={COLORS[active]}
-          emissiveIntensity={0.9}
-          metalness={0.8}
-          roughness={0.25}
-        />
-      </mesh>
-      <mesh position={[0.03, 0.015, -0.28]} frustumCulled={false}>
-        <boxGeometry args={[0.055, 0.055, 0.2]} />
-        <meshStandardMaterial
-          color={COLORS[active]}
-          emissive={COLORS[active]}
-          emissiveIntensity={1.6}
-        />
-      </mesh>
-      <Suspense fallback={null}>
-        <group position={[0, 0, 0.02]}>
-          <GunModel url={GUN_URL[active]} color={COLORS[active]} />
-        </group>
-      </Suspense>
+    <group ref={group} userData={{ skipHit: true }} scale={1.15}>
+      <ChunkyGun id={active} />
       <mesh
         ref={glowRef}
-        position={[0, 0.03, -0.4]}
+        position={[0.02, 0.04, -0.58]}
         visible={false}
         frustumCulled={false}
       >
-        <sphereGeometry args={[0.08, 10, 10]} />
+        <sphereGeometry args={[0.12, 10, 10]} />
         <meshBasicMaterial color="#fff" toneMapped={false} />
       </mesh>
     </group>
   );
 }
-
-useGLTF.preload("/assets/models/kenney-fps/blaster.glb");
-useGLTF.preload("/assets/models/kenney-fps/blaster-repeater.glb");

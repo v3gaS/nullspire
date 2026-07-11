@@ -57,7 +57,7 @@ function NestNode({ position }: { position: [number, number, number] }) {
       combatFx.pushBoom(worldPos(mesh), "#86efac", 5.2);
       combatFx.pushBoom(worldPos(mesh).clone().add(new THREE.Vector3(0, 1, 0)), "#4ade80", 2.8);
       useFxStore.getState().pulseShake(0.18, 280);
-      useFxStore.getState().pulseKill();
+      useFxStore.getState().pulseKill("Nest");
     }
   });
 

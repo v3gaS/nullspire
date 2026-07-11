@@ -8,6 +8,20 @@ export interface DamagePopup {
   born: number;
 }
 
+export interface KillFeedEntry {
+  id: number;
+  text: string;
+  born: number;
+}
+
+const KILL_VERBS = [
+  "fragged",
+  "splattered",
+  "gibbed",
+  "vaporized",
+  "shredded",
+] as const;
+
 /** Ephemeral combat FX signals (not persisted). */
 interface FxState {
   muzzleUntil: number;
@@ -22,16 +36,19 @@ interface FxState {
   shakeUntil: number;
   shakeAmp: number;
   damagePopups: DamagePopup[];
+  killFeed: KillFeedEntry[];
   pulseMuzzle: (color: string, ms?: number) => void;
   pulseHit: () => void;
-  pulseKill: () => void;
+  pulseKill: (targetName?: string) => void;
   pulseOverclock: (ms?: number) => void;
   pulseReload: (ms?: number) => void;
   pulseShake: (amp?: number, ms?: number) => void;
   pushDamage: (damage: number) => void;
+  pushFeed: (text: string) => void;
 }
 
 let popupId = 0;
+let feedId = 0;
 
 export const useFxStore = create<FxState>((set, get) => ({
   muzzleUntil: 0,
@@ -46,6 +63,7 @@ export const useFxStore = create<FxState>((set, get) => ({
   shakeUntil: 0,
   shakeAmp: 0,
   damagePopups: [],
+  killFeed: [],
   pulseMuzzle: (color, ms = 85) =>
     set({
       muzzleUntil: performance.now() + ms,
@@ -53,16 +71,31 @@ export const useFxStore = create<FxState>((set, get) => ({
       kick: 1,
     }),
   pulseHit: () => set({ hitUntil: performance.now() + 90 }),
-  pulseKill: () => {
+  pulseKill: (targetName) => {
     const now = performance.now();
     const prev = get();
     const chain = now < prev.multiKillUntil ? prev.multiKillCount + 1 : 1;
+    const verb = KILL_VERBS[Math.floor(Math.random() * KILL_VERBS.length)]!;
+    const name = targetName?.trim() || "hostile";
+    const recent = prev.killFeed[prev.killFeed.length - 1];
+    const skipFeed = recent && now - recent.born < 140;
+    const feed = skipFeed
+      ? prev.killFeed
+      : prev.killFeed
+          .filter((e) => now - e.born < 4500)
+          .concat({
+            id: ++feedId,
+            text: `You ${verb} ${name}`,
+            born: now,
+          })
+          .slice(-6);
     set({
       killUntil: now + 200,
       multiKillCount: chain,
       multiKillUntil: now + 2600,
       shakeUntil: now + (chain >= 3 ? 280 : 140),
       shakeAmp: Math.max(prev.shakeAmp, chain >= 3 ? 0.16 : 0.08),
+      killFeed: feed,
     });
   },
   pulseOverclock: (ms = 3000) =>
@@ -80,5 +113,14 @@ export const useFxStore = create<FxState>((set, get) => ({
       .concat({ id: ++popupId, damage, born: now })
       .slice(-8);
     set({ damagePopups: next });
+  },
+  pushFeed: (text) => {
+    const now = performance.now();
+    set({
+      killFeed: get()
+        .killFeed.filter((e) => now - e.born < 4500)
+        .concat({ id: ++feedId, text, born: now })
+        .slice(-6),
+    });
   },
 }));

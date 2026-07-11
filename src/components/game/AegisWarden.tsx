@@ -62,7 +62,7 @@ export function AegisWarden() {
       combatFx.pushBoom(worldPos(mesh), "#94a3b8", 5.8);
       combatFx.pushBoom(worldPos(mesh).clone().add(new THREE.Vector3(0, 1.5, 0)), "#7dffef", 3.2);
       useFxStore.getState().pulseShake(0.24, 360);
-      useFxStore.getState().pulseKill();
+      useFxStore.getState().pulseKill("Aegis Warden");
       return;
     }
 

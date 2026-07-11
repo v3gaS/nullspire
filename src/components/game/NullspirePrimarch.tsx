@@ -57,7 +57,7 @@ export function NullspirePrimarch() {
       combatFx.pushBoom(worldPos(mesh), "#c084fc", 8.5);
       combatFx.pushBoom(worldPos(mesh).clone().add(new THREE.Vector3(0, 2, 0)), "#ffffff", 4.5);
       useFxStore.getState().pulseShake(0.4, 600);
-      useFxStore.getState().pulseKill();
+      useFxStore.getState().pulseKill("Nullspire Primarch");
       return;
     }
 

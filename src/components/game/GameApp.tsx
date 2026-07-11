@@ -61,9 +61,9 @@ function World({ showDressing }: { showDressing: boolean }) {
         <mesh position={[0, -0.5, 0]} receiveShadow>
           <boxGeometry args={[180, 1, 180]} />
           <meshStandardMaterial
-            color="#2a3548"
-            roughness={0.92}
-            metalness={0.08}
+            color="#5a6570"
+            roughness={0.88}
+            metalness={0.12}
           />
         </mesh>
       </RigidBody>
@@ -72,11 +72,11 @@ function World({ showDressing }: { showDressing: boolean }) {
         <mesh position={[0, 0.05, 0]} receiveShadow>
           <boxGeometry args={[16, 0.4, 16]} />
           <meshStandardMaterial
-            color="#4a5d6e"
-            roughness={0.8}
-            metalness={0.2}
+            color="#6a7886"
+            roughness={0.75}
+            metalness={0.22}
             emissive="#2ee6c8"
-            emissiveIntensity={0.35}
+            emissiveIntensity={0.28}
           />
         </mesh>
       </RigidBody>
@@ -148,28 +148,35 @@ export function GameApp() {
           }}
           className="absolute inset-0"
         >
-          <color attach="background" args={["#2a3a4d"]} />
-          <fog attach="fog" args={["#3a4a5e", 75, cfg.fogFar]} />
-          <ambientLight intensity={0.95} />
+          <color attach="background" args={["#5a6a7c"]} />
+          <fog attach="fog" args={["#7a8a9a", 95, Math.max(cfg.fogFar, 140)]} />
+          <ambientLight intensity={1.15} />
           <directionalLight
             castShadow={cfg.shadows}
-            intensity={1.7}
-            position={[30, 42, 8]}
-            color="#f0d9a8"
+            intensity={2.35}
+            position={[18, 55, 12]}
+            color="#fff4e0"
             shadow-mapSize={cfg.shadows ? [2048, 2048] : [512, 512]}
           />
-          <hemisphereLight args={["#d4b896", "#1e2d3d", 0.8]} />
+          <hemisphereLight args={["#e8dcc8", "#2a3544", 1.05]} />
+          {/* Skylight wash — hangar bloom feel */}
+          <pointLight
+            position={[0, 48, -20]}
+            intensity={4.2}
+            color="#fff8ee"
+            distance={120}
+          />
           <pointLight
             position={[16, 12, -20]}
-            intensity={2.8}
+            intensity={2.4}
             color="#2ee6c8"
             distance={48}
           />
           <pointLight
             position={[0, 8, 8]}
-            intensity={2.8}
+            intensity={3.2}
             color="#f4a261"
-            distance={40}
+            distance={44}
           />
           <pointLight
             position={[0, 10, -70]}
@@ -182,7 +189,8 @@ export function GameApp() {
             intensity={2.4}
             color="#a78bfa"
             distance={40}
-          />          <Stars
+          />
+          <Stars
             radius={140}
             depth={50}
             count={cfg.starCount}

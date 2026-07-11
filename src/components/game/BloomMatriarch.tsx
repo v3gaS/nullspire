@@ -63,7 +63,7 @@ export function BloomMatriarch() {
       combatFx.pushBoom(worldPos(mesh), "#86efac", 6.2);
       combatFx.pushBoom(worldPos(mesh).clone().add(new THREE.Vector3(0, -2, 0)), "#4ade80", 3.5);
       useFxStore.getState().pulseShake(0.26, 340);
-      useFxStore.getState().pulseKill();
+      useFxStore.getState().pulseKill("Bloom Matriarch");
       return;
     }
 
@@ -101,7 +101,7 @@ export function BloomMatriarch() {
         combatFx.pushBoom(worldPos(sac), "#86efac", 3.4);
         combatFx.pushImpact(worldPos(sac), "#bbf7d0");
         useFxStore.getState().pulseShake(0.1, 160);
-        useFxStore.getState().pulseKill();
+        useFxStore.getState().pulseKill("Bloom Sac");
         playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.48);
       }
     });

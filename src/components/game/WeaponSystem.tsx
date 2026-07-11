@@ -31,6 +31,38 @@ interface Singularity {
 let nestId = 0;
 let singId = 0;
 
+function fragName(kind: unknown): string {
+  if (typeof kind !== "string" || !kind) return "hostile";
+  switch (kind) {
+    case "drone":
+      return "Drone";
+    case "bastion":
+      return "Bastion";
+    case "stalker":
+      return "Stalker";
+    case "spitter":
+      return "Spitter";
+    case "turret":
+      return "Turret";
+    case "skitter":
+      return "Skitter";
+    case "elite":
+      return "Elite";
+    case "boss_aegis":
+      return "Aegis Warden";
+    case "boss_bloom":
+      return "Bloom Matriarch";
+    case "boss_primarch":
+      return "Nullspire Primarch";
+    case "bloom_sac":
+      return "Bloom Sac";
+    case "dummy":
+      return "Dummy";
+    default:
+      return kind.replace(/_/g, " ");
+  }
+}
+
 function fireInterval(id: WeaponId, overclocked: boolean): number {
   switch (id) {
     case "pulse_smg":
@@ -127,7 +159,7 @@ export function applyHit(
       mesh.visible = false;
       mesh.userData.dead = true;
       playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.48);
-      useFxStore.getState().pulseKill();
+      useFxStore.getState().pulseKill(fragName(mesh.userData.kind));
       useFxStore.getState().pulseShake(0.14, 180);
     }
   } else {

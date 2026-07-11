@@ -48,7 +48,7 @@ export function BastionUnit({
       if (shieldRef.current) shieldRef.current.visible = false;
       combatFx.pushBoom(worldPos(mesh), "#94a3b8", 3.8);
       combatFx.pushImpact(worldPos(mesh), "#cbd5e1");
-      useFxStore.getState().pulseKill();
+      useFxStore.getState().pulseKill("Bastion");
       useFxStore.getState().pulseShake(0.12, 180);
       playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.58);
       return;
@@ -143,7 +143,7 @@ export function NullStalker({
       mesh.visible = false;
       combatFx.pushBoom(worldPos(mesh), "#a78bfa", 3.0);
       combatFx.pushImpact(worldPos(mesh), "#c4b5fd");
-      useFxStore.getState().pulseKill();
+      useFxStore.getState().pulseKill("Stalker");
       useFxStore.getState().pulseShake(0.1, 160);
       playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.45);
       return;
@@ -262,32 +262,45 @@ export function LootDrop({
 
   return (
     <group>
-      <mesh ref={meshRef} position={position}>
-        <octahedronGeometry args={[0.4, 0]} />
+      <mesh ref={meshRef} position={position} castShadow>
+        <boxGeometry args={[0.55, 0.55, 0.55]} />
         <meshStandardMaterial
           color={color}
           emissive={color}
-          emissiveIntensity={1.5}
+          emissiveIntensity={2.2}
+          metalness={0.15}
+          roughness={0.25}
+          toneMapped={false}
+        />
+      </mesh>
+      <mesh position={position}>
+        <boxGeometry args={[0.72, 0.72, 0.72]} />
+        <meshBasicMaterial
+          color={color}
+          transparent
+          opacity={0.22}
+          depthWrite={false}
+          toneMapped={false}
         />
       </mesh>
       <mesh
         position={[position[0], 0.05, position[2]]}
         rotation={[-Math.PI / 2, 0, 0]}
       >
-        <ringGeometry args={[0.35, 0.5, 16]} />
+        <ringGeometry args={[0.4, 0.62, 20]} />
         <meshStandardMaterial
           color={color}
           emissive={color}
-          emissiveIntensity={1.1}
+          emissiveIntensity={1.4}
           transparent
-          opacity={0.7}
+          opacity={0.75}
         />
       </mesh>
       <pointLight
         position={position}
         color={color}
-        intensity={1.5}
-        distance={6}
+        intensity={2.4}
+        distance={8}
       />
     </group>
   );

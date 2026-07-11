@@ -2,6 +2,22 @@
 
 Build diary. Newest entries at the top.
 
+## 2026-07-10 — Phase 11 visual north star (2h block ACTIVE)
+- Armed wall-clock start `1783739050` · `block_hours=2` — code continuously
+- Chunky procedural industrial viewmodels (orange/grey Quake/UT scale)
+- Corner HUD: HEALTH/ARMOR numbers, weapon+ammo+1-5 slots, kill feed
+- Hangar light: brighter skylight wash, lighter fog/floor
+- Floating emissive cube loot (health/ammo/shards)
+- Live: https://nullspire-amber.vercel.app
+
+## 2026-07-10 — Visual north star (user ref screenshot)
+- Target look: chunky low-poly arena FPS (Quake/UT vibe) with modern bloom/haze
+- Big blocky viewmodel (orange/grey industrial) filling lower-right — not tiny Kenney toy
+- Tall hangar volume + bright skylight bloom; readable floor lane glow; floating cube pickups
+- Clean corner HUD: HEALTH/ARMOR bottom-left, weapon+ammo+1–8 bar bottom-right, kill feed top-left
+- Keep Nullspire sci-fi exoplanet identity, but chase this readability + chunk + light drama
+- Ref saved: agent assets `Screenshot_2026-07-10_at_8.33.03_PM-*.png`
+
 ## 2026-07-10 — Continuous 2h Quake juice block COMPLETE
 - Protocol held: **code for ~2h**, pause only for build/deploy/QA — not stop-early
 - Wall-clock: start `1783729836` → elapsed ≥2.0h (`/tmp/nullspire_realtime_block_*.txt`)
