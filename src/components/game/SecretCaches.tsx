@@ -11,7 +11,7 @@ import { useFxStore } from "@/stores/fxStore";
 
 const SECRETS: {
   position: [number, number, number];
-  kind: "health" | "ammo" | "shards";
+  kind: "health" | "ammo" | "shards" | "armor";
   hint: string;
   radius: number;
 }[] = [
@@ -110,6 +110,18 @@ const SECRETS: {
     kind: "health",
     hint: "canyon berm medkit",
     radius: 4.5,
+  },
+  {
+    position: [-14, 1.0, 2],
+    kind: "armor",
+    hint: "Drop Zone flank armor niche",
+    radius: 4,
+  },
+  {
+    position: [13, 1.0, 1],
+    kind: "ammo",
+    hint: "Drop Zone berm ammo stash",
+    radius: 4,
   },
 ];
 
