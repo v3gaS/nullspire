@@ -463,7 +463,7 @@ export function WeaponSystem() {
               dir.normalize();
               shots.push({
                 dir,
-                damage: overclocked ? 28 : 16,
+                damage: overclocked ? 32 : 18,
                 color: overclocked ? "#ffe066" : "#7dffef",
               });
             }

@@ -25,14 +25,14 @@ export function TitleScreen() {
         className="pointer-events-none absolute inset-0 opacity-95"
         style={{
           background:
-            "radial-gradient(ellipse at 50% 18%, #3d4a5c 0%, #1a2433 48%, #0d141c 100%)",
+            "radial-gradient(ellipse at 50% 12%, #6a7a8c 0%, #3a4a5c 42%, #1a2433 72%, #0d141c 100%)",
         }}
       />
       <div
-        className="pointer-events-none absolute inset-0 opacity-35"
+        className="pointer-events-none absolute inset-0 opacity-40"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(46,230,200,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(201,166,107,0.06) 1px, transparent 1px)",
+            "linear-gradient(rgba(255,122,24,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(46,230,200,0.06) 1px, transparent 1px)",
           backgroundSize: "48px 48px",
           maskImage:
             "radial-gradient(ellipse at center, black 20%, transparent 75%)",
