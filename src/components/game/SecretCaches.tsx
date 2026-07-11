@@ -113,6 +113,8 @@ const SECRETS: {
   },
 ];
 
+let secretsFound = 0;
+
 function SecretHint({
   position,
   hint,
@@ -143,7 +145,12 @@ function SecretHint({
     }
     if (dist < radius) {
       shown.current = true;
-      useGameStore.getState().setObjective(`SECRET FOUND — ${hint}`);
+      secretsFound += 1;
+      useGameStore
+        .getState()
+        .setObjective(
+          `SECRET FOUND (${secretsFound}/${SECRETS.length}) — ${hint}`,
+        );
       playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.55);
       useFxStore.getState().pulseShake(0.14, 240);
       combatFx.pushBoom(
