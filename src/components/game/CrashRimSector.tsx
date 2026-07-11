@@ -412,9 +412,9 @@ export function CrashRimSector() {
       <Box position={[-4, 0.4, -12]} size={[1.6, 0.8, 2.0]} color="#8a8070" />
       <Box position={[5, 0.6, -15]} size={[1.4, 1.2, 1.4]} color="#6a5a48" />
       {/* Approach gate with a center gap — not a solid wall in the FOV */}
-      <Box position={[-8, 1.4, -18]} size={[8, 2.8, 1.4]} color="#6a5a48" />
-      <Box position={[8, 1.4, -18]} size={[8, 2.8, 1.4]} color="#6a5a48" />
-      <Box position={[0, 3.2, -18]} size={[6, 0.5, 1.2]} color="#4a5560" />
+      <Box position={[-8, 1.4, -18]} size={[8, 2.8, 1.4]} color="#8a7a68" />
+      <Box position={[8, 1.4, -18]} size={[8, 2.8, 1.4]} color="#8a7a68" />
+      <Box position={[0, 3.2, -18]} size={[6, 0.5, 1.2]} color="#6a7580" />
       {/* Gate gap markers — Quake doorway read */}
       <mesh position={[-3.2, 0.15, -18]} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[0.35, 0.55, 3, 1, Math.PI / 6, (Math.PI * 2) / 3]} />
