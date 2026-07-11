@@ -116,4 +116,4 @@ Campaign build order. Check items as completed. Loop works top-down.
 4. Prefer playable increments over unfinished mega-features.
 
 ## Current focus
-**2h continuous block armed** (~1.5h remaining) — DOOM/Quake feel: weapons, explosions, secrets, readable arenas — code then pause for ship/QA only
+**2h continuous block** (~1.2h remaining) — code continuously; pause only for build/deploy/QA

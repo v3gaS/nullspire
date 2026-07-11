@@ -436,18 +436,18 @@ export function WeaponSystem() {
             break;
           }
           case "rail_lance":
-            playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.4);
-            useFxStore.getState().pulseMuzzle("#e879f9", 120);
-            useFxStore.getState().pulseShake(0.04, 100);
-            playerPhysics.punch(0.055);
-            shots.push({ dir: forward.clone(), damage: 52, color: "#e879f9" });
+            playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.45);
+            useFxStore.getState().pulseMuzzle("#e879f9", 140);
+            useFxStore.getState().pulseShake(0.055, 120);
+            playerPhysics.punch(0.065);
+            shots.push({ dir: forward.clone(), damage: 58, color: "#e879f9" });
             break;
           case "void_launcher":
-            playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.4);
-            useFxStore.getState().pulseMuzzle("#c084fc", 140);
-            useFxStore.getState().pulseShake(0.06, 120);
-            playerPhysics.punch(0.06);
-            shots.push({ dir: forward.clone(), damage: 48, color: "#c084fc" });
+            playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.45);
+            useFxStore.getState().pulseMuzzle("#c084fc", 160);
+            useFxStore.getState().pulseShake(0.08, 140);
+            playerPhysics.punch(0.075);
+            shots.push({ dir: forward.clone(), damage: 52, color: "#c084fc" });
             break;
           default: {
             const _exhaustive: never = id;
