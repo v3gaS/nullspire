@@ -117,7 +117,7 @@ export function CombatVfx() {
 
     // Decay kick
     if (fx.kick > 0) {
-      useFxStore.setState({ kick: Math.max(0, fx.kick - 0.15) });
+      useFxStore.setState({ kick: Math.max(0, fx.kick - 0.12) });
     }
 
     // Beams

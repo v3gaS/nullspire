@@ -46,7 +46,7 @@ export const useFxStore = create<FxState>((set, get) => ({
   shakeUntil: 0,
   shakeAmp: 0,
   damagePopups: [],
-  pulseMuzzle: (color, ms = 70) =>
+  pulseMuzzle: (color, ms = 85) =>
     set({
       muzzleUntil: performance.now() + ms,
       muzzleColor: color,
