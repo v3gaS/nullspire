@@ -249,27 +249,41 @@ export function LootDrop({
           return _exhaustive;
         }
       }
-      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.35);
+      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.42);
       combatFx.pushImpact(mesh.position.clone(), color);
-      useFxStore.getState().pulseShake(0.04, 80);
+      combatFx.pushBoom(mesh.position.clone(), color, 1.4);
+      useFxStore.getState().pulseShake(0.055, 100);
     }
   });
 
   return (
     <group>
       <mesh ref={meshRef} position={position}>
-        <octahedronGeometry args={[0.35, 0]} />
+        <octahedronGeometry args={[0.4, 0]} />
         <meshStandardMaterial
           color={color}
           emissive={color}
-          emissiveIntensity={1.2}
+          emissiveIntensity={1.5}
+        />
+      </mesh>
+      <mesh
+        position={[position[0], 0.05, position[2]]}
+        rotation={[-Math.PI / 2, 0, 0]}
+      >
+        <ringGeometry args={[0.35, 0.5, 16]} />
+        <meshStandardMaterial
+          color={color}
+          emissive={color}
+          emissiveIntensity={1.1}
+          transparent
+          opacity={0.7}
         />
       </mesh>
       <pointLight
         position={position}
         color={color}
-        intensity={1.1}
-        distance={5}
+        intensity={1.5}
+        distance={6}
       />
     </group>
   );
