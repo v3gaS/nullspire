@@ -512,7 +512,19 @@ export function CrashRimSector() {
       <Box position={[-6, 1.5, -52]} size={[4, 0.4, 4]} color="#3ecfbf" />
       <Box position={[2, 3.2, -58]} size={[4, 0.4, 4]} color="#3ecfbf" />
       <Box position={[10, 4.8, -64]} size={[4, 0.4, 4]} color="#48d4c4" />
-      <Box position={[0, 0.2, -70]} size={[16, 0.4, 16]} color="#3a2a22" />
+      <Box position={[0, 0.2, -70]} size={[16, 0.4, 16]} color="#5a6570" />
+      <pointLight position={[0, 16, -70]} intensity={3.0} color="#fff4e0" distance={32} />
+      <mesh position={[0, 0.42, -70]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[1.4, 18]} />
+        <meshStandardMaterial
+          color="#ff7a18"
+          emissive="#ff7a18"
+          emissiveIntensity={0.9}
+          transparent
+          opacity={0.5}
+          toneMapped={false}
+        />
+      </mesh>
 
       <JumpPad position={[0, 0.2, -28]} />
       <JumpPad position={[8, 0.2, -48]} />

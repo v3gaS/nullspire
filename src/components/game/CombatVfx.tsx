@@ -187,11 +187,11 @@ export function CombatVfx() {
           }),
         );
         sprite.position.copy(imp.pos);
-        const s = 0.75 + age * 2.0;
+        const s = 0.95 + age * 2.4;
         sprite.scale.set(s, s, s);
         ig.add(sprite);
 
-        const spark = new THREE.PointLight(imp.color, 5 * (1 - age), 9);
+        const spark = new THREE.PointLight(imp.color, 6.5 * (1 - age), 11);
         spark.position.copy(imp.pos);
         ig.add(spark);
       }
