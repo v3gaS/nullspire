@@ -244,14 +244,14 @@ export function WeaponViewmodel() {
 
     // Bigger, closer, more lower-right presence
     const x =
-      0.32 +
+      0.36 +
       (playerLocomotion.moving ? Math.cos(bob.current * 0.5) * amp : 0) +
       (reloading ? Math.sin(performance.now() * 0.02) * 0.045 : 0);
     const y =
-      -0.28 +
+      -0.32 +
       (playerLocomotion.moving ? Math.sin(bob.current) * amp * 0.6 : 0) -
       reloadDip;
-    const z = 0.62 - kickZ;
+    const z = 0.58 - kickZ;
 
     g.position
       .copy(camera.position)
