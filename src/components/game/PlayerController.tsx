@@ -220,16 +220,16 @@ export function PlayerController() {
           useFxStore.getState().pulseShake(0.05, 110);
           combatFx.pushImpact(
             new THREE.Vector3(pos.x, 0.15, pos.z),
-            "#94a3b8",
+            "#e2e8f0",
           );
           combatFx.pushImpact(
             new THREE.Vector3(pos.x + 0.3, 0.2, pos.z - 0.2),
-            "#cbd5e1",
+            "#ffb347",
           );
           combatFx.pushBoom(
             new THREE.Vector3(pos.x, 0.1, pos.z),
-            "#64748b",
-            1.2,
+            "#94a3b8",
+            1.6,
           );
         } else if (impact > 1.5) {
           playerPhysics.punch(0.015);
