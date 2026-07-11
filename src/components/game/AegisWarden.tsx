@@ -153,7 +153,7 @@ export function AegisWarden() {
         <meshStandardMaterial
           color="#2ee6c8"
           emissive="#2ee6c8"
-          emissiveIntensity={0.8}
+          emissiveIntensity={1.1}
         />
       </mesh>
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.06, 0]}>
@@ -161,11 +161,14 @@ export function AegisWarden() {
         <meshStandardMaterial
           color="#7dffef"
           emissive="#2ee6c8"
-          emissiveIntensity={1.1}
+          emissiveIntensity={1.4}
           transparent
-          opacity={0.7}
+          opacity={0.8}
         />
       </mesh>
+      <pointLight position={[0, 6, 0]} intensity={2.4} color="#7dffef" distance={28} />
+      <pointLight position={[-8, 3, 0]} intensity={1.2} color="#94a3b8" distance={16} />
+      <pointLight position={[8, 3, 0]} intensity={1.2} color="#94a3b8" distance={16} />
       {/* Warden plaza cover — solid Quake duel blocks */}
       {[
         [-7, 1.2, -4],
