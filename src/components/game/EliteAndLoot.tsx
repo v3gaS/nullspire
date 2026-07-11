@@ -264,32 +264,37 @@ export function LootDrop({
           return _exhaustive;
         }
       }
-      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.42);
+      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.48);
       combatFx.pushImpact(mesh.position.clone(), color);
-      combatFx.pushBoom(mesh.position.clone(), color, 1.4);
-      useFxStore.getState().pulseShake(0.055, 100);
+      combatFx.pushBoom(mesh.position.clone(), color, 1.9);
+      combatFx.pushBoom(
+        mesh.position.clone().add(new THREE.Vector3(0, 0.2, 0)),
+        "#ffffff",
+        0.8,
+      );
+      useFxStore.getState().pulseShake(0.07, 120);
     }
   });
 
   return (
     <group>
       <mesh ref={meshRef} position={position} castShadow>
-        <boxGeometry args={[0.55, 0.55, 0.55]} />
+        <boxGeometry args={[0.68, 0.68, 0.68]} />
         <meshStandardMaterial
           color={color}
           emissive={color}
-          emissiveIntensity={2.2}
+          emissiveIntensity={2.5}
           metalness={0.15}
-          roughness={0.25}
+          roughness={0.22}
           toneMapped={false}
         />
       </mesh>
       <mesh position={position}>
-        <boxGeometry args={[0.72, 0.72, 0.72]} />
+        <boxGeometry args={[0.9, 0.9, 0.9]} />
         <meshBasicMaterial
           color={color}
           transparent
-          opacity={0.22}
+          opacity={0.26}
           depthWrite={false}
           toneMapped={false}
         />
@@ -298,20 +303,21 @@ export function LootDrop({
         position={[position[0], 0.05, position[2]]}
         rotation={[-Math.PI / 2, 0, 0]}
       >
-        <ringGeometry args={[0.4, 0.62, 20]} />
+        <ringGeometry args={[0.5, 0.78, 20]} />
         <meshStandardMaterial
           color={color}
           emissive={color}
-          emissiveIntensity={1.4}
+          emissiveIntensity={1.6}
           transparent
-          opacity={0.75}
+          opacity={0.8}
+          toneMapped={false}
         />
       </mesh>
       <pointLight
         position={position}
         color={color}
-        intensity={2.4}
-        distance={8}
+        intensity={3.0}
+        distance={10}
       />
     </group>
   );

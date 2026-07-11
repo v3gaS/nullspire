@@ -37,14 +37,14 @@ export function MultiKillBanner() {
   const scale = 1 + Math.max(0, 0.18 - pulse * 0.18);
 
   return (
-    <div className="pointer-events-none absolute left-1/2 top-[36%] z-[8] -translate-x-1/2 text-center">
+    <div className="pointer-events-none absolute left-1/2 top-[34%] z-[8] -translate-x-1/2 text-center">
       <div
-        className="text-4xl font-black tracking-[0.28em]"
+        className="text-5xl font-black tracking-[0.3em]"
         style={{
           color: hot ? "#ff4422" : "#ffb347",
           textShadow: hot
-            ? "0 0 24px rgba(255, 70, 30, 0.95), 0 0 48px rgba(255, 120, 40, 0.55)"
-            : "0 0 20px rgba(255, 160, 40, 0.9)",
+            ? "0 0 28px rgba(255, 70, 30, 0.98), 0 0 56px rgba(255, 120, 40, 0.6)"
+            : "0 0 24px rgba(255, 160, 40, 0.95)",
           transform: `scale(${scale})`,
           transition: "transform 60ms linear",
         }}
@@ -52,8 +52,8 @@ export function MultiKillBanner() {
         {label}
       </div>
       <div
-        className="mt-1 text-xs font-bold tracking-[0.35em]"
-        style={{ color: hot ? "#ffaa88" : "rgba(255,255,255,0.75)" }}
+        className="mt-1 text-sm font-bold tracking-[0.4em]"
+        style={{ color: hot ? "#ffaa88" : "rgba(255,255,255,0.8)" }}
       >
         {count}x STREAK
       </div>

@@ -41,7 +41,7 @@ export function GameHUD() {
 
   const weapon = weapons[activeWeapon];
   const meta = WEAPON_META[activeWeapon];
-  const arm = 6 + spread * 10;
+  const arm = 7 + spread * 12;
   const slotIndex = WEAPON_ORDER.indexOf(activeWeapon) + 1;
   const feed = killFeed.filter((e) => now - e.born < 4500).slice(-5);
 
@@ -50,43 +50,43 @@ export function GameHUD() {
       {/* Crosshair */}
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
         <div
-          className="absolute left-1/2 bg-white/90"
+          className="absolute left-1/2 bg-white/95"
           style={{
-            width: 2,
-            height: 8,
+            width: 2.5,
+            height: 10,
             top: -arm,
             transform: "translateX(-50%)",
-            boxShadow: "0 0 5px rgba(255,255,255,0.55)",
+            boxShadow: "0 0 7px rgba(255,255,255,0.7)",
           }}
         />
         <div
-          className="absolute left-1/2 bg-white/90"
+          className="absolute left-1/2 bg-white/95"
           style={{
-            width: 2,
-            height: 8,
+            width: 2.5,
+            height: 10,
             bottom: -arm,
             transform: "translateX(-50%)",
-            boxShadow: "0 0 5px rgba(255,255,255,0.55)",
+            boxShadow: "0 0 7px rgba(255,255,255,0.7)",
           }}
         />
         <div
-          className="absolute top-1/2 bg-white/90"
+          className="absolute top-1/2 bg-white/95"
           style={{
-            height: 2,
-            width: 8,
+            height: 2.5,
+            width: 10,
             left: -arm,
             transform: "translateY(-50%)",
-            boxShadow: "0 0 5px rgba(255,255,255,0.55)",
+            boxShadow: "0 0 7px rgba(255,255,255,0.7)",
           }}
         />
         <div
-          className="absolute top-1/2 bg-white/90"
+          className="absolute top-1/2 bg-white/95"
           style={{
-            height: 2,
-            width: 8,
+            height: 2.5,
+            width: 10,
             right: -arm,
             transform: "translateY(-50%)",
-            boxShadow: "0 0 5px rgba(255,255,255,0.55)",
+            boxShadow: "0 0 7px rgba(255,255,255,0.7)",
           }}
         />
       </div>
