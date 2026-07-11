@@ -176,6 +176,17 @@ export function NullspirePrimarch() {
           emissiveIntensity={1}
         />
       </mesh>
+      {/* Inner duel ring */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.06, 0]}>
+        <ringGeometry args={[5.5, 6.2, 48]} />
+        <meshStandardMaterial
+          color="#c4b5fd"
+          emissive="#a78bfa"
+          emissiveIntensity={1.2}
+          transparent
+          opacity={0.75}
+        />
+      </mesh>
     </group>
   );
 }
