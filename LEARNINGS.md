@@ -2,21 +2,21 @@
 
 Build diary. Newest entries at the top.
 
-## 2026-07-10 — Phase 11 visual north star (2h block ACTIVE · ~1.16h in)
+## 2026-07-10 — Phase 11 visual north star (2h block ACTIVE · ~1.36h in)
 - Armed wall-clock start `1783739050` · `block_hours=2` — code continuously
-- Chunky procedural industrial viewmodels (all 5 guns bulked Quake/UT scale)
-- Corner HUD: HEALTH/ARMOR numbers, weapon+ammo+1-5 slots, kill feed + FRAGS + secrets
+- Chunky procedural industrial viewmodels (all 5 guns bulked Quake/UT scale · 1.42)
+- Corner HUD: HEALTH/ARMOR numbers, weapon+ammo+orange slots, kill feed + FRAGS
 - Hangar light: brighter skylight wash, lighter fog/floor, orange+dual green runway
-- Floating emissive cube loot + weapon pickup cubes; plaza cover crates
-- Soft HangarBloom (medium/high) + tall wall light strips into mid-canyon
-- Orange Void RL / Scatter; thicker Rail; scroll+Q weapon cycle; 8s drop shield
-- Blocky hostiles/dummies; boss skylights; early drones/bastions/stalkers; FOV 80/92
+- Floating emissive cube loot + weapon pickup cubes; plaza cover crates + rings
+- Soft HangarBloom (medium/high) + tall wall light strips into mid-canyon pillars
+- Orange Void RL / Scatter; thicker Rail/Arc; scroll+Q weapon cycle; 8s drop shield
+- Blocky hostiles/dummies; boss skylights + orange wash; FOV 80/92; snappier move
 - Drop Zone barrel nests + flank secrets; denser cubes; fatter mags; early pads
 - Orange chevrons/gate; hangar-grey climb pads; beacon tower wash; flank pillars
-- Boss HUD restyle; hotter vignette/land dust; snappier look; ambience duck
+- Boss HUD restyle; hotter vignette/land dust/abilities; Singularity orange boom
 - Mid-block: harder Void kick/booms, fatter SMG/Scatter/Rail/Arc, orange jump pads
 - Bigger hit markers + land dust; denser barrels; thicker crosshair; multi-kill XL
-- Visual QA: Deploy → Drop Zone shows chunky SMG, corner HUD, orange lane, cubes, bloom
+- Visual QA (hard-refresh): chunky SMG, orange slot glow, corner HUD, orange lane, cubes, bloom
 - Live: https://nullspire-amber.vercel.app
 
 ## 2026-07-10 — Visual north star (user ref screenshot)

@@ -141,6 +141,12 @@ const SECRETS: {
     hint: "mid-lane under-pad medkit",
     radius: 4,
   },
+  {
+    position: [-15, 1.0, -60],
+    kind: "ammo",
+    hint: "canyon wall ammo niche",
+    radius: 4.5,
+  },
 ];
 
 let secretsFound = 0;
