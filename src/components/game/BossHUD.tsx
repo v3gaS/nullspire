@@ -33,34 +33,34 @@ export function BossHUD({
   const pct = Math.max(0, Math.min(100, (hp / maxHp) * 100));
 
   return (
-    <div className="pointer-events-none absolute left-1/2 top-20 z-10 w-[min(28rem,90vw)] -translate-x-1/2">
+    <div className="pointer-events-none absolute left-1/2 top-20 z-10 w-[min(32rem,92vw)] -translate-x-1/2">
       <div
-        className={`rounded bg-black/55 px-4 py-2.5 backdrop-blur-[2px] ${
+        className={`rounded bg-black/60 px-5 py-3 backdrop-blur-[2px] ${
           phaseFlash
-            ? "shadow-[0_0_32px_rgba(255,122,24,0.45)] ring-1 ring-orange-300/70"
-            : "ring-1 ring-white/10"
+            ? "shadow-[0_0_40px_rgba(255,122,24,0.55)] ring-1 ring-orange-300/80"
+            : "ring-1 ring-white/12"
         }`}
       >
         <div className="flex items-baseline justify-between gap-3">
-          <p className="text-sm font-semibold tracking-wide text-white">
+          <p className="text-base font-bold tracking-wide text-white">
             {name}
           </p>
           <p
-            className={`text-[10px] uppercase tracking-[0.25em] ${
+            className={`text-[11px] uppercase tracking-[0.28em] ${
               phaseFlash ? "animate-pulse text-orange-300" : "text-white/45"
             }`}
           >
             Phase {phase}
           </p>
         </div>
-        <div className="mt-2 h-2.5 overflow-hidden rounded-sm bg-white/10">
+        <div className="mt-2.5 h-3 overflow-hidden rounded-sm bg-white/10">
           <div
             className="h-full bg-gradient-to-r from-orange-500 to-amber-300 transition-[width] duration-150"
             style={{ width: `${pct}%` }}
           />
         </div>
         {phaseFlash ? (
-          <p className="mt-1 animate-pulse text-center text-[11px] font-bold uppercase tracking-[0.35em] text-orange-200">
+          <p className="mt-1.5 animate-pulse text-center text-xs font-bold uppercase tracking-[0.35em] text-orange-200">
             Phase shift — open fire
           </p>
         ) : null}

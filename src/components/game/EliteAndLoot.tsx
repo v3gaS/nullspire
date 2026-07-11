@@ -96,7 +96,7 @@ export function BastionUnit({
         castShadow
         userData={{ destructible: true, hp: 200, kind: "bastion" }}
       >
-        <boxGeometry args={[1.6, 2.2, 1.6]} />
+        <boxGeometry args={[1.85, 2.4, 1.85]} />
         <meshStandardMaterial
           color="#4b5563"
           metalness={0.8}
@@ -198,7 +198,7 @@ export function NullStalker({
       castShadow
       userData={{ destructible: true, hp: 55, kind: "stalker" }}
     >
-      <boxGeometry args={[0.9, 1.5, 0.7]} />
+      <boxGeometry args={[1.05, 1.7, 0.85]} />
       <meshStandardMaterial
         color="#c4b5fd"
         emissive="#7c3aed"
