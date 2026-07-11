@@ -101,6 +101,8 @@ Campaign build order. Check items as completed. Loop works top-down.
 - [x] Boss telegraph readability pass
 - [x] Audio mix: louder booms, duck ambience under fire
 - [x] Jump-pad boom + secret ring pulse + Overclock edge tint
+- [x] Reload gun dip + checkpoint/nest boom juice
+- [x] Biolume climb path markers
 
 ---
 

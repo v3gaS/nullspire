@@ -4,7 +4,9 @@ import { useFrame } from "@react-three/fiber";
 import { useRef, type MutableRefObject } from "react";
 import * as THREE from "three";
 import { useGameStore } from "@/stores/gameStore";
+import { useFxStore } from "@/stores/fxStore";
 import { playSfx } from "@/lib/game/audio";
+import { combatFx } from "@/components/game/CombatVfx";
 
 const GATES: {
   pos: [number, number, number];
@@ -77,6 +79,8 @@ function Gate({
         Math.min(100, useGameStore.getState().armor + 15),
       );
       playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.4);
+      combatFx.pushBoom(new THREE.Vector3(...pos), "#67e8f9", 3.2);
+      useFxStore.getState().pulseShake(0.09, 180);
       mesh.scale.setScalar(0.5);
       (mesh.material as THREE.MeshStandardMaterial).emissiveIntensity = 0.3;
     }

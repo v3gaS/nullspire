@@ -2,7 +2,9 @@
 
 import { useEffect, useRef } from "react";
 import { useGameStore, type WeaponId } from "@/stores/gameStore";
+import { useFxStore } from "@/stores/fxStore";
 import { WEAPON_ORDER } from "@/lib/game/constants";
+import { playSfx } from "@/lib/game/audio";
 
 const MAG_SIZE: Record<WeaponId, number> = {
   pulse_smg: 30,
@@ -26,6 +28,8 @@ export function useCombatInput() {
         const mag = MAG_SIZE[state.activeWeapon];
         if (weapon.ammo >= mag || weapon.reserve <= 0) return;
         reloading.current = true;
+        useFxStore.getState().pulseReload(900);
+        playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.28);
         window.setTimeout(() => {
           const s = useGameStore.getState();
           const w = s.weapons[s.activeWeapon];

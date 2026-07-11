@@ -97,6 +97,8 @@ export function WeaponViewmodel() {
     if (bobRate > 0) bob.current += dt * bobRate;
 
     const kickZ = kicking ? viewKick(active) : fx.kick * 0.07;
+    const reloading = performance.now() < fx.reloadUntil;
+    const reloadDip = reloading ? 0.12 : 0;
     const amp = playerLocomotion.sprinting ? 0.014 : 0.008;
     const right = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion);
     const up = new THREE.Vector3(0, 1, 0).applyQuaternion(camera.quaternion);
@@ -106,10 +108,12 @@ export function WeaponViewmodel() {
 
     const x =
       0.26 +
-      (playerLocomotion.moving ? Math.cos(bob.current * 0.5) * amp : 0);
+      (playerLocomotion.moving ? Math.cos(bob.current * 0.5) * amp : 0) +
+      (reloading ? Math.sin(performance.now() * 0.02) * 0.04 : 0);
     const y =
       -0.24 +
-      (playerLocomotion.moving ? Math.sin(bob.current) * amp * 0.6 : 0);
+      (playerLocomotion.moving ? Math.sin(bob.current) * amp * 0.6 : 0) -
+      reloadDip;
     const z = 0.55 - kickZ;
 
     g.position

@@ -5,7 +5,10 @@ import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import * as THREE from "three";
 import { useGameStore } from "@/stores/gameStore";
+import { useFxStore } from "@/stores/fxStore";
 import { playSfx } from "@/lib/game/audio";
+import { combatFx } from "@/components/game/CombatVfx";
+import { worldPos } from "@/lib/game/math";
 
 function Box({
   position,
@@ -50,7 +53,9 @@ function NestNode({ position }: { position: [number, number, number] }) {
       dead.current = true;
       mesh.visible = false;
       useGameStore.getState().setObjective("Nest destroyed — climb the vault shaft");
-      playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.45);
+      playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.55);
+      combatFx.pushBoom(worldPos(mesh), "#86efac", 4);
+      useFxStore.getState().pulseShake(0.14, 220);
     }
   });
 
@@ -100,6 +105,23 @@ export function BiolumeVaults() {
             color="#5eead4"
             emissive="#14b8a6"
             emissiveIntensity={1.4}
+          />
+        </mesh>
+      ))}
+      {/* Climb path markers — readable vertical route */}
+      {[2, 4.5, 7, 9.5, 12, 14.5].map((y) => (
+        <mesh
+          key={`climb-${y}`}
+          position={[0, y, -5]}
+          rotation={[-Math.PI / 2, 0, 0]}
+        >
+          <ringGeometry args={[0.4, 0.65, 3, 1, 0, (Math.PI * 2) / 3]} />
+          <meshStandardMaterial
+            color="#86efac"
+            emissive="#4ade80"
+            emissiveIntensity={1.1}
+            transparent
+            opacity={0.75}
           />
         </mesh>
       ))}
