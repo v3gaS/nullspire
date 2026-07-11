@@ -105,6 +105,12 @@ const SECRETS: {
     hint: "Primarch flank Null cache",
     radius: 5,
   },
+  {
+    position: [15, 1.2, -32],
+    kind: "health",
+    hint: "canyon berm medkit",
+    radius: 4.5,
+  },
 ];
 
 function SecretHint({

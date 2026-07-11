@@ -37,6 +37,7 @@ export function SentryTurret({
   const hp = useRef(80);
   const dead = useRef(false);
   const cooldown = useRef(0);
+  const windup = useRef(0);
 
   useFrame((state, dt) => {
     const mesh = meshRef.current;
@@ -51,19 +52,31 @@ export function SentryTurret({
     mesh.lookAt(cam.x, wp.y, cam.z);
     cooldown.current = Math.max(0, cooldown.current - dt);
     const dist = distToCam(mesh, cam);
-    if (
+    const muzzle = wp.clone().add(new THREE.Vector3(0, 0.6, 0));
+    const mat = mesh.material as THREE.MeshStandardMaterial;
+    if (windup.current > 0) {
+      windup.current = Math.max(0, windup.current - dt);
+      mat.emissiveIntensity = 1.5 + Math.sin(state.clock.elapsedTime * 18) * 0.5;
+      if (Math.random() < dt * 10) {
+        combatFx.pushBeam(muzzle, cam.clone(), "#fef08a", 0.05);
+      }
+      if (windup.current <= 0) {
+        cooldown.current = 1.7;
+        useGameStore.getState().damagePlayer(5);
+        playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.3);
+        combatFx.pushBeam(muzzle, cam.clone(), "#ff6644", 0.09);
+        combatFx.pushImpact(cam.clone(), "#ff6644");
+        mat.emissive = new THREE.Color("#ff5533");
+      }
+    } else if (
       dist < 22 &&
       cooldown.current <= 0 &&
       performance.now() >= useGameStore.getState().invulnerableUntil
     ) {
-      cooldown.current = 1.8;
-      useGameStore.getState().damagePlayer(5);
-      playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.28);
-      combatFx.pushBeam(wp.clone().add(new THREE.Vector3(0, 0.6, 0)), cam.clone(), "#ff6644", 0.07);
-      combatFx.pushImpact(cam.clone(), "#ff6644");
-      (mesh.material as THREE.MeshStandardMaterial).emissive = new THREE.Color(
-        "#ff5533",
-      );
+      windup.current = 0.38;
+      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.15);
+    } else {
+      mat.emissiveIntensity = 0.3;
     }
   });
 
