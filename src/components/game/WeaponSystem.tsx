@@ -198,6 +198,9 @@ export function WeaponSystem() {
             pos,
             until: performance.now() + 5000,
           });
+          combatFx.pushBoom(pos.clone(), "#60a5fa", 2.8);
+          combatFx.pushImpact(pos.clone(), "#93c5fd");
+          useFxStore.getState().pulseShake(0.08, 140);
           playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.5);
           break;
         }
@@ -211,6 +214,9 @@ export function WeaponSystem() {
           if (valid) {
             marked.current = valid.object;
             valid.object.userData.marked = true;
+            combatFx.pushImpact(valid.point.clone(), "#e879f9");
+            combatFx.pushBeam(origin, valid.point.clone(), "#f0abfc", 0.04);
+            useFxStore.getState().pulseShake(0.05, 100);
             playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.45);
           }
           break;

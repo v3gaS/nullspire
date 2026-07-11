@@ -2,6 +2,13 @@
 
 Build diary. Newest entries at the top.
 
+## 2026-07-10 — Continuous 2h Quake juice block (in progress)
+- Protocol: **code for ~2h**, pause only for build/deploy/QA — not stop-early
+- Shipped: rail pierce, kill X, chunkier FX, runway chevrons, barrel nests
+- Mid-canyon cover pocket, boss/drone/bastion yellow windups, ambience duck
+- Secrets/pads/overclock tint, reload dip, multi-kill banner, sprint FOV
+- Biolume climb markers + vault secrets; live https://nullspire-amber.vercel.app
+
 ## 2026-07-10 — Quake juice: pierce, kill X, chunkier FX
 - Rail Lance pierces up to 2 extra lined-up targets; Scatter/Void kick harder
 - Kill hit-marker (hot X) + bigger gib spray / impact sprites / boom spheres

@@ -95,8 +95,17 @@ export function GameHUD() {
         <p className="text-xs text-zinc-400">
           Ability: {meta.ability} (Null)
         </p>
-        <p className="mt-1 font-mono text-sm text-zinc-200">
+        <p
+          className={`mt-1 font-mono text-sm ${
+            weapon.ammo <= 3 ? "animate-pulse text-orange-300" : "text-zinc-200"
+          }`}
+        >
           {weapon.ammo} <span className="text-zinc-500">/ {weapon.reserve}</span>
+          {weapon.ammo <= 3 && weapon.reserve > 0 ? (
+            <span className="ml-2 text-[10px] uppercase tracking-widest text-orange-400">
+              reload
+            </span>
+          ) : null}
         </p>
       </div>
     </div>

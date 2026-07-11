@@ -51,6 +51,18 @@ const SECRETS: {
     hint: "vault approach ammo dump",
     radius: 5,
   },
+  {
+    position: [-10, 2.5, -92],
+    kind: "health",
+    hint: "Biolume side alcove",
+    radius: 4.5,
+  },
+  {
+    position: [8, 15.5, -95],
+    kind: "shards",
+    hint: "vault shaft high cache",
+    radius: 5,
+  },
 ];
 
 function SecretHint({
