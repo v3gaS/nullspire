@@ -122,4 +122,4 @@ Campaign build order. Check items as completed. Loop works top-down.
 4. Prefer playable increments over unfinished mega-features.
 
 ## Current focus
-**2h continuous block** (~0.6h remaining) — still coding; pause only for build/deploy/QA
+**2h continuous block** (~0.45h remaining) — still coding; pause only for build/deploy/QA
