@@ -312,8 +312,12 @@ export function PlayerController() {
             new THREE.Vector3(pos.x, 0.08, pos.z),
             "#94a3b8",
           );
+          combatFx.pushImpact(
+            new THREE.Vector3(pos.x - wish.x * 0.4, 0.1, pos.z - wish.z * 0.4),
+            "#64748b",
+          );
         }
-        footstep.current = playerLocomotion.sprinting ? 0.32 : 0.45;
+        footstep.current = playerLocomotion.sprinting ? 0.28 : 0.45;
       }
     } else {
       footstep.current = 0.1;

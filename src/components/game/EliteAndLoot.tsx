@@ -301,6 +301,9 @@ export function EliteAndLoot() {
       <LootDrop position={[9, 0.8, -40]} kind="ammo" />
       <LootDrop position={[-8, 0.8, -74]} kind="shards" />
       <LootDrop position={[0, 0.8, -116]} kind="health" />
+      <LootDrop position={[12, 0.8, -60]} kind="ammo" />
+      <LootDrop position={[-11, 0.8, -98]} kind="health" />
+      <LootDrop position={[3, 0.8, -130]} kind="shards" />
     </group>
   );
 }

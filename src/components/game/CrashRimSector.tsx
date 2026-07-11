@@ -374,10 +374,12 @@ export function CrashRimSector() {
       <JumpPad position={[0, 0.2, -126]} />
       <AcidHazard position={[-4, 0.08, -38]} size={[8, 0.1, 6]} />
       <AcidHazard position={[6, 0.08, -60]} size={[6, 0.1, 5]} />
+      <AcidHazard position={[-8, 0.08, -86]} size={[5, 0.1, 4]} />
+      <AcidHazard position={[7, 0.08, -110]} size={[5, 0.1, 4]} />
       <EnergyGrid position={[0, 0.06, -64]} size={[10, 3]} />
       <EnergyGrid position={[0, 0.06, -108]} size={[8, 2.5]} />
       <EnergyGrid position={[0, 0.06, -122]} size={[7, 2]} />
-      {/* Mid-canyon combat pocket cover — Quake lane readable */}
+      <EnergyGrid position={[5, 0.06, -95]} size={[5, 2]} />      {/* Mid-canyon combat pocket cover — Quake lane readable */}
       <Box position={[-5, 1.2, -40]} size={[2.2, 2.4, 1.2]} color="#5a4030" />
       <Box position={[5, 1.2, -41]} size={[2.2, 2.4, 1.2]} color="#5a4030" />
       <Box position={[0, 0.9, -43]} size={[3.5, 1.8, 1]} color="#4a3528" />
