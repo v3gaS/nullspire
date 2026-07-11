@@ -63,6 +63,18 @@ const SECRETS: {
     hint: "vault shaft high cache",
     radius: 5,
   },
+  {
+    position: [-12, 1.0, -125],
+    kind: "ammo",
+    hint: "Primarch antechamber stash",
+    radius: 4.5,
+  },
+  {
+    position: [11, 1.0, -128],
+    kind: "health",
+    hint: "Core ring medkit",
+    radius: 4.5,
+  },
 ];
 
 function SecretHint({
