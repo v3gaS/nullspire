@@ -1,6 +1,7 @@
 "use client";
 
 import { useFrame } from "@react-three/fiber";
+import { RigidBody } from "@react-three/rapier";
 import { useRef } from "react";
 import * as THREE from "three";
 import { useGameStore } from "@/stores/gameStore";
@@ -157,14 +158,18 @@ export function BloomMatriarch() {
         </mesh>
       ))}
       {/* Climb assist pads in vault shaft */}
-      <mesh position={[-3, 5, -2]} castShadow>
-        <boxGeometry args={[2.5, 0.3, 2.5]} />
-        <meshStandardMaterial color="#4ade80" emissive="#166534" emissiveIntensity={0.7} />
-      </mesh>
-      <mesh position={[3, 8, 1]} castShadow>
-        <boxGeometry args={[2.5, 0.3, 2.5]} />
-        <meshStandardMaterial color="#4ade80" emissive="#166534" emissiveIntensity={0.7} />
-      </mesh>
+      <RigidBody type="fixed" colliders="cuboid" position={[-3, 5, -2]}>
+        <mesh castShadow>
+          <boxGeometry args={[2.5, 0.3, 2.5]} />
+          <meshStandardMaterial color="#4ade80" emissive="#166534" emissiveIntensity={0.7} />
+        </mesh>
+      </RigidBody>
+      <RigidBody type="fixed" colliders="cuboid" position={[3, 8, 1]}>
+        <mesh castShadow>
+          <boxGeometry args={[2.5, 0.3, 2.5]} />
+          <meshStandardMaterial color="#4ade80" emissive="#166534" emissiveIntensity={0.7} />
+        </mesh>
+      </RigidBody>
     </group>
   );
 }
