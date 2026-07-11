@@ -16,6 +16,11 @@ import {
 import { worldPos } from "@/lib/game/math";
 
 const BARRELS: [number, number, number][] = [
+  // Drop Zone flank nest — immediate boom juice
+  [7.5, 0.7, -4],
+  [8.8, 0.7, -5.2],
+  [-8, 0.7, -5],
+  [-9.2, 0.7, -6.1],
   // Approach cluster — Quake chain setpiece (off spawn pad)
   [9, 0.7, -14],
   [10.5, 0.7, -15.2],
