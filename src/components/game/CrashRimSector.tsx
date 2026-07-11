@@ -82,11 +82,12 @@ function JumpPad({ position }: { position: [number, number, number] }) {
       <mesh position={[0, 0.2, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[0.9, 1.15, 3, 1, 0, (Math.PI * 2) / 3]} />
         <meshStandardMaterial
-          color="#ff9ad5"
-          emissive="#ff2ea6"
-          emissiveIntensity={1.5}
+          color="#ffe066"
+          emissive="#fbbf24"
+          emissiveIntensity={1.8}
           transparent
-          opacity={0.85}
+          opacity={0.9}
+          toneMapped={false}
         />
       </mesh>
       <mesh position={[0, 0.28, 0]} rotation={[-Math.PI / 2, 0, 0]}>
