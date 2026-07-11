@@ -8,9 +8,10 @@ Build diary. Newest entries at the top.
 - Corner HUD: HEALTH/ARMOR numbers, weapon+ammo+1-5 slots, kill feed + FRAGS + secrets
 - Hangar light: brighter skylight wash, lighter fog/floor, orange+green runway
 - Floating emissive cube loot + weapon pickup cubes; plaza cover crates
-- Soft HangarBloom (medium/high) + tall wall light strips; early Drop Zone skitters
+- Soft HangarBloom (medium/high) + tall wall light strips into mid-canyon
 - Orange Void RL / Scatter; thicker Rail; scroll+Q weapon cycle; 8s drop shield
-- Blocky practice dummies; boss arena skylights; denser armor cubes
+- Blocky hostiles/dummies; boss skylights; early drones; FOV 78/90
+- Visual QA: Deploy shows chunky SMG + corner HUD + orange lane + cube loot
 - Live: https://nullspire-amber.vercel.app
 
 ## 2026-07-10 — Visual north star (user ref screenshot)
