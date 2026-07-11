@@ -413,9 +413,9 @@ export function WeaponSystem() {
         switch (id) {
           case "pulse_smg":
             playSfx("/assets/audio/kenney-fps/blaster_repeater.ogg", overclocked ? 0.38 : 0.28);
-            useFxStore.getState().pulseMuzzle(overclocked ? "#ffe066" : "#7dffef", overclocked ? 70 : 45);
-            useFxStore.getState().pulseShake(overclocked ? 0.055 : 0.02, overclocked ? 80 : 60);
-            playerPhysics.punch(overclocked ? 0.028 : 0.018);
+            useFxStore.getState().pulseMuzzle(overclocked ? "#ffe066" : "#7dffef", overclocked ? 80 : 50);
+            useFxStore.getState().pulseShake(overclocked ? 0.065 : 0.025, overclocked ? 90 : 65);
+            playerPhysics.punch(overclocked ? 0.032 : 0.02);
             {
               const dir = forward.clone();
               const kick = useFxStore.getState().kick;
@@ -434,11 +434,11 @@ export function WeaponSystem() {
             useFxStore.getState().pulseMuzzle("#ffb347", 120);
             useFxStore.getState().pulseShake(0.085, 120);
             playerPhysics.punch(0.1);
-            for (let i = 0; i < 11; i++) {
+            for (let i = 0; i < 12; i++) {
               const dir = forward.clone();
-              dir.x += (Math.random() - 0.5) * 0.32;
-              dir.y += (Math.random() - 0.5) * 0.24;
-              dir.z += (Math.random() - 0.5) * 0.32;
+              dir.x += (Math.random() - 0.5) * 0.34;
+              dir.y += (Math.random() - 0.5) * 0.26;
+              dir.z += (Math.random() - 0.5) * 0.34;
               dir.normalize();
               shots.push({ dir, damage: 12, color: "#ffb347" });
             }
