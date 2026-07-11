@@ -145,18 +145,27 @@ function GlbDressing() {
         scale={2.8}
       />
 
-      {/* Scenic props — high / far */}
-      <GlbProp
-        url="/assets/models/kenney-fps/enemy-flying.glb"
-        position={[10, 4.5, -14]}
-        scale={2}
-        rotation={[0, Math.PI * 0.7, 0]}
-      />
-      <GlbProp
-        url="/assets/models/kenney-fps/enemy-flying.glb"
-        position={[-11, 5, -20]}
-        scale={2}
-      />
+      {/* Scenic blocky props — high / far (no Kenney cartoon enemies) */}
+      <mesh position={[10, 4.5, -14]} castShadow>
+        <boxGeometry args={[1.4, 1.0, 1.4]} />
+        <meshStandardMaterial
+          color="#94a3b8"
+          emissive="#38bdf8"
+          emissiveIntensity={0.55}
+          metalness={0.6}
+          roughness={0.35}
+        />
+      </mesh>
+      <mesh position={[-11, 5, -20]} castShadow>
+        <boxGeometry args={[1.4, 1.0, 1.4]} />
+        <meshStandardMaterial
+          color="#94a3b8"
+          emissive="#38bdf8"
+          emissiveIntensity={0.55}
+          metalness={0.6}
+          roughness={0.35}
+        />
+      </mesh>
       <GlbProp
         url="/assets/models/kenney-fps/cloud.glb"
         position={[6, 14, -28]}
