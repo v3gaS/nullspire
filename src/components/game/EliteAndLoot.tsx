@@ -215,12 +215,18 @@ export function LootDrop({
   kind,
 }: {
   position: [number, number, number];
-  kind: "health" | "ammo" | "shards";
+  kind: "health" | "ammo" | "shards" | "armor";
 }) {
   const meshRef = useRef<THREE.Mesh>(null);
   const taken = useRef(false);
   const color =
-    kind === "health" ? "#ff6b7a" : kind === "ammo" ? "#fbbf24" : "#5dffd7";
+    kind === "health"
+      ? "#4ade80"
+      : kind === "ammo"
+        ? "#fbbf24"
+        : kind === "armor"
+          ? "#a78bfa"
+          : "#5dffd7";
 
   useFrame((state) => {
     const mesh = meshRef.current;
@@ -234,6 +240,9 @@ export function LootDrop({
       switch (kind) {
         case "health":
           s.healPlayer(30);
+          break;
+        case "armor":
+          s.setArmor(Math.min(100, s.armor + 25));
           break;
         case "ammo": {
           const w = s.weapons[s.activeWeapon];
@@ -326,7 +335,9 @@ export function EliteAndLoot() {
       {/* Drop Zone plaza cubes — early readability */}
       <LootDrop position={[-3.5, 0.7, 5.5]} kind="health" />
       <LootDrop position={[4.2, 0.7, 4.8]} kind="ammo" />
-      <LootDrop position={[0, 0.7, 2.2]} kind="shards" />
+      <LootDrop position={[0, 0.7, 2.2]} kind="armor" />
+      <LootDrop position={[6.5, 0.7, 6]} kind="shards" />
+      <LootDrop position={[-6, 0.7, 6.5]} kind="armor" />
       <LootDrop position={[0, 0.8, -68]} kind="health" />
       <LootDrop position={[-7, 0.8, -46]} kind="ammo" />
       <LootDrop position={[11, 1.2, -52]} kind="shards" />

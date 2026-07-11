@@ -318,6 +318,18 @@ export function CrashRimSector() {
           opacity={0.28}
         />
       </mesh>
+      {/* Secondary green lane accent — arena floor read */}
+      <mesh position={[-3.2, 0.055, -8]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[0.35, 28]} />
+        <meshStandardMaterial
+          color="#4ade80"
+          emissive="#22c55e"
+          emissiveIntensity={0.9}
+          transparent
+          opacity={0.55}
+          toneMapped={false}
+        />
+      </mesh>
       {/* Direction chevrons — Quake-readable push lane */}
       {[2, -2, -6, -10, -14, -22, -30, -36].map((z) => (
         <mesh

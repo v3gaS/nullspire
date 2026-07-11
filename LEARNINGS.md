@@ -5,9 +5,10 @@ Build diary. Newest entries at the top.
 ## 2026-07-10 — Phase 11 visual north star (2h block ACTIVE)
 - Armed wall-clock start `1783739050` · `block_hours=2` — code continuously
 - Chunky procedural industrial viewmodels (orange/grey Quake/UT scale)
-- Corner HUD: HEALTH/ARMOR numbers, weapon+ammo+1-5 slots, kill feed
-- Hangar light: brighter skylight wash, lighter fog/floor
-- Floating emissive cube loot (health/ammo/shards)
+- Corner HUD: HEALTH/ARMOR numbers, weapon+ammo+1-5 slots, kill feed + FRAGS
+- Hangar light: brighter skylight wash, lighter fog/floor, orange runway
+- Floating emissive cube loot + weapon pickup cubes; plaza cover crates
+- Orange/white gib spray; hotter muzzle bloom; farther fog presets
 - Live: https://nullspire-amber.vercel.app
 
 ## 2026-07-10 — Visual north star (user ref screenshot)
