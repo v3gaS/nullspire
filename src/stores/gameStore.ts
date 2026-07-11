@@ -76,8 +76,8 @@ const defaultWeapons: Record<WeaponId, WeaponState> = {
   scatter_carbine: {
     id: "scatter_carbine",
     unlocked: false,
-    ammo: 7,
-    reserve: 28,
+    ammo: 9,
+    reserve: 36,
   },
   arc_caster: { id: "arc_caster", unlocked: false, ammo: 14, reserve: 42 },
   rail_lance: { id: "rail_lance", unlocked: false, ammo: 5, reserve: 15 },

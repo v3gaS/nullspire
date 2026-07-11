@@ -8,7 +8,7 @@ import { playSfx } from "@/lib/game/audio";
 
 const MAG_SIZE: Record<WeaponId, number> = {
   pulse_smg: 35,
-  scatter_carbine: 7,
+  scatter_carbine: 9,
   arc_caster: 14,
   rail_lance: 5,
   void_launcher: 4,
