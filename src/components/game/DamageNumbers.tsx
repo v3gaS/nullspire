@@ -33,15 +33,15 @@ export function DamageNumbers() {
         return (
           <div
             key={p.id}
-            className="absolute left-1/2 font-mono font-black"
+            className="absolute left-1/2 font-black tracking-tight"
             style={{
-              fontSize: big ? "1.65rem" : mid ? "1.35rem" : "1.1rem",
-              transform: `translate(-50%, ${-age * 56 - i * 8}px) scale(${1 + (big ? 0.45 : mid ? 0.2 : 0)})`,
+              fontSize: big ? "2rem" : mid ? "1.55rem" : "1.25rem",
+              transform: `translate(-50%, ${-age * 64 - i * 10}px) scale(${1 + (big ? 0.55 : mid ? 0.28 : 0.08)})`,
               opacity: 1 - age,
-              color: big ? "#ff5533" : mid ? "#ffe066" : "#fde68a",
+              color: big ? "#ff4422" : mid ? "#ff9f43" : "#f8fafc",
               textShadow: big
-                ? "0 0 16px rgba(255,80,40,0.85), 0 2px 0 rgba(0,0,0,0.9)"
-                : "0 0 10px rgba(0,0,0,0.9)",
+                ? "0 0 18px rgba(255,70,30,0.9), 0 2px 0 rgba(0,0,0,0.95)"
+                : "0 0 12px rgba(0,0,0,0.95), 0 1px 0 #000",
             }}
           >
             {p.damage}
