@@ -196,18 +196,27 @@ function SecretHint({
           `SECRET FOUND (${secretsFound}/${SECRETS.length}) — ${hint}`,
         );
       playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.62);
-      useFxStore.getState().pulseShake(0.18, 280);
+      useFxStore.getState().pulseShake(0.24, 340);
       combatFx.pushBoom(
         new THREE.Vector3(...position),
         "#fbbf24",
-        3.8,
+        4.6,
       );
       combatFx.pushBoom(
         new THREE.Vector3(position[0], position[1] + 0.4, position[2]),
         "#ffe066",
-        1.8,
+        2.4,
+      );
+      combatFx.pushBoom(
+        new THREE.Vector3(position[0], position[1] + 0.15, position[2]),
+        "#ffffff",
+        1.2,
       );
       combatFx.pushImpact(new THREE.Vector3(...position), "#ffe066");
+      combatFx.pushImpact(
+        new THREE.Vector3(position[0], position[1] + 0.6, position[2]),
+        "#ff7a18",
+      );
     }
   });
 
