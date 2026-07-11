@@ -150,28 +150,39 @@ export function GameApp() {
         >
           <color attach="background" args={["#2a3a4d"]} />
           <fog attach="fog" args={["#3a4a5e", 75, cfg.fogFar]} />
-          <ambientLight intensity={0.85} />
+          <ambientLight intensity={0.95} />
           <directionalLight
             castShadow={cfg.shadows}
-            intensity={1.55}
+            intensity={1.7}
             position={[30, 42, 8]}
             color="#f0d9a8"
             shadow-mapSize={cfg.shadows ? [2048, 2048] : [512, 512]}
           />
-          <hemisphereLight args={["#d4b896", "#1e2d3d", 0.7]} />
+          <hemisphereLight args={["#d4b896", "#1e2d3d", 0.8]} />
           <pointLight
             position={[16, 12, -20]}
-            intensity={2.5}
+            intensity={2.8}
             color="#2ee6c8"
-            distance={45}
+            distance={48}
           />
           <pointLight
             position={[0, 8, 8]}
-            intensity={2.4}
+            intensity={2.8}
             color="#f4a261"
+            distance={40}
+          />
+          <pointLight
+            position={[0, 10, -70]}
+            intensity={2.0}
+            color="#7dffef"
             distance={36}
           />
-          <Stars
+          <pointLight
+            position={[0, 12, -130]}
+            intensity={2.4}
+            color="#a78bfa"
+            distance={40}
+          />          <Stars
             radius={140}
             depth={50}
             count={cfg.starCount}

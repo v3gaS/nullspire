@@ -281,19 +281,23 @@ export function CrashRimSector() {
 
       {/* Open Drop Zone pad — keep the look-ahead lane empty */}
       <Box position={[0, 0.12, 8]} size={[14, 0.24, 14]} color="#3d4a55" />
+      {/* Spawn plaza fill lights — Quake readability */}
+      <pointLight position={[0, 6, 6]} intensity={2.2} color="#ffe8c8" distance={22} />
+      <pointLight position={[-8, 4, 2]} intensity={1.2} color="#7dffef" distance={16} />
+      <pointLight position={[8, 4, 0]} intensity={1.2} color="#7dffef" distance={16} />
       {/* Runway stripe toward the beacon so the push direction reads instantly */}
-      <mesh position={[0, 0.06, -6]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[2.2, 40]} />
+      <mesh position={[0, 0.06, -10]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[2.4, 52]} />
         <meshStandardMaterial
           color="#2ee6c8"
           emissive="#2ee6c8"
-          emissiveIntensity={0.55}
+          emissiveIntensity={0.65}
           transparent
-          opacity={0.45}
+          opacity={0.5}
         />
       </mesh>
       {/* Direction chevrons — Quake-readable push lane */}
-      {[2, -2, -6, -10, -14, -22, -30].map((z) => (
+      {[2, -2, -6, -10, -14, -22, -30, -36].map((z) => (
         <mesh
           key={`chev-${z}`}
           position={[0, 0.08, z]}
