@@ -27,9 +27,9 @@ export function HitMarker() {
 
   const kill = mode === "kill";
   const color = kill ? "#ff4422" : "#ffffff";
-  const size = kill ? "h-20 w-20" : "h-11 w-11";
-  const arm = kill ? "h-7 w-2" : "h-4 w-1";
-  const armH = kill ? "h-2 w-7" : "h-1 w-4";
+  const size = kill ? "h-24 w-24" : "h-12 w-12";
+  const arm = kill ? "h-8 w-2.5" : "h-5 w-1.5";
+  const armH = kill ? "h-2.5 w-8" : "h-1.5 w-5";
 
   return (
     <div className="pointer-events-none absolute left-1/2 top-1/2 z-[7] -translate-x-1/2 -translate-y-1/2">
@@ -37,8 +37,8 @@ export function HitMarker() {
         className={`relative ${size}`}
         style={
           kill
-            ? { transform: "rotate(45deg) scale(1.08)" }
-            : { transform: "scale(1.05)" }
+            ? { transform: "rotate(45deg) scale(1.12)" }
+            : { transform: "scale(1.08)" }
         }
       >
         <div

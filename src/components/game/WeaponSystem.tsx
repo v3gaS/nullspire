@@ -220,15 +220,16 @@ export function WeaponSystem() {
           combatFx.pushBoom(
             origin.clone().add(forward.clone().multiplyScalar(1.2)),
             "#ffe066",
-            3.2,
+            3.8,
           );
-          combatFx.pushBoom(origin.clone(), "#7dffef", 2.0);
+          combatFx.pushBoom(origin.clone(), "#ff9f43", 2.6);
           combatFx.pushBoom(
             origin.clone().add(forward.clone().multiplyScalar(0.6)),
             "#ffffff",
-            1.0,
+            1.35,
           );
-          playerPhysics.punch(0.06);
+          useFxStore.getState().pulseMuzzle("#ffe066", 160);
+          playerPhysics.punch(0.08);
           playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.62);
           break;
         }
@@ -251,15 +252,21 @@ export function WeaponSystem() {
           combatFx.pushBoom(
             origin.clone().add(forward.clone().multiplyScalar(2.5)),
             "#ffb347",
-            5.0,
+            5.8,
           );
           combatFx.pushBoom(
             origin.clone().add(forward.clone().multiplyScalar(1.5)),
             "#ff7a18",
-            2.4,
+            3.0,
+          );
+          combatFx.pushBoom(
+            origin.clone().add(forward.clone().multiplyScalar(2)),
+            "#ffffff",
+            1.5,
           );
           combatFx.pushImpact(origin.clone().add(forward.clone().multiplyScalar(2)), "#ffb347");
-          useFxStore.getState().pulseShake(0.24, 340);
+          useFxStore.getState().pulseMuzzle("#ff7a18", 140);
+          useFxStore.getState().pulseShake(0.28, 380);
           playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.68);
           break;
         }
@@ -298,14 +305,15 @@ export function WeaponSystem() {
             marked.current = valid.object;
             valid.object.userData.marked = true;
             combatFx.pushImpact(valid.point.clone(), "#e879f9");
-            combatFx.pushBeam(origin, valid.point.clone(), "#f0abfc", 0.14);
-            combatFx.pushBoom(valid.point.clone(), "#e879f9", 2.2);
+            combatFx.pushBeam(origin, valid.point.clone(), "#f0abfc", 0.22);
+            combatFx.pushBoom(valid.point.clone(), "#e879f9", 2.8);
             combatFx.pushBoom(
               valid.point.clone().add(new THREE.Vector3(0, 0.3, 0)),
               "#f0abfc",
-              1.0,
+              1.35,
             );
-            useFxStore.getState().pulseShake(0.09, 150);
+            useFxStore.getState().pulseMuzzle("#f0abfc", 120);
+            useFxStore.getState().pulseShake(0.12, 180);
             playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.55);
           }
           break;
@@ -359,22 +367,29 @@ export function WeaponSystem() {
     // Storm Nest ticks
     for (const nest of nests.current) {
       if (now > nest.until) continue;
-      if (Math.random() < dt * 8) {
+      if (Math.random() < dt * 10) {
         combatFx.pushImpact(
           nest.pos
             .clone()
             .add(
               new THREE.Vector3(
-                (Math.random() - 0.5) * 3.5,
-                Math.random() * 1.8,
-                (Math.random() - 0.5) * 3.5,
+                (Math.random() - 0.5) * 4.2,
+                Math.random() * 2.2,
+                (Math.random() - 0.5) * 4.2,
               ),
             ),
           "#60a5fa",
         );
       }
-      if (Math.random() < dt * 2.5) {
-        combatFx.pushBoom(nest.pos.clone(), "#60a5fa", 1.2);
+      if (Math.random() < dt * 3.2) {
+        combatFx.pushBoom(nest.pos.clone(), "#60a5fa", 1.6);
+      }
+      if (Math.random() < dt * 1.4) {
+        combatFx.pushBoom(
+          nest.pos.clone().add(new THREE.Vector3(0, 0.5, 0)),
+          "#93c5fd",
+          0.9,
+        );
       }
       for (const obj of collectDestructibles(scene)) {
         const op = worldPos(obj);
@@ -592,14 +607,25 @@ export function WeaponSystem() {
 
           const beamWidth =
             id === "rail_lance"
-              ? 0.4
+              ? 0.48
               : id === "void_launcher"
-                ? 0.24
+                ? 0.28
                 : id === "scatter_carbine"
-                  ? 0.085
-                  : 0.14;
+                  ? 0.1
+                  : id === "pulse_smg"
+                    ? 0.16
+                    : 0.15;
           combatFx.pushBeam(muzzle, impact, shot.color, beamWidth);
           combatFx.pushImpact(impact, shot.color);
+          if (id === "pulse_smg") {
+            // Short secondary tracer for SMG readability
+            combatFx.pushBeam(
+              muzzle,
+              impact.clone().lerp(muzzle, 0.35),
+              "#ffffff",
+              0.05,
+            );
+          }
           if (id === "void_launcher") {
             combatFx.pushBoom(impact, "#ff7a18", 4.4);
             combatFx.pushBoom(
@@ -628,7 +654,7 @@ export function WeaponSystem() {
                 const op = worldPos(obj);
                 if (op.distanceTo(primary) < 9.5 && chained < 5) {
                   applyHit(obj, 14, primary);
-                  combatFx.pushBeam(primary, op, "#93c5fd", 0.08);
+                  combatFx.pushBeam(primary, op, "#93c5fd", 0.12);
                   combatFx.pushImpact(op, "#93c5fd");
                   chained++;
                 }
@@ -651,7 +677,7 @@ export function WeaponSystem() {
                 if (obj.userData.marked) pierceDmg = Math.round(pierceDmg * 1.5);
                 applyHit(obj, pierceDmg, origin);
                 combatFx.pushImpact(h.point.clone(), "#f0abfc");
-                combatFx.pushBeam(impact, h.point.clone(), "#e879f9", 0.1);
+                combatFx.pushBeam(impact, h.point.clone(), "#e879f9", 0.18);
                 pierced++;
               }
             }
