@@ -132,7 +132,6 @@ function Gate({
           toneMapped={false}
         />
       </mesh>
-      <pointLight position={pos} color="#67e8f9" intensity={1.8} distance={10} />
     </group>
   );
 }

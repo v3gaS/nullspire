@@ -22,7 +22,7 @@ function loadQuality(): QualityPreset {
 }
 
 export const useSettingsStore = create<SettingsState>((set) => ({
-  quality: "medium",
+  quality: "low",
   setQuality: (quality) => {
     set({ quality });
     if (typeof window !== "undefined") {
@@ -40,26 +40,41 @@ export function qualityConfig(q: QualityPreset) {
     case "low":
       return {
         shadows: false,
-        starCount: 400,
-        dpr: 1,
+        starCount: 0,
+        dpr: 0.75,
         antialias: false,
-        fogFar: 90,
+        fogFar: 70,
+        hdri: false,
+        pbrFloor: false,
+        worldLights: false,
+        debris: false,
+        dressing: false,
       };
     case "medium":
       return {
         shadows: false,
-        starCount: 1200,
+        starCount: 400,
         dpr: 1,
         antialias: false,
-        fogFar: 120,
+        fogFar: 100,
+        hdri: false,
+        pbrFloor: true,
+        worldLights: false,
+        debris: true,
+        dressing: true,
       };
     case "high":
       return {
         shadows: true,
-        starCount: 2500,
-        dpr: 1.25,
+        starCount: 1200,
+        dpr: 1.15,
         antialias: true,
-        fogFar: 150,
+        fogFar: 140,
+        hdri: true,
+        pbrFloor: true,
+        worldLights: true,
+        debris: true,
+        dressing: true,
       };
     default: {
       const _exhaustive: never = q;

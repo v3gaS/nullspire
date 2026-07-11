@@ -324,12 +324,6 @@ export function LootDrop({
           toneMapped={false}
         />
       </mesh>
-      <pointLight
-        position={position}
-        color={color}
-        intensity={0.9}
-        distance={6}
-      />
     </group>
   );
 }

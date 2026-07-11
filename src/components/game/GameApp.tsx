@@ -55,7 +55,13 @@ function LoadingBeacon() {
   );
 }
 
-function World({ showDressing }: { showDressing: boolean }) {
+function World({
+  showDressing,
+  showDebris,
+}: {
+  showDressing: boolean;
+  showDebris: boolean;
+}) {
   const runId = useGameStore((s) => s.runId);
   return (
     <Physics gravity={[0, -18, 0]}>
@@ -80,11 +86,11 @@ function World({ showDressing }: { showDressing: boolean }) {
         <AegisWarden />
         <BloomMatriarch />
         <NullspirePrimarch />
-          <WeaponPickup id="scatter_carbine" position={[-4, 1.6, -6]} />
-          <WeaponPickup id="arc_caster" position={[-7, 3.0, -10]} />
-          <WeaponPickup id="rail_lance" position={[2, 5.6, -16]} />
-          <WeaponPickup id="void_launcher" position={[0, 1.2, -70]} />
-        <PhysicsDebris />
+        <WeaponPickup id="scatter_carbine" position={[-4, 1.6, -6]} />
+        <WeaponPickup id="arc_caster" position={[-7, 3.0, -10]} />
+        <WeaponPickup id="rail_lance" position={[2, 5.6, -16]} />
+        <WeaponPickup id="void_launcher" position={[0, 1.2, -70]} />
+        {showDebris && <PhysicsDebris />}
         <ExplosiveBarrels />
         <SecretCaches />
         <WeaponSystem />
@@ -95,14 +101,18 @@ function World({ showDressing }: { showDressing: boolean }) {
 
 export function GameApp() {
   const screen = useGameStore((s) => s.screen);
-  const boss = useGameStore((s) => s.boss);
   const quality = useSettingsStore((s) => s.quality);
   const cfg = qualityConfig(quality);
-  const checkpointLabel = useGameStore((s) => s.checkpoint.label);
   useCombatInput();
 
   useEffect(() => {
     hydrateSettings();
+    // One-time migration after freeze incident — user can raise quality later
+    if (!window.localStorage.getItem("nullspire_perf_v3")) {
+      window.localStorage.setItem("nullspire_quality", "low");
+      window.localStorage.setItem("nullspire_perf_v3", "1");
+      useSettingsStore.getState().setQuality("low");
+    }
     useGameStore.setState({
       mouseSensitivity: Number(window.localStorage.getItem("nullspire_sens")) || 1,
       sfxVolume: (() => {
@@ -124,38 +134,45 @@ export function GameApp() {
         >
         <Canvas
           shadows={cfg.shadows}
-          dpr={[1, cfg.dpr]}
-          camera={{ fov: 80, near: 0.08, far: 320, position: [0, 2, 8] }}
+          dpr={[0.6, cfg.dpr]}
+          camera={{ fov: 80, near: 0.1, far: cfg.fogFar + 40, position: [0, 2, 8] }}
           gl={{
             antialias: cfg.antialias,
             powerPreference: "high-performance",
             alpha: false,
-            preserveDrawingBuffer: true,
+            preserveDrawingBuffer: false,
+            stencil: false,
+            depth: true,
           }}
+          performance={{ min: 0.4 }}
           className="absolute inset-0"
         >
-          <color attach="background" args={["#4a5564"]} />
-          <fog attach="fog" args={["#6a7888", 55, cfg.fogFar]} />
-          <ambientLight intensity={0.55} />
+          <color attach="background" args={["#5a6570"]} />
+          <fog attach="fog" args={["#6a7888", 35, cfg.fogFar]} />
+          <ambientLight intensity={0.85} />
           <directionalLight
             castShadow={cfg.shadows}
-            intensity={1.4}
+            intensity={1.15}
             position={[18, 55, 12]}
             color="#fff4e0"
-            shadow-mapSize={cfg.shadows ? [1024, 1024] : [512, 512]}
+            shadow-mapSize={[512, 512]}
           />
-          <hemisphereLight args={["#efe4d0", "#2a3544", 0.55]} />
-          <Suspense fallback={null}>
-            <ArenaAtmosphere />
-          </Suspense>
-          <Stars
-            radius={140}
-            depth={50}
-            count={Math.min(cfg.starCount, 800)}
-            factor={3.5}
-            fade
-            speed={0.25}
-          />
+          <hemisphereLight args={["#efe4d0", "#2a3544", 0.7]} />
+          {cfg.hdri && (
+            <Suspense fallback={null}>
+              <ArenaAtmosphere />
+            </Suspense>
+          )}
+          {cfg.starCount > 0 && (
+            <Stars
+              radius={120}
+              depth={40}
+              count={cfg.starCount}
+              factor={3}
+              fade
+              speed={0.2}
+            />
+          )}
           <Suspense fallback={null}>
             <CombatVfx />
           </Suspense>
@@ -163,7 +180,10 @@ export function GameApp() {
             <WeaponViewmodel />
           </Suspense>
           <Suspense fallback={<LoadingBeacon />}>
-            <World showDressing={quality !== "low"} />
+            <World
+              showDressing={cfg.dressing}
+              showDebris={cfg.debris}
+            />
           </Suspense>
           <HangarBloom />
         </Canvas>
@@ -180,14 +200,7 @@ export function GameApp() {
           <HitMarker />
           <DamageNumbers />
           <GameHUD />
-          {boss.active && (
-            <BossHUD
-              name={boss.name}
-              hp={boss.hp}
-              maxHp={boss.maxHp}
-              phase={boss.phase}
-            />
-          )}
+          <BossHUD />
         </>
       )}
       {screen === "paused" && <PauseMenu />}
@@ -230,7 +243,7 @@ export function GameApp() {
             Fragged on Nullspire. Reboot and push again.
           </p>
           <p className="mt-2 text-xs uppercase tracking-[0.25em] text-zinc-500">
-            Last CP · {checkpointLabel}
+            Last CP · {useGameStore.getState().checkpoint.label}
           </p>
           <button
             type="button"

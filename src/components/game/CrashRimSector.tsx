@@ -2,8 +2,7 @@
 
 import { useFrame } from "@react-three/fiber";
 import { RigidBody } from "@react-three/rapier";
-import { useGLTF } from "@react-three/drei";
-import { Suspense, useRef } from "react";
+import { useRef } from "react";
 import * as THREE from "three";
 import { useGameStore } from "@/stores/gameStore";
 import { useFxStore } from "@/stores/fxStore";
@@ -23,9 +22,9 @@ function Box({
 }) {
   return (
     <RigidBody type="fixed" colliders="cuboid" position={position}>
-      <mesh castShadow receiveShadow>
+      <mesh>
         <boxGeometry args={size} />
-        <meshStandardMaterial color={color} roughness={0.78} metalness={0.18} />
+        <meshBasicMaterial color={color} />
       </mesh>
     </RigidBody>
   );
@@ -101,33 +100,7 @@ function JumpPad({ position }: { position: [number, number, number] }) {
           toneMapped={false}
         />
       </mesh>
-      <pointLight position={[0, 1.2, 0]} color="#ff7a18" intensity={1.2} distance={8} />
     </RigidBody>
-  );
-}
-
-function Prop({
-  url,
-  position,
-  scale = 1,
-  rotation = [0, 0, 0] as [number, number, number],
-}: {
-  url: string;
-  position: [number, number, number];
-  scale?: number;
-  rotation?: [number, number, number];
-}) {
-  const { scene } = useGLTF(url);
-  const cloned = scene.clone(true);
-  return (
-    <primitive
-      object={cloned}
-      position={position}
-      scale={scale}
-      rotation={rotation}
-      castShadow
-      receiveShadow
-    />
   );
 }
 
@@ -193,12 +166,6 @@ function Beacon({ position }: { position: [number, number, number] }) {
           opacity={0.75}
         />
       </mesh>
-      <pointLight
-        position={position}
-        color="#7dffef"
-        intensity={3.2}
-        distance={18}
-      />
     </group>
   );
 }
@@ -315,7 +282,6 @@ export function CrashRimSector() {
         />
       </mesh>
       {/* Spawn plaza fill — HDRI does most mood; keep one soft fill */}
-      <pointLight position={[0, 8, 6]} intensity={1.1} color="#fff4e0" distance={22} />
       {/* Orange runway stripe — lane read without chevron spam */}
       <mesh position={[0, 0.07, -10]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[1.6, 56]} />
@@ -428,8 +394,6 @@ export function CrashRimSector() {
           toneMapped={false}
         />
       </mesh>
-      <pointLight position={[0, 3, -18]} intensity={2.2} color="#ff7a18" distance={16} />
-      <pointLight position={[0, 8, -18]} intensity={2.0} color="#fff4e0" distance={20} />
 
       <Box position={[-4, 1.2, -6]} size={[3, 0.4, 3]} color="#6a7580" />
       <Box position={[-7, 2.6, -10]} size={[3, 0.4, 3]} color="#7a8590" />
@@ -438,8 +402,6 @@ export function CrashRimSector() {
 
       <Box position={[16, 4, -20]} size={[6, 8, 6]} color="#6a7580" />
       <Box position={[16, 8.5, -20]} size={[4, 1, 4]} color="#ff7a18" />
-      <pointLight position={[16, 12, -20]} intensity={3.0} color="#fff4e0" distance={28} />
-      <pointLight position={[16, 10, -20]} intensity={2.2} color="#ff7a18" distance={22} />
 
       {[-30, -20, -10, 0, 10, 20].map((z) => (
         <Box key={z} position={[-22, 2, z]} size={[2, 4, 2]} color="#7a6a58" />
@@ -522,7 +484,6 @@ export function CrashRimSector() {
           toneMapped={false}
         />
       </mesh>
-      <pointLight position={[0, 3, 4]} intensity={1.8} color="#ff7a18" distance={14} />
 
       {/* Mid-canyon combat pocket — cover flanks, open kill lane */}
       <Box position={[-7, 1.1, -40]} size={[2.2, 2.2, 2.2]} color="#6a5a48" />
@@ -537,7 +498,6 @@ export function CrashRimSector() {
       <Box position={[12, 0.65, -46]} size={[1.7, 1.3, 1.5]} color="#8a7a68" />
       <Box position={[-3, 0.5, -50]} size={[1.4, 1.0, 1.6]} color="#6a5a48" />
       <Box position={[3.5, 0.55, -52]} size={[1.5, 1.1, 1.3]} color="#5a6570" />
-      <pointLight position={[0, 14, -46]} intensity={3.2} color="#fff4e0" distance={36} />
       {/* Mid-canyon hangar light strips — arena wall glow */}
       <mesh position={[-16.5, 7, -46]}>
         <boxGeometry args={[0.18, 1.8, 22]} />
@@ -575,8 +535,6 @@ export function CrashRimSector() {
           toneMapped={false}
         />
       </mesh>
-      <pointLight position={[-15, 7, -46]} intensity={2.4} color="#fff4e0" distance={22} />
-      <pointLight position={[15, 7, -48]} intensity={2.4} color="#fff4e0" distance={22} />
       <mesh position={[0, 0.05, -46]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[10, 16]} />
         <meshStandardMaterial
@@ -653,7 +611,6 @@ export function CrashRimSector() {
       <Box position={[2, 3.2, -58]} size={[4, 0.4, 4]} color="#7a8590" />
       <Box position={[10, 4.8, -64]} size={[4, 0.4, 4]} color="#8a9098" />
       <Box position={[0, 0.2, -70]} size={[16, 0.4, 16]} color="#5a6570" />
-      <pointLight position={[0, 16, -70]} intensity={1.6} color="#fff4e0" distance={28} />
       <mesh position={[0, 0.42, -70]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[1.4, 18]} />
         <meshStandardMaterial
@@ -668,14 +625,10 @@ export function CrashRimSector() {
 
       <JumpPad position={[0, 0.2, -28]} />
       <JumpPad position={[8, 0.2, -48]} />
-      <JumpPad position={[-8, 0.2, -56]} />
       <JumpPad position={[0, 0.2, -72]} />
-      <JumpPad position={[-4, 0.2, -88]} />
-      <JumpPad position={[6, 0.2, -105]} />
       <JumpPad position={[0, 0.2, -126]} />
       <JumpPad position={[-7, 0.2, -8]} />
       <JumpPad position={[7.5, 0.2, -10]} />
-      <JumpPad position={[0, 0.2, -38]} />
       <AcidHazard position={[-4, 0.08, -38]} size={[8, 0.1, 6]} />
       <AcidHazard position={[6, 0.08, -60]} size={[6, 0.1, 5]} />
       <AcidHazard position={[-8, 0.08, -86]} size={[5, 0.1, 4]} />
@@ -700,40 +653,6 @@ export function CrashRimSector() {
       <Box position={[9, 1.0, -125]} size={[2.2, 2.0, 1.3]} color="#2e1065" />
       <Box position={[-4, 0.9, -130]} size={[2.8, 1.8, 1.2]} color="#312e81" />
       <Box position={[4, 0.9, -131]} size={[2.8, 1.8, 1.2]} color="#312e81" />
-      <Suspense fallback={null}>
-        <Prop
-          url="/assets/models/kenney-fps/wall-high.glb"
-          position={[20, 0, -8]}
-          scale={2}
-        />
-        <Prop
-          url="/assets/models/kenney-fps/wall-low.glb"
-          position={[-18, 0, -12]}
-          scale={2}
-        />
-        <Prop
-          url="/assets/models/kenney-fps/platform.glb"
-          position={[-14, 0.1, -4]}
-          scale={2}
-        />
-        <Prop
-          url="/assets/models/kenney-fps/platform-large-grass.glb"
-          position={[0, 0.05, -70]}
-          scale={3}
-        />
-        <Prop
-          url="/assets/models/kenney-fps/enemy-flying.glb"
-          position={[10, 4, -18]}
-          scale={1.5}
-          rotation={[0, Math.PI, 0]}
-        />
-      </Suspense>
     </group>
   );
 }
-
-useGLTF.preload("/assets/models/kenney-fps/wall-high.glb");
-useGLTF.preload("/assets/models/kenney-fps/wall-low.glb");
-useGLTF.preload("/assets/models/kenney-fps/platform.glb");
-useGLTF.preload("/assets/models/kenney-fps/platform-large-grass.glb");
-useGLTF.preload("/assets/models/kenney-fps/enemy-flying.glb");

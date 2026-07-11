@@ -37,12 +37,20 @@ export function AegisWarden() {
     if (dist < 28) engaged.current = true;
 
     if (engaged.current) {
-      useGameStore.getState().setBoss({
-        name: "Aegis Warden",
-        hp: hp.current,
-        maxHp: 500,
-        phase: phase.current,
-      });
+      const b = useGameStore.getState().boss;
+      if (
+        !b.active ||
+        b.hp !== hp.current ||
+        b.phase !== phase.current ||
+        b.name !== "Aegis Warden"
+      ) {
+        useGameStore.getState().setBoss({
+          name: "Aegis Warden",
+          hp: hp.current,
+          maxHp: 500,
+          phase: phase.current,
+        });
+      }
     }
 
     if (hp.current <= 0) {
@@ -166,8 +174,6 @@ export function AegisWarden() {
           opacity={0.8}
         />
       </mesh>
-      <pointLight position={[0, 14, 0]} intensity={2.2} color="#fff4e0" distance={40} />
-      <pointLight position={[0, 8, 4]} intensity={1.4} color="#ff7a18" distance={22} />
       {/* Warden plaza cover — solid Quake duel blocks */}
       {[
         [-7, 1.2, -4],

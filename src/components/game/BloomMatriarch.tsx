@@ -37,12 +37,20 @@ export function BloomMatriarch() {
     if (dist < 32) engaged.current = true;
 
     if (engaged.current) {
-      useGameStore.getState().setBoss({
-        name: "Bloom Matriarch",
-        hp: hp.current,
-        maxHp: 650,
-        phase: phase.current,
-      });
+      const b = useGameStore.getState().boss;
+      if (
+        !b.active ||
+        b.hp !== hp.current ||
+        b.phase !== phase.current ||
+        b.name !== "Bloom Matriarch"
+      ) {
+        useGameStore.getState().setBoss({
+          name: "Bloom Matriarch",
+          hp: hp.current,
+          maxHp: 650,
+          phase: phase.current,
+        });
+      }
     }
 
     if (hp.current <= 0) {
@@ -210,8 +218,6 @@ export function BloomMatriarch() {
           />
         </mesh>
       ))}
-      <pointLight position={[0, 14, 0]} intensity={2.0} color="#86efac" distance={34} />
-      <pointLight position={[0, 8, 4]} intensity={1.3} color="#ff7a18" distance={20} />
     </group>
   );
 }

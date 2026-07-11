@@ -179,6 +179,18 @@ function collectDestructibles(scene: THREE.Scene): THREE.Object3D[] {
   return out;
 }
 
+let destructibleCache: THREE.Object3D[] = [];
+let destructibleCacheAt = 0;
+
+function collectDestructiblesCached(scene: THREE.Scene): THREE.Object3D[] {
+  const now = performance.now();
+  if (now - destructibleCacheAt > 200) {
+    destructibleCache = collectDestructibles(scene);
+    destructibleCacheAt = now;
+  }
+  return destructibleCache;
+}
+
 /** Multi-weapon combat + unique abilities (F). */
 export function WeaponSystem() {
   const { camera, scene, gl } = useThree();
@@ -227,7 +239,7 @@ export function WeaponSystem() {
         }
         case "scatter_carbine": {
           if (!state.spendNullEnergy(40)) return;
-          for (const obj of collectDestructibles(scene)) {
+          for (const obj of collectDestructiblesCached(scene)) {
             const op = worldPos(obj);
             if (op.distanceTo(origin) < 10) {
               applyHit(obj, 52, origin);
@@ -331,7 +343,7 @@ export function WeaponSystem() {
       if (Math.random() < dt * 1.2) {
         combatFx.pushImpact(nest.pos.clone(), "#60a5fa");
       }
-      for (const obj of collectDestructibles(scene)) {
+      for (const obj of collectDestructiblesCached(scene)) {
         const op = worldPos(obj);
         if (op.distanceTo(nest.pos) < 6.2 && Math.random() < dt * 6) {
           applyHit(obj, 9, nest.pos);
@@ -353,7 +365,7 @@ export function WeaponSystem() {
     // Singularity pull then boom — physics pull on debris, stagger on meshes
     for (const s of singularities.current) {
       if (!s.detonated && now < s.until) {
-        for (const obj of collectDestructibles(scene)) {
+        for (const obj of collectDestructiblesCached(scene)) {
           const op = worldPos(obj);
           const to = new THREE.Vector3().subVectors(s.pos, op);
           const dist = to.length();
@@ -372,7 +384,7 @@ export function WeaponSystem() {
       }
       if (!s.detonated && now >= s.until) {
         s.detonated = true;
-        for (const obj of collectDestructibles(scene)) {
+        for (const obj of collectDestructiblesCached(scene)) {
           const op = worldPos(obj);
           if (op.distanceTo(s.pos) < 10) {
             applyHit(obj, 65, s.pos);
@@ -550,7 +562,7 @@ export function WeaponSystem() {
             if (id === "arc_caster") {
               const primary = worldPos(valid.object).clone();
               let chained = 0;
-              for (const obj of collectDestructibles(scene)) {
+              for (const obj of collectDestructiblesCached(scene)) {
                 if (obj === valid.object) continue;
                 const op = worldPos(obj);
                 if (op.distanceTo(primary) < 9.5 && chained < 2) {
@@ -582,7 +594,7 @@ export function WeaponSystem() {
             }
 
             if (id === "void_launcher") {
-              for (const obj of collectDestructibles(scene)) {
+              for (const obj of collectDestructiblesCached(scene)) {
                 const op = worldPos(obj);
                 if (op.distanceTo(impact) < 8.0) {
                   applyHit(obj, 36, impact);

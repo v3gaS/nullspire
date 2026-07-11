@@ -37,12 +37,20 @@ export function NullspirePrimarch() {
     if (dist < 35) engaged.current = true;
 
     if (engaged.current) {
-      useGameStore.getState().setBoss({
-        name: "Nullspire Primarch",
-        hp: hp.current,
-        maxHp: 900,
-        phase: phase.current,
-      });
+      const b = useGameStore.getState().boss;
+      if (
+        !b.active ||
+        b.hp !== hp.current ||
+        b.phase !== phase.current ||
+        b.name !== "Nullspire Primarch"
+      ) {
+        useGameStore.getState().setBoss({
+          name: "Nullspire Primarch",
+          hp: hp.current,
+          maxHp: 900,
+          phase: phase.current,
+        });
+      }
     }
 
     if (hp.current <= 0) {
@@ -151,8 +159,6 @@ export function NullspirePrimarch() {
           roughness={0.2}
         />
       </mesh>
-      <pointLight position={[0, 16, 0]} intensity={2.4} color="#a78bfa" distance={44} />
-      <pointLight position={[0, 10, 0]} intensity={1.5} color="#ff7a18" distance={26} />
       {/* Arena cover pillars — Quake duel geometry */}
       {[
         [-8, 1.5, -6],

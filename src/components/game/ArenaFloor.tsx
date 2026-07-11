@@ -1,20 +1,36 @@
 "use client";
 
-import {
-  useAsphaltMaps,
-  useMetalGrateMaps,
-  useTilesMaps,
-} from "@/lib/game/useArenaTextures";
+import { useAsphaltMaps, useMetalGrateMaps, useTilesMaps } from "@/lib/game/useArenaTextures";
+import { useSettingsStore } from "@/stores/settingsStore";
 
-/** Textured hangar floor — asphalt field, tile spawn pad, grate strip. */
-export function ArenaFloor() {
+/** Plain floor for Low — no PBR texture upload (was freezing Macs). */
+function LiteFloor() {
+  return (
+    <>
+      <mesh position={[0, -0.5, 0]} receiveShadow={false} userData={{ skipHit: true }}>
+        <boxGeometry args={[180, 1, 180]} />
+        <meshBasicMaterial color="#6a717a" />
+      </mesh>
+      <mesh position={[0, 0.05, 8]} receiveShadow={false} userData={{ skipHit: true }}>
+        <boxGeometry args={[16, 0.35, 16]} />
+        <meshBasicMaterial color="#8a949e" />
+      </mesh>
+      <mesh position={[0, 0.08, -8]} receiveShadow={false} userData={{ skipHit: true }}>
+        <boxGeometry args={[3.5, 0.08, 48]} />
+        <meshBasicMaterial color="#5a636c" />
+      </mesh>
+    </>
+  );
+}
+
+function PbrFloor() {
   const asphalt = useAsphaltMaps(16);
   const tiles = useTilesMaps(3);
   const grate = useMetalGrateMaps(10);
 
   return (
     <>
-      <mesh position={[0, -0.5, 0]} receiveShadow>
+      <mesh position={[0, -0.5, 0]} receiveShadow userData={{ skipHit: true }}>
         <boxGeometry args={[180, 1, 180]} />
         <meshStandardMaterial
           map={asphalt.map}
@@ -25,7 +41,7 @@ export function ArenaFloor() {
           color="#b8b4ae"
         />
       </mesh>
-      <mesh position={[0, 0.05, 8]} receiveShadow>
+      <mesh position={[0, 0.05, 8]} receiveShadow userData={{ skipHit: true }}>
         <boxGeometry args={[16, 0.35, 16]} />
         <meshStandardMaterial
           map={tiles.map}
@@ -38,8 +54,7 @@ export function ArenaFloor() {
           emissiveIntensity={0.08}
         />
       </mesh>
-      {/* Grate runway accent — readable lane without chevron spam */}
-      <mesh position={[0, 0.08, -8]} receiveShadow>
+      <mesh position={[0, 0.08, -8]} receiveShadow userData={{ skipHit: true }}>
         <boxGeometry args={[4.5, 0.08, 48]} />
         <meshStandardMaterial
           map={grate.map}
@@ -53,4 +68,10 @@ export function ArenaFloor() {
       </mesh>
     </>
   );
+}
+
+/** Textured hangar floor — PBR only when quality allows. */
+export function ArenaFloor() {
+  const pbr = useSettingsStore((s) => s.quality !== "low");
+  return pbr ? <PbrFloor /> : <LiteFloor />;
 }

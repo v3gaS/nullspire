@@ -30,9 +30,14 @@ export function GameHUD() {
 
   useEffect(() => {
     let raf = 0;
-    const tick = () => {
-      setSpread(useFxStore.getState().kick);
-      setNow(performance.now());
+    let last = 0;
+    const tick = (t: number) => {
+      // HUD at ~15fps — full RAF React setState was burning the main thread
+      if (t - last > 66) {
+        last = t;
+        setSpread(useFxStore.getState().kick);
+        setNow(performance.now());
+      }
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);

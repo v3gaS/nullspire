@@ -2,6 +2,14 @@
 
 Build diary. Newest entries at the top.
 
+## 2026-07-11 — Low still froze high-end Mac — root causes
+- Boss HUD subscribed in `GameApp` → Canvas React tree re-rendered every boss HP tick
+- `CombatVfx` create/dispose meshes+materials **every frame** while firing (GC death)
+- `preserveDrawingBuffer: true` + HDRI Environment + many PointLights + PBR floor on Low
+- Full-scene raycast traverse every SMG pellet; HUD RAF setState every frame
+- Fix: BossHUD self-subscribes; pooled VFX; no HDRI/PBR/Stars/debris/dressing on Low; DPR 0.75; strip world point lights; cached raycasts; one-time `perf_v3` → Low migration
+- Live: hard-refresh amber; stay on Low
+
 ## 2026-07-11 — Asset fan-out (look over cube spam)
 - Goal: simple, highly appealing, fun — real CC0 assets > procedural blocks
 - Sources beyond Kenney: **Poly Haven** (HDRI, asphalt, metal grate, plastic crate, power box, military crate) + **AmbientCG** (tiles, concrete, rust)

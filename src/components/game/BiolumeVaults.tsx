@@ -147,10 +147,6 @@ export function BiolumeVaults() {
         </mesh>
       ))}
       <NestNode position={[0, 1.4, 0]} />
-      <pointLight position={[0, 8, 0]} intensity={2.8} color="#4ade80" distance={36} />
-      <pointLight position={[-6, 12, 2]} intensity={1.8} color="#86efac" distance={22} />
-      <pointLight position={[6, 10, -2]} intensity={1.8} color="#86efac" distance={22} />
-      <pointLight position={[0, 16, 0]} intensity={2.0} color="#bbf7d0" distance={24} />
     </group>
   );
 }

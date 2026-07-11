@@ -222,13 +222,6 @@ function SecretHint({
 
   return (
     <>
-      <pointLight
-        ref={light}
-        position={[position[0], position[1] + 0.8, position[2]]}
-        color="#fbbf24"
-        intensity={1.8}
-        distance={9}
-      />
       <mesh
         ref={ring}
         position={[position[0], 0.04, position[2]]}
