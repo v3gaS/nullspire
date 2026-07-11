@@ -19,15 +19,15 @@ const ACCENT: Record<WeaponId, string> = {
 function viewKick(id: WeaponId): number {
   switch (id) {
     case "pulse_smg":
-      return 0.2;
+      return 0.24;
     case "scatter_carbine":
-      return 0.34;
+      return 0.38;
     case "arc_caster":
-      return 0.22;
+      return 0.26;
     case "rail_lance":
-      return 0.32;
+      return 0.36;
     case "void_launcher":
-      return 0.42;
+      return 0.55;
     default: {
       const _exhaustive: never = id;
       return _exhaustive;
@@ -67,24 +67,28 @@ function ChunkyGun({ id }: { id: WeaponId }) {
       return (
         <group>
           <mesh position={[0.02, -0.02, 0.02]} frustumCulled={false}>
-            <boxGeometry args={[0.16, 0.18, 0.56]} />
+            <boxGeometry args={[0.19, 0.2, 0.58]} />
             <Mat color="#4a5563" emissive="#1e293b" emissiveIntensity={0.15} />
           </mesh>
-          <mesh position={[0.02, 0.04, -0.22]} frustumCulled={false}>
-            <boxGeometry args={[0.1, 0.1, 0.28]} />
+          <mesh position={[0.02, 0.05, -0.22]} frustumCulled={false}>
+            <boxGeometry args={[0.12, 0.12, 0.3]} />
             <Mat color="#6b7280" emissive="#374151" emissiveIntensity={0.2} />
           </mesh>
-          <mesh position={[0.02, 0.02, -0.42]} frustumCulled={false}>
-            <boxGeometry args={[0.075, 0.075, 0.26]} />
-            <Mat color={accent} emissive={accent} emissiveIntensity={1.7} />
+          <mesh position={[0.02, 0.03, -0.44]} frustumCulled={false}>
+            <boxGeometry args={[0.09, 0.09, 0.28]} />
+            <Mat color={accent} emissive={accent} emissiveIntensity={2.0} />
           </mesh>
-          <mesh position={[0.02, -0.14, 0.08]} frustumCulled={false}>
-            <boxGeometry args={[0.07, 0.16, 0.12]} />
+          <mesh position={[0.02, -0.15, 0.08]} frustumCulled={false}>
+            <boxGeometry args={[0.08, 0.18, 0.14]} />
             <Mat color="#2d3748" emissive="#111827" emissiveIntensity={0.1} />
           </mesh>
-          <mesh position={[0.02, 0.12, 0.05]} frustumCulled={false}>
-            <boxGeometry args={[0.05, 0.06, 0.18]} />
-            <Mat color={accent} emissive={accent} emissiveIntensity={0.9} />
+          <mesh position={[0.02, 0.13, 0.05]} frustumCulled={false}>
+            <boxGeometry args={[0.06, 0.07, 0.2]} />
+            <Mat color={accent} emissive={accent} emissiveIntensity={1.15} />
+          </mesh>
+          <mesh position={[0.12, 0, 0.02]} frustumCulled={false}>
+            <boxGeometry args={[0.06, 0.1, 0.22]} />
+            <Mat color="#64748b" emissive="#334155" emissiveIntensity={0.25} />
           </mesh>
         </group>
       );
@@ -259,7 +263,9 @@ export function WeaponViewmodel() {
       .addScaledVector(up, y)
       .addScaledVector(forward, z);
     g.quaternion.copy(camera.quaternion);
-    g.rotateX(0.06 - fx.kick * 0.18);
+    const kickPitch =
+      active === "void_launcher" ? 0.28 : active === "scatter_carbine" ? 0.22 : 0.18;
+    g.rotateX(0.06 - fx.kick * kickPitch);
     g.rotateY(0.1);
 
     if (glowRef.current) {
@@ -267,6 +273,15 @@ export function WeaponViewmodel() {
       (glowRef.current.material as THREE.MeshBasicMaterial).color.set(
         fx.muzzleColor,
       );
+      const glowScale =
+        active === "void_launcher"
+          ? 1.55
+          : active === "scatter_carbine"
+            ? 1.25
+            : active === "pulse_smg"
+              ? 1.15
+              : 1;
+      glowRef.current.scale.setScalar(glowScale);
     }
   });
 
@@ -279,7 +294,7 @@ export function WeaponViewmodel() {
         visible={false}
         frustumCulled={false}
       >
-        <sphereGeometry args={[0.12, 10, 10]} />
+        <sphereGeometry args={[0.14, 10, 10]} />
         <meshBasicMaterial color="#fff" toneMapped={false} />
       </mesh>
     </group>

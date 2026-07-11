@@ -451,10 +451,10 @@ export function WeaponSystem() {
 
         switch (id) {
           case "pulse_smg":
-            playSfx("/assets/audio/kenney-fps/blaster_repeater.ogg", overclocked ? 0.38 : 0.28);
-            useFxStore.getState().pulseMuzzle(overclocked ? "#ffe066" : "#7dffef", overclocked ? 80 : 50);
-            useFxStore.getState().pulseShake(overclocked ? 0.065 : 0.025, overclocked ? 90 : 65);
-            playerPhysics.punch(overclocked ? 0.032 : 0.02);
+            playSfx("/assets/audio/kenney-fps/blaster_repeater.ogg", overclocked ? 0.42 : 0.32);
+            useFxStore.getState().pulseMuzzle(overclocked ? "#ffe066" : "#7dffef", overclocked ? 95 : 70);
+            useFxStore.getState().pulseShake(overclocked ? 0.075 : 0.032, overclocked ? 100 : 75);
+            playerPhysics.punch(overclocked ? 0.04 : 0.026);
             {
               const dir = forward.clone();
               const kick = useFxStore.getState().kick;
@@ -505,11 +505,11 @@ export function WeaponSystem() {
             shots.push({ dir: forward.clone(), damage: 68, color: "#e879f9" });
             break;
           case "void_launcher":
-            playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.52);
-            useFxStore.getState().pulseMuzzle("#ff7a18", 200);
-            useFxStore.getState().pulseShake(0.12, 170);
-            playerPhysics.punch(0.11);
-            shots.push({ dir: forward.clone(), damage: 62, color: "#ff7a18" });
+            playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.58);
+            useFxStore.getState().pulseMuzzle("#ff7a18", 260);
+            useFxStore.getState().pulseShake(0.16, 200);
+            playerPhysics.punch(0.16);
+            shots.push({ dir: forward.clone(), damage: 68, color: "#ff7a18" });
             break;
           default: {
             const _exhaustive: never = id;
@@ -554,9 +554,13 @@ export function WeaponSystem() {
           combatFx.pushBeam(muzzle, impact, shot.color, beamWidth);
           combatFx.pushImpact(impact, shot.color);
           if (id === "void_launcher") {
-            combatFx.pushBoom(impact, "#ff7a18", 3.6);
-            combatFx.pushBoom(impact.clone().add(new THREE.Vector3(0, 0.3, 0)), "#ffb347", 1.8);
-            useFxStore.getState().pulseShake(0.14, 180);
+            combatFx.pushBoom(impact, "#ff7a18", 4.4);
+            combatFx.pushBoom(
+              impact.clone().add(new THREE.Vector3(0, 0.35, 0)),
+              "#ffb347",
+              2.2,
+            );
+            useFxStore.getState().pulseShake(0.18, 220);
           }
 
           if (valid?.object?.userData?.destructible) {
@@ -608,26 +612,31 @@ export function WeaponSystem() {
             if (id === "void_launcher") {
               for (const obj of collectDestructibles(scene)) {
                 const op = worldPos(obj);
-                if (op.distanceTo(impact) < 7.2) {
-                  applyHit(obj, 32, impact);
-                  impulseRigid(obj, op.clone().sub(impact), 16);
+                if (op.distanceTo(impact) < 8.0) {
+                  applyHit(obj, 36, impact);
+                  impulseRigid(obj, op.clone().sub(impact), 18);
                 }
               }
-              combatFx.pushBoom(impact, "#ff7a18", 5.6);
+              combatFx.pushBoom(impact, "#ff7a18", 6.4);
               combatFx.pushBoom(
-                impact.clone().add(new THREE.Vector3(0, 0.5, 0)),
+                impact.clone().add(new THREE.Vector3(0, 0.55, 0)),
                 "#ffb347",
-                2.4,
+                3.0,
+              );
+              combatFx.pushBoom(
+                impact.clone().add(new THREE.Vector3(0, 0.15, 0)),
+                "#ffffff",
+                1.4,
               );
               combatFx.pushImpact(impact, "#ff9f43");
-              useFxStore.getState().pulseShake(0.26, 360);
-              playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.72);
-              playerPhysics.punch(0.08);
+              useFxStore.getState().pulseShake(0.3, 400);
+              playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.78);
+              playerPhysics.punch(0.1);
               // Soft rocket-jump if close — Quake RJ window
-              if (origin.distanceTo(impact) < 7.5) {
+              if (origin.distanceTo(impact) < 8.0) {
                 const up = origin.clone().sub(impact).normalize();
-                playerPhysics.pushKnock(up.x * 9, 10.5, up.z * 9);
-                playerPhysics.punch(-0.1);
+                playerPhysics.pushKnock(up.x * 10, 11.5, up.z * 10);
+                playerPhysics.punch(-0.12);
               }
             }
           }

@@ -198,7 +198,7 @@ export function CombatVfx() {
     }
 
     // DOOM-style explosion spheres + debris ring
-    combatFx.booms = combatFx.booms.filter((b) => now - b.born < 580);
+    combatFx.booms = combatFx.booms.filter((b) => now - b.born < 720);
     const bgBoom = boomsGroup.current;
     if (bgBoom) {
       while (bgBoom.children.length) {
@@ -210,8 +210,8 @@ export function CombatVfx() {
         }
       }
       for (const boom of combatFx.booms) {
-        const age = (now - boom.born) / 580;
-        const scale = boom.radius * (0.4 + age * 1.7);
+        const age = (now - boom.born) / 720;
+        const scale = boom.radius * (0.45 + age * 1.85);
         const shell = new THREE.Mesh(
           new THREE.SphereGeometry(1, 14, 12),
           new THREE.MeshBasicMaterial({
@@ -274,8 +274,8 @@ export function CombatVfx() {
 
         const light = new THREE.PointLight(
           boom.color,
-          22 * (1 - age),
-          boom.radius * 5.5,
+          28 * (1 - age),
+          boom.radius * 6.5,
         );
         light.position.copy(boom.pos);
         bgBoom.add(light);

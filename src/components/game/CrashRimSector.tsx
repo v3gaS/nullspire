@@ -495,6 +495,45 @@ export function CrashRimSector() {
       <Box position={[-8.5, 0.45, -52]} size={[1.6, 0.9, 1.8]} color="#8a7a68" />
       <Box position={[8, 0.6, -54]} size={[1.5, 1.2, 1.5]} color="#6a7580" />
       <pointLight position={[0, 14, -46]} intensity={3.2} color="#fff4e0" distance={36} />
+      {/* Mid-canyon hangar light strips — arena wall glow */}
+      <mesh position={[-16.5, 7, -46]}>
+        <boxGeometry args={[0.18, 1.8, 22]} />
+        <meshStandardMaterial
+          color="#fff4e0"
+          emissive="#fff4e0"
+          emissiveIntensity={1.5}
+          toneMapped={false}
+        />
+      </mesh>
+      <mesh position={[16.5, 7, -48]}>
+        <boxGeometry args={[0.18, 1.8, 24]} />
+        <meshStandardMaterial
+          color="#fff4e0"
+          emissive="#fff4e0"
+          emissiveIntensity={1.5}
+          toneMapped={false}
+        />
+      </mesh>
+      <mesh position={[-16.5, 3.5, -46]}>
+        <boxGeometry args={[0.14, 0.9, 18]} />
+        <meshStandardMaterial
+          color="#ffb347"
+          emissive="#ff7a18"
+          emissiveIntensity={1.1}
+          toneMapped={false}
+        />
+      </mesh>
+      <mesh position={[16.5, 3.5, -48]}>
+        <boxGeometry args={[0.14, 0.9, 20]} />
+        <meshStandardMaterial
+          color="#ffb347"
+          emissive="#ff7a18"
+          emissiveIntensity={1.1}
+          toneMapped={false}
+        />
+      </mesh>
+      <pointLight position={[-15, 7, -46]} intensity={2.4} color="#fff4e0" distance={22} />
+      <pointLight position={[15, 7, -48]} intensity={2.4} color="#fff4e0" distance={22} />
       <mesh position={[0, 0.05, -46]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[10, 16]} />
         <meshStandardMaterial
