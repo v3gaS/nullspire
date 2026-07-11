@@ -422,16 +422,17 @@ export function WeaponSystem() {
             }
             break;
           case "arc_caster": {
-            playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.28);
-            useFxStore.getState().pulseMuzzle("#60a5fa", 80);
-            playerPhysics.punch(0.03);
+            playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.32);
+            useFxStore.getState().pulseMuzzle("#60a5fa", 95);
+            useFxStore.getState().pulseShake(0.03, 70);
+            playerPhysics.punch(0.038);
             {
               const dir = forward.clone();
               const kick = useFxStore.getState().kick;
               dir.x += (Math.random() - 0.5) * kick * 0.02;
               dir.y += (Math.random() - 0.5) * kick * 0.016;
               dir.normalize();
-              shots.push({ dir, damage: 14, color: "#60a5fa" });
+              shots.push({ dir, damage: 16, color: "#60a5fa" });
             }
             break;
           }
@@ -502,9 +503,9 @@ export function WeaponSystem() {
               for (const obj of collectDestructibles(scene)) {
                 if (obj === valid.object) continue;
                 const op = worldPos(obj);
-                if (op.distanceTo(primary) < 7 && chained < 3) {
-                  applyHit(obj, 10, primary);
-                  combatFx.pushBeam(primary, op, "#93c5fd", 0.05);
+                if (op.distanceTo(primary) < 8 && chained < 4) {
+                  applyHit(obj, 12, primary);
+                  combatFx.pushBeam(primary, op, "#93c5fd", 0.06);
                   combatFx.pushImpact(op, "#93c5fd");
                   chained++;
                 }
