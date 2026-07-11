@@ -524,7 +524,7 @@ export function WeaponSystem() {
         switch (id) {
           case "pulse_smg":
             playSfx("/assets/audio/kenney-fps/blaster_repeater.ogg", overclocked ? 0.42 : 0.32);
-            useFxStore.getState().pulseMuzzle(overclocked ? "#ffe066" : "#7dffef", overclocked ? 95 : 70);
+            useFxStore.getState().pulseMuzzle(overclocked ? "#ffe066" : "#7dffef", overclocked ? 110 : 85);
             useFxStore.getState().pulseShake(overclocked ? 0.075 : 0.032, overclocked ? 100 : 75);
             playerPhysics.punch(overclocked ? 0.04 : 0.026);
             {
