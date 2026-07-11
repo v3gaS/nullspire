@@ -359,24 +359,27 @@ export function WeaponSystem() {
     // Storm Nest ticks
     for (const nest of nests.current) {
       if (now > nest.until) continue;
-      if (Math.random() < dt * 6) {
+      if (Math.random() < dt * 8) {
         combatFx.pushImpact(
           nest.pos
             .clone()
             .add(
               new THREE.Vector3(
-                (Math.random() - 0.5) * 3,
-                Math.random() * 1.5,
-                (Math.random() - 0.5) * 3,
+                (Math.random() - 0.5) * 3.5,
+                Math.random() * 1.8,
+                (Math.random() - 0.5) * 3.5,
               ),
             ),
           "#60a5fa",
         );
       }
+      if (Math.random() < dt * 2.5) {
+        combatFx.pushBoom(nest.pos.clone(), "#60a5fa", 1.2);
+      }
       for (const obj of collectDestructibles(scene)) {
         const op = worldPos(obj);
-        if (op.distanceTo(nest.pos) < 5.5 && Math.random() < dt * 5) {
-          applyHit(obj, 7, nest.pos);
+        if (op.distanceTo(nest.pos) < 6.2 && Math.random() < dt * 6) {
+          applyHit(obj, 9, nest.pos);
         }
       }
     }
