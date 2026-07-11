@@ -4,6 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import * as THREE from "three";
 import { useGameStore } from "@/stores/gameStore";
+import { useFxStore } from "@/stores/fxStore";
 import { playSfx } from "@/lib/game/audio";
 import { combatFx } from "@/components/game/CombatVfx";
 
@@ -69,6 +70,8 @@ export function DroneScout({ position, id }: DroneProps) {
     if (hp.current <= 0) {
       dead.current = true;
       mesh.visible = false;
+      combatFx.pushBoom(mesh.position.clone(), "#6ecbff", 2);
+      useFxStore.getState().pulseKill();
     }
   });
 
@@ -98,6 +101,8 @@ export function DroneSquad() {
       <DroneScout id="d2" position={[18, 4, -34]} />
       <DroneScout id="d3" position={[-14, 3.8, -44]} />
       <DroneScout id="d4" position={[8, 4.2, -54]} />
+      <DroneScout id="d5" position={[-6, 4.5, -72]} />
+      <DroneScout id="d6" position={[14, 5, -100]} />
     </group>
   );
 }
