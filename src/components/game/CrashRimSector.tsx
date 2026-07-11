@@ -53,15 +53,15 @@ function JumpPad({ position }: { position: [number, number, number] }) {
         if (performance.now() < playerPhysics.spawnGraceUntil) return;
         const p = body.translation();
         if (Math.hypot(p.x - position[0], p.z - position[2]) > 2.4) return;
-        playerPhysics.applyImpulse(0, 19.5, 0, { pad: true });
-        playerPhysics.punch(-0.11);
-        playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.4);
+        playerPhysics.applyImpulse(0, 21, 0, { pad: true });
+        playerPhysics.punch(-0.13);
+        playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.45);
         combatFx.pushBoom(
           new THREE.Vector3(position[0], position[1] + 0.4, position[2]),
           "#ff6bcb",
-          3.0,
+          3.4,
         );
-        useFxStore.getState().pulseShake(0.08, 140);
+        useFxStore.getState().pulseShake(0.1, 160);
       }}
     >
       <mesh
