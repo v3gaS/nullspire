@@ -135,7 +135,7 @@ export function GameHUD() {
       {/* Vitals — bottom left (HEALTH / ARMOR big numbers) */}
       <div className="absolute bottom-6 left-5 rounded bg-black/55 px-4 py-3 backdrop-blur-[2px]">
         <p
-          className={`text-[36px] font-black leading-none tracking-wide ${
+          className={`text-[42px] font-black leading-none tracking-wide ${
             health <= 30 ? "animate-pulse text-red-400" : "text-white"
           }`}
         >
@@ -144,13 +144,13 @@ export function GameHUD() {
           </span>
           {Math.round(health)}
         </p>
-        <p className="mt-2 text-[28px] font-black leading-none tracking-wide text-sky-300">
+        <p className="mt-2 text-[32px] font-black leading-none tracking-wide text-sky-300">
           <span className="mr-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-sky-300/55">
             Armor
           </span>
           {Math.round(armor)}
         </p>
-        <p className="mt-2 text-[15px] font-bold text-teal-300/90">
+        <p className="mt-2 text-[16px] font-bold text-teal-300/90">
           <span className="mr-2 text-[10px] uppercase tracking-[0.2em] text-teal-300/50">
             Null
           </span>
@@ -159,13 +159,13 @@ export function GameHUD() {
       </div>
 
       {/* Weapon — bottom right */}
-      <div className="absolute bottom-6 right-5 min-w-[230px] rounded bg-black/55 px-4 py-3 backdrop-blur-[2px]">
-        <p className="text-[17px] font-bold text-white">
+      <div className="absolute bottom-6 right-5 min-w-[240px] rounded bg-black/55 px-4 py-3 backdrop-blur-[2px]">
+        <p className="text-[18px] font-bold text-white">
           <span className="mr-1.5 text-white/40">[{slotIndex}]</span>
           {meta.name}
         </p>
         <p
-          className={`mt-1 font-mono text-base ${
+          className={`mt-1 font-mono text-lg ${
             weapon.ammo <= 3 ? "animate-pulse text-orange-300" : "text-white/90"
           }`}
         >
@@ -182,9 +182,9 @@ export function GameHUD() {
             return (
               <div
                 key={id}
-                className={`flex h-8 w-8 items-center justify-center rounded-sm text-xs font-bold ${
+                className={`flex h-9 w-9 items-center justify-center rounded-sm text-sm font-bold ${
                   active
-                    ? "bg-orange-400 text-black shadow-[0_0_12px_rgba(255,122,24,0.55)]"
+                    ? "bg-orange-400 text-black shadow-[0_0_16px_rgba(255,122,24,0.7)]"
                     : unlocked
                       ? "bg-white/15 text-white/85"
                       : "bg-white/5 text-white/25"

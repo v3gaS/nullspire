@@ -8,16 +8,16 @@ export function HangarBloom() {
   const quality = useSettingsStore((s) => s.quality);
   if (quality === "low") return null;
   const cfg = qualityConfig(quality);
-  const intensity = quality === "high" ? 0.95 : 0.65;
+  const intensity = quality === "high" ? 1.15 : 0.78;
   return (
     <EffectComposer multisampling={cfg.antialias ? 2 : 0}>
       <Bloom
-        luminanceThreshold={0.65}
-        luminanceSmoothing={0.3}
+        luminanceThreshold={0.58}
+        luminanceSmoothing={0.28}
         intensity={intensity}
         mipmapBlur
       />
-      <Vignette eskil={false} offset={0.18} darkness={0.35} />
+      <Vignette eskil={false} offset={0.16} darkness={0.32} />
     </EffectComposer>
   );
 }
