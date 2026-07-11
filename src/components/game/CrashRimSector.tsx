@@ -446,8 +446,10 @@ export function CrashRimSector() {
       <Box position={[-3, 4, -14]} size={[3, 0.4, 3]} color="#6a7580" />
       <Box position={[2, 5.2, -16]} size={[4, 0.4, 3]} color="#8a9098" />
 
-      <Box position={[16, 4, -20]} size={[6, 8, 6]} color="#3a4550" />
-      <Box position={[16, 8.5, -20]} size={[4, 1, 4]} color="#2ee6c8" />
+      <Box position={[16, 4, -20]} size={[6, 8, 6]} color="#6a7580" />
+      <Box position={[16, 8.5, -20]} size={[4, 1, 4]} color="#ff7a18" />
+      <pointLight position={[16, 12, -20]} intensity={3.0} color="#fff4e0" distance={28} />
+      <pointLight position={[16, 10, -20]} intensity={2.2} color="#ff7a18" distance={22} />
 
       {[-30, -20, -10, 0, 10, 20].map((z) => (
         <Box key={z} position={[-22, 2, z]} size={[2, 4, 2]} color="#554838" />
