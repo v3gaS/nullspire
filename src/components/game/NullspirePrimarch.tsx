@@ -146,10 +146,11 @@ export function NullspirePrimarch() {
         [8, 1.5, -6],
         [-10, 1.5, 4],
         [10, 1.5, 4],
+        [0, 1.2, -10],
       ].map((p, i) => (
         <RigidBody key={`pc-${i}`} type="fixed" colliders="cuboid" position={p as [number, number, number]}>
           <mesh castShadow>
-            <boxGeometry args={[2.2, 3, 2.2]} />
+            <boxGeometry args={[i === 4 ? 3.2 : 2.2, i === 4 ? 2.4 : 3, i === 4 ? 1.4 : 2.2]} />
             <meshStandardMaterial
               color="#2e1065"
               emissive="#4c1d95"
