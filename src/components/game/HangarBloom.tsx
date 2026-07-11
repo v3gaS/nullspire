@@ -8,7 +8,7 @@ export function HangarBloom() {
   const quality = useSettingsStore((s) => s.quality);
   if (quality === "low") return null;
   const cfg = qualityConfig(quality);
-  const intensity = quality === "high" ? 0.55 : 0.38;
+  const intensity = quality === "high" ? 0.72 : 0.48;
   return (
     <EffectComposer multisampling={cfg.antialias ? 2 : 0}>
       <Bloom
