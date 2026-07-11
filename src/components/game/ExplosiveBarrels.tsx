@@ -31,10 +31,13 @@ const BARRELS: [number, number, number][] = [
   [0, 0.7, -44],
   [1.4, 0.7, -45.2],
   [-1.2, 0.7, -45.5],
-  // Deep approach
+  // Deep approach + Primarch approach nest
   [14, 0.7, -52],
   [15.2, 0.7, -53],
   [-5, 0.7, -58],
+  [6, 0.7, -118],
+  [7.4, 0.7, -119.2],
+  [-6, 0.7, -120],
 ];
 
 function ExplosiveBarrel({ position }: { position: [number, number, number] }) {

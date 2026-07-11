@@ -14,6 +14,25 @@ const MAG_SIZE: Record<WeaponId, number> = {
   void_launcher: 3,
 };
 
+function switchFlash(id: WeaponId): string {
+  switch (id) {
+    case "pulse_smg":
+      return "#7dffef";
+    case "scatter_carbine":
+      return "#ffb347";
+    case "arc_caster":
+      return "#60a5fa";
+    case "rail_lance":
+      return "#e879f9";
+    case "void_launcher":
+      return "#c084fc";
+    default: {
+      const _exhaustive: never = id;
+      return _exhaustive;
+    }
+  }
+}
+
 /** Keyboard: reload (R), weapon switch 1-5. */
 export function useCombatInput() {
   const reloading = useRef(false);
@@ -56,6 +75,8 @@ export function useCombatInput() {
         const id = WEAPON_ORDER[idx];
         if (state.weapons[id].unlocked) {
           useGameStore.getState().setActiveWeapon(id);
+          useFxStore.getState().pulseMuzzle(switchFlash(id), 40);
+          playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.32);
         }
       }
     };

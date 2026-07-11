@@ -137,6 +137,26 @@ export function NullspirePrimarch() {
         />
       </mesh>
       <pointLight position={[0, 8, 0]} intensity={3} color="#a78bfa" distance={40} />
+      {/* Arena cover pillars — Quake duel geometry */}
+      {[
+        [-8, 1.5, -6],
+        [8, 1.5, -6],
+        [-10, 1.5, 4],
+        [10, 1.5, 4],
+      ].map((p, i) => (
+        <RigidBody key={`pc-${i}`} type="fixed" colliders="cuboid" position={p as [number, number, number]}>
+          <mesh castShadow>
+            <boxGeometry args={[2.2, 3, 2.2]} />
+            <meshStandardMaterial
+              color="#2e1065"
+              emissive="#4c1d95"
+              emissiveIntensity={0.45}
+              metalness={0.55}
+              roughness={0.4}
+            />
+          </mesh>
+        </RigidBody>
+      ))}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.05, 0]}>
         <ringGeometry args={[14, 15, 64]} />
         <meshStandardMaterial
