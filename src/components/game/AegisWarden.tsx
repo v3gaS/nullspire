@@ -151,6 +151,16 @@ export function AegisWarden() {
           emissiveIntensity={0.8}
         />
       </mesh>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.06, 0]}>
+        <ringGeometry args={[4.2, 4.8, 40]} />
+        <meshStandardMaterial
+          color="#7dffef"
+          emissive="#2ee6c8"
+          emissiveIntensity={1.1}
+          transparent
+          opacity={0.7}
+        />
+      </mesh>
       {/* Warden plaza cover — shootable sightlines */}
       {[
         [-7, 1.2, -4],
