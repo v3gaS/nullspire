@@ -140,7 +140,7 @@ export function BloomMatriarch() {
           roughness={0.45}
         />
       </mesh>
-      {[0, 1, 2].map((i) => (
+      {[0, 1, 2, 3].map((i) => (
         <mesh
           key={i}
           ref={(el) => {
@@ -156,6 +156,15 @@ export function BloomMatriarch() {
           />
         </mesh>
       ))}
+      {/* Climb assist pads in vault shaft */}
+      <mesh position={[-3, 5, -2]} castShadow>
+        <boxGeometry args={[2.5, 0.3, 2.5]} />
+        <meshStandardMaterial color="#4ade80" emissive="#166534" emissiveIntensity={0.7} />
+      </mesh>
+      <mesh position={[3, 8, 1]} castShadow>
+        <boxGeometry args={[2.5, 0.3, 2.5]} />
+        <meshStandardMaterial color="#4ade80" emissive="#166534" emissiveIntensity={0.7} />
+      </mesh>
     </group>
   );
 }
