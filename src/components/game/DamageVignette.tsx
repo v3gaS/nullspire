@@ -12,8 +12,8 @@ export function DamageVignette() {
 
   useEffect(() => {
     if (!lastDamagedAt) return;
-    setHitFlash(0.55);
-    const id = window.setTimeout(() => setHitFlash(0), 220);
+    setHitFlash(0.72);
+    const id = window.setTimeout(() => setHitFlash(0), 280);
     return () => window.clearTimeout(id);
   }, [lastDamagedAt]);
 

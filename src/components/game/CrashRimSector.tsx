@@ -6,7 +6,9 @@ import { useGLTF } from "@react-three/drei";
 import { Suspense, useRef } from "react";
 import * as THREE from "three";
 import { useGameStore } from "@/stores/gameStore";
+import { useFxStore } from "@/stores/fxStore";
 import { playSfx } from "@/lib/game/audio";
+import { combatFx } from "@/components/game/CombatVfx";
 import { playerPhysics } from "@/lib/game/playerPhysics";
 
 function Box({
@@ -29,6 +31,15 @@ function Box({
 }
 
 function JumpPad({ position }: { position: [number, number, number] }) {
+  const meshRef = useRef<THREE.Mesh>(null);
+
+  useFrame((state) => {
+    const mesh = meshRef.current;
+    if (!mesh) return;
+    const mat = mesh.material as THREE.MeshStandardMaterial;
+    mat.emissiveIntensity = 1.2 + Math.sin(state.clock.elapsedTime * 5) * 0.5;
+  });
+
   return (
     <RigidBody
       type="fixed"
@@ -41,11 +52,23 @@ function JumpPad({ position }: { position: [number, number, number] }) {
         if (performance.now() < playerPhysics.spawnGraceUntil) return;
         const p = body.translation();
         if (Math.hypot(p.x - position[0], p.z - position[2]) > 2.4) return;
-        playerPhysics.applyImpulse(0, 16, 0, { pad: true });
-        playerPhysics.punch(-0.06);
+        playerPhysics.applyImpulse(0, 18, 0, { pad: true });
+        playerPhysics.punch(-0.09);
+        playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.35);
+        combatFx.pushBoom(
+          new THREE.Vector3(position[0], position[1] + 0.4, position[2]),
+          "#ff6bcb",
+          2.4,
+        );
+        useFxStore.getState().pulseShake(0.06, 120);
       }}
     >
-      <mesh castShadow receiveShadow userData={{ jumpPad: true, boost: 14 }}>
+      <mesh
+        ref={meshRef}
+        castShadow
+        receiveShadow
+        userData={{ jumpPad: true, boost: 16 }}
+      >
         <cylinderGeometry args={[1.4, 1.4, 0.25, 16]} />
         <meshStandardMaterial
           color="#ff6bcb"

@@ -159,6 +159,7 @@ export function WeaponSystem() {
         case "pulse_smg": {
           if (!state.spendNullEnergy(35)) return;
           overclockUntil.current = performance.now() + 3000;
+          useFxStore.getState().pulseOverclock(3000);
           playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.45);
           break;
         }

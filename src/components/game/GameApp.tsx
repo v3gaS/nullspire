@@ -15,6 +15,7 @@ import { CombatVfx } from "./CombatVfx";
 import { KenneyWorldDressing } from "./KenneyWorldDressing";
 import { DamageVignette } from "./DamageVignette";
 import { MuzzleFlashOverlay } from "./MuzzleFlashOverlay";
+import { OverclockOverlay } from "./OverclockOverlay";
 import { HitMarker } from "./HitMarker";
 import { DamageNumbers } from "./DamageNumbers";
 import { BossHUD } from "./BossHUD";
@@ -194,6 +195,7 @@ export function GameApp() {
       {(screen === "playing" || screen === "paused") && (
         <>
           <DamageVignette />
+          <OverclockOverlay />
           <MuzzleFlashOverlay />
           <HitMarker />
           <DamageNumbers />

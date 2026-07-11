@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { LootDrop } from "@/components/game/EliteAndLoot";
+import { combatFx } from "@/components/game/CombatVfx";
 import { useGameStore } from "@/stores/gameStore";
 import { playSfx } from "@/lib/game/audio";
 import { useFxStore } from "@/stores/fxStore";
@@ -63,31 +64,60 @@ function SecretHint({
 }) {
   const shown = useRef(false);
   const light = useRef<THREE.PointLight>(null);
+  const ring = useRef<THREE.Mesh>(null);
 
   useFrame((state) => {
     if (shown.current) return;
     const dist = state.camera.position.distanceTo(
       new THREE.Vector3(...position),
     );
+    const pulse = 0.6 + Math.sin(state.clock.elapsedTime * 4) * 0.4;
     if (light.current) {
-      light.current.intensity = 0.6 + Math.sin(state.clock.elapsedTime * 4) * 0.4;
+      light.current.intensity = pulse;
+      light.current.position.y =
+        position[1] + 0.8 + Math.sin(state.clock.elapsedTime * 2.2) * 0.25;
+    }
+    if (ring.current) {
+      ring.current.rotation.z = state.clock.elapsedTime * 0.8;
+      ring.current.scale.setScalar(1 + Math.sin(state.clock.elapsedTime * 3) * 0.08);
     }
     if (dist < radius) {
       shown.current = true;
       useGameStore.getState().setObjective(`SECRET FOUND — ${hint}`);
       playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.55);
       useFxStore.getState().pulseShake(0.1, 200);
+      combatFx.pushBoom(
+        new THREE.Vector3(...position),
+        "#fbbf24",
+        2.2,
+      );
     }
   });
 
   return (
-    <pointLight
-      ref={light}
-      position={[position[0], position[1] + 0.8, position[2]]}
-      color="#fbbf24"
-      intensity={1.4}
-      distance={7}
-    />
+    <>
+      <pointLight
+        ref={light}
+        position={[position[0], position[1] + 0.8, position[2]]}
+        color="#fbbf24"
+        intensity={1.4}
+        distance={7}
+      />
+      <mesh
+        ref={ring}
+        position={[position[0], 0.04, position[2]]}
+        rotation={[-Math.PI / 2, 0, 0]}
+      >
+        <ringGeometry args={[0.35, 0.55, 16]} />
+        <meshStandardMaterial
+          color="#fbbf24"
+          emissive="#f59e0b"
+          emissiveIntensity={0.8}
+          transparent
+          opacity={0.85}
+        />
+      </mesh>
+    </>
   );
 }
 
@@ -105,20 +135,6 @@ export function SecretCaches() {
             radius={s.radius}
           />
           <LootDrop position={s.position} kind={s.kind} />
-          {/* Subtle floor marker for searchers */}
-          <mesh
-            position={[s.position[0], 0.04, s.position[2]]}
-            rotation={[-Math.PI / 2, 0, 0]}
-          >
-            <ringGeometry args={[0.35, 0.55, 16]} />
-            <meshStandardMaterial
-              color="#fbbf24"
-              emissive="#f59e0b"
-              emissiveIntensity={0.8}
-              transparent
-              opacity={0.85}
-            />
-          </mesh>
         </group>
       ))}
     </group>

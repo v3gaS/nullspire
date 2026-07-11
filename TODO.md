@@ -100,6 +100,7 @@ Campaign build order. Check items as completed. Loop works top-down.
 - [x] Mid-canyon combat pocket (cover + denser pack)
 - [x] Boss telegraph readability pass
 - [x] Audio mix: louder booms, duck ambience under fire
+- [x] Jump-pad boom + secret ring pulse + Overclock edge tint
 
 ---
 

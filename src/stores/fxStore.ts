@@ -15,12 +15,14 @@ interface FxState {
   kick: number;
   hitUntil: number;
   killUntil: number;
+  overclockUntil: number;
   shakeUntil: number;
   shakeAmp: number;
   damagePopups: DamagePopup[];
   pulseMuzzle: (color: string, ms?: number) => void;
   pulseHit: () => void;
   pulseKill: () => void;
+  pulseOverclock: (ms?: number) => void;
   pulseShake: (amp?: number, ms?: number) => void;
   pushDamage: (damage: number) => void;
 }
@@ -33,6 +35,7 @@ export const useFxStore = create<FxState>((set, get) => ({
   kick: 0,
   hitUntil: 0,
   killUntil: 0,
+  overclockUntil: 0,
   shakeUntil: 0,
   shakeAmp: 0,
   damagePopups: [],
@@ -44,6 +47,8 @@ export const useFxStore = create<FxState>((set, get) => ({
     }),
   pulseHit: () => set({ hitUntil: performance.now() + 90 }),
   pulseKill: () => set({ killUntil: performance.now() + 160 }),
+  pulseOverclock: (ms = 3000) =>
+    set({ overclockUntil: performance.now() + ms }),
   pulseShake: (amp = 0.12, ms = 280) =>
     set({
       shakeUntil: performance.now() + ms,
