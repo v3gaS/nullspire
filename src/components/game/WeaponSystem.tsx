@@ -327,11 +327,12 @@ export function WeaponSystem() {
 
         switch (id) {
           case "pulse_smg":
-            playSfx("/assets/audio/kenney-fps/blaster_repeater.ogg", 0.22);
-            useFxStore.getState().pulseMuzzle(overclocked ? "#ffe066" : "#7dffef", 55);
+            playSfx("/assets/audio/kenney-fps/blaster_repeater.ogg", 0.28);
+            useFxStore.getState().pulseMuzzle(overclocked ? "#ffe066" : "#7dffef", 70);
+            useFxStore.getState().pulseShake(overclocked ? 0.04 : 0.02, 60);
             shots.push({
               dir: forward.clone(),
-              damage: overclocked ? 18 : 12,
+              damage: overclocked ? 22 : 15,
               color: overclocked ? "#ffe066" : "#7dffef",
             });
             break;

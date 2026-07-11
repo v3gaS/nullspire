@@ -199,6 +199,17 @@ export function CrashRimSector() {
 
       {/* Open Drop Zone pad — keep the look-ahead lane empty */}
       <Box position={[0, 0.12, 8]} size={[14, 0.24, 14]} color="#3d4a55" />
+      {/* Runway stripe toward the beacon so the push direction reads instantly */}
+      <mesh position={[0, 0.06, -6]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[2.2, 28]} />
+        <meshStandardMaterial
+          color="#2ee6c8"
+          emissive="#2ee6c8"
+          emissiveIntensity={0.55}
+          transparent
+          opacity={0.45}
+        />
+      </mesh>
       {/* Flanking berms — wide of the center lane */}
       <Box position={[-12, 1.5, -2]} size={[1.5, 3, 12]} color="#5a4a3a" />
       <Box position={[12, 1.5, -6]} size={[1.5, 3, 14]} color="#4a5560" />

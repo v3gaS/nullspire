@@ -4,12 +4,12 @@ import { useMemo } from "react";
 import * as THREE from "three";
 
 const TARGETS: [number, number, number][] = [
-  [6, 1.2, -4],
-  [-6, 1.2, -8],
-  [12, 1.5, -14],
+  [10, 1.2, -14],
+  [-10, 1.2, -16],
+  [14, 1.5, -22],
   [0, 5.8, -16],
-  [18, 2, -8],
-  [-10, 1.2, 2],
+  [18, 2, -18],
+  [-14, 1.2, -20],
 ];
 
 /** Destructible practice drones for combat baseline. */

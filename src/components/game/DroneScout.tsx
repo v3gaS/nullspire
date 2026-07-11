@@ -80,8 +80,8 @@ export function DroneScout({ position, id }: DroneProps) {
 export function DroneSquad() {
   return (
     <group>
-      <DroneScout id="d1" position={[8, 3.5, -14]} />
-      <DroneScout id="d2" position={[16, 4, -22]} />
+      <DroneScout id="d1" position={[12, 3.5, -26]} />
+      <DroneScout id="d2" position={[18, 4, -34]} />
     </group>
   );
 }
