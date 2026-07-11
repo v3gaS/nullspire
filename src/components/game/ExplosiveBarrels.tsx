@@ -38,6 +38,7 @@ const BARRELS: [number, number, number][] = [
   [6, 0.7, -118],
   [7.4, 0.7, -119.2],
   [-6, 0.7, -120],
+  [-7.2, 0.7, -121],
 ];
 
 function ExplosiveBarrel({ position }: { position: [number, number, number] }) {
