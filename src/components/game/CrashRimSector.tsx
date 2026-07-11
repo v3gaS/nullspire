@@ -235,8 +235,15 @@ function AcidHazard({
     ) {
       cooldown.current = 0.5;
       useGameStore.getState().damagePlayer(6);
-      playSfx("/assets/audio/kenney-fps/enemy_hurt.ogg", 0.18);
-      mat.emissiveIntensity = 2.2;
+      playSfx("/assets/audio/kenney-fps/enemy_hurt.ogg", 0.24);
+      combatFx.pushImpact(cam.clone(), "#84cc16");
+      combatFx.pushBoom(
+        new THREE.Vector3(cam.x, position[1] + 0.1, cam.z),
+        "#84cc16",
+        1.1,
+      );
+      useFxStore.getState().pulseShake(0.06, 100);
+      mat.emissiveIntensity = 2.6;
     }
   });
 
@@ -247,9 +254,10 @@ function AcidHazard({
         <meshStandardMaterial
           color="#7cff3a"
           emissive="#3a8a10"
-          emissiveIntensity={0.8}
+          emissiveIntensity={1.05}
           transparent
-          opacity={0.65}
+          opacity={0.72}
+          toneMapped={false}
         />
       </mesh>
       {/* Warning rim so acid reads before you step in */}
@@ -258,9 +266,10 @@ function AcidHazard({
         <meshStandardMaterial
           color="#bbf76a"
           emissive="#84cc16"
-          emissiveIntensity={1.2}
+          emissiveIntensity={1.45}
           transparent
-          opacity={0.7}
+          opacity={0.8}
+          toneMapped={false}
         />
       </mesh>
     </group>

@@ -35,10 +35,10 @@ export const WEAPON_META = {
 } as const;
 
 export const PLAYER = {
-  walkSpeed: 12.8,
-  sprintSpeed: 21,
-  jumpImpulse: 11.0,
+  walkSpeed: 13.0,
+  sprintSpeed: 21.5,
+  jumpImpulse: 11.2,
   height: 1.7,
   radius: 0.35,
-  coyoteTime: 0.16,
+  coyoteTime: 0.18,
 } as const;
