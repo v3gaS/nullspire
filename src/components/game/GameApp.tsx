@@ -214,12 +214,12 @@ export function GameApp() {
       )}
       {screen === "paused" && <PauseMenu />}
       {screen === "victory" && (
-        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/70">
-          <h2 className="font-[family-name:var(--font-display)] text-4xl tracking-wide text-[#5dffd7]">
+        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-[radial-gradient(ellipse_at_center,rgba(46,230,200,0.2)_0%,rgba(0,0,0,0.88)_65%)]">
+          <h2 className="font-[family-name:var(--font-display)] text-5xl tracking-[0.12em] text-[#5dffd7] drop-shadow-[0_0_28px_rgba(46,230,200,0.4)]">
             Nullspire Cleared
           </h2>
-          <p className="mt-2 max-w-md px-6 text-center text-sm text-zinc-300">
-            The Primarch is offline. The exoplanet falls silent — for now.
+          <p className="mt-3 max-w-md px-6 text-center text-sm text-zinc-300">
+            Primarch offline. Barrels emptied. Secrets found. Run it back.
           </p>
           <button
             type="button"

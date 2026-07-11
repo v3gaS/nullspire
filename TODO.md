@@ -104,6 +104,8 @@ Campaign build order. Check items as completed. Loop works top-down.
 - [x] Reload gun dip + checkpoint/nest boom juice
 - [x] Biolume climb path markers
 - [x] Multi-kill banner + sprint FOV + land dust + Mark pulse
+- [x] Energy grid + Primarch/Aegis cover + stalker blink telegraph
+- [x] Dry-fire auto-reload + stronger void RJ
 
 ---
 
