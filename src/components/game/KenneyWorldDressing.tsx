@@ -181,73 +181,47 @@ function GlbDressing() {
 function ObjDressing() {
   return (
     <group>
-      {/* Crash debris ring — outside the open pad */}
+      {/* Clean hard-surface props only — soft Kenney blobs stay off the approach cone */}
       <ObjProp
         url="/assets/models/kenney-space/barrelLarge.obj"
-        position={[9, 0, -4]}
-        scale={1.8}
+        position={[11, 0, -8]}
+        scale={1.6}
         color="#94a3b8"
       />
       <ObjProp
         url="/assets/models/kenney-space/barrel.obj"
-        position={[10.2, 0, -5.5]}
-        scale={1.8}
+        position={[12.2, 0, -9.5]}
+        scale={1.6}
         color="#a8a29e"
       />
       <ObjProp
         url="/assets/models/kenney-space/console.obj"
-        position={[-10, 0, -6]}
-        scale={1.8}
+        position={[-12, 0, -10]}
+        scale={1.6}
         rotation={[0, 0.9, 0]}
         color="#64748b"
       />
       <ObjProp
         url="/assets/models/kenney-space/metalFence.obj"
-        position={[11, 0, -10]}
-        scale={1.8}
+        position={[14, 0, -16]}
+        scale={1.6}
         color="#cbd5e1"
       />
       <ObjProp
-        url="/assets/models/kenney-space/robot.obj"
-        position={[-11, 0, -16]}
-        scale={2}
-        color="#38bdf8"
-      />
-      <ObjProp
-        url="/assets/models/kenney-space/alien.obj"
-        position={[13, 0, -22]}
-        scale={2.2}
-        rotation={[0, -1, 0]}
-        color="#86efac"
-      />
-      <ObjProp
         url="/assets/models/kenney-space/satelliteDish.obj"
-        position={[18, 0, -28]}
-        scale={1.6}
+        position={[20, 0, -32]}
+        scale={1.5}
         color="#e2e8f0"
       />
       <ObjProp
-        url="/assets/models/kenney-space/spaceCraft1.obj"
-        position={[-22, 2, -12]}
-        scale={1.1}
-        rotation={[0, 0.6, 0]}
-        color="#94a3b8"
-      />
-      <ObjProp
-        url="/assets/models/kenney-space/rocksTall.obj"
-        position={[-16, 0, -18]}
-        scale={1.8}
-        color="#78716c"
-      />
-      <ObjProp
         url="/assets/models/kenney-space/stairs.obj"
-        position={[14, 0, -20]}
-        scale={1.8}
+        position={[-16, 0, -24]}
+        scale={1.6}
         color="#a8a29e"
       />
-      <RigidBody type="fixed" colliders="cuboid" position={[9, 0.7, -4]}>
+      <RigidBody type="fixed" colliders="cuboid" position={[11, 0.65, -8]}>
         <mesh visible={false}>
-          <boxGeometry args={[1.2, 1.4, 1.2]} />
+          <boxGeometry args={[1.1, 1.3, 1.1]} />
         </mesh>
       </RigidBody>
     </group>
