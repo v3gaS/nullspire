@@ -300,11 +300,13 @@ export function EliteAndLoot() {
       <BastionUnit position={[-16, 1.1, -66]} />
       <BastionUnit position={[14, 1.1, -95]} />
       <BastionUnit position={[-12, 1.1, -118]} />
+      <BastionUnit position={[8, 1.1, -128]} />
       <NullStalker position={[-8, 1, -42]} />
       <NullStalker position={[6, 1, -62]} />
       <NullStalker position={[12, 1, -78]} />
       <NullStalker position={[-10, 1, -110]} />
       <NullStalker position={[8, 1, -126]} />
+      <NullStalker position={[-5, 1, -90]} />
       <LootDrop position={[8, 0.6, -14]} kind="health" />
       <LootDrop position={[-9, 1.6, -12]} kind="ammo" />
       <LootDrop position={[14, 0.6, -22]} kind="shards" />
