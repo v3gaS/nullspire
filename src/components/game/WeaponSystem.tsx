@@ -525,28 +525,32 @@ export function WeaponSystem() {
               for (const obj of collectDestructibles(scene)) {
                 if (obj === valid.object) continue;
                 const op = worldPos(obj);
-                if (op.distanceTo(primary) < 8 && chained < 4) {
-                  applyHit(obj, 12, primary);
-                  combatFx.pushBeam(primary, op, "#93c5fd", 0.06);
+                if (op.distanceTo(primary) < 9.5 && chained < 5) {
+                  applyHit(obj, 14, primary);
+                  combatFx.pushBeam(primary, op, "#93c5fd", 0.08);
                   combatFx.pushImpact(op, "#93c5fd");
                   chained++;
                 }
               }
+              if (chained > 0) {
+                useFxStore.getState().pulseShake(0.04, 80);
+              }
             }
 
             if (id === "rail_lance") {
-              playerPhysics.punch(0.035);
+              playerPhysics.punch(0.04);
               // Quake rail pierce — keep punching through lined-up targets
               let pierced = 0;
               for (const h of hits) {
                 if (h.distance <= 1.2) continue;
                 const obj = h.object as THREE.Object3D;
                 if (!obj.userData?.destructible || obj === valid.object) continue;
-                if (pierced >= 2) break;
-                let pierceDmg = Math.round(shot.damage * (0.7 - pierced * 0.2));
+                if (pierced >= 3) break;
+                let pierceDmg = Math.round(shot.damage * (0.75 - pierced * 0.18));
                 if (obj.userData.marked) pierceDmg = Math.round(pierceDmg * 1.5);
                 applyHit(obj, pierceDmg, origin);
                 combatFx.pushImpact(h.point.clone(), "#f0abfc");
+                combatFx.pushBeam(impact, h.point.clone(), "#e879f9", 0.1);
                 pierced++;
               }
             }

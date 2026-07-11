@@ -98,9 +98,11 @@ export function BloomMatriarch() {
         sac.visible = false;
         hp.current -= 40;
         mesh.userData.hp = hp.current;
-        combatFx.pushBoom(worldPos(sac), "#86efac", 2.6);
-        useFxStore.getState().pulseShake(0.08, 140);
-        playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.4);
+        combatFx.pushBoom(worldPos(sac), "#86efac", 3.4);
+        combatFx.pushImpact(worldPos(sac), "#bbf7d0");
+        useFxStore.getState().pulseShake(0.1, 160);
+        useFxStore.getState().pulseKill();
+        playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.48);
       }
     });
 
@@ -108,8 +110,8 @@ export function BloomMatriarch() {
     const muzzle = worldPos(mesh).clone();
     if (windup.current > 0) {
       windup.current = Math.max(0, windup.current - dt);
-      if (Math.random() < dt * 10) {
-        combatFx.pushBeam(muzzle, cam.clone(), "#fef08a", 0.05);
+      if (Math.random() < dt * 14) {
+        combatFx.pushBeam(muzzle, cam.clone(), "#fef08a", 0.07);
       }
       if (windup.current <= 0) {
         cooldown.current = phase.current === 3 ? 1.2 : 1.8;
@@ -117,14 +119,15 @@ export function BloomMatriarch() {
         if (cam.y < mesh.position.y - 2 && phase.current >= 2) {
           useGameStore.getState().damagePlayer(3);
         }
-        playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.35);
-        combatFx.pushBeam(muzzle, cam.clone(), "#86efac", 0.14);
+        playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.4);
+        combatFx.pushBeam(muzzle, cam.clone(), "#86efac", 0.18);
         combatFx.pushImpact(cam.clone(), "#86efac");
-        useFxStore.getState().pulseShake(0.07, 130);
+        useFxStore.getState().pulseShake(0.09, 150);
       }
     } else if (dist < 28 && cooldown.current <= 0) {
-      windup.current = 0.5;
-      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.2);
+      windup.current = 0.55;
+      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.24);
+      combatFx.pushImpact(muzzle, "#fef08a");
     }
   });
 
