@@ -641,7 +641,7 @@ export function CrashRimSector() {
         />
       </mesh>
       {/* Mid-canyon chevrons through the combat pocket */}
-      {[-40, -44, -48, -52, -56].map((z) => (
+      {[-38, -42, -46, -50, -54, -58].map((z) => (
         <mesh
           key={`midchev-${z}`}
           position={[0, 0.09, z]}
@@ -651,9 +651,9 @@ export function CrashRimSector() {
           <meshStandardMaterial
             color="#fbbf24"
             emissive="#f59e0b"
-            emissiveIntensity={1.0}
+            emissiveIntensity={1.15}
             transparent
-            opacity={0.7}
+            opacity={0.78}
             toneMapped={false}
           />
         </mesh>
@@ -677,19 +677,20 @@ export function CrashRimSector() {
         </mesh>
       ))}
       {/* Vault exit chevrons toward Core */}
-      {[-90, -94, -98].map((z) => (
+      {[-88, -92, -96, -100].map((z) => (
         <mesh
           key={`vexit-${z}`}
           position={[0, 0.09, z]}
           rotation={[-Math.PI / 2, 0, 0]}
         >
-          <ringGeometry args={[0.5, 0.75, 3, 1, Math.PI / 6, (Math.PI * 2) / 3]} />
+          <ringGeometry args={[0.55, 0.82, 3, 1, Math.PI / 6, (Math.PI * 2) / 3]} />
           <meshStandardMaterial
             color="#86efac"
             emissive="#4ade80"
-            emissiveIntensity={0.95}
+            emissiveIntensity={1.1}
             transparent
-            opacity={0.65}
+            opacity={0.72}
+            toneMapped={false}
           />
         </mesh>
       ))}

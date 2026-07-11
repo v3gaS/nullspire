@@ -34,26 +34,26 @@ export function MultiKillBanner() {
 
   const label = LABELS[Math.min(count, LABELS.length - 1)] ?? "GODLIKE";
   const hot = count >= 4;
-  const scale = 1 + Math.max(0, 0.18 - pulse * 0.18);
+  const scale = 1.08 + Math.max(0, 0.22 - pulse * 0.22);
 
   return (
-    <div className="pointer-events-none absolute left-1/2 top-[34%] z-[8] -translate-x-1/2 text-center">
+    <div className="pointer-events-none absolute left-1/2 top-[32%] z-[8] -translate-x-1/2 text-center">
       <div
-        className="text-5xl font-black tracking-[0.3em]"
+        className="text-6xl font-black tracking-[0.32em]"
         style={{
           color: hot ? "#ff4422" : "#ffb347",
           textShadow: hot
-            ? "0 0 28px rgba(255, 70, 30, 0.98), 0 0 56px rgba(255, 120, 40, 0.6)"
-            : "0 0 24px rgba(255, 160, 40, 0.95)",
+            ? "0 0 32px rgba(255, 70, 30, 1), 0 0 64px rgba(255, 120, 40, 0.7)"
+            : "0 0 28px rgba(255, 160, 40, 1), 0 0 48px rgba(255, 122, 24, 0.45)",
           transform: `scale(${scale})`,
-          transition: "transform 60ms linear",
+          transition: "transform 50ms linear",
         }}
       >
         {label}
       </div>
       <div
-        className="mt-1 text-sm font-bold tracking-[0.4em]"
-        style={{ color: hot ? "#ffaa88" : "rgba(255,255,255,0.8)" }}
+        className="mt-1.5 text-base font-bold tracking-[0.45em]"
+        style={{ color: hot ? "#ffaa88" : "rgba(255,255,255,0.88)" }}
       >
         {count}x STREAK
       </div>
