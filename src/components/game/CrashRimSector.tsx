@@ -494,6 +494,30 @@ export function CrashRimSector() {
           toneMapped={false}
         />
       </mesh>
+      {/* Drop Zone plaza rings — Quake floor read */}
+      <mesh position={[0, 0.1, 4]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[2.2, 2.7, 28]} />
+        <meshStandardMaterial
+          color="#ffb347"
+          emissive="#ff7a18"
+          emissiveIntensity={1.15}
+          transparent
+          opacity={0.55}
+          toneMapped={false}
+        />
+      </mesh>
+      <mesh position={[0, 0.11, 4]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[3.4, 3.7, 32]} />
+        <meshStandardMaterial
+          color="#2ee6c8"
+          emissive="#2ee6c8"
+          emissiveIntensity={0.7}
+          transparent
+          opacity={0.35}
+          toneMapped={false}
+        />
+      </mesh>
+      <pointLight position={[0, 3, 4]} intensity={1.8} color="#ff7a18" distance={14} />
 
       {/* Mid-canyon combat pocket — cover flanks, open kill lane */}
       <Box position={[-7, 1.1, -40]} size={[2.2, 2.2, 2.2]} color="#6a5a48" />

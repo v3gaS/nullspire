@@ -27,12 +27,12 @@ export function PauseMenu() {
   }
 
   return (
-    <div className="absolute inset-0 z-20 flex items-center justify-center bg-[radial-gradient(ellipse_at_center,rgba(20,40,50,0.55)_0%,rgba(0,0,0,0.78)_70%)] backdrop-blur-sm">
-      <div className="w-full max-w-sm rounded border border-teal-400/25 bg-[#121820]/95 p-6 shadow-[0_0_40px_rgba(46,230,200,0.12)]">
-        <p className="text-[10px] uppercase tracking-[0.35em] text-teal-300/70">
+    <div className="absolute inset-0 z-20 flex items-center justify-center bg-[radial-gradient(ellipse_at_center,rgba(40,28,18,0.5)_0%,rgba(0,0,0,0.8)_70%)] backdrop-blur-sm">
+      <div className="w-full max-w-sm rounded border border-orange-400/30 bg-[#141820]/95 p-6 shadow-[0_0_48px_rgba(255,122,24,0.16)]">
+        <p className="text-[10px] uppercase tracking-[0.35em] text-orange-300/75">
           Nullspire
         </p>
-        <h2 className="font-[family-name:var(--font-display)] text-3xl tracking-[0.2em] text-teal-50">
+        <h2 className="font-[family-name:var(--font-display)] text-3xl tracking-[0.2em] text-orange-50">
           PAUSED
         </h2>
         <p className="mt-2 text-sm text-zinc-300">
@@ -49,7 +49,7 @@ export function PauseMenu() {
             step={0.1}
             value={sensitivity}
             onChange={(e) => setMouseSensitivity(Number(e.target.value))}
-            className="mt-2 w-full accent-cyan-400"
+            className="mt-2 w-full accent-orange-400"
           />
           <span className="mt-1 block text-zinc-300">{sensitivity.toFixed(1)}</span>
         </label>
@@ -74,7 +74,7 @@ export function PauseMenu() {
             step={0.05}
             value={sfxVolume}
             onChange={(e) => setSfxVolume(Number(e.target.value))}
-            className="mt-2 w-full accent-cyan-400"
+            className="mt-2 w-full accent-orange-400"
           />
           <span className="mt-1 block text-zinc-300">
             {Math.round(sfxVolume * 100)}%
@@ -85,7 +85,7 @@ export function PauseMenu() {
             type="checkbox"
             checked={muted}
             onChange={(e) => setMuted(e.target.checked)}
-            className="accent-cyan-400"
+            className="accent-orange-400"
           />
           Mute audio
         </label>
