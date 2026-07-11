@@ -156,9 +156,10 @@ export function AegisWarden() {
         [7, 1.2, -4],
         [-9, 1.2, 5],
         [9, 1.2, 5],
+        [0, 1.0, 8],
       ].map((p, i) => (
         <mesh key={`ac-${i}`} position={p as [number, number, number]} castShadow>
-          <boxGeometry args={[2.4, 2.4, 1.4]} />
+          <boxGeometry args={[i === 4 ? 3.5 : 2.4, i === 4 ? 2.0 : 2.4, i === 4 ? 1.2 : 1.4]} />
           <meshStandardMaterial
             color="#475569"
             metalness={0.65}

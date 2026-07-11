@@ -34,15 +34,15 @@ let singId = 0;
 function fireInterval(id: WeaponId, overclocked: boolean): number {
   switch (id) {
     case "pulse_smg":
-      return overclocked ? 0.045 : 0.09;
+      return overclocked ? 0.04 : 0.085;
     case "scatter_carbine":
-      return 0.55;
+      return 0.5;
     case "arc_caster":
-      return 0.28;
+      return 0.25;
     case "rail_lance":
-      return 0.9;
+      return 0.82;
     case "void_launcher":
-      return 0.85;
+      return 0.78;
     default: {
       const _exhaustive: never = id;
       return _exhaustive;
