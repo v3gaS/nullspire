@@ -317,10 +317,15 @@ export function PlayerController() {
         },
         true,
       );
+      playSfx("/assets/audio/kenney-fps/jump_a.ogg", 0.28);
+      playerPhysics.punch(-0.045);
+      combatFx.pushImpact(
+        new THREE.Vector3(pos.x, 0.1, pos.z),
+        "#94a3b8",
+      );
       coyote.current = 0;
       jumpBuffer.current = 0;
       canCutJump.current = true;
-      playerPhysics.punch(-0.02);
     };
 
     if (coyote.current > 0 && jumpBuffer.current > 0) {

@@ -50,6 +50,25 @@ function fireInterval(id: WeaponId, overclocked: boolean): number {
   }
 }
 
+function magSize(id: WeaponId): number {
+  switch (id) {
+    case "pulse_smg":
+      return 30;
+    case "scatter_carbine":
+      return 6;
+    case "arc_caster":
+      return 12;
+    case "rail_lance":
+      return 4;
+    case "void_launcher":
+      return 3;
+    default: {
+      const _exhaustive: never = id;
+      return _exhaustive;
+    }
+  }
+}
+
 export function applyHit(
   obj: THREE.Object3D,
   damage: number,
@@ -331,7 +350,24 @@ export function WeaponSystem() {
 
     if (firing.current && fireCooldown.current <= 0) {
       const weapon = state.weapons[id];
-      if (weapon.ammo > 0) {
+      if (weapon.ammo <= 0 && weapon.reserve > 0) {
+        // Dry-fire → auto-reload
+        fireCooldown.current = 0.95;
+        useFxStore.getState().pulseReload(900);
+        playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.3);
+        const need = magSize(id) - weapon.ammo;
+        const take = Math.min(need, weapon.reserve);
+        useGameStore.setState({
+          weapons: {
+            ...state.weapons,
+            [id]: {
+              ...weapon,
+              ammo: weapon.ammo + take,
+              reserve: weapon.reserve - take,
+            },
+          },
+        });
+      } else if (weapon.ammo > 0) {
         fireCooldown.current = fireInterval(id, overclocked);
         useGameStore.setState({
           weapons: {
