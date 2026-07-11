@@ -308,10 +308,22 @@ export function CrashRimSector() {
 
       {/* Open Drop Zone pad — keep the look-ahead lane empty */}
       <Box position={[0, 0.12, 8]} size={[14, 0.24, 14]} color="#6a7580" />
+      <mesh position={[0, 0.26, 8]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[5.5, 6.2, 40]} />
+        <meshStandardMaterial
+          color="#ffb347"
+          emissive="#ff7a18"
+          emissiveIntensity={0.85}
+          transparent
+          opacity={0.4}
+          toneMapped={false}
+        />
+      </mesh>
       {/* Spawn plaza fill lights — hangar wash */}
-      <pointLight position={[0, 10, 6]} intensity={3.4} color="#fff4e0" distance={28} />
-      <pointLight position={[-8, 5, 2]} intensity={1.6} color="#7dffef" distance={18} />
-      <pointLight position={[8, 5, 0]} intensity={1.6} color="#ff9f43" distance={18} />
+      <pointLight position={[0, 10, 6]} intensity={3.8} color="#fff4e0" distance={30} />
+      <pointLight position={[-8, 5, 2]} intensity={1.9} color="#7dffef" distance={20} />
+      <pointLight position={[8, 5, 0]} intensity={1.9} color="#ff9f43" distance={20} />
+      <pointLight position={[0, 6, 10]} intensity={2.2} color="#ff7a18" distance={18} />
       {/* Orange runway stripe — Quake/UT lane read */}
       <mesh position={[0, 0.07, -10]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[1.9, 56]} />
