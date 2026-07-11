@@ -419,21 +419,23 @@ export function CrashRimSector() {
       <mesh position={[-3.2, 0.15, -18]} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[0.35, 0.55, 3, 1, Math.PI / 6, (Math.PI * 2) / 3]} />
         <meshStandardMaterial
-          color="#7dffef"
-          emissive="#2ee6c8"
-          emissiveIntensity={1.1}
+          color="#ffb347"
+          emissive="#ff7a18"
+          emissiveIntensity={1.2}
           transparent
-          opacity={0.75}
+          opacity={0.8}
+          toneMapped={false}
         />
       </mesh>
       <mesh position={[3.2, 0.15, -18]} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[0.35, 0.55, 3, 1, Math.PI / 6, (Math.PI * 2) / 3]} />
         <meshStandardMaterial
-          color="#7dffef"
-          emissive="#2ee6c8"
-          emissiveIntensity={1.1}
+          color="#ffb347"
+          emissive="#ff7a18"
+          emissiveIntensity={1.2}
           transparent
-          opacity={0.75}
+          opacity={0.8}
+          toneMapped={false}
         />
       </mesh>
       <pointLight position={[0, 3, -18]} intensity={2.2} color="#ff7a18" distance={16} />
