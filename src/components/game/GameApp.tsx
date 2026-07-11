@@ -243,11 +243,11 @@ export function GameApp() {
       )}
       {screen === "paused" && <PauseMenu />}
       {screen === "victory" && (
-        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-[radial-gradient(ellipse_at_center,rgba(46,230,200,0.32)_0%,rgba(0,0,0,0.9)_60%)]">
-          <p className="mb-2 text-xs uppercase tracking-[0.4em] text-teal-300/80">
+        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-[radial-gradient(ellipse_at_center,rgba(255,122,24,0.28)_0%,rgba(0,0,0,0.9)_62%)]">
+          <p className="mb-2 text-xs uppercase tracking-[0.4em] text-orange-300/85">
             Campaign Complete
           </p>
-          <h2 className="font-[family-name:var(--font-display)] text-6xl tracking-[0.12em] text-[#5dffd7] drop-shadow-[0_0_36px_rgba(46,230,200,0.55)]">
+          <h2 className="font-[family-name:var(--font-display)] text-6xl tracking-[0.12em] text-[#ffb347] drop-shadow-[0_0_40px_rgba(255,122,24,0.6)]">
             Nullspire Cleared
           </h2>
           <p className="mt-4 max-w-md px-6 text-center text-sm text-zinc-200">
@@ -255,7 +255,7 @@ export function GameApp() {
           </p>
           <button
             type="button"
-            className="mt-8 rounded border border-teal-300/50 bg-teal-500/25 px-7 py-3.5 text-sm uppercase tracking-[0.22em] text-teal-50 shadow-[0_0_24px_rgba(46,230,200,0.25)] hover:bg-teal-400/35"
+            className="mt-8 rounded border border-orange-300/60 bg-orange-500/25 px-7 py-3.5 text-sm uppercase tracking-[0.22em] text-orange-50 shadow-[0_0_28px_rgba(255,122,24,0.3)] hover:bg-orange-400/35"
             onClick={() => useGameStore.getState().resetRun()}
           >
             Run Again
@@ -270,11 +270,11 @@ export function GameApp() {
         </div>
       )}
       {screen === "dead" && (
-        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-[radial-gradient(ellipse_at_center,rgba(120,8,18,0.7)_0%,rgba(0,0,0,0.9)_68%)]">
-          <p className="mb-2 text-xs uppercase tracking-[0.4em] text-red-400/80">
+        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-[radial-gradient(ellipse_at_center,rgba(140,8,18,0.78)_0%,rgba(0,0,0,0.92)_68%)]">
+          <p className="mb-2 text-xs uppercase tracking-[0.4em] text-red-400/90">
             Fragged
           </p>
-          <h2 className="font-[family-name:var(--font-display)] text-6xl tracking-[0.12em] text-[#ff4d5e] drop-shadow-[0_0_32px_rgba(255,60,70,0.6)]">
+          <h2 className="font-[family-name:var(--font-display)] text-6xl tracking-[0.12em] text-[#ff4d5e] drop-shadow-[0_0_40px_rgba(255,60,70,0.7)]">
             Signal Lost
           </h2>
           <p className="mt-4 text-sm text-zinc-200">
@@ -285,7 +285,7 @@ export function GameApp() {
           </p>
           <button
             type="button"
-            className="mt-8 rounded border border-red-400/40 bg-red-500/20 px-7 py-3.5 text-sm uppercase tracking-[0.22em] text-red-100 shadow-[0_0_20px_rgba(255,60,70,0.2)] hover:bg-red-400/30"
+            className="mt-8 rounded border border-red-400/50 bg-red-500/25 px-7 py-3.5 text-sm uppercase tracking-[0.22em] text-red-100 shadow-[0_0_28px_rgba(255,60,70,0.28)] hover:bg-red-400/35"
             onClick={() => useGameStore.getState().resetRun()}
           >
             Reboot Drop

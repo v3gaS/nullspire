@@ -104,13 +104,13 @@ export function BiolumeVaults() {
       <Box position={[-14, 6, 0]} size={[1.5, 12, 28]} color="#24352c" emissive="#0d2818" />
       <Box position={[14, 6, 0]} size={[1.5, 12, 28]} color="#24352c" emissive="#0d2818" />
       <Box position={[0, 6, -14]} size={[28, 12, 1.5]} color="#24352c" emissive="#0d2818" />
-      {/* Vertical climb */}
-      <Box position={[-6, 2, -4]} size={[3, 0.35, 3]} color="#4ade80" emissive="#166534" />
-      <Box position={[0, 4.5, -6]} size={[3, 0.35, 3]} color="#4ade80" emissive="#166534" />
-      <Box position={[6, 7, -4]} size={[3, 0.35, 3]} color="#4ade80" emissive="#166534" />
-      <Box position={[2, 9.5, 2]} size={[4, 0.35, 4]} color="#86efac" emissive="#166534" />
-      <Box position={[-4, 12, 4]} size={[3, 0.35, 3]} color="#4ade80" emissive="#166534" />
-      <Box position={[0, 14.5, 0]} size={[6, 0.4, 6]} color="#bbf7d0" emissive="#15803d" />
+      {/* Vertical climb — hangar-grey pads + green biolume edge */}
+      <Box position={[-6, 2, -4]} size={[3, 0.35, 3]} color="#6a7580" emissive="#3a4550" />
+      <Box position={[0, 4.5, -6]} size={[3, 0.35, 3]} color="#7a8590" emissive="#3a4550" />
+      <Box position={[6, 7, -4]} size={[3, 0.35, 3]} color="#6a7580" emissive="#3a4550" />
+      <Box position={[2, 9.5, 2]} size={[4, 0.35, 4]} color="#8a9098" emissive="#4a5560" />
+      <Box position={[-4, 12, 4]} size={[3, 0.35, 3]} color="#6a7580" emissive="#3a4550" />
+      <Box position={[0, 14.5, 0]} size={[6, 0.4, 6]} color="#8a9098" emissive="#4ade80" />
       {/* Biolume pillars */}
       {[
         [-10, 3, 8],
@@ -124,24 +124,25 @@ export function BiolumeVaults() {
           <meshStandardMaterial
             color="#5eead4"
             emissive="#14b8a6"
-            emissiveIntensity={1.4}
+            emissiveIntensity={1.55}
           />
         </mesh>
       ))}
-      {/* Climb path markers — readable vertical route */}
+      {/* Climb path markers — orange Quake chevrons up the shaft */}
       {[2, 4.5, 7, 9.5, 12, 14.5].map((y) => (
         <mesh
           key={`climb-${y}`}
           position={[0, y, -5]}
           rotation={[-Math.PI / 2, 0, 0]}
         >
-          <ringGeometry args={[0.4, 0.65, 3, 1, 0, (Math.PI * 2) / 3]} />
+          <ringGeometry args={[0.45, 0.72, 3, 1, 0, (Math.PI * 2) / 3]} />
           <meshStandardMaterial
-            color="#86efac"
-            emissive="#4ade80"
-            emissiveIntensity={1.1}
+            color="#ffb347"
+            emissive="#ff7a18"
+            emissiveIntensity={1.25}
             transparent
-            opacity={0.75}
+            opacity={0.8}
+            toneMapped={false}
           />
         </mesh>
       ))}
