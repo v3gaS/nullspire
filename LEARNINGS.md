@@ -14,7 +14,8 @@ Build diary. Newest entries at the top.
 - Solid Aegis cover colliders; boss phase/death booms; Core chevrons; void RJ buff
 - Overclock/Shockwave louder; pickup rings; land dust; chunkier damage numbers
 - Arc chain/rail pierce buffs; Core barrels/cover; sprint dust; hazard denser
-- Live: https://nullspire-amber.vercel.app · ~0.55h remaining in block
+- Spitter/turret/bastion windups; vault climb pads; denser barrel nests
+- Live: https://nullspire-amber.vercel.app · ~0.35h remaining in block
 
 ## 2026-07-10 — Quake juice: pierce, kill X, chunkier FX
 - Rail Lance pierces up to 2 extra lined-up targets; Scatter/Void kick harder

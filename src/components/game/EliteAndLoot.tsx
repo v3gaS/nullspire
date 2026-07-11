@@ -172,7 +172,9 @@ export function NullStalker({
       combatFx.pushImpact(from, "#c4b5fd");
       combatFx.pushImpact(worldPos(mesh), "#a78bfa");
       combatFx.pushBeam(from, worldPos(mesh), "#fef08a", 0.06);
-      playSfx("/assets/audio/kenney-fps/jump_a.ogg", 0.25);
+      combatFx.pushBoom(from, "#a78bfa", 1.4);
+      playSfx("/assets/audio/kenney-fps/jump_a.ogg", 0.28);
+      useFxStore.getState().pulseShake(0.04, 80);
       mat.emissiveIntensity = 0.9;
     }
 
