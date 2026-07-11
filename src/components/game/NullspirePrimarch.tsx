@@ -53,9 +53,10 @@ export function NullspirePrimarch() {
       useGameStore
         .getState()
         .setObjective("Primarch destroyed — Nullspire is quiet");
-      playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.8);
-      combatFx.pushBoom(worldPos(mesh), "#c084fc", 7);
-      useFxStore.getState().pulseShake(0.32, 500);
+      playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.88);
+      combatFx.pushBoom(worldPos(mesh), "#c084fc", 8.5);
+      combatFx.pushBoom(worldPos(mesh).clone().add(new THREE.Vector3(0, 2, 0)), "#ffffff", 4.5);
+      useFxStore.getState().pulseShake(0.4, 600);
       useFxStore.getState().pulseKill();
       return;
     }
@@ -68,7 +69,10 @@ export function NullspirePrimarch() {
       useGameStore
         .getState()
         .setObjective(`Nullspire Primarch — Phase ${phase.current}`);
-      playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.5);
+      playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.55);
+      combatFx.pushBoom(worldPos(mesh), "#ffe066", 4.2);
+      useFxStore.getState().pulseShake(0.16, 240);
+      playerPhysics.punch(0.12);
     }
 
     const t = state.clock.elapsedTime;
@@ -154,6 +158,8 @@ export function NullspirePrimarch() {
         [-10, 1.5, 4],
         [10, 1.5, 4],
         [0, 1.2, -10],
+        [-6, 1.2, 9],
+        [6, 1.2, 9],
       ].map((p, i) => (
         <RigidBody key={`pc-${i}`} type="fixed" colliders="cuboid" position={p as [number, number, number]}>
           <mesh castShadow>

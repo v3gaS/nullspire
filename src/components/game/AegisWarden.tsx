@@ -1,6 +1,7 @@
 "use client";
 
 import { useFrame } from "@react-three/fiber";
+import { RigidBody } from "@react-three/rapier";
 import { useRef } from "react";
 import * as THREE from "three";
 import { useGameStore } from "@/stores/gameStore";
@@ -57,9 +58,10 @@ export function AegisWarden() {
       useGameStore
         .getState()
         .setObjective("Aegis Warden down — enter Biolume Vaults");
-      playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.7);
-      combatFx.pushBoom(worldPos(mesh), "#94a3b8", 4.5);
-      useFxStore.getState().pulseShake(0.18, 280);
+      playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.78);
+      combatFx.pushBoom(worldPos(mesh), "#94a3b8", 5.8);
+      combatFx.pushBoom(worldPos(mesh).clone().add(new THREE.Vector3(0, 1.5, 0)), "#7dffef", 3.2);
+      useFxStore.getState().pulseShake(0.24, 360);
       useFxStore.getState().pulseKill();
       return;
     }
@@ -69,7 +71,9 @@ export function AegisWarden() {
     const nextPhase = hp.current > 330 ? 1 : hp.current > 160 ? 2 : 3;
     if (nextPhase !== phase.current) {
       phase.current = nextPhase;
-      playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.5);
+      playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.55);
+      combatFx.pushBoom(worldPos(mesh), "#ffe066", 3.5);
+      useFxStore.getState().pulseShake(0.12, 200);
       useGameStore
         .getState()
         .setObjective(`Aegis Warden — Phase ${phase.current}`);
@@ -161,24 +165,39 @@ export function AegisWarden() {
           opacity={0.7}
         />
       </mesh>
-      {/* Warden plaza cover — shootable sightlines */}
+      {/* Warden plaza cover — solid Quake duel blocks */}
       {[
         [-7, 1.2, -4],
         [7, 1.2, -4],
         [-9, 1.2, 5],
         [9, 1.2, 5],
         [0, 1.0, 8],
+        [-5, 1.0, -8],
+        [5, 1.0, -8],
       ].map((p, i) => (
-        <mesh key={`ac-${i}`} position={p as [number, number, number]} castShadow>
-          <boxGeometry args={[i === 4 ? 3.5 : 2.4, i === 4 ? 2.0 : 2.4, i === 4 ? 1.2 : 1.4]} />
-          <meshStandardMaterial
-            color="#475569"
-            metalness={0.65}
-            roughness={0.35}
-            emissive="#1e293b"
-            emissiveIntensity={0.35}
-          />
-        </mesh>
+        <RigidBody
+          key={`ac-${i}`}
+          type="fixed"
+          colliders="cuboid"
+          position={p as [number, number, number]}
+        >
+          <mesh castShadow>
+            <boxGeometry
+              args={[
+                i === 4 ? 3.5 : 2.4,
+                i === 4 ? 2.0 : 2.4,
+                i === 4 ? 1.2 : 1.4,
+              ]}
+            />
+            <meshStandardMaterial
+              color="#475569"
+              metalness={0.65}
+              roughness={0.35}
+              emissive="#1e293b"
+              emissiveIntensity={0.35}
+            />
+          </mesh>
+        </RigidBody>
       ))}
     </group>
   );

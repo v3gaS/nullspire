@@ -59,9 +59,10 @@ export function BloomMatriarch() {
       useGameStore
         .getState()
         .setObjective("Bloom Matriarch slain — approach the Null Core");
-      playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.7);
-      combatFx.pushBoom(worldPos(mesh), "#86efac", 5);
-      useFxStore.getState().pulseShake(0.2, 300);
+      playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.78);
+      combatFx.pushBoom(worldPos(mesh), "#86efac", 6.2);
+      combatFx.pushBoom(worldPos(mesh).clone().add(new THREE.Vector3(0, -2, 0)), "#4ade80", 3.5);
+      useFxStore.getState().pulseShake(0.26, 340);
       useFxStore.getState().pulseKill();
       return;
     }
@@ -74,7 +75,9 @@ export function BloomMatriarch() {
       useGameStore
         .getState()
         .setObjective(`Bloom Matriarch — Phase ${phase.current}`);
-      playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.45);
+      playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.5);
+      combatFx.pushBoom(worldPos(mesh), "#ffe066", 3.2);
+      useFxStore.getState().pulseShake(0.12, 200);
     }
 
     const t = state.clock.elapsedTime;

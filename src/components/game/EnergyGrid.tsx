@@ -77,6 +77,26 @@ export function EnergyGrid({
           opacity={0.75}
         />
       </mesh>
+      {/* Warning rim — Quake hazard readability */}
+      <mesh
+        position={[position[0], position[1] + 0.04, position[2]]}
+        rotation={[-Math.PI / 2, 0, 0]}
+      >
+        <ringGeometry
+          args={[
+            Math.max(size[0], size[1]) * 0.52,
+            Math.max(size[0], size[1]) * 0.58,
+            24,
+          ]}
+        />
+        <meshStandardMaterial
+          color="#fbbf24"
+          emissive="#f59e0b"
+          emissiveIntensity={1.4}
+          transparent
+          opacity={0.8}
+        />
+      </mesh>
     </group>
   );
 }
