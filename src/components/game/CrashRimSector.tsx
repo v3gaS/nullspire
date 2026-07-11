@@ -349,24 +349,24 @@ export function CrashRimSector() {
       </mesh>
       {/* Secondary green lane accent — arena floor read */}
       <mesh position={[-3.2, 0.055, -8]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[0.35, 28]} />
+        <planeGeometry args={[0.4, 36]} />
         <meshStandardMaterial
           color="#4ade80"
           emissive="#22c55e"
-          emissiveIntensity={0.9}
+          emissiveIntensity={1.05}
           transparent
-          opacity={0.55}
+          opacity={0.6}
           toneMapped={false}
         />
       </mesh>
       <mesh position={[3.2, 0.055, -8]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[0.35, 28]} />
+        <planeGeometry args={[0.4, 36]} />
         <meshStandardMaterial
           color="#4ade80"
           emissive="#22c55e"
-          emissiveIntensity={0.9}
+          emissiveIntensity={1.05}
           transparent
-          opacity={0.55}
+          opacity={0.6}
           toneMapped={false}
         />
       </mesh>
