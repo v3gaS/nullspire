@@ -257,6 +257,5 @@ useGLTF.preload("/assets/models/kenney-fps/wall-high.glb");
 useGLTF.preload("/assets/models/kenney-fps/wall-low.glb");
 useGLTF.preload("/assets/models/kenney-fps/platform.glb");
 useGLTF.preload("/assets/models/kenney-fps/platform-large-grass.glb");
-useGLTF.preload("/assets/models/kenney-fps/enemy-flying.glb");
 useGLTF.preload("/assets/models/kenney-fps/cloud.glb");
 useGLTF.preload("/assets/models/kenney-fps/grass-small.glb");

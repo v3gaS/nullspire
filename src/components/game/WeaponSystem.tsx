@@ -483,17 +483,17 @@ export function WeaponSystem() {
             }
             break;
           case "arc_caster": {
-            playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.34);
-            useFxStore.getState().pulseMuzzle("#60a5fa", 100);
-            useFxStore.getState().pulseShake(0.035, 75);
-            playerPhysics.punch(0.042);
+            playSfx("/assets/audio/kenney-fps/blaster.ogg", 0.38);
+            useFxStore.getState().pulseMuzzle("#60a5fa", 115);
+            useFxStore.getState().pulseShake(0.045, 90);
+            playerPhysics.punch(0.05);
             {
               const dir = forward.clone();
               const kick = useFxStore.getState().kick;
               dir.x += (Math.random() - 0.5) * kick * 0.02;
               dir.y += (Math.random() - 0.5) * kick * 0.016;
               dir.normalize();
-              shots.push({ dir, damage: 18, color: "#60a5fa" });
+              shots.push({ dir, damage: 22, color: "#60a5fa" });
             }
             break;
           }
