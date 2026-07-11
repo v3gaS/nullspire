@@ -179,6 +179,12 @@ export function WeaponSystem() {
           if (!state.spendNullEnergy(35)) return;
           overclockUntil.current = performance.now() + 3000;
           useFxStore.getState().pulseOverclock(3000);
+          useFxStore.getState().pulseShake(0.1, 180);
+          combatFx.pushBoom(
+            origin.clone().add(forward.clone().multiplyScalar(1.2)),
+            "#ffe066",
+            1.8,
+          );
           playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.45);
           break;
         }
@@ -384,19 +390,19 @@ export function WeaponSystem() {
 
         switch (id) {
           case "pulse_smg":
-            playSfx("/assets/audio/kenney-fps/blaster_repeater.ogg", 0.28);
-            useFxStore.getState().pulseMuzzle(overclocked ? "#ffe066" : "#7dffef", 45);
-            useFxStore.getState().pulseShake(overclocked ? 0.04 : 0.02, 60);
-            playerPhysics.punch(0.018);
+            playSfx("/assets/audio/kenney-fps/blaster_repeater.ogg", overclocked ? 0.38 : 0.28);
+            useFxStore.getState().pulseMuzzle(overclocked ? "#ffe066" : "#7dffef", overclocked ? 70 : 45);
+            useFxStore.getState().pulseShake(overclocked ? 0.055 : 0.02, overclocked ? 80 : 60);
+            playerPhysics.punch(overclocked ? 0.028 : 0.018);
             {
               const dir = forward.clone();
               const kick = useFxStore.getState().kick;
-              dir.x += (Math.random() - 0.5) * kick * 0.035;
-              dir.y += (Math.random() - 0.5) * kick * 0.028;
+              dir.x += (Math.random() - 0.5) * kick * (overclocked ? 0.05 : 0.035);
+              dir.y += (Math.random() - 0.5) * kick * (overclocked ? 0.04 : 0.028);
               dir.normalize();
               shots.push({
                 dir,
-                damage: overclocked ? 22 : 15,
+                damage: overclocked ? 26 : 15,
                 color: overclocked ? "#ffe066" : "#7dffef",
               });
             }
