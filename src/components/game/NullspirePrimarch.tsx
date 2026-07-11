@@ -151,11 +151,12 @@ export function NullspirePrimarch() {
           roughness={0.2}
         />
       </mesh>
-      <pointLight position={[0, 8, 0]} intensity={4.0} color="#a78bfa" distance={48} />
-      <pointLight position={[0, 28, 0]} intensity={4.8} color="#fff4e0" distance={60} />
-      <pointLight position={[-8, 4, -4]} intensity={1.9} color="#c4b5fd" distance={22} />
-      <pointLight position={[8, 4, 4]} intensity={1.9} color="#c4b5fd" distance={22} />
-      <pointLight position={[0, 12, 0]} intensity={2.4} color="#ff7a18" distance={28} />
+      <pointLight position={[0, 8, 0]} intensity={4.6} color="#a78bfa" distance={52} />
+      <pointLight position={[0, 28, 0]} intensity={5.6} color="#fff4e0" distance={68} />
+      <pointLight position={[-8, 4, -4]} intensity={2.3} color="#c4b5fd" distance={26} />
+      <pointLight position={[8, 4, 4]} intensity={2.3} color="#c4b5fd" distance={26} />
+      <pointLight position={[0, 12, 0]} intensity={3.2} color="#ff7a18" distance={34} />
+      <pointLight position={[0, 5, 8]} intensity={2.2} color="#ffb347" distance={24} />
       {/* Arena cover pillars — Quake duel geometry */}
       {[
         [-8, 1.5, -6],
@@ -207,9 +208,9 @@ export function NullspirePrimarch() {
         <meshStandardMaterial
           color="#ffb347"
           emissive="#ff7a18"
-          emissiveIntensity={1.1}
+          emissiveIntensity={1.45}
           transparent
-          opacity={0.55}
+          opacity={0.72}
           toneMapped={false}
         />
       </mesh>
