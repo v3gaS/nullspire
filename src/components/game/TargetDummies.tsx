@@ -4,12 +4,14 @@ import { useMemo } from "react";
 import * as THREE from "three";
 
 const TARGETS: [number, number, number][] = [
-  [10, 1.2, -14],
+  // Approach flanks — rail-pierce practice line
+  [9, 1.2, -14],
+  [9, 1.2, -18],
+  [9, 1.2, -22],
   [-10, 1.2, -16],
-  [14, 1.5, -22],
+  [14, 1.5, -26],
   [0, 5.8, -16],
-  [18, 2, -18],
-  [-14, 1.2, -20],
+  [-14, 1.2, -22],
 ];
 
 /** Destructible practice drones for combat baseline. */

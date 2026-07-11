@@ -59,7 +59,7 @@ function ExplosiveBarrel({ position }: { position: [number, number, number] }) {
     combatFx.pushBoom(origin, "#ff6b2e", 4.2);
     combatFx.pushImpact(origin, "#ffb347");
     useFxStore.getState().pulseShake(0.22, 340);
-    playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.55);
+    playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.72);
 
     // Chain damage + physics blast
     scene.traverse((obj) => {

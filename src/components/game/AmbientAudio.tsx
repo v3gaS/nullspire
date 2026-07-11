@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useGameStore } from "@/stores/gameStore";
+import { useFxStore } from "@/stores/fxStore";
 
 /** Soft looping ambient via WebAudio oscillators (no external music file). */
 export function AmbientAudio() {
@@ -10,6 +11,7 @@ export function AmbientAudio() {
   const ctxRef = useRef<AudioContext | null>(null);
   const nodesRef = useRef<OscillatorNode[]>([]);
   const gainRef = useRef<GainNode | null>(null);
+  const rafRef = useRef(0);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -56,8 +58,30 @@ export function AmbientAudio() {
     };
   }, [muted, screen]);
 
+  // Duck ambience under gunfire / explosions so booms read
+  useEffect(() => {
+    if (muted || (screen !== "playing" && screen !== "paused")) return;
+    const tick = () => {
+      const g = gainRef.current;
+      if (g) {
+        const fx = useFxStore.getState();
+        const now = performance.now();
+        const hot =
+          now < fx.muzzleUntil ||
+          now < fx.shakeUntil ||
+          now < fx.killUntil;
+        const target = hot ? 0.012 : 0.035;
+        g.gain.value += (target - g.gain.value) * 0.18;
+      }
+      rafRef.current = requestAnimationFrame(tick);
+    };
+    rafRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [muted, screen]);
+
   useEffect(() => {
     return () => {
+      cancelAnimationFrame(rafRef.current);
       nodesRef.current.forEach((n) => {
         try {
           n.stop();

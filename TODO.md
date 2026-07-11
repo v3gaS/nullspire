@@ -97,9 +97,9 @@ Campaign build order. Check items as completed. Loop works top-down.
 - [x] Secret caches + SECRET FOUND juice
 - [x] Open Drop Zone plaza / gate gap / shrunk pickups
 - [x] Rail pierce + kill marker + chunkier impacts/booms
-- [ ] More readable mid-canyon combat arenas
-- [ ] Boss telegraph readability pass
-- [ ] Audio mix: louder booms, quieter ambience under fire
+- [x] Mid-canyon combat pocket (cover + denser pack)
+- [x] Boss telegraph readability pass
+- [x] Audio mix: louder booms, duck ambience under fire
 
 ---
 

@@ -299,7 +299,7 @@ export function WeaponSystem() {
           playerPhysics.pushKnock(blast.x * 10, 5, blast.z * 10);
           playerPhysics.punch(0.12);
         }
-        playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.55);
+        playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.7);
         combatFx.pushBoom(s.pos.clone(), "#c084fc", 5.5);
         combatFx.pushImpact(s.pos.clone(), "#c084fc");
         useFxStore.getState().pulseShake(0.28, 400);
@@ -477,6 +477,7 @@ export function WeaponSystem() {
               combatFx.pushBoom(impact, "#c084fc", 4.5);
               combatFx.pushImpact(impact, "#c084fc");
               useFxStore.getState().pulseShake(0.2, 300);
+              playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.65);
               playerPhysics.punch(0.06);
               // Soft rocket-jump if close
               if (origin.distanceTo(impact) < 5) {

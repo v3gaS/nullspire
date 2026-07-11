@@ -6,6 +6,8 @@ Build diary. Newest entries at the top.
 - Rail Lance pierces up to 2 extra lined-up targets; Scatter/Void kick harder
 - Kill hit-marker (hot X) + bigger gib spray / impact sprites / boom spheres
 - Drop Zone runway chevrons; denser barrel chain nests; Phase 10 tracked in TODO
+- Mid-canyon cover pocket + denser pack; boss yellow windup beams before strike
+- Audio: louder boom SFX; ambience ducks under muzzle/shake
 - Loop: **code continuously for 2h**, pause only for build/deploy/QA — not the reverse
 
 ## 2026-07-10 — Open Drop Zone + 2h loop

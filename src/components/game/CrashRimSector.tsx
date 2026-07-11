@@ -252,6 +252,22 @@ export function CrashRimSector() {
       <Box position={[6, 0.05, -8]} size={[5, 0.1, 5]} color="#1f6b4a" />
       <Box position={[-12, 0.05, -16]} size={[4, 0.1, 4]} color="#1f6b4a" />
 
+      {/* Mid-canyon combat pocket — cover flanks, open kill lane */}
+      <Box position={[-7, 1.1, -40]} size={[2.2, 2.2, 2.2]} color="#5a4030" />
+      <Box position={[7, 1.1, -42]} size={[2.2, 2.2, 2.2]} color="#5a4030" />
+      <Box position={[-10, 0.9, -48]} size={[3, 1.8, 1.6]} color="#6b4a32" />
+      <Box position={[10, 0.9, -50]} size={[3, 1.8, 1.6]} color="#6b4a32" />
+      <mesh position={[0, 0.05, -46]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[8, 14]} />
+        <meshStandardMaterial
+          color="#3a2a22"
+          emissive="#2a1810"
+          emissiveIntensity={0.25}
+          transparent
+          opacity={0.85}
+        />
+      </mesh>
+
       {/* Rust Canyons trench */}
       <Box position={[0, 1.5, -45]} size={[40, 3, 2]} color="#6b3f2a" />
       <Box position={[-18, 3, -55]} size={[4, 6, 4]} color="#5a4030" />

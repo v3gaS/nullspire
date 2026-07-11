@@ -4,6 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import * as THREE from "three";
 import { useGameStore } from "@/stores/gameStore";
+import { useFxStore } from "@/stores/fxStore";
 import { playSfx } from "@/lib/game/audio";
 import { combatFx } from "@/components/game/CombatVfx";
 import { distToCam, worldPos } from "@/lib/game/math";
@@ -15,6 +16,7 @@ export function AegisWarden() {
   const dead = useRef(false);
   const phase = useRef(1);
   const cooldown = useRef(0);
+  const windup = useRef(0);
   const engaged = useRef(false);
 
   useFrame((state, dt) => {
@@ -75,39 +77,49 @@ export function AegisWarden() {
     mesh.rotation.y += dt * (0.4 + phase.current * 0.25);
 
     cooldown.current = Math.max(0, cooldown.current - dt);
-    if (dist < 26 && cooldown.current <= 0) {
-      const interval = phase.current === 1 ? 2.0 : phase.current === 2 ? 1.5 : 1.1;
-      cooldown.current = interval;
-      const cam = state.camera.position;
-      useGameStore.getState().damagePlayer(5 + phase.current * 2);
-      playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.3);
-      const color =
-        phase.current === 1
-          ? "#94a3b8"
-          : phase.current === 2
-            ? "#a78bfa"
-            : "#f87171";
-      combatFx.pushBeam(
-        worldPos(mesh).clone().add(new THREE.Vector3(0, 1.2, 0)),
-        cam.clone(),
-        color,
-        0.12,
-      );
-      combatFx.pushImpact(cam.clone(), color);
-      if (phase.current === 3 && dist < 10) {
-        useGameStore.getState().damagePlayer(6);
+    const mat = mesh.material as THREE.MeshStandardMaterial;
+    const muzzle = worldPos(mesh).clone().add(new THREE.Vector3(0, 1.2, 0));
+    const color =
+      phase.current === 1
+        ? "#94a3b8"
+        : phase.current === 2
+          ? "#a78bfa"
+          : "#f87171";
+
+    if (windup.current > 0) {
+      windup.current = Math.max(0, windup.current - dt);
+      if (Math.random() < dt * 10) {
+        combatFx.pushBeam(muzzle, cam.clone(), "#ffe066", 0.05);
       }
+      mat.emissiveIntensity = 1.4 + Math.sin(t * 18) * 0.5;
+      if (windup.current <= 0) {
+        const interval =
+          phase.current === 1 ? 2.0 : phase.current === 2 ? 1.5 : 1.1;
+        cooldown.current = interval;
+        useGameStore.getState().damagePlayer(5 + phase.current * 2);
+        playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.38);
+        combatFx.pushBeam(muzzle, cam.clone(), color, 0.16);
+        combatFx.pushImpact(cam.clone(), color);
+        useFxStore.getState().pulseShake(0.08, 140);
+        if (phase.current === 3 && dist < 10) {
+          useGameStore.getState().damagePlayer(6);
+        }
+      }
+    } else if (dist < 26 && cooldown.current <= 0) {
+      windup.current = 0.48;
+      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.22);
     }
 
-    const mat = mesh.material as THREE.MeshStandardMaterial;
-    mat.emissive = new THREE.Color(
-      phase.current === 1
-        ? "#334155"
-        : phase.current === 2
-          ? "#7c3aed"
-          : "#dc2626",
-    );
-    mat.emissiveIntensity = 0.6 + phase.current * 0.35;
+    if (windup.current <= 0) {
+      mat.emissive = new THREE.Color(
+        phase.current === 1
+          ? "#334155"
+          : phase.current === 2
+            ? "#7c3aed"
+            : "#dc2626",
+      );
+      mat.emissiveIntensity = 0.6 + phase.current * 0.35;
+    }
   });
 
   return (

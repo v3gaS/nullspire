@@ -4,6 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import * as THREE from "three";
 import { useGameStore } from "@/stores/gameStore";
+import { useFxStore } from "@/stores/fxStore";
 import { playSfx } from "@/lib/game/audio";
 import { combatFx } from "@/components/game/CombatVfx";
 import { distToCam, worldPos } from "@/lib/game/math";
@@ -16,6 +17,7 @@ export function BloomMatriarch() {
   const dead = useRef(false);
   const phase = useRef(1);
   const cooldown = useRef(0);
+  const windup = useRef(0);
   const engaged = useRef(false);
 
   useFrame((state, dt) => {
@@ -93,20 +95,26 @@ export function BloomMatriarch() {
     });
 
     cooldown.current = Math.max(0, cooldown.current - dt);
-    if (dist < 28 && cooldown.current <= 0) {
-      cooldown.current = phase.current === 3 ? 1.2 : 1.8;
-      useGameStore.getState().damagePlayer(4 + phase.current * 2);
-      if (cam.y < mesh.position.y - 2 && phase.current >= 2) {
-        useGameStore.getState().damagePlayer(3);
+    const muzzle = worldPos(mesh).clone();
+    if (windup.current > 0) {
+      windup.current = Math.max(0, windup.current - dt);
+      if (Math.random() < dt * 10) {
+        combatFx.pushBeam(muzzle, cam.clone(), "#fef08a", 0.05);
       }
-      playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.28);
-      combatFx.pushBeam(
-        worldPos(mesh).clone(),
-        cam.clone(),
-        "#86efac",
-        0.11,
-      );
-      combatFx.pushImpact(cam.clone(), "#86efac");
+      if (windup.current <= 0) {
+        cooldown.current = phase.current === 3 ? 1.2 : 1.8;
+        useGameStore.getState().damagePlayer(4 + phase.current * 2);
+        if (cam.y < mesh.position.y - 2 && phase.current >= 2) {
+          useGameStore.getState().damagePlayer(3);
+        }
+        playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.35);
+        combatFx.pushBeam(muzzle, cam.clone(), "#86efac", 0.14);
+        combatFx.pushImpact(cam.clone(), "#86efac");
+        useFxStore.getState().pulseShake(0.07, 130);
+      }
+    } else if (dist < 28 && cooldown.current <= 0) {
+      windup.current = 0.5;
+      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.2);
     }
   });
 

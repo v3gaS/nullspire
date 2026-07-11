@@ -5,6 +5,7 @@ import { RigidBody } from "@react-three/rapier";
 import { useRef } from "react";
 import * as THREE from "three";
 import { useGameStore } from "@/stores/gameStore";
+import { useFxStore } from "@/stores/fxStore";
 import { playSfx } from "@/lib/game/audio";
 import { combatFx } from "@/components/game/CombatVfx";
 import { distToCam, worldPos } from "@/lib/game/math";
@@ -16,6 +17,7 @@ export function NullspirePrimarch() {
   const dead = useRef(false);
   const phase = useRef(1);
   const cooldown = useRef(0);
+  const windup = useRef(0);
   const engaged = useRef(false);
 
   useFrame((state, dt) => {
@@ -71,26 +73,31 @@ export function NullspirePrimarch() {
     mesh.rotation.x = Math.sin(t * 0.5) * 0.15;
 
     cooldown.current = Math.max(0, cooldown.current - dt);
-    if (dist < 30 && cooldown.current <= 0) {
-      cooldown.current = phase.current === 3 ? 0.9 : 1.4;
-      const cam = state.camera.position;
-      useGameStore.getState().damagePlayer(6 + phase.current * 2);
-      // Singularity wells — pull feel via extra damage in close range
-      if (phase.current >= 2 && dist < 14) {
-        useGameStore.getState().damagePlayer(4);
-      }
-      playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.32);
-      combatFx.pushBeam(
-        worldPos(mesh).clone().add(new THREE.Vector3(0, 1.5, 0)),
-        cam.clone(),
-        "#c084fc",
-        0.14,
-      );
-      combatFx.pushImpact(cam.clone(), "#c084fc");
-    }
-
     const mat = mesh.material as THREE.MeshStandardMaterial;
-    mat.emissiveIntensity = 0.8 + phase.current * 0.5;
+    const muzzle = worldPos(mesh).clone().add(new THREE.Vector3(0, 1.5, 0));
+    if (windup.current > 0) {
+      windup.current = Math.max(0, windup.current - dt);
+      mat.emissiveIntensity = 2.2 + Math.sin(t * 20) * 0.6;
+      if (Math.random() < dt * 12) {
+        combatFx.pushBeam(muzzle, cam.clone(), "#fde68a", 0.06);
+      }
+      if (windup.current <= 0) {
+        cooldown.current = phase.current === 3 ? 0.9 : 1.4;
+        useGameStore.getState().damagePlayer(6 + phase.current * 2);
+        if (phase.current >= 2 && dist < 14) {
+          useGameStore.getState().damagePlayer(4);
+        }
+        playSfx("/assets/audio/kenney-fps/enemy_attack.ogg", 0.4);
+        combatFx.pushBeam(muzzle, cam.clone(), "#c084fc", 0.18);
+        combatFx.pushImpact(cam.clone(), "#c084fc");
+        useFxStore.getState().pulseShake(0.1, 160);
+      }
+    } else if (dist < 30 && cooldown.current <= 0) {
+      windup.current = 0.55;
+      playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.24);
+    } else {
+      mat.emissiveIntensity = 0.8 + phase.current * 0.5;
+    }
   });
 
   return (
