@@ -214,43 +214,53 @@ export function WeaponSystem() {
       switch (state.activeWeapon) {
         case "pulse_smg": {
           if (!state.spendNullEnergy(35)) return;
-          overclockUntil.current = performance.now() + 3200;
-          useFxStore.getState().pulseOverclock(3200);
-          useFxStore.getState().pulseShake(0.14, 220);
+          overclockUntil.current = performance.now() + 3400;
+          useFxStore.getState().pulseOverclock(3400);
+          useFxStore.getState().pulseShake(0.16, 260);
           combatFx.pushBoom(
             origin.clone().add(forward.clone().multiplyScalar(1.2)),
             "#ffe066",
-            2.6,
+            3.2,
           );
-          combatFx.pushBoom(origin.clone(), "#7dffef", 1.6);
-          playerPhysics.punch(0.05);
-          playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.55);
+          combatFx.pushBoom(origin.clone(), "#7dffef", 2.0);
+          combatFx.pushBoom(
+            origin.clone().add(forward.clone().multiplyScalar(0.6)),
+            "#ffffff",
+            1.0,
+          );
+          playerPhysics.punch(0.06);
+          playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.62);
           break;
         }
         case "scatter_carbine": {
           if (!state.spendNullEnergy(40)) return;
           for (const obj of collectDestructibles(scene)) {
             const op = worldPos(obj);
-            if (op.distanceTo(origin) < 9) {
-              applyHit(obj, 45, origin);
-              impulseRigid(obj, op.clone().sub(origin), 16);
+            if (op.distanceTo(origin) < 10) {
+              applyHit(obj, 52, origin);
+              impulseRigid(obj, op.clone().sub(origin), 18);
             }
           }
           // Self knockback — shockwave kick
           playerPhysics.pushKnock(
-            -forward.x * 7.5,
-            3.0,
-            -forward.z * 7.5,
+            -forward.x * 8.5,
+            3.4,
+            -forward.z * 8.5,
           );
-          playerPhysics.punch(0.09);
+          playerPhysics.punch(0.11);
           combatFx.pushBoom(
             origin.clone().add(forward.clone().multiplyScalar(2.5)),
             "#ffb347",
-            4.0,
+            5.0,
+          );
+          combatFx.pushBoom(
+            origin.clone().add(forward.clone().multiplyScalar(1.5)),
+            "#ff7a18",
+            2.4,
           );
           combatFx.pushImpact(origin.clone().add(forward.clone().multiplyScalar(2)), "#ffb347");
-          useFxStore.getState().pulseShake(0.2, 300);
-          playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.58);
+          useFxStore.getState().pulseShake(0.24, 340);
+          playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.68);
           break;
         }
         case "arc_caster": {

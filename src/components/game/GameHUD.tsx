@@ -96,7 +96,7 @@ export function GameHUD() {
         {feed.map((e) => (
           <p
             key={e.id}
-            className="text-[13px] font-medium tracking-wide text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.85)]"
+            className="text-[14px] font-semibold tracking-wide text-orange-100/95 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]"
           >
             {e.text}
           </p>
@@ -104,12 +104,12 @@ export function GameHUD() {
       </div>
 
       {/* Frags — top right */}
-      <div className="absolute right-5 top-5 rounded bg-black/50 px-3 py-2 text-right backdrop-blur-[2px]">
+      <div className="absolute right-5 top-5 rounded bg-black/55 px-3.5 py-2.5 text-right backdrop-blur-[2px]">
         <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/45">
           Frags
         </p>
-        <p className="text-2xl font-bold leading-none text-white">{frags}</p>
-        <p className="mt-1.5 text-[10px] uppercase tracking-[0.16em] text-amber-300/70">
+        <p className="text-3xl font-black leading-none text-white">{frags}</p>
+        <p className="mt-1.5 text-[11px] uppercase tracking-[0.16em] text-amber-300/80">
           Secrets {secretsFound}
         </p>
       </div>
@@ -182,11 +182,11 @@ export function GameHUD() {
             return (
               <div
                 key={id}
-                className={`flex h-7 w-7 items-center justify-center rounded-sm text-xs font-bold ${
+                className={`flex h-8 w-8 items-center justify-center rounded-sm text-xs font-bold ${
                   active
-                    ? "bg-white text-black"
+                    ? "bg-orange-400 text-black shadow-[0_0_12px_rgba(255,122,24,0.55)]"
                     : unlocked
-                      ? "bg-white/15 text-white/80"
+                      ? "bg-white/15 text-white/85"
                       : "bg-white/5 text-white/25"
                 }`}
               >

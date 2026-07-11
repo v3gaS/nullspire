@@ -139,4 +139,4 @@ Campaign build order. Check items as completed. Loop works top-down.
 - [ ] Continue Quake juice until wall-clock ends
 
 ## Current focus
-**2h continuous Phase 11** (~0.9h remaining) — code until wall-clock ends; pause only for build/deploy/QA
+**2h continuous Phase 11** (~0.75h remaining) — code until wall-clock ends; pause only for build/deploy/QA
