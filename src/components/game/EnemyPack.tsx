@@ -13,6 +13,7 @@ function useDestructibleSync(
   meshRef: RefObject<THREE.Mesh | null>,
   hpRef: MutableRefObject<number>,
   deadRef: MutableRefObject<boolean>,
+  boomColor = "#ff6644",
 ) {
   const mesh = meshRef.current;
   if (!mesh || deadRef.current) return;
@@ -22,6 +23,8 @@ function useDestructibleSync(
   if (hpRef.current <= 0) {
     deadRef.current = true;
     mesh.visible = false;
+    // applyHit already gibs; add a local boom for pack readability
+    combatFx.pushBoom(worldPos(mesh), boomColor, 2.2);
   }
 }
 
@@ -39,7 +42,7 @@ export function SentryTurret({
     const mesh = meshRef.current;
     if (!mesh || dead.current) return;
     if (useGameStore.getState().screen !== "playing") return;
-    useDestructibleSync(meshRef, hp, dead);
+    useDestructibleSync(meshRef, hp, dead, "#94a3b8");
     if (dead.current) return;
     if (performance.now() < (mesh.userData.staggerUntil ?? 0)) return;
 
@@ -94,7 +97,7 @@ export function Skitter({ position }: { position: [number, number, number] }) {
     const mesh = meshRef.current;
     if (!mesh || dead.current) return;
     if (useGameStore.getState().screen !== "playing") return;
-    useDestructibleSync(meshRef, hp, dead);
+    useDestructibleSync(meshRef, hp, dead, "#7dff6a");
     if (dead.current) return;
     if (performance.now() < (mesh.userData.staggerUntil ?? 0)) return;
 
@@ -104,7 +107,7 @@ export function Skitter({ position }: { position: [number, number, number] }) {
     if (dist < 22 && dist > 1.4) {
       to.y = 0;
       to.normalize();
-      mesh.position.add(to.multiplyScalar(dt * 9.2));
+      mesh.position.add(to.multiplyScalar(dt * 10.5));
       mesh.position.y = origin.current.y + Math.abs(Math.sin(state.clock.elapsedTime * 10)) * 0.25;
       mesh.lookAt(cam.x, mesh.position.y, cam.z);
     }
@@ -150,7 +153,7 @@ export function Spitter({ position }: { position: [number, number, number] }) {
     const mesh = meshRef.current;
     if (!mesh || dead.current) return;
     if (useGameStore.getState().screen !== "playing") return;
-    useDestructibleSync(meshRef, hp, dead);
+    useDestructibleSync(meshRef, hp, dead, "#a3e635");
     if (dead.current) return;
     if (performance.now() < (mesh.userData.staggerUntil ?? 0)) return;
 

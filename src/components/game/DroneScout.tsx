@@ -70,8 +70,10 @@ export function DroneScout({ position, id }: DroneProps) {
     if (hp.current <= 0) {
       dead.current = true;
       mesh.visible = false;
-      combatFx.pushBoom(mesh.position.clone(), "#6ecbff", 2);
+      combatFx.pushBoom(mesh.position.clone(), "#6ecbff", 2.8);
+      combatFx.pushImpact(mesh.position.clone(), "#bae6fd");
       useFxStore.getState().pulseKill();
+      useFxStore.getState().pulseShake(0.08, 140);
     }
   });
 

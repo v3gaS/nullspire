@@ -54,8 +54,10 @@ function NestNode({ position }: { position: [number, number, number] }) {
       mesh.visible = false;
       useGameStore.getState().setObjective("Nest destroyed — climb the vault shaft");
       playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.55);
-      combatFx.pushBoom(worldPos(mesh), "#86efac", 4);
-      useFxStore.getState().pulseShake(0.14, 220);
+      combatFx.pushBoom(worldPos(mesh), "#86efac", 5.2);
+      combatFx.pushBoom(worldPos(mesh).clone().add(new THREE.Vector3(0, 1, 0)), "#4ade80", 2.8);
+      useFxStore.getState().pulseShake(0.18, 280);
+      useFxStore.getState().pulseKill();
     }
   });
 
@@ -81,6 +83,23 @@ export function BiolumeVaults() {
     <group position={[0, 0, -95]}>
       {/* Chamber floor */}
       <Box position={[0, 0.2, 0]} size={[28, 0.4, 28]} color="#1a2e24" />
+      {/* Floor chevrons toward climb shaft */}
+      {[4, 1, -2, -5].map((z) => (
+        <mesh
+          key={`vchev-${z}`}
+          position={[0, 0.42, z]}
+          rotation={[-Math.PI / 2, 0, Math.PI]}
+        >
+          <ringGeometry args={[0.45, 0.7, 3, 1, Math.PI / 6, (Math.PI * 2) / 3]} />
+          <meshStandardMaterial
+            color="#86efac"
+            emissive="#4ade80"
+            emissiveIntensity={1.0}
+            transparent
+            opacity={0.7}
+          />
+        </mesh>
+      ))}
       {/* Walls */}
       <Box position={[-14, 6, 0]} size={[1.5, 12, 28]} color="#24352c" emissive="#0d2818" />
       <Box position={[14, 6, 0]} size={[1.5, 12, 28]} color="#24352c" emissive="#0d2818" />
