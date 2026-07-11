@@ -254,7 +254,7 @@ export function CrashRimSector() {
         />
       </mesh>
       {/* Direction chevrons — Quake-readable push lane */}
-      {[2, -2, -6, -10, -14].map((z) => (
+      {[2, -2, -6, -10, -14, -22, -30].map((z) => (
         <mesh
           key={`chev-${z}`}
           position={[0, 0.08, z]}
