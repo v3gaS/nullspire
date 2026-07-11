@@ -7,11 +7,11 @@ import { WEAPON_ORDER } from "@/lib/game/constants";
 import { playSfx } from "@/lib/game/audio";
 
 const MAG_SIZE: Record<WeaponId, number> = {
-  pulse_smg: 30,
-  scatter_carbine: 6,
-  arc_caster: 12,
-  rail_lance: 4,
-  void_launcher: 3,
+  pulse_smg: 35,
+  scatter_carbine: 7,
+  arc_caster: 14,
+  rail_lance: 5,
+  void_launcher: 4,
 };
 
 function switchFlash(id: WeaponId): string {
@@ -47,8 +47,8 @@ export function useCombatInput() {
         const mag = MAG_SIZE[state.activeWeapon];
         if (weapon.ammo >= mag || weapon.reserve <= 0) return;
         reloading.current = true;
-        useFxStore.getState().pulseReload(900);
-        playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.28);
+        useFxStore.getState().pulseReload(750);
+        playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.35);
         window.setTimeout(() => {
           const s = useGameStore.getState();
           const w = s.weapons[s.activeWeapon];
@@ -65,7 +65,7 @@ export function useCombatInput() {
             },
           });
           reloading.current = false;
-        }, 900);
+        }, 750);
       }
 
       const idx = ["Digit1", "Digit2", "Digit3", "Digit4", "Digit5"].indexOf(
@@ -75,8 +75,9 @@ export function useCombatInput() {
         const id = WEAPON_ORDER[idx];
         if (state.weapons[id].unlocked) {
           useGameStore.getState().setActiveWeapon(id);
-          useFxStore.getState().pulseMuzzle(switchFlash(id), 40);
-          playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.32);
+          useFxStore.getState().pulseMuzzle(switchFlash(id), 70);
+          useFxStore.getState().pulseShake(0.03, 60);
+          playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.4);
         }
       }
     };

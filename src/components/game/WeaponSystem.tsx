@@ -53,15 +53,15 @@ function fireInterval(id: WeaponId, overclocked: boolean): number {
 function magSize(id: WeaponId): number {
   switch (id) {
     case "pulse_smg":
-      return 30;
+      return 35;
     case "scatter_carbine":
-      return 6;
+      return 7;
     case "arc_caster":
-      return 12;
+      return 14;
     case "rail_lance":
-      return 4;
+      return 5;
     case "void_launcher":
-      return 3;
+      return 4;
     default: {
       const _exhaustive: never = id;
       return _exhaustive;
@@ -380,8 +380,8 @@ export function WeaponSystem() {
       const weapon = state.weapons[id];
       if (weapon.ammo <= 0 && weapon.reserve > 0) {
         // Dry-fire → auto-reload
-        fireCooldown.current = 0.95;
-        useFxStore.getState().pulseReload(900);
+        fireCooldown.current = 0.8;
+        useFxStore.getState().pulseReload(750);
         playSfx("/assets/audio/kenney-fps/weapon_change.ogg", 0.3);
         const need = magSize(id) - weapon.ammo;
         const take = Math.min(need, weapon.reserve);

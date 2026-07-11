@@ -68,20 +68,20 @@ export interface GameState {
 }
 
 const defaultWeapons: Record<WeaponId, WeaponState> = {
-  pulse_smg: { id: "pulse_smg", unlocked: true, ammo: 30, reserve: 120 },
+  pulse_smg: { id: "pulse_smg", unlocked: true, ammo: 35, reserve: 140 },
   scatter_carbine: {
     id: "scatter_carbine",
     unlocked: false,
-    ammo: 6,
-    reserve: 24,
+    ammo: 7,
+    reserve: 28,
   },
-  arc_caster: { id: "arc_caster", unlocked: false, ammo: 12, reserve: 36 },
-  rail_lance: { id: "rail_lance", unlocked: false, ammo: 4, reserve: 12 },
+  arc_caster: { id: "arc_caster", unlocked: false, ammo: 14, reserve: 42 },
+  rail_lance: { id: "rail_lance", unlocked: false, ammo: 5, reserve: 15 },
   void_launcher: {
     id: "void_launcher",
     unlocked: false,
-    ammo: 3,
-    reserve: 9,
+    ammo: 4,
+    reserve: 12,
   },
 };
 
