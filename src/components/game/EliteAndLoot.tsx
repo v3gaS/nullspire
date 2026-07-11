@@ -46,6 +46,9 @@ export function BastionUnit({
       dead.current = true;
       mesh.visible = false;
       if (shieldRef.current) shieldRef.current.visible = false;
+      combatFx.pushBoom(worldPos(mesh), "#94a3b8", 3);
+      useFxStore.getState().pulseKill();
+      playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.5);
       return;
     }
 
@@ -134,6 +137,8 @@ export function NullStalker({
     if (hp.current <= 0) {
       dead.current = true;
       mesh.visible = false;
+      combatFx.pushBoom(worldPos(mesh), "#a78bfa", 2.2);
+      useFxStore.getState().pulseKill();
       return;
     }
 
@@ -144,13 +149,23 @@ export function NullStalker({
     mat.opacity = cloaked ? 0.15 : 0.85;
     mat.transparent = true;
 
+    // Blink telegraph — brighten before teleport
+    if (blink.current < 0.35 && blink.current > 0 && distToCam(mesh, cam) < 22) {
+      mat.emissiveIntensity = 2.2;
+      mat.opacity = 0.95;
+    }
+
     if (blink.current <= 0 && distToCam(mesh, cam) < 22) {
       blink.current = 2.4;
+      const from = worldPos(mesh).clone();
       const dir = new THREE.Vector3()
-        .subVectors(cam, worldPos(mesh))
+        .subVectors(cam, from)
         .normalize();
       mesh.position.add(dir.multiplyScalar(6));
+      combatFx.pushImpact(from, "#c4b5fd");
+      combatFx.pushImpact(worldPos(mesh), "#a78bfa");
       playSfx("/assets/audio/kenney-fps/jump_a.ogg", 0.2);
+      mat.emissiveIntensity = 0.9;
     }
 
     cooldown.current = Math.max(0, cooldown.current - dt);
@@ -258,14 +273,17 @@ export function EliteAndLoot() {
   return (
     <group>
       <BastionUnit position={[20, 1.1, -50]} />
+      <BastionUnit position={[-16, 1.1, -66]} />
       <NullStalker position={[-8, 1, -42]} />
       <NullStalker position={[6, 1, -62]} />
+      <NullStalker position={[12, 1, -78]} />
       <LootDrop position={[8, 0.6, -14]} kind="health" />
       <LootDrop position={[-9, 1.6, -12]} kind="ammo" />
       <LootDrop position={[14, 0.6, -22]} kind="shards" />
       <LootDrop position={[0, 0.8, -68]} kind="health" />
       <LootDrop position={[-7, 0.8, -46]} kind="ammo" />
       <LootDrop position={[11, 1.2, -52]} kind="shards" />
+      <LootDrop position={[4, 0.8, -78]} kind="health" />
     </group>
   );
 }
