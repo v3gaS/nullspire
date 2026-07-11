@@ -238,14 +238,14 @@ export function GameApp() {
         </div>
       )}
       {screen === "dead" && (
-        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/70">
-          <h2 className="font-[family-name:var(--font-display)] text-4xl tracking-wide text-[#ff6b7a]">
+        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-[radial-gradient(ellipse_at_center,rgba(80,10,20,0.55)_0%,rgba(0,0,0,0.85)_70%)]">
+          <h2 className="font-[family-name:var(--font-display)] text-5xl tracking-[0.12em] text-[#ff6b7a] drop-shadow-[0_0_24px_rgba(255,80,90,0.45)]">
             Signal Lost
           </h2>
-          <p className="mt-2 text-sm text-zinc-300">
-            You were overrun on Nullspire.
+          <p className="mt-3 text-sm text-zinc-300">
+            Fragged on Nullspire. Reboot and push again.
           </p>
-          <p className="mt-1 text-xs uppercase tracking-[0.2em] text-zinc-500">
+          <p className="mt-2 text-xs uppercase tracking-[0.25em] text-zinc-500">
             Last CP · {checkpointLabel}
           </p>
           <button

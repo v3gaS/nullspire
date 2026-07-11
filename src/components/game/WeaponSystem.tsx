@@ -535,10 +535,11 @@ export function WeaponSystem() {
               useFxStore.getState().pulseShake(0.2, 300);
               playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.65);
               playerPhysics.punch(0.06);
-              // Soft rocket-jump if close
-              if (origin.distanceTo(impact) < 5) {
+              // Soft rocket-jump if close — Quake RJ window
+              if (origin.distanceTo(impact) < 6.5) {
                 const up = origin.clone().sub(impact).normalize();
-                playerPhysics.pushKnock(up.x * 5, 6, up.z * 5);
+                playerPhysics.pushKnock(up.x * 7, 8.5, up.z * 7);
+                playerPhysics.punch(-0.08);
               }
             }
           }
