@@ -93,6 +93,18 @@ const SECRETS: {
     hint: "Core approach med niche",
     radius: 4.5,
   },
+  {
+    position: [14, 1.0, -88],
+    kind: "ammo",
+    hint: "vault exit ammo alcove",
+    radius: 4.5,
+  },
+  {
+    position: [-11, 1.0, -132],
+    kind: "shards",
+    hint: "Primarch flank Null cache",
+    radius: 5,
+  },
 ];
 
 function SecretHint({

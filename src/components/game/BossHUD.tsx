@@ -23,7 +23,7 @@ export function BossHUD({
     if (phase !== prevPhase.current) {
       prevPhase.current = phase;
       setPhaseFlash(true);
-      const id = window.setTimeout(() => setPhaseFlash(false), 900);
+      const id = window.setTimeout(() => setPhaseFlash(false), 1100);
       return () => window.clearTimeout(id);
     }
   }, [phase]);
@@ -37,7 +37,7 @@ export function BossHUD({
       <div
         className={`rounded border bg-black/50 px-4 py-2 backdrop-blur-sm ${
           phaseFlash
-            ? "border-amber-300/70 shadow-[0_0_24px_rgba(251,191,36,0.35)]"
+            ? "border-amber-300/80 shadow-[0_0_32px_rgba(251,191,36,0.5)]"
             : "border-teal-400/30"
         }`}
       >
@@ -60,8 +60,8 @@ export function BossHUD({
           />
         </div>
         {phaseFlash ? (
-          <p className="mt-1 text-center text-[10px] uppercase tracking-[0.3em] text-amber-200">
-            Phase shift
+          <p className="mt-1 animate-pulse text-center text-[11px] font-bold uppercase tracking-[0.35em] text-amber-100">
+            Phase shift — open fire
           </p>
         ) : null}
       </div>

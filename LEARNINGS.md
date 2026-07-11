@@ -11,7 +11,9 @@ Build diary. Newest entries at the top.
 - Stalker blink telegraph; boss death booms; dry-fire auto-reload; stronger void RJ
 - Boom debris rings + hotter muzzle punch; vault-mouth barrel nests; 3 more secrets
 - Snappier fire rates (SMG/Scatter/Arc/Rail/Void)
-- Live: https://nullspire-amber.vercel.app · ~0.85h remaining in block
+- Solid Aegis cover colliders; boss phase/death booms; Core chevrons; void RJ buff
+- Overclock/Shockwave louder; pickup rings; land dust; chunkier damage numbers
+- Live: https://nullspire-amber.vercel.app · ~0.7h remaining in block
 
 ## 2026-07-10 — Quake juice: pierce, kill X, chunkier FX
 - Rail Lance pierces up to 2 extra lined-up targets; Scatter/Void kick harder

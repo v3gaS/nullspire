@@ -46,9 +46,11 @@ export function BastionUnit({
       dead.current = true;
       mesh.visible = false;
       if (shieldRef.current) shieldRef.current.visible = false;
-      combatFx.pushBoom(worldPos(mesh), "#94a3b8", 3);
+      combatFx.pushBoom(worldPos(mesh), "#94a3b8", 3.8);
+      combatFx.pushImpact(worldPos(mesh), "#cbd5e1");
       useFxStore.getState().pulseKill();
-      playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.5);
+      useFxStore.getState().pulseShake(0.12, 180);
+      playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.58);
       return;
     }
 
@@ -137,8 +139,11 @@ export function NullStalker({
     if (hp.current <= 0) {
       dead.current = true;
       mesh.visible = false;
-      combatFx.pushBoom(worldPos(mesh), "#a78bfa", 2.2);
+      combatFx.pushBoom(worldPos(mesh), "#a78bfa", 3.0);
+      combatFx.pushImpact(worldPos(mesh), "#c4b5fd");
       useFxStore.getState().pulseKill();
+      useFxStore.getState().pulseShake(0.1, 160);
+      playSfx("/assets/audio/kenney-fps/enemy_destroy.ogg", 0.45);
       return;
     }
 
@@ -164,7 +169,8 @@ export function NullStalker({
       mesh.position.add(dir.multiplyScalar(6));
       combatFx.pushImpact(from, "#c4b5fd");
       combatFx.pushImpact(worldPos(mesh), "#a78bfa");
-      playSfx("/assets/audio/kenney-fps/jump_a.ogg", 0.2);
+      combatFx.pushBeam(from, worldPos(mesh), "#fef08a", 0.06);
+      playSfx("/assets/audio/kenney-fps/jump_a.ogg", 0.25);
       mat.emissiveIntensity = 0.9;
     }
 
