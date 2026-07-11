@@ -24,7 +24,7 @@ export function EnergyGrid({
     const mesh = meshRef.current;
     if (!mesh || useGameStore.getState().screen !== "playing") return;
     const mat = mesh.material as THREE.MeshStandardMaterial;
-    mat.emissiveIntensity = 0.9 + Math.sin(state.clock.elapsedTime * 8) * 0.5;
+    mat.emissiveIntensity = 1.15 + Math.sin(state.clock.elapsedTime * 9) * 0.55;
     const cam = state.camera.position;
     if (
       Math.abs(cam.x - position[0]) < size[0] / 2 &&
@@ -35,10 +35,11 @@ export function EnergyGrid({
     ) {
       cooldown.current = 0.45;
       useGameStore.getState().damagePlayer(5);
-      playSfx("/assets/audio/kenney-fps/enemy_hurt.ogg", 0.22);
+      playSfx("/assets/audio/kenney-fps/enemy_hurt.ogg", 0.26);
       combatFx.pushImpact(cam.clone(), "#38bdf8");
-      useFxStore.getState().pulseShake(0.05, 90);
-      mat.emissiveIntensity = 2.4;
+      combatFx.pushBoom(cam.clone().add(new THREE.Vector3(0, -0.4, 0)), "#38bdf8", 1.2);
+      useFxStore.getState().pulseShake(0.07, 110);
+      mat.emissiveIntensity = 2.8;
     }
   });
 
@@ -53,9 +54,10 @@ export function EnergyGrid({
         <meshStandardMaterial
           color="#38bdf8"
           emissive="#0ea5e9"
-          emissiveIntensity={1.1}
+          emissiveIntensity={1.35}
           transparent
-          opacity={0.55}
+          opacity={0.62}
+          toneMapped={false}
         />
       </mesh>
       <mesh

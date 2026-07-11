@@ -689,6 +689,8 @@ export function CrashRimSector() {
       <EnergyGrid position={[0, 0.06, -108]} size={[8, 2.5]} />
       <EnergyGrid position={[0, 0.06, -122]} size={[7, 2]} />
       <EnergyGrid position={[5, 0.06, -95]} size={[5, 2]} />
+      <EnergyGrid position={[-6, 0.06, -80]} size={[5, 2]} />
+      <EnergyGrid position={[0, 0.06, -34]} size={[6, 2]} />
       {/* Mid-canyon combat pocket cover — Quake lane readable */}
       <Box position={[-5, 1.2, -40]} size={[2.2, 2.4, 1.2]} color="#5a4030" />
       <Box position={[5, 1.2, -41]} size={[2.2, 2.4, 1.2]} color="#5a4030" />

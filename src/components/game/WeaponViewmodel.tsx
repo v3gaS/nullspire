@@ -251,7 +251,7 @@ export function WeaponViewmodel() {
     const kickZ = kicking ? viewKick(active) : fx.kick * 0.12;
     const reloading = performance.now() < fx.reloadUntil;
     const reloadDip = reloading ? 0.18 : 0;
-    const amp = playerLocomotion.sprinting ? 0.016 : 0.009;
+    const amp = playerLocomotion.sprinting ? 0.02 : 0.012;
     const right = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion);
     const up = new THREE.Vector3(0, 1, 0).applyQuaternion(camera.quaternion);
     const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(
@@ -260,14 +260,14 @@ export function WeaponViewmodel() {
 
     // Bigger, closer, more lower-right presence
     const x =
-      0.36 +
+      0.38 +
       (playerLocomotion.moving ? Math.cos(bob.current * 0.5) * amp : 0) +
-      (reloading ? Math.sin(performance.now() * 0.02) * 0.045 : 0);
+      (reloading ? Math.sin(performance.now() * 0.02) * 0.05 : 0);
     const y =
-      -0.32 +
-      (playerLocomotion.moving ? Math.sin(bob.current) * amp * 0.6 : 0) -
+      -0.34 +
+      (playerLocomotion.moving ? Math.sin(bob.current) * amp * 0.65 : 0) -
       reloadDip;
-    const z = 0.58 - kickZ;
+    const z = 0.56 - kickZ;
 
     g.position
       .copy(camera.position)
