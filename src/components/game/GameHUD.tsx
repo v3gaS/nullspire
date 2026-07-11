@@ -126,7 +126,7 @@ export function GameHUD() {
 
       {shieldActive && (
         <div className="absolute left-1/2 top-20 -translate-x-1/2 text-center">
-          <p className="animate-pulse text-xs font-bold uppercase tracking-[0.25em] text-teal-200">
+          <p className="animate-pulse text-xs font-bold uppercase tracking-[0.25em] text-orange-200">
             Drop shield active
           </p>
         </div>

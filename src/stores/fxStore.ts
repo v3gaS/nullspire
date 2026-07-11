@@ -98,7 +98,7 @@ export const useFxStore = create<FxState>((set, get) => ({
   },
   pulseOverclock: (ms = 3000) =>
     set({ overclockUntil: performance.now() + ms }),
-  pulseReload: (ms = 900) => set({ reloadUntil: performance.now() + ms }),
+  pulseReload: (ms = 750) => set({ reloadUntil: performance.now() + ms }),
   pulseShake: (amp = 0.12, ms = 280) =>
     set({
       shakeUntil: performance.now() + ms,

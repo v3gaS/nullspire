@@ -520,7 +520,7 @@ export function WeaponSystem() {
               dir.x += (Math.random() - 0.5) * kick * 0.02;
               dir.y += (Math.random() - 0.5) * kick * 0.016;
               dir.normalize();
-              shots.push({ dir, damage: 22, color: "#60a5fa" });
+              shots.push({ dir, damage: 26, color: "#60a5fa" });
             }
             break;
           }
