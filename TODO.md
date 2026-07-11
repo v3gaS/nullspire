@@ -112,6 +112,8 @@ Campaign build order. Check items as completed. Loop works top-down.
 - [x] Faster Quake move/air + solid Aegis cover + boss phase/death booms
 - [x] Hotter death/victory + Core chevrons + stronger void RJ
 - [x] Louder Overclock/Shockwave + pickup rings + land dust FOV
+- [x] Spitter/turret windups + secret counter + denser late fight
+- [x] Vault-exit chevrons + start armor 50 + multi-kill shake
 
 ---
 
@@ -122,4 +124,4 @@ Campaign build order. Check items as completed. Loop works top-down.
 4. Prefer playable increments over unfinished mega-features.
 
 ## Current focus
-**2h continuous block** (~0.15h remaining) — still coding; pause only for build/deploy/QA
+**2h continuous block** (~0.12h remaining) — still coding; pause only for build/deploy/QA

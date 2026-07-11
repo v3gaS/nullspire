@@ -15,7 +15,8 @@ Build diary. Newest entries at the top.
 - Overclock/Shockwave louder; pickup rings; land dust; chunkier damage numbers
 - Arc chain/rail pierce buffs; Core barrels/cover; sprint dust; hazard denser
 - Spitter/turret/bastion windups; vault climb pads; denser barrel nests
-- Live: https://nullspire-amber.vercel.app · ~0.35h remaining in block
+- Secret found counter; start armor 50; vault-exit chevrons; multi-kill shake
+- Live: https://nullspire-amber.vercel.app · ~0.15h remaining in block
 
 ## 2026-07-10 — Quake juice: pierce, kill X, chunkier FX
 - Rail Lance pierces up to 2 extra lined-up targets; Scatter/Void kick harder

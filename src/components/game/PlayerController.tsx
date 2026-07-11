@@ -86,8 +86,8 @@ export function PlayerController() {
     const onMouseMove = (e: MouseEvent) => {
       if (document.pointerLockElement !== canvas) return;
       if (useGameStore.getState().screen !== "playing") return;
-      yaw.current -= e.movementX * 0.002 * sensitivity;
-      pitch.current -= e.movementY * 0.002 * sensitivity;
+      yaw.current -= e.movementX * 0.0022 * sensitivity;
+      pitch.current -= e.movementY * 0.0022 * sensitivity;
       pitch.current = Math.max(-1.4, Math.min(1.4, pitch.current));
     };
     const onClick = () => {
