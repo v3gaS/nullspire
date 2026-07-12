@@ -1,7 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
+import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { useGameStore } from "@/stores/gameStore";
 import { playerPhysics } from "@/lib/game/playerPhysics";
@@ -241,37 +242,51 @@ function FairEnemy({
 }
 
 function PracticeDummy({ position }: { position: [number, number, number] }) {
-  const meshRef = useRef<THREE.Mesh>(null);
+  const meshRef = useRef<THREE.Group>(null);
   const hp = useRef(80);
+  const { scene } = useGLTF("/assets/models/kenney-blaster/target-large.glb");
+  const cloned = useMemo(() => {
+    const c = scene.clone(true);
+    c.traverse((o) => {
+      const m = o as THREE.Mesh;
+      if (m.isMesh) {
+        m.userData.destructible = true;
+        m.castShadow = false;
+      }
+    });
+    return c;
+  }, [scene]);
 
   useFrame(() => {
-    const mesh = meshRef.current;
-    if (!mesh) return;
-    if (typeof mesh.userData.hp === "number") hp.current = mesh.userData.hp;
-    mesh.userData.destructible = true;
-    mesh.userData.hp = hp.current;
-    mesh.userData.kind = "dummy";
+    const root = meshRef.current;
+    if (!root) return;
+    // Hit tracking lives on the group; WeaponSystem hits child meshes —
+    // mirror hp onto children so applyHit still works.
+    root.traverse((o) => {
+      if ((o as THREE.Mesh).isMesh) {
+        o.userData.destructible = true;
+        o.userData.kind = "dummy";
+        if (typeof o.userData.hp !== "number") o.userData.hp = hp.current;
+        hp.current = o.userData.hp as number;
+      }
+    });
     if (hp.current <= 0) {
       hp.current = 80;
-      mesh.userData.hp = 80;
-      mesh.visible = true;
-      combatFx.pushBoom(worldPos(mesh), "#94a3b8", 1.6);
+      root.traverse((o) => {
+        if ((o as THREE.Mesh).isMesh) o.userData.hp = 80;
+      });
+      combatFx.pushBoom(
+        new THREE.Vector3(position[0], position[1], position[2]),
+        "#94a3b8",
+        1.6,
+      );
     }
   });
 
   return (
-    <mesh
-      ref={meshRef}
-      position={position}
-      userData={{ destructible: true, hp: 80, kind: "dummy" }}
-    >
-      <boxGeometry args={[1.0, 1.6, 0.7]} />
-      <meshStandardMaterial
-        color="#cbd5e1"
-        emissive="#64748b"
-        emissiveIntensity={0.35}
-      />
-    </mesh>
+    <group ref={meshRef} position={position} scale={1.8}>
+      <primitive object={cloned} />
+    </group>
   );
 }
 

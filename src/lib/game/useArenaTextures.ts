@@ -81,3 +81,31 @@ export function useMetalGrateMaps(repeat = 8) {
   prep([map, normalMap, roughnessMap, metalnessMap], 0, repeat);
   return { map, normalMap, roughnessMap, metalnessMap };
 }
+
+/** Diffuse-only — looks textured without PBR shader cost (Low-safe). */
+export function useHangarDiffuseMaps() {
+  const [floor, wall, metal, grate] = useTexture([
+    "/assets/textures/polyhaven/concrete_floor/diff.jpg",
+    "/assets/textures/polyhaven/plaster_wall/diff.jpg",
+    "/assets/textures/polyhaven/metal_plate_02/diff.jpg",
+    "/assets/textures/polyhaven/metal_grate/diff.jpg",
+  ]);
+  prep([floor, wall, metal, grate], 0, 1);
+  floor.repeat.set(12, 12);
+  wall.repeat.set(6, 3);
+  metal.repeat.set(2, 2);
+  grate.repeat.set(8, 20);
+  for (const t of [floor, wall, metal, grate]) {
+    t.colorSpace = THREE.SRGBColorSpace;
+    t.needsUpdate = true;
+  }
+  return { floor, wall, metal, grate };
+}
+
+export function usePaintedMetalDiffuse(repeat = 2) {
+  const [map] = useTexture([
+    "/assets/textures/ambientcg/painted_metal004/color.jpg",
+  ]);
+  prep([map], 0, repeat);
+  return { map };
+}

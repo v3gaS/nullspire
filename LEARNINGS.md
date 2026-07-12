@@ -2,6 +2,12 @@
 
 Build diary. Newest entries at the top.
 
+## 2026-07-12 — Free assets dress the lean arena
+- Pulled more CC0: Poly Haven concrete floor / plaster wall / metal_plate_02 + cardboard box; AmbientCG painted_metal004
+- Wired diffuse-only hangar maps + sunset sky dome (no HDRI/PMREM on Low) + 10 curated Kenney/Poly Haven props
+- Practice dummies use Kenney Blaster target GLB
+- Still one RigidBody shell — textures for life, not physics spam
+
 ## 2026-07-12 — First-principles arena rebuild (playable > campaign pile)
 - Old world unplayable: ~90 RigidBodies, 22 always-on enemies, no-LOS aggro, invisible stalkers, spawn camp, WeaponSystem mesh alloc
 - **Shipped lean loop:** `PlayArena` (1 RigidBody + few colliders) + `FairEnemies` (3 bright waves, LOS + spawn grace, windup telegraph) + pooled VFX + SMG/Scatter/Rail

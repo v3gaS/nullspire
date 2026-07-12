@@ -18,12 +18,13 @@ export function CreditsScreen({ onBack }: { onBack: () => void }) {
             Station Kit, Space Kit · CC0 · kenney.nl
           </li>
           <li>
-            <span className="text-teal-300">Poly Haven</span> — Industrial Sunset
-            HDRI, Metal Plate · CC0 · polyhaven.com
+            <span className="text-teal-300">Poly Haven</span> — Sunset sky,
+            concrete floor, plaster walls, metal plates/grate, crates · CC0 ·
+            polyhaven.com
           </li>
           <li>
-            <span className="text-teal-300">AmbientCG</span> — Concrete & metal
-            PBR textures · CC0 · ambientcg.com
+            <span className="text-teal-300">AmbientCG</span> — Painted metal,
+            tiles, rust, concrete · CC0 · ambientcg.com
           </li>
           <li>
             <span className="text-teal-300">Google Fonts</span> — Orbitron, Exo
