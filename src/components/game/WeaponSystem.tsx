@@ -34,6 +34,12 @@ let singId = 0;
 function fragName(kind: unknown): string {
   if (typeof kind !== "string" || !kind) return "hostile";
   switch (kind) {
+    case "grunt":
+      return "Grunt";
+    case "shooter":
+      return "Shooter";
+    case "brute":
+      return "Brute";
     case "drone":
       return "Drone";
     case "bastion":
@@ -140,6 +146,10 @@ export function applyHit(
     } else if (mesh.userData.kind === "barrel") {
       // Barrel death handled by ExplosiveBarrels tick
       mesh.userData.hp = 0;
+    } else if (mesh.userData.kind === "dummy") {
+      combatFx.pushBoom(worldPos(mesh), "#94a3b8", 1.6);
+      playSfx("/assets/audio/kenney-fps/enemy_hurt.ogg", 0.35);
+      // Dummy respawns in its own tick — no frag
     } else {
       // Light gib spray — capped by CombatVfx MAX_IMPACTS
       const wp = worldPos(mesh);
@@ -624,39 +634,16 @@ export function WeaponSystem() {
 
     const fx = fxRef.current;
     if (fx) {
-      while (fx.children.length) {
-        const child = fx.children[0];
-        fx.remove(child);
-        if (child instanceof THREE.Mesh) {
-          child.geometry.dispose();
-          (child.material as THREE.Material).dispose();
+      // Ability rings use CombatVfx booms — no per-frame geometry alloc
+      for (const nest of nests.current) {
+        if (Math.random() < dt * 0.8) {
+          combatFx.pushImpact(nest.pos.clone(), "#60a5fa");
         }
       }
-      for (const nest of nests.current) {
-        const mesh = new THREE.Mesh(
-          new THREE.CylinderGeometry(4.5, 4.5, 0.15, 12),
-          new THREE.MeshBasicMaterial({
-            color: "#60a5fa",
-            transparent: true,
-            opacity: 0.35,
-            depthWrite: false,
-          }),
-        );
-        mesh.position.copy(nest.pos);
-        fx.add(mesh);
-      }
       for (const s of singularities.current) {
-        const mesh = new THREE.Mesh(
-          new THREE.SphereGeometry(s.detonated ? 1.6 : 0.55, 8, 8),
-          new THREE.MeshBasicMaterial({
-            color: "#c084fc",
-            transparent: true,
-            opacity: s.detonated ? 0.3 : 0.75,
-            depthWrite: false,
-          }),
-        );
-        mesh.position.copy(s.pos);
-        fx.add(mesh);
+        if (!s.detonated && Math.random() < dt * 1.2) {
+          combatFx.pushImpact(s.pos.clone(), "#c084fc");
+        }
       }
     }
   });

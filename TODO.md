@@ -139,4 +139,4 @@ Campaign build order. Check items as completed. Loop works top-down.
 - [x] Continue Quake juice until wall-clock ends
 
 ## Current focus
-**Asset fan-out COMPLETE (look over cubes)** — Poly Haven + AmbientCG + Kenney Blaster/Station; HDRI floor + real guns/props; keep Quality Low for perf; next: Quaternius enemy skins if downloadable
+**Arena rebuild LIVE** — lean hangar + 3 fair waves. Expand only after this feels solid on Low.

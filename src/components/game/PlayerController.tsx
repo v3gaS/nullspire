@@ -298,26 +298,6 @@ export function PlayerController() {
           "/assets/audio/kenney-fps/walking.ogg",
           playerLocomotion.sprinting ? 0.18 : 0.12,
         );
-        if (playerLocomotion.sprinting) {
-          combatFx.pushImpact(
-            new THREE.Vector3(pos.x, 0.08, pos.z),
-            "#94a3b8",
-          );
-          combatFx.pushImpact(
-            new THREE.Vector3(pos.x - wish.x * 0.4, 0.1, pos.z - wish.z * 0.4),
-            "#64748b",
-          );
-          combatFx.pushBoom(
-            new THREE.Vector3(pos.x, 0.05, pos.z),
-            "#94a3b8",
-            0.7,
-          );
-        } else {
-          combatFx.pushImpact(
-            new THREE.Vector3(pos.x, 0.06, pos.z),
-            "#64748b",
-          );
-        }
         footstep.current = playerLocomotion.sprinting ? 0.28 : 0.45;
       }
     } else {

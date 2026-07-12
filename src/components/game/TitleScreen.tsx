@@ -54,11 +54,11 @@ export function TitleScreen() {
         NULLSPIRE
       </h1>
       <p className="relative z-10 mt-4 max-w-md px-6 text-center text-sm leading-relaxed text-zinc-200/95">
-        Chunky guns. Fat explosions. Floating loot cubes. Chain the barrels,
-        rocket-jump the pads, and melt the Primarch.
+        Hangar arena. Bright enemies. Fair fights. Clear three waves — no
+        invisible stalkers, no system freezes.
       </p>
       <p className="relative z-10 mt-2 text-[11px] uppercase tracking-[0.3em] text-orange-300/80">
-        Quake juice · hangar bloom · exoplanet scrap
+        WASD · Mouse · Click fire · 1–5 guns · F ability
       </p>
 
       <div className="relative z-10 mt-10 flex flex-col items-center gap-3">

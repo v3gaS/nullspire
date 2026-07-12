@@ -75,12 +75,12 @@ const defaultWeapons: Record<WeaponId, WeaponState> = {
   pulse_smg: { id: "pulse_smg", unlocked: true, ammo: 35, reserve: 140 },
   scatter_carbine: {
     id: "scatter_carbine",
-    unlocked: false,
+    unlocked: true,
     ammo: 9,
     reserve: 36,
   },
   arc_caster: { id: "arc_caster", unlocked: false, ammo: 14, reserve: 42 },
-      rail_lance: { id: "rail_lance", unlocked: false, ammo: 6, reserve: 18 },
+  rail_lance: { id: "rail_lance", unlocked: true, ammo: 6, reserve: 18 },
   void_launcher: {
     id: "void_launcher",
     unlocked: false,
@@ -101,7 +101,7 @@ const startCheckpoint: Checkpoint = {
   x: 0,
   y: 2,
   z: 8,
-  label: "Drop Zone",
+  label: "Hangar Arena",
 };
 
 function loadSens(): number {
@@ -127,7 +127,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   sfxVolume: 1,
   activeWeapon: "pulse_smg",
   weapons: defaultWeapons,
-  objective: "Reach the Crash Rim beacon",
+  objective: "Clear 3 waves — shoot the bright hostiles",
   invulnerableUntil: 0,
   lastDamagedAt: 0,
   checkpoint: startCheckpoint,
@@ -200,8 +200,8 @@ export const useGameStore = create<GameState>((set, get) => ({
       nullEnergy: 100,
       activeWeapon: "pulse_smg",
       weapons: structuredClone(defaultWeapons),
-      objective: "Reach the Crash Rim beacon",
-      invulnerableUntil: performance.now() + 8000,
+      objective: "Clear 3 waves — shoot the bright hostiles",
+      invulnerableUntil: performance.now() + 5000,
       checkpoint: startCheckpoint,
       boss: defaultBoss,
       frags: 0,

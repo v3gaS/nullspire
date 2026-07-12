@@ -2,7 +2,12 @@
 
 Build diary. Newest entries at the top.
 
-## 2026-07-11 — Low still froze high-end Mac — root causes
+## 2026-07-12 — First-principles arena rebuild (playable > campaign pile)
+- Old world unplayable: ~90 RigidBodies, 22 always-on enemies, no-LOS aggro, invisible stalkers, spawn camp, WeaponSystem mesh alloc
+- **Shipped lean loop:** `PlayArena` (1 RigidBody + few colliders) + `FairEnemies` (3 bright waves, LOS + spawn grace, windup telegraph) + pooled VFX + SMG/Scatter/Rail
+- Removed from play path: CrashRimSector, bosses, drones, elites, barrels, secrets, biolume, dressing, HDRI, debris
+- Win condition: clear 3 waves → victory; green heal pad at spawn
+- Live: hard-refresh amber; Deploy; shoot red/blue/gold cubes that telegraph before hitting
 - Boss HUD subscribed in `GameApp` → Canvas React tree re-rendered every boss HP tick
 - `CombatVfx` create/dispose meshes+materials **every frame** while firing (GC death)
 - `preserveDrawingBuffer: true` + HDRI Environment + many PointLights + PBR floor on Low
